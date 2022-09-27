@@ -1,6 +1,15 @@
 buildscript {
+    ext {
+        nav_version = '2.5.2'
+        hilt_version = '2.38.1'
+        coroutines = '1.6.4'
+        moshi_version = '1.9.3'
+        paging_version = '3.1.1'
+    }
+
+
     dependencies {
-        classpath 'com.google.dagger:hilt-android-gradle-plugin:2.40.5'
+        classpath "com.google.dagger:hilt-android-gradle-plugin:$hilt_version"
     }
 }
 

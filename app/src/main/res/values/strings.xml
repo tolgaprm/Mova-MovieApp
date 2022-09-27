@@ -1,3 +1,7 @@
 <resources>
-    <string name="app_name">Mova-MovieApp</string>
+    <string name="app_name">Mova/MovieApp</string>
+    <string name="splash_screen_logo_text">Mova</string>
+    <string name="bottom_nav_home">Home</string>
+    <string name="bottom_nav_explore">Explore</string>
+    <string name="bottom_nav_my_list">My List</string>
 </resources>
