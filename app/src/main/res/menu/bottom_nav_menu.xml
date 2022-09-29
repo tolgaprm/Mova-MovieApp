@@ -8,12 +8,12 @@
         android:title="@string/bottom_nav_home" />
 
     <item
-        android:id="@+id/explore"
+        android:id="@+id/exploreFragment"
         android:icon="@drawable/bottom_nav_explore_selector"
         android:title="@string/bottom_nav_explore" />
 
     <item
-        android:id="@+id/myList"
+        android:id="@+id/myListFragment"
         android:icon="@drawable/bottom_nav_mylist_selector"
         android:title="@string/bottom_nav_my_list" />
 

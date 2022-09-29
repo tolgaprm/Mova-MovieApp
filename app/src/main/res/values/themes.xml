@@ -1,13 +1,15 @@
 <resources>
     <!-- Base application theme. -->
-    <style name="Theme.MovaMovieApp" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.MovaMovieApp" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Primary brand color. -->
+
+
         <item name="colorPrimary">@color/red</item>
         <item name="colorOnPrimary">@color/white</item>
         <item name="colorPrimaryVariant">@color/red_variant</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor">@android:color/transparent</item>
-        <item name="android:windowLightStatusBar">?android:isLightTheme</item>
+        <item name="android:windowLightStatusBar">?isLightTheme</item>
         <!-- Customize your theme here. -->
     </style>
 </resources>

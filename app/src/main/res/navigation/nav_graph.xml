@@ -8,8 +8,8 @@
     <fragment
         android:id="@+id/splashFragment"
         android:name="com.prmto.mova_movieapp.presentation.splash.SplashFragment"
-        tools:layout="@layout/fragment_splash"
-        android:label="SplashFragmentFragment" >
+        android:label="SplashFragmentFragment"
+        tools:layout="@layout/fragment_splash">
         <action
             android:id="@+id/actionToHomeFragment"
             app:destination="@id/homeFragment"
@@ -18,7 +18,17 @@
     </fragment>
     <fragment
         android:id="@+id/homeFragment"
-        tools:layout="@layout/fragment_home"
         android:name="com.prmto.mova_movieapp.presentation.home.HomeFragment"
-        android:label="HomeFragment" />
+        android:label="HomeFragment"
+        tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/exploreFragment"
+        android:name="com.prmto.mova_movieapp.presentation.explore.ExploreFragment"
+        android:label="ExploreFragment"
+        tools:layout="@layout/fragment_explore" />
+    <fragment
+        android:id="@+id/myListFragment"
+        android:name="com.prmto.mova_movieapp.presentation.myList.MyListFragment"
+        android:label="MyListFragment"
+        tools:layout="@layout/fragment_my_list" />
 </navigation>

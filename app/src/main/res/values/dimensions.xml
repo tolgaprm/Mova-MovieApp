@@ -12,4 +12,11 @@
     <dimen name="medium_padding">8dp</dimen>
     <dimen name="large_padding">16dp</dimen>
 
+
+    <dimen name="shape_medium">8dp</dimen>
+    <dimen name="shape_large">16dp</dimen>
+
+    <dimen name="now_playing_row_backdrop_size">320dp</dimen>
+    <dimen name="now_playing_row_poster_size">150dp</dimen>
+
 </resources>

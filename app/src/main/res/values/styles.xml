@@ -7,6 +7,21 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="Mova.H5" parent="TextAppearance.MaterialComponents.Headline5">
+        <item name="android:fontFamily">@font/urbanist_bold</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Mova.Caption" parent="TextAppearance.MaterialComponents.Caption">
+        <item name="android:fontFamily">@font/urbanist_bold</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="Mova.Subtitle2" parent="TextAppearance.MaterialComponents.Subtitle2">
+        <item name="android:fontFamily">@font/urbanist_light</item>
+    </style>
+
     <style name="Mova.body1" parent="TextAppearance.MaterialComponents.Body1">
         <item name="android:fontFamily">@font/urbanist_medium</item>
         <item name="android:textSize">18sp</item>

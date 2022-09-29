@@ -8,8 +8,7 @@ import com.prmto.mova_movieapp.R
 
 import kotlinx.coroutines.*
 
-class SplashFragment
-    : Fragment(R.layout.fragment_splash) {
+class SplashFragment : Fragment(R.layout.fragment_splash) {
 
     private var coroutine: CoroutineScope? = null
 
