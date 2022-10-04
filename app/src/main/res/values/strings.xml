@@ -6,4 +6,10 @@
     <string name="bottom_nav_my_list">My List</string>
     <string name="now_playing">Now Playing</string>
     <string name="see_all">See all</string>
+    <string name="popular_movies">Popular Movies</string>
+    <string name="popular_tv_series">Popular Tv Series</string>
+    <string name="top_rated_movies">Top Rated Movies</string>
+    <string name="search">Search</string>
+    <string name="filter">filter</string>
+    <string name="top_rated_tv_series">Top Rated Tv Series</string>
 </resources>

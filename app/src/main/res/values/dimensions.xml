@@ -3,7 +3,7 @@
 
     <dimen name="splash_icon_size">100dp</dimen>
 
-    <dimen name="extra_large_margin">48dp</dimen>
+    <dimen name="extra_large_margin">32dp</dimen>
     <dimen name="small_margin">4dp</dimen>
     <dimen name="medium_margin">8dp</dimen>
     <dimen name="large_margin">16dp</dimen>
@@ -18,5 +18,11 @@
 
     <dimen name="now_playing_row_backdrop_size">320dp</dimen>
     <dimen name="now_playing_row_poster_size">150dp</dimen>
+
+    <dimen name="movie_row_width">170dp</dimen>
+    <dimen name="movie_row_image_width">170dp</dimen>
+    <dimen name="movie_row_image_height">200dp</dimen>
+
+    <dimen name="edit_text_height">60dp</dimen>
 
 </resources>
