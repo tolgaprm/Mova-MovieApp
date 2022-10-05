@@ -25,10 +25,18 @@
         android:id="@+id/exploreFragment"
         android:name="com.prmto.mova_movieapp.presentation.explore.ExploreFragment"
         android:label="ExploreFragment"
-        tools:layout="@layout/fragment_explore" />
+        tools:layout="@layout/fragment_explore" >
+        <action
+            android:id="@+id/action_exploreFragment_to_filterBottomSheetFragment"
+            app:destination="@id/filterBottomSheetFragment" />
+    </fragment>
     <fragment
         android:id="@+id/myListFragment"
         android:name="com.prmto.mova_movieapp.presentation.myList.MyListFragment"
         android:label="MyListFragment"
         tools:layout="@layout/fragment_my_list" />
+    <dialog
+        android:id="@+id/filterBottomSheetFragment"
+        android:name="com.prmto.mova_movieapp.presentation.filter_bottom_sheet.FilterBottomSheetFragment"
+        android:label="FilterBottomSheetFragment" />
 </navigation>

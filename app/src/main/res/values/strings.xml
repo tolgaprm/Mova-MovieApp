@@ -12,4 +12,9 @@
     <string name="search">Search</string>
     <string name="filter">filter</string>
     <string name="top_rated_tv_series">Top Rated Tv Series</string>
+    <string name="sort_amp_filter"><![CDATA[Sort & Filter]]></string>
+    <string name="categories">Categories</string>
+    <string name="movie">Movie</string>
+    <string name="tv_series">Tv Series</string>
+    <string name="genre">Genre</string>
 </resources>
