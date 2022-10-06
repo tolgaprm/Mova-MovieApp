@@ -7,6 +7,7 @@ import androidx.navigation.fragment.findNavController
 import com.prmto.mova_movieapp.R
 import com.prmto.mova_movieapp.databinding.FragmentExploreBinding
 
+
 class ExploreFragment : Fragment(R.layout.fragment_explore) {
 
     private var _binding: FragmentExploreBinding? = null

@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import com.prmto.mova_movieapp.R
 import com.prmto.mova_movieapp.databinding.FragmentMyListBinding
 
+
 class MyListFragment : Fragment(R.layout.fragment_my_list) {
 
     private var binding: FragmentMyListBinding? = null
@@ -13,7 +14,7 @@ class MyListFragment : Fragment(R.layout.fragment_my_list) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-       val binding = FragmentMyListBinding.bind(view)
+        val binding = FragmentMyListBinding.bind(view)
 
     }
 

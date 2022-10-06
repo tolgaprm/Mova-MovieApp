@@ -20,17 +20,19 @@ data class MovieDto(
     @Json(name = "vote_average") val voteAverage: Double
 )
 
-fun MovieDto.toMovie(): Movie {
-    return Movie(
-        id = id,
-        overview = overview,
-        title = title,
-        originalTitle = originalTitle,
-        posterPath = posterPath,
-        backdropPath = backdropPath,
-        releaseDate = releaseDate,
-        genreIds = genreIds,
-        voteCount = voteCount,
-        voteAverage = voteAverage
-    )
+fun List<MovieDto>.toMovieList(): List<Movie> {
+    return map {
+        Movie(
+            id = it.id,
+            overview = it.overview,
+            title = it.title,
+            originalTitle = it.originalTitle,
+            posterPath = it.posterPath,
+            backdropPath = it.backdropPath,
+            releaseDate = it.releaseDate,
+            genreIds = it.genreIds,
+            voteCount = it.voteCount,
+            voteAverage = it.voteAverage
+        )
+    }
 }

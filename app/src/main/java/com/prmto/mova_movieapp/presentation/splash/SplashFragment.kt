@@ -5,8 +5,8 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.prmto.mova_movieapp.R
-
 import kotlinx.coroutines.*
+
 
 class SplashFragment : Fragment(R.layout.fragment_splash) {
 
