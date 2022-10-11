@@ -5,31 +5,31 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.prmto.mova_movieapp.data.paging_source.NowPlayingPagingSource
 import com.prmto.mova_movieapp.data.remote.TMDBApi
-import com.prmto.mova_movieapp.domain.models.Genre
+import com.prmto.mova_movieapp.domain.models.GenreList
 import com.prmto.mova_movieapp.domain.models.Movie
 import com.prmto.mova_movieapp.domain.repository.RemoteRepository
-import com.prmto.mova_movieapp.util.Constants.ITEMS_PER_PAGE
+import com.prmto.mova_movieapp.util.Constants
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class RemoteRepositoryImpl @Inject constructor(
     private val tmdbApi: TMDBApi
 ) : RemoteRepository {
-    override suspend fun getMovieGenreList(language: String): List<Genre> {
+    override suspend fun getMovieGenreList(language: String): GenreList {
         return tmdbApi.getMovieGenreList(language = language)
     }
 
-    override suspend fun getTvGenreList(language: String): List<Genre> {
+    override suspend fun getTvGenreList(language: String): GenreList {
         return tmdbApi.getTvGenreList(language = language)
     }
 
-    override suspend fun getNowPlayingMovies(
+    override fun getNowPlayingMovies(
         language: String,
         region: String
     ): Flow<PagingData<Movie>> {
         return Pager(
             config = PagingConfig(
-                pageSize = ITEMS_PER_PAGE
+                pageSize = Constants.ITEMS_PER_PAGE
             ),
             pagingSourceFactory = {
                 NowPlayingPagingSource(

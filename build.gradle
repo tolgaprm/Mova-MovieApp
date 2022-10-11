@@ -5,7 +5,7 @@ buildscript {
         coroutines = '1.6.4'
         moshi_version = '1.9.3'
         paging_version = '3.1.1'
-        data_store_version ="1.0.0"
+        data_store_version = "1.0.0"
     }
 
 

@@ -11,26 +11,25 @@ import javax.inject.Inject
 class NowPlayingPagingSource @Inject constructor(
     private val tmdbApi: TMDBApi,
     private val language: String,
-    private val region: String
+    private val region: String,
 ) : PagingSource<Int, Movie>() {
-    override fun getRefreshKey(state: PagingState<Int, Movie>): Int? {
-        return null
-    }
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Movie> {
+
+        val nextPage = params.key ?: STARTING_PAGE
         return try {
 
             val response = tmdbApi.getNowPlayingMovies(
+                page = nextPage,
                 language = language,
-                region = region,
+                region = region
             )
-
-            val page = response.page
 
             LoadResult.Page(
                 data = response.results.toMovieList(),
-                prevKey = if (page != STARTING_PAGE) page - 1 else STARTING_PAGE,
-                nextKey = page + 1,
+                prevKey = if (nextPage == 1) null else nextPage - 1,
+                nextKey = if (nextPage < response.totalPages)
+                    response.page.plus(1) else null
             )
 
         } catch (e: Exception) {
@@ -39,4 +38,7 @@ class NowPlayingPagingSource @Inject constructor(
     }
 
 
+    override fun getRefreshKey(state: PagingState<Int, Movie>): Int? {
+        return state.anchorPosition
+    }
 }

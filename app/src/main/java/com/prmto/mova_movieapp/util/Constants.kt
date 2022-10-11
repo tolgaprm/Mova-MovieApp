@@ -3,7 +3,8 @@ package com.prmto.mova_movieapp.util
 import com.prmto.mova_movieapp.BuildConfig
 
 object Constants {
-    const val BASE_URL = "https://api.themoviedb.org/3"
+    const val BASE_URL = "https://api.themoviedb.org/3/"
+    const val IMAGE_BASE_URL = "https://image.tmdb.org/t/p/"
 
     const val DEFAULT_LANGUAGE = "en"
     const val DEFAULT_REGION = "US"
@@ -13,7 +14,7 @@ object Constants {
 
     const val ITEMS_PER_PAGE = 20
 
-    const val PREFERENCES_NAME="mova_preferences_name"
+    const val PREFERENCES_NAME = "mova_preferences_name"
 
-    const val LOCALE_KEY ="locale_key"
+    const val LOCALE_KEY = "locale_key"
 }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.circularreveal.cardview.CircularRevealCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -12,7 +12,7 @@
         android:layout_height="match_parent">
 
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/backdropImage"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:importantForAccessibility="no"
@@ -24,27 +24,9 @@
             tools:ignore="UseAppTint"
             tools:src="@drawable/spiderman" />
 
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/materialCardView"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/now_playing_row_poster_size"
-            android:layout_margin="@dimen/large_margin"
-            app:cardCornerRadius="@dimen/shape_large"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:importantForAccessibility="no"
-                android:scaleType="centerCrop"
-                tools:src="@drawable/back" />
-
-        </com.google.android.material.card.MaterialCardView>
 
         <TextView
-            android:id="@+id/textView5"
+            android:id="@+id/movieTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/large_margin"
@@ -52,11 +34,11 @@
             android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/materialCardView"
+            app:layout_constraintTop_toTopOf="@+id/guideline2"
             tools:text="Spider-Man: No Way Home" />
 
         <TextView
-            android:id="@+id/textView6"
+            android:id="@+id/genresText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/large_margin"
@@ -67,7 +49,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView5"
+            app:layout_constraintTop_toBottomOf="@+id/movieTitle"
             tools:text="Action,Adventure,Science,Fiction,Hero,Adventure,Science" />
 
         <ImageView
@@ -77,10 +59,11 @@
             android:layout_marginTop="@dimen/large_margin"
             android:importantForAccessibility="no"
             android:src="@drawable/ic_star_rate"
-            app:layout_constraintStart_toStartOf="@+id/textView6"
-            app:layout_constraintTop_toBottomOf="@+id/textView6" />
+            app:layout_constraintStart_toStartOf="@+id/genresText"
+            app:layout_constraintTop_toBottomOf="@+id/genresText" />
 
         <TextView
+            android:id="@+id/voteAverage"
             style="@style/Mova.Subtitle2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -91,8 +74,15 @@
             app:layout_constraintTop_toTopOf="@+id/imageView2"
             tools:text="4.4 (1.14 k)" />
 
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="175dp" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-</com.google.android.material.card.MaterialCardView>
+</com.google.android.material.circularreveal.cardview.CircularRevealCardView>

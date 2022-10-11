@@ -11,7 +11,7 @@ import javax.inject.Inject
 class GetNowPlayingMoviesUseCase @Inject constructor(
     private val remoteRepository: RemoteRepository
 ) {
-    suspend operator fun invoke(
+    operator fun invoke(
         language: String = DEFAULT_LANGUAGE,
         region: String = DEFAULT_REGION
     ): Flow<PagingData<Movie>> {
