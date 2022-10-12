@@ -15,18 +15,18 @@
 
 
         <ImageView
-            android:id="@+id/imageView3"
+            android:id="@+id/ivPoster"
             android:layout_width="@dimen/movie_row_image_width"
             android:layout_height="@dimen/movie_row_image_height"
+            android:importantForAccessibility="no"
             android:scaleType="centerCrop"
             android:src="@drawable/spiderman"
-            android:importantForAccessibility="no"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/tvMovieTvName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/medium_margin"
@@ -37,17 +37,17 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView3"
+            app:layout_constraintTop_toBottomOf="@+id/ivPoster"
             tools:text="Spiderman No Way Home" />
 
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/tvGenre"
             style="@style/Mova.Subtitle1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/medium_margin"
-            app:layout_constraintStart_toStartOf="@+id/textView2"
-            app:layout_constraintTop_toBottomOf="@+id/textView2"
+            app:layout_constraintStart_toStartOf="@+id/tvMovieTvName"
+            app:layout_constraintTop_toBottomOf="@+id/tvMovieTvName"
             tools:text="2020 Action" />
 
 
@@ -59,11 +59,12 @@
             android:importantForAccessibility="no"
             android:src="@drawable/ic_star_rate"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/textView4"
-            app:layout_constraintTop_toBottomOf="@+id/textView4"
+            app:layout_constraintStart_toStartOf="@+id/tvGenre"
+            app:layout_constraintTop_toBottomOf="@+id/tvGenre"
             app:layout_constraintVertical_bias="0.25" />
 
         <TextView
+            android:id="@+id/voteAverage"
             style="@style/Mova.Subtitle2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

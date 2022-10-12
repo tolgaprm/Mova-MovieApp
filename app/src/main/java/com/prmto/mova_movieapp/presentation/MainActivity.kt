@@ -9,6 +9,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.prmto.mova_movieapp.R
 import com.prmto.mova_movieapp.databinding.ActivityMainBinding
+import com.prmto.mova_movieapp.presentation.util.FragmentFactory
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

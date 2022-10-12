@@ -34,6 +34,7 @@ class HomeFragment @Inject constructor(
                 viewModel.getNowPlayingMovies(language = language)
                     .collectLatest {
                         nowPlayingAdapter.submitData(it)
+
                     }
 
             }

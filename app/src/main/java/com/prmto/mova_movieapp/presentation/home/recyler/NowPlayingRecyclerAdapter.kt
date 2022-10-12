@@ -14,12 +14,13 @@ import com.prmto.mova_movieapp.data.remote.ImageSize
 import com.prmto.mova_movieapp.databinding.NowPlayingRowBinding
 import com.prmto.mova_movieapp.domain.models.Genre
 import com.prmto.mova_movieapp.domain.models.Movie
+import com.prmto.mova_movieapp.domain.models.TvSeries
 import javax.inject.Inject
 
 class NowPlayingRecyclerAdapter @Inject constructor(
     private val imageLoader: ImageLoader
 ) :
-    PagingDataAdapter<Movie, NowPlayingRecyclerAdapter.MovieViewHolder>(DiffUtilCallBack()) {
+    PagingDataAdapter<Movie, NowPlayingRecyclerAdapter.MovieViewHolder>(DiffUtilCallBack<Movie>()) {
 
     private var movieGenreList: List<Genre> = emptyList()
 
@@ -92,13 +93,27 @@ class NowPlayingRecyclerAdapter @Inject constructor(
 
 }
 
-class DiffUtilCallBack : DiffUtil.ItemCallback<Movie>() {
-    override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean {
-        return oldItem.id == newItem.id
+class DiffUtilCallBack<T : Any> : DiffUtil.ItemCallback<T>() {
+
+
+    override fun areItemsTheSame(oldItem: T, newItem: T): Boolean {
+        return if (oldItem is Movie && newItem is Movie) {
+            val old = oldItem as Movie
+            val new = newItem as Movie
+            new.id == old.id
+        } else {
+            val old = oldItem as TvSeries
+            val new = newItem as TvSeries
+            old.id == new.id
+        }
     }
 
-    override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean {
-        return oldItem == newItem
+    override fun areContentsTheSame(oldItem: T, newItem: T): Boolean {
+        return if (oldItem is Movie) {
+            oldItem as Movie == newItem as Movie
+        } else {
+            oldItem as TvSeries == newItem as TvSeries
+        }
     }
 
 
