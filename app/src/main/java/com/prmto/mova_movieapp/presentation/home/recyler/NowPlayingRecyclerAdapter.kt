@@ -15,6 +15,7 @@ import com.prmto.mova_movieapp.databinding.NowPlayingRowBinding
 import com.prmto.mova_movieapp.domain.models.Genre
 import com.prmto.mova_movieapp.domain.models.Movie
 import com.prmto.mova_movieapp.domain.models.TvSeries
+import com.prmto.mova_movieapp.presentation.util.Util
 import javax.inject.Inject
 
 class NowPlayingRecyclerAdapter @Inject constructor(
@@ -47,24 +48,12 @@ class NowPlayingRecyclerAdapter @Inject constructor(
                 imageLoader = imageLoader
             )
             if (movie.genreIds.isNotEmpty()) {
-
-                binding.genresText.text = handleGenreText(movie = movie)
+                binding.genresText.text =
+                    Util.handleGenreText(movieGenreList = movieGenreList, movie = movie)
             }
 
         }
 
-        private fun handleGenreText(movie: Movie): String {
-            var genreNames = ""
-            movieGenreList.forEach { genre ->
-                movie.genreIds.forEach {
-                    if (it == genre.id) {
-                        genreNames += "${genre.name}, "
-                    }
-                }
-            }
-
-            return genreNames.substring(startIndex = 0, endIndex = genreNames.length - 2)
-        }
 
     }
 

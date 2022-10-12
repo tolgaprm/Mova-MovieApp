@@ -29,10 +29,12 @@
             android:id="@+id/tvMovieTvName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/medium_margin"
             android:layout_marginTop="8dp"
+            android:layout_margin="@dimen/medium_margin"
             android:ellipsize="end"
             android:maxLines="1"
+            android:paddingEnd="@dimen/medium_padding"
+            android:paddingStart="0dp"
             android:textAppearance="@style/Mova.H6"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -41,7 +43,7 @@
             tools:text="Spiderman No Way Home" />
 
         <TextView
-            android:id="@+id/tvGenre"
+            android:id="@+id/tvReleaseDate_Genre"
             style="@style/Mova.Subtitle1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -55,12 +57,13 @@
             android:id="@+id/imageView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginVertical="@dimen/medium_margin"
+            android:layout_marginTop="@dimen/medium_margin"
+            android:layout_marginBottom="@dimen/large_margin"
             android:importantForAccessibility="no"
             android:src="@drawable/ic_star_rate"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/tvGenre"
-            app:layout_constraintTop_toBottomOf="@+id/tvGenre"
+            app:layout_constraintStart_toStartOf="@+id/tvReleaseDate_Genre"
+            app:layout_constraintTop_toBottomOf="@+id/tvReleaseDate_Genre"
             app:layout_constraintVertical_bias="0.25" />
 
         <TextView

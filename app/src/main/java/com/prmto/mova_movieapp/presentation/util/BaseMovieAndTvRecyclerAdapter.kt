@@ -1,5 +1,6 @@
 package com.prmto.mova_movieapp.presentation.util
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
@@ -16,11 +17,12 @@ abstract class BaseMovieAndTvRecyclerAdapter<T : Any>(
     ) : RecyclerView.ViewHolder(binding.root)
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
-        onBindViewHold(binding = holder.binding, position = position)
+        val context = holder.itemView.context
+        onBindViewHold(binding = holder.binding, position = position, context = context)
     }
 
 
-    abstract fun onBindViewHold(binding: MovieRowBinding, position: Int)
+    abstract fun onBindViewHold(binding: MovieRowBinding, position: Int, context: Context)
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {

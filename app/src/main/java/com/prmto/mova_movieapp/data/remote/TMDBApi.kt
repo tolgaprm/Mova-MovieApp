@@ -36,16 +36,14 @@ interface TMDBApi {
     suspend fun getPopularMovies(
         @Query("api_key") apiKey: String = API_KEY,
         @Query("page") page: Int = STARTING_PAGE,
-        @Query("language") language: String,
-        @Query("region") region: String
+        @Query("language") language: String
     ): ApiResponse<MovieDto>
 
     @GET("movie/top_rated")
     suspend fun getTopRatedMovies(
         @Query("api_key") apiKey: String = API_KEY,
         @Query("page") page: Int = STARTING_PAGE,
-        @Query("language") language: String,
-        @Query("region") region: String
+        @Query("language") language: String
     ): ApiResponse<MovieDto>
 
 

@@ -26,6 +26,12 @@ class HomeViewModel @Inject constructor(
         ).cachedIn(viewModelScope)
     }
 
+    fun getPopularMovies(language: String): Flow<PagingData<Movie>> {
+        return homeUseCases.getPopularMoviesUseCase(
+            language = language.lowercase()
+        ).cachedIn(viewModelScope)
+    }
+
     fun getLanguage(): Flow<String> {
         return homeUseCases.getLocaleUseCase()
     }

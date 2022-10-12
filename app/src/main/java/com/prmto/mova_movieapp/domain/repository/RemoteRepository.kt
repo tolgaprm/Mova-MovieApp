@@ -20,4 +20,8 @@ interface RemoteRepository {
         language: String = Constants.DEFAULT_LANGUAGE,
         region: String = Constants.DEFAULT_REGION
     ): Flow<PagingData<Movie>>
+
+    fun getPopularMovies(
+        language: String = Constants.DEFAULT_LANGUAGE
+    ): Flow<PagingData<Movie>>
 }
