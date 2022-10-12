@@ -11,19 +11,20 @@
 
         <TextView
             android:id="@+id/now_playing_text"
+            style="@style/Mova.Title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="52dp"
             android:text="@string/now_playing"
-            style="@style/Mova.Title"
             app:layout_constraintEnd_toStartOf="@+id/nowPlayingSeeAll"
-            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="spread"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/nowPlayingSeeAll"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="?android:attr/actionBarSize"
             android:paddingHorizontal="@dimen/large_padding"
@@ -33,6 +34,8 @@
             android:textColor="@color/red"
             app:layout_constraintBottom_toTopOf="@+id/nowPlayingRecyclerView"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/now_playing_text"
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.jackandphantom.carouselrecyclerview.CarouselRecyclerview

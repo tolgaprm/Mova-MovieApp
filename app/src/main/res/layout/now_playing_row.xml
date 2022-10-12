@@ -30,6 +30,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/large_margin"
+            android:ellipsize="end"
+            android:lines="1"
             android:textAppearance="@style/Mova.H5"
             android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"

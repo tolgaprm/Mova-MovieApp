@@ -11,12 +11,12 @@
         android:id="@+id/bottomBar"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
-        app:layout_constraintBottom_toBottomOf="parent"
         android:visibility="gone"
-        tools:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/bottom_nav_menu">
+        app:menu="@menu/bottom_nav_menu"
+        tools:visibility="visible">
 
     </com.google.android.material.bottomnavigation.BottomNavigationView>
 

@@ -2,6 +2,7 @@ package com.prmto.mova_movieapp.di
 
 import android.content.Context
 import coil.ImageLoader
+import com.prmto.mova_movieapp.R
 import com.prmto.mova_movieapp.data.remote.TMDBApi
 import com.prmto.mova_movieapp.util.Constants
 import com.squareup.moshi.Moshi
@@ -41,8 +42,9 @@ object NetworkModule {
     @Provides
     @Singleton
     fun provideImageLoader(@ApplicationContext context: Context): ImageLoader {
-        return  ImageLoader.Builder(context)
+        return ImageLoader.Builder(context)
             .crossfade(true)
+            .placeholder(R.drawable.loading_animate)
             .build()
     }
 }
