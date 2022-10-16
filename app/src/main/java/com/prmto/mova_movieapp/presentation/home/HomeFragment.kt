@@ -1,16 +1,22 @@
 package com.prmto.mova_movieapp.presentation.home
 
+import android.content.Context.CONNECTIVITY_SERVICE
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.prmto.mova_movieapp.R
 import com.prmto.mova_movieapp.databinding.FragmentHomeBinding
 import com.prmto.mova_movieapp.presentation.home.recyler.NowPlayingRecyclerAdapter
 import com.prmto.mova_movieapp.presentation.home.recyler.PopularMoviesRecyclerView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -30,44 +36,57 @@ class HomeFragment @Inject constructor(
         val binding = FragmentHomeBinding.bind(view)
 
 
-        lifecycleScope.launchWhenCreated {
+        val connMgr =
+            requireContext().getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager
 
-            viewModel.getLanguage().collectLatest { language ->
-                viewModel.getNowPlayingMovies(language = language)
-                    .collectLatest {
-                        nowPlayingAdapter.submitData(it)
+        if (connMgr.activeNetwork != null) {
+
+
+            viewLifecycleOwner.lifecycleScope.launch {
+                viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+
+                    launch {
+                        viewModel.getLanguage().collect {
+                            viewModel.setLanguage(it)
+                        }
                     }
-            }
-        }
 
-        lifecycleScope.launchWhenCreated {
-            viewModel.getLanguage().collectLatest {
-                val genreList = viewModel.getMovieGenreList(it).genres
-                nowPlayingAdapter.passMovieGenreList(genreList)
-                popularMoviesRecyclerView.passMovieGenreList(genreList)
-            }
-        }
+                    launch {
+                        viewModel.getNowPlayingMovies().collectLatest { pagingData ->
+                            nowPlayingAdapter.submitData(pagingData)
+                        }
+                    }
 
-        lifecycleScope.launchWhenCreated {
-            viewModel.getLanguage().collectLatest {
-                viewModel.getPopularMovies(language = it).collectLatest { pagingData ->
-                    popularMoviesRecyclerView.submitData(pagingData)
+                    launch {
+                        viewModel.getPopularMovies()
+                            .collectLatest { pagingData ->
+                                popularMoviesRecyclerView.submitData(pagingData)
+                            }
+                    }
+
+                    launch {
+                        val genreList = viewModel.getMovieGenreList().genres
+                        if (genreList.isNotEmpty()) {
+                            nowPlayingAdapter.passMovieGenreList(genreList)
+                            popularMoviesRecyclerView.passMovieGenreList(genreList)
+                        }
+                    }
+
+
                 }
+
             }
         }
-
 
 
 
 
         binding.nowPlayingRecyclerView.adapter = nowPlayingAdapter
         binding.nowPlayingRecyclerView.setAlpha(true)
-
         binding.popularMoviesRecyclerView.adapter = popularMoviesRecyclerView
 
 
     }
-
 
     override fun onDestroyView() {
         super.onDestroyView()
