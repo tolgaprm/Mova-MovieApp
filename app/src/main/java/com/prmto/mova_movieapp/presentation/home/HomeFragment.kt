@@ -18,6 +18,7 @@ import com.prmto.mova_movieapp.presentation.home.recyler.TopRatedMoviesAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -41,14 +42,13 @@ class HomeFragment @Inject constructor(
         _binding = binding
 
 
-        setupRecyclerAdapters()
-
         val connMgr =
             requireContext().getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager
 
         if (connMgr.activeNetwork != null) {
 
             viewLifecycleOwner.lifecycleScope.launch {
+
                 viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
 
                     launch {
@@ -57,15 +57,6 @@ class HomeFragment @Inject constructor(
                         }
                     }
 
-                    launch {
-                        val genreList = viewModel.getMovieGenreList().genres
-                        if (genreList.isNotEmpty()) {
-                            nowPlayingAdapter.passMovieGenreList(genreList)
-                            popularMoviesAdapter.passMovieGenreList(genreList)
-                            topRatedMoviesAdapter.passMovieGenreList(genreList)
-                            popularTvSeriesAdapter.passMovieGenreList(genreList)
-                        }
-                    }
                     launch {
                         viewModel.getNowPlayingMovies().collectLatest { pagingData ->
                             nowPlayingAdapter.submitData(pagingData)
@@ -93,11 +84,26 @@ class HomeFragment @Inject constructor(
                             }
                     }
 
+                    launch {
+                        val genreList = viewModel.getMovieGenreList().genres
+                        if (genreList.isNotEmpty()) {
+                            nowPlayingAdapter.passMovieGenreList(genreList)
+                            popularMoviesAdapter.passMovieGenreList(genreList)
+                            topRatedMoviesAdapter.passMovieGenreList(genreList)
+                        }
+                    }
 
+                    launch {
+                        val tvGenreList = viewModel.getTvGenreList().genres
+                        if (tvGenreList.isNotEmpty()) {
+                            popularTvSeriesAdapter.passMovieGenreList(tvGenreList)
+                        }
+                    }
                 }
 
             }
         }
+        setupRecyclerAdapters()
 
 
     }

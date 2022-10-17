@@ -4,7 +4,6 @@ import androidx.paging.PagingData
 import com.prmto.mova_movieapp.domain.models.GenreList
 import com.prmto.mova_movieapp.domain.models.Movie
 import com.prmto.mova_movieapp.domain.models.TvSeries
-import com.prmto.mova_movieapp.util.Constants.DEFAULT_LANGUAGE
 import com.prmto.mova_movieapp.util.Constants.DEFAULT_REGION
 import kotlinx.coroutines.flow.Flow
 
@@ -19,19 +18,19 @@ interface RemoteRepository {
     ): GenreList
 
     fun getNowPlayingMovies(
-        language: String = DEFAULT_LANGUAGE,
+        language: String,
         region: String = DEFAULT_REGION
     ): Flow<PagingData<Movie>>
 
     fun getPopularMovies(
-        language: String = DEFAULT_LANGUAGE
+        language: String
     ): Flow<PagingData<Movie>>
 
     fun getTopRatedMovies(
-        language: String = DEFAULT_LANGUAGE
+        language: String
     ): Flow<PagingData<Movie>>
 
     fun getPopularTvs(
-        language: String = DEFAULT_LANGUAGE
+        language: String
     ): Flow<PagingData<TvSeries>>
 }

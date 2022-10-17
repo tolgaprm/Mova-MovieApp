@@ -8,7 +8,6 @@ import com.prmto.mova_movieapp.domain.models.GenreList
 import com.prmto.mova_movieapp.domain.models.Movie
 import com.prmto.mova_movieapp.domain.models.TvSeries
 import com.prmto.mova_movieapp.domain.use_case.HomeUseCases
-import com.prmto.mova_movieapp.util.Constants.DEFAULT_LANGUAGE
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,7 +19,7 @@ class HomeViewModel @Inject constructor(
     private val homeUseCases: HomeUseCases
 ) : ViewModel() {
 
-    private val _language = MutableStateFlow(DEFAULT_LANGUAGE)
+    private val _language = MutableStateFlow("")
     val language: StateFlow<String> get() = _language
 
 
@@ -33,31 +32,35 @@ class HomeViewModel @Inject constructor(
     }
 
     suspend fun getMovieGenreList(): GenreList {
-        return homeUseCases.getMovieGenreList(_language.value)
+        return homeUseCases.getMovieGenreList(_language.value.lowercase())
+    }
+
+    suspend fun getTvGenreList(): GenreList {
+        return homeUseCases.getTvGenreList(_language.value.lowercase())
     }
 
     fun getNowPlayingMovies(): Flow<PagingData<Movie>> {
         return homeUseCases.getNowPlayingMoviesUseCase(
-            language = _language.value
+            language = _language.value.lowercase()
         ).cachedIn(viewModelScope)
     }
 
     fun getPopularMovies(): Flow<PagingData<Movie>> {
         return homeUseCases.getPopularMoviesUseCase(
-            language = _language.value
+            language = _language.value.lowercase()
         ).cachedIn(viewModelScope)
     }
 
     fun getTopRatedMovies(): Flow<PagingData<Movie>> {
         return homeUseCases.getTopRatedMoviesUseCase(
-            language = _language.value
+            language = _language.value.lowercase()
         ).cachedIn(viewModelScope)
     }
 
     fun getPopularTvSeries(): Flow<PagingData<TvSeries>> {
         return homeUseCases.getPopularTvSeries(
-            language = _language.value
-        ).cachedIn(viewModelScope)
+            language = _language.value.lowercase()
+        )
     }
 
 
