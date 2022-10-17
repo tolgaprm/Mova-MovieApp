@@ -8,51 +8,46 @@ import com.prmto.mova_movieapp.data.remote.ImageApi
 import com.prmto.mova_movieapp.data.remote.ImageSize
 import com.prmto.mova_movieapp.databinding.MovieRowBinding
 import com.prmto.mova_movieapp.domain.models.Genre
-import com.prmto.mova_movieapp.domain.models.Movie
+import com.prmto.mova_movieapp.domain.models.TvSeries
 import com.prmto.mova_movieapp.presentation.util.BaseMovieAndTvRecyclerAdapter
 import com.prmto.mova_movieapp.presentation.util.Util
 import javax.inject.Inject
 
-class PopularMoviesRecyclerView @Inject constructor(
+class PopularTvSeriesAdapter @Inject constructor(
     private val imageLoader: ImageLoader
-) : BaseMovieAndTvRecyclerAdapter<Movie>() {
+) : BaseMovieAndTvRecyclerAdapter<TvSeries>() {
 
-    private var movieGenreList: List<Genre> = emptyList()
+    override fun onBindViewHold(binding: MovieRowBinding, position: Int, context: Context) {
+        val tvSeries = getItem(position)
 
-    override fun onBindViewHold(
-        binding: MovieRowBinding,
-        position: Int,
-        context: Context
-    ) {
-
-        val movie = getItem(position)
-
-        if (movie != null) {
+        if (tvSeries != null) {
             binding.ivPoster.load(
                 ImageApi.getImage(
                     imageSize = ImageSize.W185.path,
-                    imageUrl = movie.posterPath
+                    imageUrl = tvSeries.posterPath
                 ),
                 imageLoader = imageLoader
             )
 
-            binding.tvMovieTvName.text = movie.title
+            binding.tvMovieTvName.text = tvSeries.name
 
-            val genre = Util.handleGenreOneText(movieGenreList, movie)
-            val releaseDate = Util.handleReleaseDate(movie.releaseDate)
+            val genre = Util.handleGenreOneText(genreList, tvSeries.genreIds)
+            val releaseDate = Util.handleReleaseDate(tvSeries.firstAirDate)
+
+            val voteCount = Util.handleVoteCount(tvSeries.voteCount)
 
             binding.tvReleaseDateGenre.text =
                 context.getString(R.string.release_date_genre, releaseDate, genre)
 
             binding.voteAverage.text = context.getString(
                 R.string.voteAverage,
-                movie.voteAverage.toString(), movie.voteCount.toString()
+                tvSeries.voteAverage.toString(),
+                voteCount
             )
         }
-
     }
 
-    fun passMovieGenreList(movieGenreList: List<Genre>) {
-        this.movieGenreList = movieGenreList
+    override fun passMovieGenreList(genreList: List<Genre>) {
+        this.genreList = genreList
     }
 }

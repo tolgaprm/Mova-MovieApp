@@ -7,13 +7,14 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.prmto.mova_movieapp.R
 import com.prmto.mova_movieapp.databinding.FragmentHomeBinding
 import com.prmto.mova_movieapp.presentation.home.recyler.NowPlayingRecyclerAdapter
-import com.prmto.mova_movieapp.presentation.home.recyler.PopularMoviesRecyclerView
+import com.prmto.mova_movieapp.presentation.home.recyler.PopularMoviesAdapter
+import com.prmto.mova_movieapp.presentation.home.recyler.PopularTvSeriesAdapter
+import com.prmto.mova_movieapp.presentation.home.recyler.TopRatedMoviesAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -22,10 +23,13 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class HomeFragment @Inject constructor(
     private val nowPlayingAdapter: NowPlayingRecyclerAdapter,
-    private val popularMoviesRecyclerView: PopularMoviesRecyclerView
+    private val popularMoviesAdapter: PopularMoviesAdapter,
+    private val topRatedMoviesAdapter: TopRatedMoviesAdapter,
+    private val popularTvSeriesAdapter: PopularTvSeriesAdapter
 ) : Fragment(R.layout.fragment_home) {
 
-    private var binding: FragmentHomeBinding? = null
+    private var _binding: FragmentHomeBinding? = null
+    private val binding get() = _binding
 
 
     private val viewModel: HomeViewModel by viewModels()
@@ -34,13 +38,15 @@ class HomeFragment @Inject constructor(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val binding = FragmentHomeBinding.bind(view)
+        _binding = binding
 
+
+        setupRecyclerAdapters()
 
         val connMgr =
             requireContext().getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager
 
         if (connMgr.activeNetwork != null) {
-
 
             viewLifecycleOwner.lifecycleScope.launch {
                 viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -52,6 +58,15 @@ class HomeFragment @Inject constructor(
                     }
 
                     launch {
+                        val genreList = viewModel.getMovieGenreList().genres
+                        if (genreList.isNotEmpty()) {
+                            nowPlayingAdapter.passMovieGenreList(genreList)
+                            popularMoviesAdapter.passMovieGenreList(genreList)
+                            topRatedMoviesAdapter.passMovieGenreList(genreList)
+                            popularTvSeriesAdapter.passMovieGenreList(genreList)
+                        }
+                    }
+                    launch {
                         viewModel.getNowPlayingMovies().collectLatest { pagingData ->
                             nowPlayingAdapter.submitData(pagingData)
                         }
@@ -60,16 +75,22 @@ class HomeFragment @Inject constructor(
                     launch {
                         viewModel.getPopularMovies()
                             .collectLatest { pagingData ->
-                                popularMoviesRecyclerView.submitData(pagingData)
+                                popularMoviesAdapter.submitData(pagingData)
                             }
                     }
 
                     launch {
-                        val genreList = viewModel.getMovieGenreList().genres
-                        if (genreList.isNotEmpty()) {
-                            nowPlayingAdapter.passMovieGenreList(genreList)
-                            popularMoviesRecyclerView.passMovieGenreList(genreList)
-                        }
+                        viewModel.getTopRatedMovies()
+                            .collectLatest { pagingData ->
+                                topRatedMoviesAdapter.submitData(pagingData)
+                            }
+                    }
+
+                    launch {
+                        viewModel.getPopularTvSeries()
+                            .collectLatest { pagingData ->
+                                popularTvSeriesAdapter.submitData(pagingData)
+                            }
                     }
 
 
@@ -79,17 +100,24 @@ class HomeFragment @Inject constructor(
         }
 
 
+    }
 
 
-        binding.nowPlayingRecyclerView.adapter = nowPlayingAdapter
-        binding.nowPlayingRecyclerView.setAlpha(true)
-        binding.popularMoviesRecyclerView.adapter = popularMoviesRecyclerView
-
+    private fun setupRecyclerAdapters() {
+        if (binding != null) {
+            binding?.apply {
+                nowPlayingRecyclerView.adapter = nowPlayingAdapter
+                nowPlayingRecyclerView.setAlpha(true)
+                popularMoviesRecyclerView.adapter = popularMoviesAdapter
+                topRatedMoviesRecyclerView.adapter = topRatedMoviesAdapter
+                popularTvSeriesRecyclerView.adapter = popularTvSeriesAdapter
+            }
+        }
 
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        binding = null
+        _binding = null
     }
 }

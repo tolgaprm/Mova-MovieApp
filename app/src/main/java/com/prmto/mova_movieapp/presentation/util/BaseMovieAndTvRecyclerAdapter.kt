@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.prmto.mova_movieapp.databinding.MovieRowBinding
+import com.prmto.mova_movieapp.domain.models.Genre
 import com.prmto.mova_movieapp.presentation.home.recyler.DiffUtilCallBack
 
 abstract class BaseMovieAndTvRecyclerAdapter<T : Any>(
@@ -21,7 +22,6 @@ abstract class BaseMovieAndTvRecyclerAdapter<T : Any>(
         onBindViewHold(binding = holder.binding, position = position, context = context)
     }
 
-
     abstract fun onBindViewHold(binding: MovieRowBinding, position: Int, context: Context)
 
 
@@ -33,5 +33,9 @@ abstract class BaseMovieAndTvRecyclerAdapter<T : Any>(
         )
     }
 
+
+    var genreList: List<Genre> = emptyList()
+
+    abstract fun passMovieGenreList(genreList: List<Genre>)
 }
 

@@ -3,11 +3,13 @@ package com.prmto.mova_movieapp.data.repository
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
-import com.prmto.mova_movieapp.data.paging_source.APIFUNC
+import com.prmto.mova_movieapp.data.paging_source.APIFUNCTIONS
 import com.prmto.mova_movieapp.data.paging_source.MoviesPagingSource
+import com.prmto.mova_movieapp.data.paging_source.TvPagingSource
 import com.prmto.mova_movieapp.data.remote.TMDBApi
 import com.prmto.mova_movieapp.domain.models.GenreList
 import com.prmto.mova_movieapp.domain.models.Movie
+import com.prmto.mova_movieapp.domain.models.TvSeries
 import com.prmto.mova_movieapp.domain.repository.RemoteRepository
 import com.prmto.mova_movieapp.util.Constants.ITEMS_PER_PAGE
 import kotlinx.coroutines.flow.Flow
@@ -37,7 +39,7 @@ class RemoteRepositoryImpl @Inject constructor(
                     tmdbApi = tmdbApi,
                     language = language,
                     region = region,
-                    apiFunc = APIFUNC.NOWPLAYINGMOVIES
+                    apiFunc = APIFUNCTIONS.NOW_PLAYING_MOVIES
                 )
             }
         ).flow
@@ -52,7 +54,36 @@ class RemoteRepositoryImpl @Inject constructor(
                 MoviesPagingSource(
                     tmdbApi = tmdbApi,
                     language = language,
-                    apiFunc = APIFUNC.POPULARMOVIES
+                    apiFunc = APIFUNCTIONS.POPULAR_MOVIES
+                )
+            }
+        ).flow
+    }
+
+    override fun getTopRatedMovies(language: String): Flow<PagingData<Movie>> {
+        return Pager(
+            config = PagingConfig(
+                pageSize = ITEMS_PER_PAGE
+            ),
+            pagingSourceFactory = {
+                MoviesPagingSource(
+                    tmdbApi = tmdbApi,
+                    language = language,
+                    apiFunc = APIFUNCTIONS.TOP_RATED_MOVIES
+                )
+            }
+        ).flow
+    }
+
+    override fun getPopularTvs(language: String): Flow<PagingData<TvSeries>> {
+        return Pager(
+            config = PagingConfig(
+                pageSize = ITEMS_PER_PAGE
+            ),
+            pagingSourceFactory = {
+                TvPagingSource(
+                    tmdb = tmdbApi,
+                    language = language
                 )
             }
         ).flow

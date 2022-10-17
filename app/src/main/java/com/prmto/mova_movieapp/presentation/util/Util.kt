@@ -22,10 +22,10 @@ object Util {
         return genreNames
     }
 
-    fun handleGenreOneText(movieGenreList: List<Genre>, movie: Movie): String {
+    fun handleGenreOneText(movieGenreList: List<Genre>, genreIds: List<Int>): String {
 
         for (genre: Genre in movieGenreList) {
-            for (genreId: Int in movie.genreIds) {
+            for (genreId: Int in genreIds) {
                 if (genreId == genre.id) {
                     return genre.name
                 }
@@ -36,5 +36,24 @@ object Util {
 
         return ""
 
+    }
+
+    fun handleVoteCount(voteCount: Int): String {
+        if (voteCount < 1000)
+            return voteCount.toString()
+
+        val voteCountText: Int?
+
+        val divide = (voteCount / 1000).toFloat()
+
+        val mod = voteCount % 1000
+
+        if (mod > 100) {
+            voteCountText = (mod / 100)
+        } else {
+            return "${divide.toInt()} k"
+        }
+
+        return "${divide.toInt()}.$voteCountText k"
     }
 }

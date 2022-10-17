@@ -19,19 +19,23 @@ data class TvSeriesDto(
     @Json(name = "vote_count") val voteCount: Int,
 )
 
-fun TvSeriesDto.toTvSeries(): TvSeries {
-    return TvSeries(
-        id = id,
-        overview = overview,
-        name = name,
-        originalName = originalName,
-        posterPath = posterPath,
-        backdropPath = backdropPath,
-        firstAirDate = firstAirDate,
-        genreIds = genreIds,
-        voteCount = voteCount,
-        voteAverage = voteAverage
-    )
+fun List<TvSeriesDto>.toTvSeries(): List<TvSeries> {
+    return map {
+        TvSeries(
+            id = it.id,
+            overview = it.overview,
+            name = it.name,
+            originalName = it.originalName,
+            posterPath = it.posterPath,
+            backdropPath = it.backdropPath,
+            firstAirDate = it.firstAirDate,
+            genreIds = it.genreIds,
+            voteCount = it.voteCount,
+            voteAverage = it.voteAverage
+        )
+    }
+
+
 }
 
 

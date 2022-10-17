@@ -12,8 +12,8 @@ import javax.inject.Inject
 class MoviesPagingSource @Inject constructor(
     private val tmdbApi: TMDBApi,
     private val language: String,
-    private val region: String= DEFAULT_REGION,
-    private val apiFunc: APIFUNC,
+    private val region: String = DEFAULT_REGION,
+    private val apiFunc: APIFUNCTIONS,
 ) : PagingSource<Int, Movie>() {
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Movie> {
@@ -22,15 +22,21 @@ class MoviesPagingSource @Inject constructor(
         return try {
 
             val response = when (apiFunc) {
-                APIFUNC.NOWPLAYINGMOVIES -> {
+                APIFUNCTIONS.NOW_PLAYING_MOVIES -> {
                     tmdbApi.getNowPlayingMovies(
                         page = nextPage,
                         language = language,
                         region = region
                     )
                 }
-                APIFUNC.POPULARMOVIES -> {
+                APIFUNCTIONS.POPULAR_MOVIES -> {
                     tmdbApi.getPopularMovies(
+                        page = nextPage,
+                        language = language
+                    )
+                }
+                APIFUNCTIONS.TOP_RATED_MOVIES -> {
+                    tmdbApi.getTopRatedMovies(
                         page = nextPage,
                         language = language
                     )
@@ -56,7 +62,8 @@ class MoviesPagingSource @Inject constructor(
 }
 
 
-enum class APIFUNC {
-    NOWPLAYINGMOVIES(),
-    POPULARMOVIES()
+enum class APIFUNCTIONS {
+    NOW_PLAYING_MOVIES(),
+    POPULAR_MOVIES(),
+    TOP_RATED_MOVIES()
 }
