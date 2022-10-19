@@ -19,4 +19,10 @@
     <string name="genre">Genre</string>
     <string name="voteAverage">%1$s (%2$s)</string>
     <string name="release_date_genre">%1$s  %2$s</string>
+    <string name="add_list">add_list</string>
+    <string name="share">Share</string>
+    <string name="favorite_list">Favori Listem</string>
+    <string name="watchList">Watch List</string>
+    <string name="detail_bottom_sheet_movie_info">Details and More</string>
+    <string name="detail_bottom_sheet_tv_info">Episodes and More</string>
 </resources>

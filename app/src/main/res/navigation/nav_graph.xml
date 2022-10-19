@@ -20,12 +20,16 @@
         android:id="@+id/homeFragment"
         android:name="com.prmto.mova_movieapp.presentation.home.HomeFragment"
         android:label="HomeFragment"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_homeFragment_to_detailBottomSheet"
+            app:destination="@id/detailBottomSheet" />
+    </fragment>
     <fragment
         android:id="@+id/exploreFragment"
         android:name="com.prmto.mova_movieapp.presentation.explore.ExploreFragment"
         android:label="ExploreFragment"
-        tools:layout="@layout/fragment_explore" >
+        tools:layout="@layout/fragment_explore">
         <action
             android:id="@+id/action_exploreFragment_to_filterBottomSheetFragment"
             app:destination="@id/filterBottomSheetFragment" />
@@ -38,5 +42,22 @@
     <dialog
         android:id="@+id/filterBottomSheetFragment"
         android:name="com.prmto.mova_movieapp.presentation.filter_bottom_sheet.FilterBottomSheetFragment"
-        android:label="FilterBottomSheetFragment" />
+        android:label="FilterBottomSheetFragment"
+        tools:layout="@layout/fragment_bottom_sheet"/>
+    <dialog
+        android:id="@+id/detailBottomSheet"
+        android:name="com.prmto.mova_movieapp.presentation.detail_bottom_sheet.DetailBottomSheet"
+        android:label="DetailBottomSheet"
+        tools:layout="@layout/fragment_detail_bottom_sheet" >
+        <argument
+            android:name="Movie"
+            app:argType="com.prmto.mova_movieapp.domain.models.Movie"
+            app:nullable="true"
+            android:defaultValue="@null" />
+        <argument
+            android:name="TvSeries"
+            app:argType="com.prmto.mova_movieapp.domain.models.TvSeries"
+            app:nullable="true"
+            android:defaultValue="@null" />
+    </dialog>
 </navigation>

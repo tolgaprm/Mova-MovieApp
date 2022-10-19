@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import com.prmto.mova_movieapp.R
 import com.prmto.mova_movieapp.databinding.FragmentHomeBinding
 import com.prmto.mova_movieapp.presentation.home.recyler.NowPlayingRecyclerAdapter
@@ -18,7 +19,6 @@ import com.prmto.mova_movieapp.presentation.home.recyler.TopRatedMoviesAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -124,14 +124,20 @@ class HomeFragment @Inject constructor(
     }
 
     private fun setAdaptersClickListener() {
-        popularMoviesAdapter.setOnItemClickListener {
-            Timber.d("Popular Movies ${it.title} ")
+        popularMoviesAdapter.setOnItemClickListener { movie ->
+            val action = HomeFragmentDirections.actionHomeFragmentToDetailBottomSheet()
+            action.movie = movie
+            findNavController().navigate(action)
         }
-        popularTvSeriesAdapter.setOnItemClickListener {
-            Timber.d("Popular TvSeries ${it.name} ")
+        popularTvSeriesAdapter.setOnItemClickListener { tvSeries ->
+            val action = HomeFragmentDirections.actionHomeFragmentToDetailBottomSheet()
+            action.tvSeries = tvSeries
+            findNavController().navigate(action)
         }
-        topRatedMoviesAdapter.setOnItemClickListener {
-            Timber.d("TopRated Movies ${it.title} ")
+        topRatedMoviesAdapter.setOnItemClickListener { movie ->
+            val action = HomeFragmentDirections.actionHomeFragmentToDetailBottomSheet()
+            action.movie = movie
+            findNavController().navigate(action)
         }
     }
 

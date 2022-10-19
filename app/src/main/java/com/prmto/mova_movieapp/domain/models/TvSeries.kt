@@ -1,5 +1,9 @@
 package com.prmto.mova_movieapp.domain.models
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class TvSeries(
     val id: Int,
     val overview: String,
@@ -11,4 +15,4 @@ data class TvSeries(
     val genreIds: List<Int>,
     val voteCount: Int,
     val voteAverage: Double,
-)
+) : Parcelable
