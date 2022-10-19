@@ -33,4 +33,8 @@ interface RemoteRepository {
     fun getPopularTvs(
         language: String
     ): Flow<PagingData<TvSeries>>
+
+    fun getTopRatedTvs(
+        language: String
+    ): Flow<PagingData<TvSeries>>
 }

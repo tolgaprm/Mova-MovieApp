@@ -2,6 +2,7 @@ package com.prmto.mova_movieapp.data.paging_source
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
+import com.prmto.mova_movieapp.data.models.enums.TvSeriesApiFunction
 import com.prmto.mova_movieapp.data.models.toTvSeries
 import com.prmto.mova_movieapp.data.remote.TMDBApi
 import com.prmto.mova_movieapp.domain.models.TvSeries
@@ -10,7 +11,8 @@ import javax.inject.Inject
 
 class TvPagingSource @Inject constructor(
     private val tmdb: TMDBApi,
-    private val language: String
+    private val language: String,
+    private val apiFunction: TvSeriesApiFunction
 ) : PagingSource<Int, TvSeries>() {
     override fun getRefreshKey(state: PagingState<Int, TvSeries>): Int? {
         return null
@@ -21,10 +23,22 @@ class TvPagingSource @Inject constructor(
         val nextPage = params.key ?: STARTING_PAGE
 
         return try {
-            val response = tmdb.getPopularTvs(
-                page = nextPage,
-                language = language
-            )
+
+            val response = when (apiFunction) {
+                TvSeriesApiFunction.POPULAR_TV -> {
+                    tmdb.getPopularTvs(
+                        page = nextPage,
+                        language = language
+                    )
+                }
+                TvSeriesApiFunction.TOP_RATED_TV -> {
+                    tmdb.getTopRatedTvs(
+                        page = nextPage,
+                        language = language
+                    )
+                }
+            }
+
 
             LoadResult.Page(
                 data = response.results.toTvSeries(),

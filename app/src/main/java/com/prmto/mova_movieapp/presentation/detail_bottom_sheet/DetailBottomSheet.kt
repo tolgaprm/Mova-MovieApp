@@ -14,7 +14,7 @@ import com.prmto.mova_movieapp.R
 import com.prmto.mova_movieapp.data.remote.ImageApi
 import com.prmto.mova_movieapp.data.remote.ImageSize
 import com.prmto.mova_movieapp.databinding.FragmentDetailBottomSheetBinding
-import com.prmto.mova_movieapp.presentation.util.Util
+import com.prmto.mova_movieapp.presentation.util.HandleUtils
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -54,7 +54,7 @@ class DetailBottomSheet : BottomSheetDialogFragment() {
             if (movie != null) {
 
                 tvName.text = movie.title
-                tvReleaseDate.text = Util.handleReleaseDate(movie.releaseDate)
+                tvReleaseDate.text = HandleUtils.handleReleaseDate(movie.releaseDate)
                 tvOverview.text = movie.overview
                 if (movie.posterPath != null) {
                     loadImage(posterPath = movie.posterPath)
@@ -68,7 +68,7 @@ class DetailBottomSheet : BottomSheetDialogFragment() {
 
                 tvName.text = tvSeries.name
                 tvOverview.text = tvSeries.overview
-                tvReleaseDate.text = Util.handleReleaseDate(tvSeries.firstAirDate)
+                tvReleaseDate.text = HandleUtils.handleReleaseDate(tvSeries.firstAirDate)
                 if (tvSeries.posterPath != null) {
                     loadImage(posterPath = tvSeries.posterPath)
                 }

@@ -13,6 +13,7 @@ import com.prmto.mova_movieapp.domain.use_case.get_now_playing_movies.GetNowPlay
 import com.prmto.mova_movieapp.domain.use_case.get_popular_movies.GetPopularMoviesUseCase
 import com.prmto.mova_movieapp.domain.use_case.get_popular_tv_series.GetPopularTvSeries
 import com.prmto.mova_movieapp.domain.use_case.get_top_rated_movies.GetTopRatedMoviesUseCase
+import com.prmto.mova_movieapp.domain.use_case.get_top_rated_tv_series.GetTopRatedTvSeriesUseCase
 import com.prmto.mova_movieapp.domain.use_case.get_tv_genre_list.GetTvGenreListUseCase
 import dagger.Module
 import dagger.Provides
@@ -44,7 +45,8 @@ object RepositoryModule {
             getLocaleUseCase = GetLocaleUseCase(dataStoreOperations),
             getPopularMoviesUseCase = GetPopularMoviesUseCase(remoteRepository),
             getTopRatedMoviesUseCase = GetTopRatedMoviesUseCase(remoteRepository),
-            getPopularTvSeries = GetPopularTvSeries(remoteRepository)
+            getPopularTvSeries = GetPopularTvSeries(remoteRepository),
+            getTopRatedTvSeriesUseCase = GetTopRatedTvSeriesUseCase(remoteRepository)
         )
     }
 

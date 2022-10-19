@@ -5,8 +5,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.prmto.mova_movieapp.R
 import com.prmto.mova_movieapp.databinding.MovieRowBinding
 import com.prmto.mova_movieapp.domain.models.Genre
+import com.prmto.mova_movieapp.domain.models.Movie
+import com.prmto.mova_movieapp.domain.models.TvSeries
 import com.prmto.mova_movieapp.presentation.home.recyler.DiffUtilCallBack
 
 abstract class BaseMovieAndTvRecyclerAdapter<T : Any>(
@@ -17,10 +20,56 @@ abstract class BaseMovieAndTvRecyclerAdapter<T : Any>(
 
     class MovieViewHolder(
         val binding: MovieRowBinding,
-    ) : RecyclerView.ViewHolder(binding.root)
+    ) : RecyclerView.ViewHolder(binding.root) {
+
+        fun bindMovie(movie: Movie, genreList: List<Genre>, context: Context) {
+
+            binding.tvMovieTvName.text = movie.title
+            val genre = HandleUtils.handleGenreOneText(genreList, movie.genreIds)
+            val voteCount = HandleUtils.handleVoteCount(movie.voteCount)
+            val releaseDate = HandleUtils.handleReleaseDate(movie.releaseDate)
+
+            binding.tvReleaseDateGenre.text =
+                context.getString(R.string.release_date_genre, releaseDate, genre)
+
+            binding.voteAverage.text = context.getString(
+                R.string.voteAverage,
+                movie.voteAverage.toString(), voteCount
+            )
+
+        }
+
+        fun bindTvSeries(tv: TvSeries, genreList: List<Genre>, context: Context) {
+            binding.tvMovieTvName.text = tv.name
+
+            val genre = HandleUtils.handleGenreOneText(genreList, tv.genreIds)
+            val releaseDate = HandleUtils.handleReleaseDate(tv.firstAirDate)
+            val voteCount = HandleUtils.handleVoteCount(tv.voteCount)
+
+            binding.tvReleaseDateGenre.text =
+                context.getString(R.string.release_date_genre, releaseDate, genre)
+
+            binding.voteAverage.text = context.getString(
+                R.string.voteAverage,
+                tv.voteAverage.toString(),
+                voteCount
+            )
+        }
+    }
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
         val context = holder.itemView.context
+        val item = getItem(position)
+
+        if (item is Movie) {
+
+            holder.bindMovie(movie = item, genreList = genreList, context = context)
+        }
+
+        if (item is TvSeries) {
+            holder.bindTvSeries(tv = item, genreList = genreList, context = context)
+        }
+
         onBindViewHold(binding = holder.binding, position = position, context = context)
     }
 

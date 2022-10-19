@@ -21,7 +21,7 @@ class SplashFragmentTest {
     @get:Rule
     var instantTaskExecutorRule = InstantTaskExecutorRule()
 
-    lateinit var scenario: FragmentScenario<SplashFragment>
+    private lateinit var scenario: FragmentScenario<SplashFragment>
 
     @Before
     fun setup() {

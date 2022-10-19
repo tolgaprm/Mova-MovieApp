@@ -6,6 +6,7 @@ import com.prmto.mova_movieapp.domain.use_case.get_now_playing_movies.GetNowPlay
 import com.prmto.mova_movieapp.domain.use_case.get_popular_movies.GetPopularMoviesUseCase
 import com.prmto.mova_movieapp.domain.use_case.get_popular_tv_series.GetPopularTvSeries
 import com.prmto.mova_movieapp.domain.use_case.get_top_rated_movies.GetTopRatedMoviesUseCase
+import com.prmto.mova_movieapp.domain.use_case.get_top_rated_tv_series.GetTopRatedTvSeriesUseCase
 import com.prmto.mova_movieapp.domain.use_case.get_tv_genre_list.GetTvGenreListUseCase
 
 data class HomeUseCases(
@@ -15,5 +16,6 @@ data class HomeUseCases(
     val getLocaleUseCase: GetLocaleUseCase,
     val getPopularMoviesUseCase: GetPopularMoviesUseCase,
     val getTopRatedMoviesUseCase: GetTopRatedMoviesUseCase,
-    val getPopularTvSeries: GetPopularTvSeries
+    val getPopularTvSeries: GetPopularTvSeries,
+    val getTopRatedTvSeriesUseCase: GetTopRatedTvSeriesUseCase
 )

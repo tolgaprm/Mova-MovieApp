@@ -3,7 +3,7 @@ package com.prmto.mova_movieapp.presentation.util
 import com.prmto.mova_movieapp.domain.models.Genre
 import com.prmto.mova_movieapp.domain.models.Movie
 
-object Util {
+object HandleUtils {
     fun handleReleaseDate(releaseDate: String): String {
         return releaseDate.split("-")[0]
     }
