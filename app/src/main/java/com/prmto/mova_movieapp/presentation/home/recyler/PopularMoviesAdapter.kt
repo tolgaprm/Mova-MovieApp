@@ -49,6 +49,10 @@ class PopularMoviesAdapter @Inject constructor(
                 movie.voteAverage.toString(),
                 voteCount
             )
+
+            binding.root.setOnClickListener {
+                this.itemClickListener(movie)
+            }
         }
 
     }

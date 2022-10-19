@@ -44,6 +44,10 @@ class PopularTvSeriesAdapter @Inject constructor(
                 tvSeries.voteAverage.toString(),
                 voteCount
             )
+
+            binding.root.setOnClickListener {
+                this.itemClickListener(tvSeries)
+            }
         }
     }
 

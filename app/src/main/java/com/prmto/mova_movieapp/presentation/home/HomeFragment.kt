@@ -104,6 +104,7 @@ class HomeFragment @Inject constructor(
             }
         }
         setupRecyclerAdapters()
+        setAdaptersClickListener()
 
 
     }
@@ -120,6 +121,18 @@ class HomeFragment @Inject constructor(
             }
         }
 
+    }
+
+    private fun setAdaptersClickListener() {
+        popularMoviesAdapter.setOnItemClickListener {
+            Timber.d("Popular Movies ${it.title} ")
+        }
+        popularTvSeriesAdapter.setOnItemClickListener {
+            Timber.d("Popular TvSeries ${it.name} ")
+        }
+        topRatedMoviesAdapter.setOnItemClickListener {
+            Timber.d("TopRated Movies ${it.title} ")
+        }
     }
 
     override fun onDestroyView() {

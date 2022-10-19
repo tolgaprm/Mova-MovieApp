@@ -13,6 +13,8 @@ abstract class BaseMovieAndTvRecyclerAdapter<T : Any>(
 ) : PagingDataAdapter<
         T, BaseMovieAndTvRecyclerAdapter.MovieViewHolder>(DiffUtilCallBack<T>()) {
 
+    var itemClickListener: (T) -> Unit = {}
+
     class MovieViewHolder(
         val binding: MovieRowBinding,
     ) : RecyclerView.ViewHolder(binding.root)
@@ -33,6 +35,9 @@ abstract class BaseMovieAndTvRecyclerAdapter<T : Any>(
         )
     }
 
+    fun setOnItemClickListener(listener: (T) -> Unit) {
+        itemClickListener = listener
+    }
 
     var genreList: List<Genre> = emptyList()
 
