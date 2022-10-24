@@ -17,4 +17,11 @@ object Constants {
     const val PREFERENCES_NAME = "mova_preferences_name"
 
     const val LOCALE_KEY = "locale_key"
+
+    val supportedLanguages = listOf(
+        "EN",
+        "DE",
+        "FR",
+        "TR"
+    )
 }

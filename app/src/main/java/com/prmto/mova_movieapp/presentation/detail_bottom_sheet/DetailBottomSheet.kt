@@ -49,8 +49,6 @@ class DetailBottomSheet : BottomSheetDialogFragment() {
         setupButtonClickListeners()
 
         binding?.apply {
-            tvOverview.movementMethod = ScrollingMovementMethod()
-
             if (movie != null) {
 
                 tvName.text = movie.title
@@ -76,6 +74,8 @@ class DetailBottomSheet : BottomSheetDialogFragment() {
                     requireContext().getString(R.string.detail_bottom_sheet_tv_info)
 
             }
+
+            tvOverview.movementMethod = ScrollingMovementMethod()
         }
 
 
