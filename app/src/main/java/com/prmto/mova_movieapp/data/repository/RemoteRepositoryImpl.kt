@@ -20,11 +20,23 @@ class RemoteRepositoryImpl @Inject constructor(
     private val tmdbApi: TMDBApi
 ) : RemoteRepository {
     override suspend fun getMovieGenreList(language: String): GenreList {
-        return tmdbApi.getMovieGenreList(language = language)
+
+        return try {
+            tmdbApi.getMovieGenreList(language = language)
+        } catch (e: Exception) {
+            throw e
+        }
+
+
     }
 
     override suspend fun getTvGenreList(language: String): GenreList {
-        return tmdbApi.getTvGenreList(language = language)
+        return try {
+            tmdbApi.getTvGenreList(language = language)
+        } catch (e: Exception) {
+            throw e
+        }
+
     }
 
     override fun getNowPlayingMovies(

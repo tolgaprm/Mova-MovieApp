@@ -137,7 +137,6 @@
         android:layout_marginTop="@dimen/small_padding"
         android:text="@string/share"
         app:layout_constraintEnd_toEndOf="@+id/ibShare"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/ibShare"
         app:layout_constraintTop_toBottomOf="@+id/ibShare" />
 

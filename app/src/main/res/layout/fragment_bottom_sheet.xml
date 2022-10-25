@@ -96,6 +96,7 @@
         app:layout_constraintTop_toBottomOf="@+id/categoriesChipGroup" />
 
     <HorizontalScrollView
+        android:id="@+id/horizontalScrollView2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
@@ -103,7 +104,44 @@
         app:layout_constraintTop_toBottomOf="@+id/genreText">
 
         <com.google.android.material.chip.ChipGroup
-            android:id="@+id/as"
+            android:id="@+id/genreListGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingHorizontal="@dimen/large_padding"
+            android:paddingVertical="@dimen/small_padding"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/categoriesText"
+            app:layout_constraintTop_toBottomOf="@id/categoriesText"
+            app:singleLine="true">
+
+        </com.google.android.material.chip.ChipGroup>
+
+
+    </HorizontalScrollView>
+
+    <TextView
+        android:id="@+id/time"
+        style="@style/Mova.Title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/time_periods"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView2" />
+
+    <HorizontalScrollView
+        android:id="@+id/horizontalScrollView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/time"
+        app:layout_constraintTop_toBottomOf="@+id/time">
+
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/timeChipGroup"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:paddingHorizontal="@dimen/large_padding"
@@ -118,5 +156,6 @@
 
 
     </HorizontalScrollView>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -7,20 +7,34 @@ import androidx.paging.cachedIn
 import com.prmto.mova_movieapp.domain.models.GenreList
 import com.prmto.mova_movieapp.domain.models.Movie
 import com.prmto.mova_movieapp.domain.models.TvSeries
+import com.prmto.mova_movieapp.domain.repository.ConnectivityObserver
 import com.prmto.mova_movieapp.domain.use_case.HomeUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val homeUseCases: HomeUseCases
+    private val homeUseCases: HomeUseCases,
+    private val networkConnectivityObserver: ConnectivityObserver
 ) : ViewModel() {
 
     private val _language = MutableStateFlow("")
     val language: StateFlow<String> get() = _language
+
+
+    private val _showSnackBarNoInternetConnectivity = MutableSharedFlow<String>()
+    val showSnackBarNoInternetConnectivity: SharedFlow<String> get() = _showSnackBarNoInternetConnectivity
+
+    fun observeNetworkConnectivity() = networkConnectivityObserver.observe()
+
+
+    fun showSnackbar() {
+        viewModelScope.launch {
+            _showSnackBarNoInternetConnectivity.emit("No Internet Connection")
+        }
+    }
 
 
     fun getLanguage(): Flow<String> {

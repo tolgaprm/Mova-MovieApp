@@ -1,7 +1,5 @@
 package com.prmto.mova_movieapp.presentation.home
 
-import android.content.Context.CONNECTIVITY_SERVICE
-import android.net.ConnectivityManager
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
@@ -10,10 +8,13 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.snackbar.Snackbar
 import com.prmto.mova_movieapp.R
 import com.prmto.mova_movieapp.databinding.FragmentHomeBinding
+import com.prmto.mova_movieapp.domain.repository.ConnectivityObserver
 import com.prmto.mova_movieapp.presentation.home.recyler.*
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -39,16 +40,38 @@ class HomeFragment @Inject constructor(
         val binding = FragmentHomeBinding.bind(view)
         _binding = binding
 
-
-        val connMgr =
-            requireContext().getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager
-
-        if (connMgr.activeNetwork != null) {
-            observeData()
-        }
         setupRecyclerAdapters()
+        observeNetworkConnectivity()
         setAdaptersClickListener()
 
+    }
+
+    private fun observeNetworkConnectivity() {
+        var job: Job? = null
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                launch {
+                    viewModel.observeNetworkConnectivity().collectLatest { it ->
+                        if (it == ConnectivityObserver.Status.Unavaliable || it == ConnectivityObserver.Status.Lost) {
+                            viewModel.showSnackbar()
+                            job?.cancel()
+                        } else if (it == ConnectivityObserver.Status.Avaliable) {
+                            job?.cancel()
+                            job = observeData()
+                        }
+                    }
+                }
+
+                launch {
+                    viewModel.showSnackBarNoInternetConnectivity.collectLatest {
+                        if (it.isNotEmpty()) {
+                            Snackbar.make(requireView(), it, Snackbar.LENGTH_SHORT).show()
+                        }
+                    }
+                }
+            }
+
+        }
 
     }
 
@@ -67,7 +90,7 @@ class HomeFragment @Inject constructor(
 
     }
 
-    private fun observeData() {
+    private fun observeData() =
         viewLifecycleOwner.lifecycleScope.launch {
 
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -127,10 +150,12 @@ class HomeFragment @Inject constructor(
                         topRatedTvSeriesAdapter.submitData(pagingData)
                     }
                 }
+
+
             }
 
         }
-    }
+
 
     private fun setAdaptersClickListener() {
 

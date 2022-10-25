@@ -2,6 +2,9 @@ package com.prmto.mova_movieapp.presentation.util
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentFactory
+import com.prmto.mova_movieapp.presentation.detail_bottom_sheet.DetailBottomSheet
+import com.prmto.mova_movieapp.presentation.explore.ExploreFragment
+import com.prmto.mova_movieapp.presentation.filter_bottom_sheet.FilterBottomSheetFragment
 import com.prmto.mova_movieapp.presentation.home.HomeFragment
 import com.prmto.mova_movieapp.presentation.home.recyler.*
 import javax.inject.Inject
@@ -23,6 +26,9 @@ class FragmentFactory @Inject constructor(
                 popularTvSeriesAdapter = popularTvSeriesAdapter,
                 topRatedTvSeriesAdapter = topRatedTvSeriesAdapter
             )
+            ExploreFragment::class.java.name -> ExploreFragment()
+            DetailBottomSheet::class.java.name -> DetailBottomSheet()
+            FilterBottomSheetFragment::class.java.name -> FilterBottomSheetFragment()
 
             else -> super.instantiate(classLoader, className)
         }

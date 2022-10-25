@@ -25,4 +25,6 @@
     <string name="watchList">Watch List</string>
     <string name="detail_bottom_sheet_movie_info">Details and More</string>
     <string name="detail_bottom_sheet_tv_info">Episodes and More</string>
+    <string name="time_periods">Time/Periods</string>
+    <string name="retry">Retry</string>
 </resources>

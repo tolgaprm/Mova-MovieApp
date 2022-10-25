@@ -3,7 +3,9 @@ package com.prmto.mova_movieapp.di
 import android.content.Context
 import com.prmto.mova_movieapp.data.remote.TMDBApi
 import com.prmto.mova_movieapp.data.repository.DataOperationsImpl
+import com.prmto.mova_movieapp.data.repository.NetworkConnectivityObserver
 import com.prmto.mova_movieapp.data.repository.RemoteRepositoryImpl
+import com.prmto.mova_movieapp.domain.repository.ConnectivityObserver
 import com.prmto.mova_movieapp.domain.repository.DataStoreOperations
 import com.prmto.mova_movieapp.domain.repository.RemoteRepository
 import com.prmto.mova_movieapp.domain.use_case.HomeUseCases
@@ -56,6 +58,14 @@ object RepositoryModule {
         @ApplicationContext context: Context
     ): DataStoreOperations {
         return DataOperationsImpl(context = context)
+    }
+
+    @Provides
+    @Singleton
+    fun provideConnectivityManager(
+        @ApplicationContext context: Context
+    ): ConnectivityObserver {
+      return  NetworkConnectivityObserver(context)
     }
 
 }
