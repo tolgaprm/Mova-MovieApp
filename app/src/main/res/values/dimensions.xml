@@ -27,6 +27,7 @@
     <dimen name="movie_row_image_height">200dp</dimen>
 
     <dimen name="edit_text_height">60dp</dimen>
+    <dimen name="filter_button_size">60dp</dimen>
 
     <dimen name="iconSizeLarge">40dp</dimen>
     <dimen name="iconSizeMedium">30dp</dimen>

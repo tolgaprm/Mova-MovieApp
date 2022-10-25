@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="@drawable/filter_bottom_sheet_back">
 
     <com.google.android.material.divider.MaterialDivider
@@ -44,10 +44,11 @@
         style="@style/Mova.Title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/medium_margin"
+        android:layout_marginTop="@dimen/large_margin"
         android:text="@string/categories"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/materialDivider2" />
 
@@ -156,6 +157,98 @@
 
 
     </HorizontalScrollView>
+
+    <TextView
+        android:id="@+id/sort"
+        style="@style/Mova.Title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/sort"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView" />
+
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/sortChipGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="@dimen/large_padding"
+        android:paddingVertical="@dimen/small_padding"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/sort"
+        app:layout_constraintTop_toBottomOf="@+id/sort"
+        app:singleLine="true"
+        app:singleSelection="true">
+
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/popularity"
+            style="@style/Mova.Chip.Choice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/popularity"
+            app:chipStrokeColor="@color/red"
+            app:chipStrokeWidth="2dp" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/latestRelease"
+            style="@style/Mova.Chip.Choice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/latest_release"
+            app:chipStrokeColor="@color/red"
+            app:chipStrokeWidth="2dp" />
+
+
+    </com.google.android.material.chip.ChipGroup>
+
+
+    <com.google.android.material.divider.MaterialDivider
+        android:id="@+id/materialDivider3"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginHorizontal="@dimen/large_margin"
+        android:layout_marginTop="@dimen/large_margin"
+        android:background="@drawable/gray_large_shape"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sortChipGroup" />
+
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/button"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/filter_button_size"
+        android:layout_margin="@dimen/large_margin"
+        android:backgroundTint="@color/reset_button_background"
+        android:text="@string/reset"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textColor="@color/reset_button_text"
+        app:cornerRadius="@dimen/shape_large"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/button2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/materialDivider3"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/button2"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/filter_button_size"
+        android:textAlignment="center"
+        android:layout_margin="@dimen/large_margin"
+        android:backgroundTint="@color/red"
+        android:text="@string/apply"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        app:cornerRadius="@dimen/shape_large"
+        app:layout_constraintBottom_toBottomOf="@+id/button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/button"
+        app:layout_constraintTop_toTopOf="@+id/button" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

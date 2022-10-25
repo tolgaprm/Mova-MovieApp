@@ -27,4 +27,9 @@
     <string name="detail_bottom_sheet_tv_info">Episodes and More</string>
     <string name="time_periods">Time/Periods</string>
     <string name="retry">Retry</string>
+    <string name="sort">Sort</string>
+    <string name="popularity">Popularity</string>
+    <string name="latest_release">Latest Release</string>
+    <string name="reset">Reset</string>
+    <string name="apply">Apply</string>
 </resources>
