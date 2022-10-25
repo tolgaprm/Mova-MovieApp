@@ -8,6 +8,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import coil.ImageLoader
 import com.google.android.material.snackbar.Snackbar
 import com.prmto.mova_movieapp.R
 import com.prmto.mova_movieapp.databinding.FragmentHomeBinding
@@ -20,17 +21,19 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class HomeFragment @Inject constructor(
-    private val nowPlayingAdapter: NowPlayingRecyclerAdapter,
-    private val popularMoviesAdapter: PopularMoviesAdapter,
-    private val topRatedMoviesAdapter: TopRatedMoviesAdapter,
-    private val popularTvSeriesAdapter: PopularTvSeriesAdapter,
-    private val topRatedTvSeriesAdapter: TopRatedTvSeriesAdapter
-) : Fragment(R.layout.fragment_home) {
+class HomeFragment: Fragment(R.layout.fragment_home) {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding
 
+    @Inject
+    lateinit var imageLoader: ImageLoader
+
+    private val nowPlayingAdapter: NowPlayingRecyclerAdapter by lazy { NowPlayingRecyclerAdapter(imageLoader) }
+    private val popularMoviesAdapter: PopularMoviesAdapter by lazy { PopularMoviesAdapter(imageLoader) }
+    private val topRatedMoviesAdapter: TopRatedMoviesAdapter by lazy { TopRatedMoviesAdapter(imageLoader) }
+    private val popularTvSeriesAdapter: PopularTvSeriesAdapter by lazy { PopularTvSeriesAdapter(imageLoader) }
+    private val topRatedTvSeriesAdapter: TopRatedTvSeriesAdapter by lazy { TopRatedTvSeriesAdapter(imageLoader) }
 
     private val viewModel: HomeViewModel by viewModels()
 
