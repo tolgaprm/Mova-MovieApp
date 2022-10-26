@@ -19,7 +19,7 @@ android {
         versionCode 1
         versionName "1.0"
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "com.prmto.mova_movieapp.HiltTestRunner"
 
         Properties properties = new Properties()
         properties.load(project.rootProject.file("local.properties").newDataInputStream())
@@ -123,7 +123,7 @@ dependencies {
     androidTestImplementation 'org.mockito:mockito-android:4.5.1'
     androidTestImplementation 'com.google.dagger:hilt-android-testing:2.38.1'
     kaptAndroidTest "com.google.dagger:hilt-android-compiler:$hilt_version"
-    debugImplementation 'androidx.fragment:fragment-testing:1.5.3'
-    androidTestImplementation 'androidx.test.espresso:espresso-contrib:3.4.0'
+    debugImplementation 'androidx.fragment:fragment-testing:1.5.4'
+  //  androidTestImplementation 'androidx.test.espresso:espresso-contrib:3.4.0'
 
 }

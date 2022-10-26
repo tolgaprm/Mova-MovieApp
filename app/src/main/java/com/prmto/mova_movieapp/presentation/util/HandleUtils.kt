@@ -11,12 +11,21 @@ object HandleUtils {
 
     fun handleGenreText(movieGenreList: List<Genre>, movie: Movie): String {
         var genreNames = ""
+
+        if (movie.genreIds.isEmpty()) {
+            return ""
+        }
+
         movieGenreList.forEach { genre ->
             movie.genreIds.forEach {
                 if (it == genre.id) {
                     genreNames += "${genre.name}, "
                 }
             }
+        }
+
+        if (genreNames.isNotEmpty()) {
+            return genreNames.subSequence(0, genreNames.length - 2).toString()
         }
 
         return genreNames

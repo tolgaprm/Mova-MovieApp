@@ -8,7 +8,7 @@ import org.junit.Test
 class HandleUtilsTest {
 
 
-    val movieGenreList = listOf<Genre>(
+    private val movieGenreList = listOf<Genre>(
         Genre(id = 1, "Action"),
         Genre(id = 2, "Drama"),
         Genre(id = 3, "Animation"),
@@ -49,8 +49,31 @@ class HandleUtilsTest {
                 movieGenreList = movieGenreList,
                 movie = movie
             )
-        ).matches("Drama, Animation, Crime, ")
+        ).matches("Drama, Animation, Crime")
 
+    }
+
+    @Test
+    fun `If the movie genreList is empty, return empty string`(){
+        val movie = Movie(
+            id = 1,
+            overview = "",
+            title = "",
+            originalTitle = "",
+            posterPath = "",
+            backdropPath = "",
+            releaseDate = "",
+            genreIds = listOf(),
+            voteAverage = 0.0,
+            voteCount = 1
+        )
+
+        assertThat(
+            HandleUtils.handleGenreText(
+                movieGenreList = movieGenreList,
+                movie = movie
+            )
+        ).isEmpty()
     }
 
     @Test
@@ -75,7 +98,7 @@ class HandleUtilsTest {
                 movieGenreList = movieGenreList,
                 movie = movie
             )
-        ).matches("")
+        ).isEmpty()
 
     }
 

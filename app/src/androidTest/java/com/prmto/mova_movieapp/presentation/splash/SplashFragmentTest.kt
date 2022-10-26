@@ -2,30 +2,39 @@ package com.prmto.mova_movieapp.presentation.splash
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.core.view.isVisible
-import androidx.fragment.app.testing.FragmentScenario
-import androidx.fragment.app.testing.launchFragmentInContainer
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import com.prmto.mova_movieapp.R
+import com.prmto.mova_movieapp.launchFragmentInHiltContainer
+import dagger.hilt.android.testing.HiltAndroidRule
+import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.junit.runners.JUnit4
+import org.mockito.Mockito
 
 @ExperimentalCoroutinesApi
-@RunWith(JUnit4::class)
+@HiltAndroidTest
 class SplashFragmentTest {
 
     @get:Rule
     var instantTaskExecutorRule = InstantTaskExecutorRule()
 
-    private lateinit var scenario: FragmentScenario<SplashFragment>
+    @get:Rule
+    val hiltRule = HiltAndroidRule(this)
+
+    lateinit var navController: NavController
 
     @Before
     fun setup() {
-        scenario = launchFragmentInContainer<SplashFragment>()
+        hiltRule.inject()
+        navController = Mockito.mock(NavController::class.java)
+        launchFragmentInHiltContainer<SplashFragment> {
+            Navigation.setViewNavController(requireView(), navController)
+        }
     }
 
     @Test
