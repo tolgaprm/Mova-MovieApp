@@ -142,7 +142,7 @@
         app:layout_constraintTop_toBottomOf="@+id/time">
 
         <com.google.android.material.chip.ChipGroup
-            android:id="@+id/timeChipGroup"
+            android:id="@+id/periodChipGroup"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:paddingHorizontal="@dimen/large_padding"
@@ -172,7 +172,7 @@
 
     <com.google.android.material.chip.ChipGroup
         android:id="@+id/sortChipGroup"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:paddingHorizontal="@dimen/large_padding"
         android:paddingVertical="@dimen/small_padding"
@@ -218,7 +218,7 @@
 
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/button"
+        android:id="@+id/btnReset"
         android:layout_width="0dp"
         android:layout_height="@dimen/filter_button_size"
         android:layout_margin="@dimen/large_margin"
@@ -245,10 +245,10 @@
         android:textAllCaps="false"
         android:textColor="@color/white"
         app:cornerRadius="@dimen/shape_large"
-        app:layout_constraintBottom_toBottomOf="@+id/button"
+        app:layout_constraintBottom_toBottomOf="@+id/btnReset"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/button"
-        app:layout_constraintTop_toTopOf="@+id/button" />
+        app:layout_constraintStart_toEndOf="@+id/btnReset"
+        app:layout_constraintTop_toTopOf="@+id/btnReset" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

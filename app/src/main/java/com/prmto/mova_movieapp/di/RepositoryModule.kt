@@ -1,6 +1,8 @@
 package com.prmto.mova_movieapp.di
 
 import android.content.Context
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
 import com.prmto.mova_movieapp.data.remote.TMDBApi
 import com.prmto.mova_movieapp.data.repository.DataOperationsImpl
 import com.prmto.mova_movieapp.data.repository.NetworkConnectivityObserver
@@ -55,9 +57,9 @@ object RepositoryModule {
     @Provides
     @Singleton
     fun provideDataStoreOperations(
-        @ApplicationContext context: Context
+        dataStore: DataStore<Preferences>
     ): DataStoreOperations {
-        return DataOperationsImpl(context = context)
+        return DataOperationsImpl(dataStore = dataStore)
     }
 
     @Provides
@@ -65,7 +67,7 @@ object RepositoryModule {
     fun provideConnectivityManager(
         @ApplicationContext context: Context
     ): ConnectivityObserver {
-      return  NetworkConnectivityObserver(context)
+        return NetworkConnectivityObserver(context)
     }
 
 }

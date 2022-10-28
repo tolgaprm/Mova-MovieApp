@@ -2,18 +2,18 @@ package com.prmto.mova_movieapp.presentation.explore
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.prmto.mova_movieapp.data.models.enums.Categories
+import com.prmto.mova_movieapp.data.models.enums.Category
+import com.prmto.mova_movieapp.data.models.enums.Sort
 import com.prmto.mova_movieapp.domain.models.Genre
+import com.prmto.mova_movieapp.domain.models.Period
 import com.prmto.mova_movieapp.domain.use_case.get_locale.GetLocaleUseCase
 import com.prmto.mova_movieapp.domain.use_case.get_movie_genre_list.GetMovieGenreListUseCase
 import com.prmto.mova_movieapp.domain.use_case.get_tv_genre_list.GetTvGenreListUseCase
+import com.prmto.mova_movieapp.presentation.filter_bottom_sheet.state.FilterBottomState
 import com.prmto.mova_movieapp.util.Constants.DEFAULT_LANGUAGE
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.text.SimpleDateFormat
@@ -35,27 +35,76 @@ class ExploreViewModel @Inject constructor(
     private val _genreList = MutableStateFlow<List<Genre>>(emptyList())
     val genreList: StateFlow<List<Genre>> get() = _genreList
 
-    private val _categoriesState = MutableStateFlow(Categories.MOVIE)
-    val categoriesState: StateFlow<Categories> = _categoriesState
+    private val _filterBottomSheetState = MutableStateFlow(FilterBottomState())
+    val filterBottomSheetState: StateFlow<FilterBottomState> get() = _filterBottomSheetState
 
-    private val _periodsList = MutableStateFlow<List<Genre>>(emptyList())
-    val periodsList: StateFlow<List<Genre>> get() = _periodsList
+    private val _periodState = MutableStateFlow<List<Period>>(emptyList())
+    val periodState: StateFlow<List<Period>> get() = _periodState
 
-    fun setCategoriesState(value: Categories) {
-        _categoriesState.value = value
-    }
+    private val _isDownloadGenreOptions = MutableSharedFlow<Boolean>()
+    val isError: SharedFlow<Boolean> = _isDownloadGenreOptions
 
     init {
-
         setupTimePeriods()
-
         viewModelScope.launch(Dispatchers.IO) {
             getLocale().collectLatest {
                 _language.value = it
             }
         }
+    }
 
+    fun setCategoryState(newCategory: Category) {
+        if (newCategory == _filterBottomSheetState.value.categoryState) {
+            return
+        }
+        _filterBottomSheetState.update {
+            it.copy(
+                categoryState = newCategory
+            )
+        }
+        resetSelectedGenreIdsState()
 
+    }
+
+    private fun resetSelectedGenreIdsState() {
+        _filterBottomSheetState.update {
+            it.copy(
+                checkedGenreIdsState = emptyList()
+            )
+        }
+    }
+
+    fun setGenreList(checkedIds: List<Int>) {
+
+        resetSelectedGenreIdsState()
+
+        _filterBottomSheetState.update {
+            it.copy(
+                checkedGenreIdsState = checkedIds
+            )
+        }
+    }
+
+    fun setCheckedSortState(checkedSort: Sort) {
+        _filterBottomSheetState.update {
+            it.copy(
+                checkedSortState = checkedSort
+            )
+        }
+    }
+
+    fun setCheckedPeriods(checkedPeriodId: Int) {
+        _filterBottomSheetState.update {
+            it.copy(
+                checkedPeriodId = checkedPeriodId
+            )
+        }
+    }
+
+    fun resetFilterBottomState() {
+        _filterBottomSheetState.update {
+            FilterBottomState()
+        }
     }
 
     private fun getLocale(): Flow<String> {
@@ -66,19 +115,20 @@ class ExploreViewModel @Inject constructor(
 
         viewModelScope.launch {
             try {
-                _genreList.value = if (categoriesState.value == Categories.TV) {
-                    tvGenreListUseCase.invoke(_language.value.lowercase()).genres
-                } else {
-                    movieGenreListUseCase.invoke(language = _language.value).genres
-                }
+                _genreList.value =
+                    if (_filterBottomSheetState.value.categoryState == Category.TV) {
+                        tvGenreListUseCase.invoke(_language.value.lowercase()).genres
+                    } else {
+                        movieGenreListUseCase.invoke(language = _language.value).genres
+                    }
             } catch (e: Exception) {
+                _isDownloadGenreOptions.emit(true)
                 Timber.e("Didn't download genreList $e")
             }
         }
 
 
     }
-
 
     private fun setupTimePeriods() {
 
@@ -96,10 +146,13 @@ class ExploreViewModel @Inject constructor(
             year--
         }
 
-        _periodsList.value = periods.mapIndexed { index, s ->
-            Genre(id = index, name = s)
+        _periodState.value = periods.mapIndexed { index, s ->
+            Period(id = index, time = s)
         }
+
     }
+
 }
+
 
 

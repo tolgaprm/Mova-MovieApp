@@ -32,4 +32,6 @@
     <string name="latest_release">Latest Release</string>
     <string name="reset">Reset</string>
     <string name="apply">Apply</string>
+    <string name="error_didnt_download">Didn\'t download genre options. PLease check your internet connection</string>
+    <string name="all_periods">All Periods</string>
 </resources>
