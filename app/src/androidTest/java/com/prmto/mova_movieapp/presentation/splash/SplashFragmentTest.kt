@@ -2,8 +2,9 @@ package com.prmto.mova_movieapp.presentation.splash
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.core.view.isVisible
-import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import androidx.navigation.testing.TestNavHostController
+import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import com.prmto.mova_movieapp.R
@@ -14,7 +15,6 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.mockito.Mockito
 
 @ExperimentalCoroutinesApi
 @HiltAndroidTest
@@ -26,14 +26,18 @@ class SplashFragmentTest {
     @get:Rule
     val hiltRule = HiltAndroidRule(this)
 
-    lateinit var navController: NavController
+    private lateinit var navController: TestNavHostController
 
     @Before
     fun setup() {
         hiltRule.inject()
-        navController = Mockito.mock(NavController::class.java)
+        navController = TestNavHostController(
+            ApplicationProvider.getApplicationContext()
+        )
+
         launchFragmentInHiltContainer<SplashFragment> {
             Navigation.setViewNavController(requireView(), navController)
+            navController.setGraph(R.navigation.nav_graph)
         }
     }
 
@@ -51,5 +55,4 @@ class SplashFragmentTest {
             view.isVisible
         }
     }
-
 }
