@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.flow
 
 class FakeDataStoreOperations : DataStoreOperations {
 
-    private var locale: String = ""
+    private var locale: String = "tr"
 
     override suspend fun updateCurrentLocale(locale: String) {
         this.locale = locale
@@ -14,7 +14,7 @@ class FakeDataStoreOperations : DataStoreOperations {
 
     override fun getLocale(): Flow<String> {
         return flow {
-            locale
+            emit(locale)
         }
     }
 }

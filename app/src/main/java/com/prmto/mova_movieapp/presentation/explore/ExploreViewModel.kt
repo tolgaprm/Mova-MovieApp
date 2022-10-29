@@ -111,15 +111,19 @@ class ExploreViewModel @Inject constructor(
         return getLocaleUseCase.invoke()
     }
 
-    fun getGenreListByCategoriesState() {
+    fun setLocale(locale: String) {
+        _language.value = locale
+    }
+
+    fun getGenreListByCategoriesState(language: String) {
 
         viewModelScope.launch {
             try {
                 _genreList.value =
                     if (_filterBottomSheetState.value.categoryState == Category.TV) {
-                        tvGenreListUseCase.invoke(_language.value.lowercase()).genres
+                        tvGenreListUseCase.invoke(language).genres
                     } else {
-                        movieGenreListUseCase.invoke(language = _language.value).genres
+                        movieGenreListUseCase.invoke(language).genres
                     }
             } catch (e: Exception) {
                 _isDownloadGenreOptions.emit(true)

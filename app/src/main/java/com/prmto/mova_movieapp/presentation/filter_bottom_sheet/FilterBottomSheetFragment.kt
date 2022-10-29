@@ -55,7 +55,7 @@ class FilterBottomSheetFragment() : BottomSheetDialogFragment() {
             viewModel.setCategoryState(category)
 
             // GetGenreList by categories state and language
-            viewModel.getGenreListByCategoriesState()
+            viewModel.getGenreListByCategoriesState(viewModel.language.value)
 
 
         }
@@ -161,6 +161,11 @@ class FilterBottomSheetFragment() : BottomSheetDialogFragment() {
                     }
                 }
 
+                launch {
+                    viewModel.language.collectLatest {
+                        viewModel.setLocale(it)
+                    }
+                }
             }
         }
     }

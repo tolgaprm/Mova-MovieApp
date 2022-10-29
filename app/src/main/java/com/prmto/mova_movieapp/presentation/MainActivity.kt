@@ -42,9 +42,8 @@ class MainActivity : AppCompatActivity() {
             }
 
             binding.bottomBar.isVisible = isVisibleBottomBar
+
         }
-
-
     }
 }
 
