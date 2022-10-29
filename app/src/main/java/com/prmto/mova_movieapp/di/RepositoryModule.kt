@@ -19,6 +19,8 @@ import com.prmto.mova_movieapp.domain.use_case.get_popular_tv_series.GetPopularT
 import com.prmto.mova_movieapp.domain.use_case.get_top_rated_movies.GetTopRatedMoviesUseCase
 import com.prmto.mova_movieapp.domain.use_case.get_top_rated_tv_series.GetTopRatedTvSeriesUseCase
 import com.prmto.mova_movieapp.domain.use_case.get_tv_genre_list.GetTvGenreListUseCase
+import com.prmto.mova_movieapp.util.DefaultDispatchers
+import com.prmto.mova_movieapp.util.DispatchersProvider
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -69,5 +71,11 @@ object RepositoryModule {
     ): ConnectivityObserver {
         return NetworkConnectivityObserver(context)
     }
+
+
+    @Provides
+    @Singleton
+    fun provideDispatchers(): DispatchersProvider =
+        DefaultDispatchers()
 
 }

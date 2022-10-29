@@ -1,6 +1,5 @@
 package com.prmto.mova_movieapp.presentation.splash
 
-import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.core.view.isVisible
 import androidx.navigation.Navigation
 import androidx.navigation.testing.TestNavHostController
@@ -20,8 +19,6 @@ import org.junit.Test
 @HiltAndroidTest
 class SplashFragmentTest {
 
-    @get:Rule
-    var instantTaskExecutorRule = InstantTaskExecutorRule()
 
     @get:Rule
     val hiltRule = HiltAndroidRule(this)

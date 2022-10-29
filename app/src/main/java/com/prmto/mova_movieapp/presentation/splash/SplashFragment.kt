@@ -4,49 +4,42 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.os.ConfigurationCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.prmto.mova_movieapp.R
-
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.*
-import timber.log.Timber
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class SplashFragment : Fragment(R.layout.fragment_splash) {
 
-    private val viewModel: SplashViewModel by viewModels()
+    lateinit var viewModel: SplashViewModel
 
-    private var coroutine: CoroutineScope? = null
-    private var job: Job? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
-
-        coroutine = CoroutineScope(context = Dispatchers.Main)
+        viewModel = ViewModelProvider(this)[SplashViewModel::class.java]
 
         val locale =
             ConfigurationCompat.getLocales(requireContext().resources.configuration)[0]?.country.toString()
-        Timber.d(locale)
-
 
         viewModel.updateLocale(locale = locale)
 
-        job = coroutine?.launch {
-            delay(2000)
-            findNavController().navigate(SplashFragmentDirections.actionToHomeFragment())
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.navigateToHomeFragment()
+                viewModel.isNavigateToHomeFragment.collect {
+                    if (it) {
+                        findNavController().navigate(SplashFragmentDirections.actionToHomeFragment())
+                    }
+                }
+            }
         }
 
 
     }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        job?.cancel()
-        coroutine = null
-    }
-
-
 }
