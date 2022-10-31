@@ -9,6 +9,7 @@ import com.prmto.mova_movieapp.domain.models.Period
 import com.prmto.mova_movieapp.domain.use_case.get_locale.GetLocaleUseCase
 import com.prmto.mova_movieapp.domain.use_case.get_movie_genre_list.GetMovieGenreListUseCase
 import com.prmto.mova_movieapp.domain.use_case.get_tv_genre_list.GetTvGenreListUseCase
+import com.prmto.mova_movieapp.presentation.filter_bottom_sheet.state.FilterBottomState
 import com.prmto.mova_movieapp.repository.FakeDataStoreOperations
 import com.prmto.mova_movieapp.repository.FakeRemoteRepository
 import com.prmto.mova_movieapp.util.MainDispatcherRule
@@ -221,6 +222,21 @@ class ExploreViewModelTest {
 
     }
 
+    @Test
+    fun `filter bottom state, reset bottom state, check default bottom state`() = runTest {
+        viewModel.setCategoryState(Category.TV)
+        viewModel.setCheckedPeriods(3)
+        viewModel.setGenreList(listOf(3, 5, 6, 7, 9))
+        viewModel.setLocale("tr")
+        viewModel.resetFilterBottomState()
+
+        viewModel.filterBottomSheetState.test {
+            val filterState = awaitItem()
+            assertThat(filterState).isEqualTo(FilterBottomState())
+        }
+
+    }
+
     private fun getCheckedGenreIdsState(): List<Int> {
 
         var checkedGenreList = listOf<Int>()
@@ -245,7 +261,7 @@ class ExploreViewModelTest {
         var year = currentYear
 
         periods.add("All Periods")
-        while (year >= 1985) {
+        repeat(35) {
             periods.add(year.toString())
             year--
         }
