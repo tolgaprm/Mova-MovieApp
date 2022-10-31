@@ -12,7 +12,6 @@ import com.prmto.mova_movieapp.domain.use_case.get_tv_genre_list.GetTvGenreListU
 import com.prmto.mova_movieapp.presentation.filter_bottom_sheet.state.FilterBottomState
 import com.prmto.mova_movieapp.util.Constants.DEFAULT_LANGUAGE
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -46,7 +45,7 @@ class ExploreViewModel @Inject constructor(
 
     init {
         setupTimePeriods()
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch() {
             getLocale().collectLatest {
                 _language.value = it
             }
@@ -145,7 +144,7 @@ class ExploreViewModel @Inject constructor(
         var year = formatter.format(calendar.time).toInt()
 
         periods.add("All Periods")
-        repeat(35) {
+        while (year >= 1985) {
             periods.add(year.toString())
             year--
         }

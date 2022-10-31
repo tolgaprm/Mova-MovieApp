@@ -4,6 +4,8 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
 import com.prmto.mova_movieapp.data.models.enums.Category
+import com.prmto.mova_movieapp.data.models.enums.Sort
+import com.prmto.mova_movieapp.domain.models.Period
 import com.prmto.mova_movieapp.domain.use_case.get_locale.GetLocaleUseCase
 import com.prmto.mova_movieapp.domain.use_case.get_movie_genre_list.GetMovieGenreListUseCase
 import com.prmto.mova_movieapp.domain.use_case.get_tv_genre_list.GetTvGenreListUseCase
@@ -15,6 +17,8 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import java.text.SimpleDateFormat
+import java.util.*
 
 @ExperimentalCoroutinesApi
 class ExploreViewModelTest {
@@ -45,7 +49,15 @@ class ExploreViewModelTest {
 
 
     @Test
-    fun `get genre list by Tv Category and language tr, assert genreListWithLanguageTr`() =
+    fun `language state when initialized viewModel then assert language is tr`() = runTest {
+        viewModel.language.test {
+            assertThat(awaitItem()).isEqualTo("tr")
+            cancelAndConsumeRemainingEvents()
+        }
+    }
+
+    @Test
+    fun `get genre list by Tv Category and language tr, check genreListWithLanguageTr`() =
         runTest {
 
             viewModel.setCategoryState(Category.TV)
@@ -69,7 +81,16 @@ class ExploreViewModelTest {
         }
 
     @Test
-    fun `get genre list by Tv Category and language en, assert genreListWithLanguageEn`() =
+    fun `period state when initialized viewModel then check list years from current year to 1985`() =
+        runTest {
+            viewModel.periodState.test {
+                assertThat(awaitItem()).isEqualTo(listFromCurrentYearTo1985())
+                cancelAndConsumeRemainingEvents()
+            }
+        }
+
+    @Test
+    fun `get genre list by Tv Category and language en, check genreListWithLanguageEn`() =
         runTest {
 
             viewModel.setCategoryState(Category.TV)
@@ -95,7 +116,7 @@ class ExploreViewModelTest {
         }
 
     @Test
-    fun `get genre list by Movie Category and language en, assert genreListWithLanguageEn`() =
+    fun `get genre list by Movie Category and language en, check genreListWithLanguageEn`() =
         runTest {
 
             viewModel.setLocale("en")
@@ -119,7 +140,7 @@ class ExploreViewModelTest {
         }
 
     @Test
-    fun `get genre list by Movie Category and language tr, assert genreListWithLanguageTr`() =
+    fun `get genre list by Movie Category and language tr, check genreListWithLanguageTr`() =
         runTest {
 
             viewModel.setLocale("tr")
@@ -164,6 +185,42 @@ class ExploreViewModelTest {
             assertThat(checkedGenreIds).isEqualTo(getCheckedGenreIdsState())
         }
 
+
+    @Test
+    fun `checkedSortState, check the  of the sortState default value is Popularity then update sort state, check is the updated`() =
+        runTest {
+            // SortState is default Popularity
+            viewModel.filterBottomSheetState.test {
+                val sortState = awaitItem().checkedSortState
+                assertThat(sortState).isEqualTo(Sort.Popularity)
+                cancelAndConsumeRemainingEvents()
+            }
+
+            viewModel.setCheckedSortState(Sort.LatestRelease)
+
+            viewModel.filterBottomSheetState.test {
+                val sortState = awaitItem().checkedSortState
+                assertThat(sortState).isEqualTo(Sort.LatestRelease)
+                cancelAndConsumeRemainingEvents()
+            }
+
+        }
+
+    @Test
+    fun `checked period state, set checked period state then check is the`() = runTest {
+
+        val checkedPeriodId = 3
+
+        viewModel.setCheckedPeriods(checkedPeriodId)
+
+        viewModel.filterBottomSheetState.test {
+            val checkedPeriodState = awaitItem().checkedPeriodId
+            assertThat(checkedPeriodState).isEqualTo(checkedPeriodId)
+            cancelAndConsumeRemainingEvents()
+        }
+
+    }
+
     private fun getCheckedGenreIdsState(): List<Int> {
 
         var checkedGenreList = listOf<Int>()
@@ -175,6 +232,29 @@ class ExploreViewModelTest {
             }
         }
         return checkedGenreList
+    }
+
+    private fun listFromCurrentYearTo1985(): List<Period> {
+
+        val periods = mutableListOf<String>()
+        val periodList = mutableListOf<Period>()
+
+        val formatter = SimpleDateFormat("y", Locale.getDefault())
+        val calendar = Calendar.getInstance()
+        val currentYear = formatter.format(calendar.time).toInt()
+        var year = currentYear
+
+        periods.add("All Periods")
+        while (year >= 1985) {
+            periods.add(year.toString())
+            year--
+        }
+
+        periods.mapIndexed { index, s ->
+            periodList.add(Period(index, s))
+        }
+
+        return periodList
     }
 
 }
