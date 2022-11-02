@@ -65,4 +65,5 @@ object HandleUtils {
 
         return "${divide.toInt()}.$voteCountText k"
     }
+
 }

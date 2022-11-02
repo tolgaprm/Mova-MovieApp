@@ -10,7 +10,10 @@ import com.prmto.mova_movieapp.data.repository.RemoteRepositoryImpl
 import com.prmto.mova_movieapp.domain.repository.ConnectivityObserver
 import com.prmto.mova_movieapp.domain.repository.DataStoreOperations
 import com.prmto.mova_movieapp.domain.repository.RemoteRepository
+import com.prmto.mova_movieapp.domain.use_case.ExploreUseCases
 import com.prmto.mova_movieapp.domain.use_case.HomeUseCases
+import com.prmto.mova_movieapp.domain.use_case.discover_movie.DiscoverMovieUseCase
+import com.prmto.mova_movieapp.domain.use_case.discover_tv.DiscoverTvUseCase
 import com.prmto.mova_movieapp.domain.use_case.get_locale.GetLocaleUseCase
 import com.prmto.mova_movieapp.domain.use_case.get_movie_genre_list.GetMovieGenreListUseCase
 import com.prmto.mova_movieapp.domain.use_case.get_now_playing_movies.GetNowPlayingMoviesUseCase
@@ -53,6 +56,21 @@ object RepositoryModule {
             getTopRatedMoviesUseCase = GetTopRatedMoviesUseCase(remoteRepository),
             getPopularTvSeries = GetPopularTvSeries(remoteRepository),
             getTopRatedTvSeriesUseCase = GetTopRatedTvSeriesUseCase(remoteRepository)
+        )
+    }
+
+    @Provides
+    @Singleton
+    fun provideExploreUseCases(
+        remoteRepository: RemoteRepository,
+        dataStoreOperations: DataStoreOperations
+    ): ExploreUseCases {
+        return ExploreUseCases(
+            tvGenreListUseCase = GetTvGenreListUseCase(remoteRepository),
+            movieGenreListUseCase = GetMovieGenreListUseCase(remoteRepository),
+            getLocaleUseCase = GetLocaleUseCase(dataStoreOperations),
+            discoverMovieUseCase = DiscoverMovieUseCase(remoteRepository),
+            discoverTvUseCase = DiscoverTvUseCase(remoteRepository)
         )
     }
 

@@ -2,17 +2,17 @@ package com.prmto.mova_movieapp.presentation.explore
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
 import com.prmto.mova_movieapp.data.models.enums.Category
 import com.prmto.mova_movieapp.data.models.enums.Sort
 import com.prmto.mova_movieapp.domain.models.Genre
+import com.prmto.mova_movieapp.domain.models.Movie
 import com.prmto.mova_movieapp.domain.models.Period
-import com.prmto.mova_movieapp.domain.use_case.get_locale.GetLocaleUseCase
-import com.prmto.mova_movieapp.domain.use_case.get_movie_genre_list.GetMovieGenreListUseCase
-import com.prmto.mova_movieapp.domain.use_case.get_tv_genre_list.GetTvGenreListUseCase
+import com.prmto.mova_movieapp.domain.models.TvSeries
+import com.prmto.mova_movieapp.domain.use_case.ExploreUseCases
 import com.prmto.mova_movieapp.presentation.filter_bottom_sheet.state.FilterBottomState
 import com.prmto.mova_movieapp.util.Constants.DEFAULT_LANGUAGE
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -23,28 +23,29 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ExploreViewModel @Inject constructor(
-    private val tvGenreListUseCase: GetTvGenreListUseCase,
-    private val movieGenreListUseCase: GetMovieGenreListUseCase,
-    private val getLocaleUseCase: GetLocaleUseCase
+    private val exploreUseCases: ExploreUseCases
 ) : ViewModel() {
 
 
     private val _language = MutableStateFlow<String>(DEFAULT_LANGUAGE)
-    val language: StateFlow<String> get() = _language
+    val language = _language.asStateFlow()
 
     private val _genreList = MutableStateFlow<List<Genre>>(emptyList())
-    val genreList: StateFlow<List<Genre>> get() = _genreList
+    val genreList = _genreList.asStateFlow()
 
     private val _filterBottomSheetState = MutableStateFlow(FilterBottomState())
-    val filterBottomSheetState: StateFlow<FilterBottomState> get() = _filterBottomSheetState
+    val filterBottomSheetState = _filterBottomSheetState.asStateFlow()
 
     private val _periodState = MutableStateFlow<List<Period>>(emptyList())
-    val periodState: StateFlow<List<Period>> get() = _periodState
+    val periodState = _periodState.asStateFlow()
 
     private val _isDownloadGenreOptions = MutableSharedFlow<Boolean>()
-    val isError: SharedFlow<Boolean> = _isDownloadGenreOptions
+    val isDownloadGenreOptions = _isDownloadGenreOptions.asSharedFlow()
+
 
     init {
+
+
         setupTimePeriods()
         viewModelScope.launch() {
             getLocale().collectLatest {
@@ -52,6 +53,7 @@ class ExploreViewModel @Inject constructor(
             }
         }
     }
+
 
     fun setCategoryState(newCategory: Category) {
         if (newCategory == _filterBottomSheetState.value.categoryState) {
@@ -108,7 +110,7 @@ class ExploreViewModel @Inject constructor(
     }
 
     private fun getLocale(): Flow<String> {
-        return getLocaleUseCase.invoke()
+        return exploreUseCases.getLocaleUseCase.invoke()
     }
 
     fun setLocale(locale: String) {
@@ -121,9 +123,9 @@ class ExploreViewModel @Inject constructor(
             try {
                 _genreList.value =
                     if (_filterBottomSheetState.value.categoryState == Category.TV) {
-                        tvGenreListUseCase.invoke(language).genres
+                        exploreUseCases.tvGenreListUseCase.invoke(language).genres
                     } else {
-                        movieGenreListUseCase.invoke(language).genres
+                        exploreUseCases.movieGenreListUseCase.invoke(language).genres
                     }
             } catch (e: Exception) {
                 _isDownloadGenreOptions.emit(true)
@@ -131,8 +133,9 @@ class ExploreViewModel @Inject constructor(
             }
         }
 
-
     }
+
+
 
     private fun setupTimePeriods() {
 

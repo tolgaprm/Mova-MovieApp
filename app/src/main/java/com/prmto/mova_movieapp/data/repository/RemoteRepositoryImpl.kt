@@ -5,6 +5,8 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.prmto.mova_movieapp.data.models.enums.MoviesApiFunction
 import com.prmto.mova_movieapp.data.models.enums.TvSeriesApiFunction
+import com.prmto.mova_movieapp.data.paging_source.DiscoverMoviePagingSource
+import com.prmto.mova_movieapp.data.paging_source.DiscoverTvPagingSource
 import com.prmto.mova_movieapp.data.paging_source.MoviesPagingSource
 import com.prmto.mova_movieapp.data.paging_source.TvPagingSource
 import com.prmto.mova_movieapp.data.remote.TMDBApi
@@ -12,6 +14,7 @@ import com.prmto.mova_movieapp.domain.models.GenreList
 import com.prmto.mova_movieapp.domain.models.Movie
 import com.prmto.mova_movieapp.domain.models.TvSeries
 import com.prmto.mova_movieapp.domain.repository.RemoteRepository
+import com.prmto.mova_movieapp.presentation.filter_bottom_sheet.state.FilterBottomState
 import com.prmto.mova_movieapp.util.Constants.ITEMS_PER_PAGE
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -113,6 +116,42 @@ class RemoteRepositoryImpl @Inject constructor(
                     tmdb = tmdbApi,
                     language = language,
                     apiFunction = TvSeriesApiFunction.TOP_RATED_TV
+                )
+            }
+        ).flow
+    }
+
+    override fun discoverMovie(
+        language: String,
+        filterBottomState: FilterBottomState
+    ): Flow<PagingData<Movie>> {
+        return Pager(
+            config = PagingConfig(
+                pageSize = 10
+            ),
+            pagingSourceFactory = {
+                DiscoverMoviePagingSource(
+                    tmdbApi = tmdbApi,
+                    filterBottomState = filterBottomState,
+                    language = language
+                )
+            }
+        ).flow
+    }
+
+    override fun discoverTv(
+        language: String,
+        filterBottomState: FilterBottomState
+    ): Flow<PagingData<TvSeries>> {
+        return Pager(
+            config = PagingConfig(
+                pageSize = ITEMS_PER_PAGE
+            ),
+            pagingSourceFactory = {
+                DiscoverTvPagingSource(
+                    tmdbApi = tmdbApi,
+                    filterBottomState = filterBottomState,
+                    language = language
                 )
             }
         ).flow

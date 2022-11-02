@@ -6,6 +6,9 @@ import com.google.common.truth.Truth.assertThat
 import com.prmto.mova_movieapp.data.models.enums.Category
 import com.prmto.mova_movieapp.data.models.enums.Sort
 import com.prmto.mova_movieapp.domain.models.Period
+import com.prmto.mova_movieapp.domain.use_case.ExploreUseCases
+import com.prmto.mova_movieapp.domain.use_case.discover_movie.DiscoverMovieUseCase
+import com.prmto.mova_movieapp.domain.use_case.discover_tv.DiscoverTvUseCase
 import com.prmto.mova_movieapp.domain.use_case.get_locale.GetLocaleUseCase
 import com.prmto.mova_movieapp.domain.use_case.get_movie_genre_list.GetMovieGenreListUseCase
 import com.prmto.mova_movieapp.domain.use_case.get_tv_genre_list.GetTvGenreListUseCase
@@ -41,10 +44,17 @@ class ExploreViewModelTest {
         fakeDataStoreOperations = FakeDataStoreOperations()
         fakeRemoteRepository = FakeRemoteRepository()
 
-        viewModel = ExploreViewModel(
+        val exploreUseCase = ExploreUseCases(
             tvGenreListUseCase = GetTvGenreListUseCase(fakeRemoteRepository),
             movieGenreListUseCase = GetMovieGenreListUseCase(fakeRemoteRepository),
-            getLocaleUseCase = GetLocaleUseCase(fakeDataStoreOperations)
+            getLocaleUseCase = GetLocaleUseCase(fakeDataStoreOperations),
+            discoverTvUseCase = DiscoverTvUseCase(fakeRemoteRepository),
+            discoverMovieUseCase = DiscoverMovieUseCase(fakeRemoteRepository)
+        )
+
+
+        viewModel = ExploreViewModel(
+            exploreUseCases = exploreUseCase
         )
     }
 

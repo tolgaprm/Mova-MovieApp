@@ -4,6 +4,7 @@ import androidx.paging.PagingData
 import com.prmto.mova_movieapp.domain.models.GenreList
 import com.prmto.mova_movieapp.domain.models.Movie
 import com.prmto.mova_movieapp.domain.models.TvSeries
+import com.prmto.mova_movieapp.presentation.filter_bottom_sheet.state.FilterBottomState
 import com.prmto.mova_movieapp.util.Constants.DEFAULT_REGION
 import kotlinx.coroutines.flow.Flow
 
@@ -36,5 +37,16 @@ interface RemoteRepository {
 
     fun getTopRatedTvs(
         language: String
+    ): Flow<PagingData<TvSeries>>
+
+    fun discoverMovie(
+        language: String,
+        filterBottomState: FilterBottomState
+    ): Flow<PagingData<Movie>>
+
+
+    fun discoverTv(
+        language: String,
+        filterBottomState: FilterBottomState
     ): Flow<PagingData<TvSeries>>
 }

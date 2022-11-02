@@ -6,12 +6,13 @@ import com.prmto.mova_movieapp.domain.models.GenreList
 import com.prmto.mova_movieapp.domain.models.Movie
 import com.prmto.mova_movieapp.domain.models.TvSeries
 import com.prmto.mova_movieapp.domain.repository.RemoteRepository
+import com.prmto.mova_movieapp.presentation.filter_bottom_sheet.state.FilterBottomState
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 class FakeRemoteRepository : RemoteRepository {
 
-     val movieGenreListLanguageTr = GenreList(
+    val movieGenreListLanguageTr = GenreList(
         genres = listOf(
             Genre(id = 1, "Aksiyon"),
             Genre(id = 2, "Macera"),
@@ -21,7 +22,7 @@ class FakeRemoteRepository : RemoteRepository {
 
     )
 
-     val movieGenreListLanguageEn = GenreList(
+    val movieGenreListLanguageEn = GenreList(
         listOf(
             Genre(id = 1, "Action"),
             Genre(id = 2, "Adventure"),
@@ -30,7 +31,7 @@ class FakeRemoteRepository : RemoteRepository {
         )
     )
 
-     val tvGenreListLanguageTr = GenreList(
+    val tvGenreListLanguageTr = GenreList(
         genres = listOf(
             Genre(id = 1, "Aksiyon & Macera"),
             Genre(id = 2, "Suç"),
@@ -40,7 +41,7 @@ class FakeRemoteRepository : RemoteRepository {
 
     )
 
-     val tvGenreListLanguageEn = GenreList(
+    val tvGenreListLanguageEn = GenreList(
         listOf(
             Genre(id = 1, "Action & Adventure"),
             Genre(id = 2, "Crime"),
@@ -94,5 +95,24 @@ class FakeRemoteRepository : RemoteRepository {
         return flow {
             PagingData.empty<TvSeries>()
         }
+    }
+
+    override fun discoverMovie(
+        language: String,
+        filterBottomState: FilterBottomState
+    ): Flow<PagingData<Movie>> {
+        return flow {
+            PagingData.empty<Movie>()
+        }
+    }
+
+    override fun discoverTv(
+        language: String,
+        filterBottomState: FilterBottomState
+    ): Flow<PagingData<TvSeries>> {
+        return flow {
+            PagingData.empty<TvSeries>()
+        }
+
     }
 }

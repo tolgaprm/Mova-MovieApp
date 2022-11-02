@@ -229,13 +229,13 @@
         android:textColor="@color/reset_button_text"
         app:cornerRadius="@dimen/shape_large"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/button2"
+        app:layout_constraintEnd_toStartOf="@+id/btnApply"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/materialDivider3"
         app:layout_constraintVertical_bias="0.0" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/button2"
+        android:id="@+id/btnApply"
         android:layout_width="0dp"
         android:layout_height="@dimen/filter_button_size"
         android:textAlignment="center"

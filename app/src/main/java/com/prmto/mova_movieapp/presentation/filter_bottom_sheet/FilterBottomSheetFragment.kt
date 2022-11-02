@@ -9,6 +9,8 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
+import androidx.paging.map
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
@@ -22,9 +24,10 @@ import com.prmto.mova_movieapp.presentation.explore.ExploreViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 @AndroidEntryPoint
-class FilterBottomSheetFragment() : BottomSheetDialogFragment() {
+class FilterBottomSheetFragment : BottomSheetDialogFragment() {
 
     private lateinit var binding: FragmentBottomSheetBinding
 
@@ -47,7 +50,7 @@ class FilterBottomSheetFragment() : BottomSheetDialogFragment() {
         observeData()
 
         // Listen to change of the CategoriesChipGroup and update categories state in ViewModel
-        binding.categoriesChipGroup.setOnCheckedStateChangeListener { group, checkedIds ->
+        binding.categoriesChipGroup.setOnCheckedStateChangeListener { group, _ ->
             val category =
                 if (group.checkedChipId == binding.movieChip.id) Category.MOVIE else Category.TV
 
@@ -61,17 +64,17 @@ class FilterBottomSheetFragment() : BottomSheetDialogFragment() {
         }
 
         // Listener Selected GenreList and update checkedGenreIdsState in ViewModel
-        binding.genreListGroup.setOnCheckedStateChangeListener { group, checkedIds ->
+        binding.genreListGroup.setOnCheckedStateChangeListener { _, checkedIds ->
             viewModel.setGenreList(checkedIds)
         }
 
         // Listen to change of the PeriodChipGroup and update checkedPeriod in ViewModel
-        binding.periodChipGroup.setOnCheckedStateChangeListener { group, checkedIds ->
+        binding.periodChipGroup.setOnCheckedStateChangeListener { group, _ ->
             viewModel.setCheckedPeriods(group.checkedChipId)
         }
 
         // Listen to change of the sortChipGroup and update checkedSort in ViewModel
-        binding.sortChipGroup.setOnCheckedStateChangeListener { group, checkedIds ->
+        binding.sortChipGroup.setOnCheckedStateChangeListener { group, _ ->
             val checkedSort =
                 if (group.checkedChipId == binding.popularity.id) Sort.Popularity else Sort.LatestRelease
 
@@ -81,6 +84,13 @@ class FilterBottomSheetFragment() : BottomSheetDialogFragment() {
         binding.btnReset.setOnClickListener {
             viewModel.resetFilterBottomState()
         }
+
+        binding.btnApply.setOnClickListener {
+            findNavController().popBackStack()
+        }
+
+
+
     }
 
 
@@ -136,7 +146,7 @@ class FilterBottomSheetFragment() : BottomSheetDialogFragment() {
                 }
 
                 launch {
-                    viewModel.isError.collectLatest {
+                    viewModel.isDownloadGenreOptions.collectLatest {
                         if (it) {
                             Toast.makeText(
                                 requireContext(),

@@ -18,6 +18,10 @@ object Constants {
 
     const val LOCALE_KEY = "locale_key"
 
+    const val DISCOVER_DATE_QUERY_FOR_TV = "first_air_date"
+
+
+
     val supportedLanguages = listOf(
         "EN",
         "DE",
