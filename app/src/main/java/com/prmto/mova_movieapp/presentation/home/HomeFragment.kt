@@ -3,6 +3,8 @@ package com.prmto.mova_movieapp.presentation.home
 
 import android.os.Bundle
 import android.view.View
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import androidx.activity.OnBackPressedCallback
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
@@ -90,6 +92,9 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         requireActivity().onBackPressedDispatcher.addCallback(callback)
     }
 
+    private fun slideInLeftAnim(): Animation =
+        AnimationUtils.loadAnimation(requireContext(), R.anim.slide_in_left)
+
     private fun showRecyclerViewSeeAll(@StringRes toolBarTextId: Int) {
         val context = requireContext()
 
@@ -98,6 +103,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 scrollView.visibility = View.GONE
                 recyclerViewSeeAllSection.visibility = View.VISIBLE
                 toolbarText.text = context.getString(toolBarTextId)
+                recyclerViewSeeAllSection.animation = slideInLeftAnim()
                 recyclerViewSeeAll.layoutManager = GridLayoutManager(requireContext(), 2)
             }
         }
@@ -108,6 +114,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         binding?.let {
             it.recyclerViewSeeAllSection.visibility = View.GONE
             it.scrollView.visibility = View.VISIBLE
+            it.scrollView.animation = slideInLeftAnim()
             it.recyclerViewSeeAll.removeAllViews()
         }
     }
