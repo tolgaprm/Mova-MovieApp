@@ -21,8 +21,8 @@
     <dimen name="now_playing_row_backdrop_size">320dp</dimen>
     <dimen name="now_playing_row_poster_size">150dp</dimen>
 
-    <dimen name="movie_row_width">150dp</dimen>
-    <dimen name="movie_row_image_width">150dp</dimen>
+    <dimen name="movie_row_width">165dp</dimen>
+    <dimen name="movie_row_image_width">165dp</dimen>
     <dimen name="movie_row_image_min_height">320dp</dimen>
     <dimen name="movie_row_image_height">200dp</dimen>
 

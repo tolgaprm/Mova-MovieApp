@@ -1,13 +1,17 @@
 package com.prmto.mova_movieapp.presentation.home
 
+
 import android.os.Bundle
 import android.view.View
+import androidx.activity.OnBackPressedCallback
+import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import coil.ImageLoader
 import com.google.android.material.snackbar.Snackbar
 import com.prmto.mova_movieapp.R
@@ -20,32 +24,119 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+
 @AndroidEntryPoint
-class HomeFragment: Fragment(R.layout.fragment_home) {
+class HomeFragment : Fragment(R.layout.fragment_home) {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding
 
+
     @Inject
     lateinit var imageLoader: ImageLoader
 
-    private val nowPlayingAdapter: NowPlayingRecyclerAdapter by lazy { NowPlayingRecyclerAdapter(imageLoader) }
-    private val popularMoviesAdapter: PopularMoviesAdapter by lazy { PopularMoviesAdapter(imageLoader) }
-    private val topRatedMoviesAdapter: TopRatedMoviesAdapter by lazy { TopRatedMoviesAdapter(imageLoader) }
-    private val popularTvSeriesAdapter: PopularTvSeriesAdapter by lazy { PopularTvSeriesAdapter(imageLoader) }
-    private val topRatedTvSeriesAdapter: TopRatedTvSeriesAdapter by lazy { TopRatedTvSeriesAdapter(imageLoader) }
+    private val nowPlayingAdapter: NowPlayingRecyclerAdapter by lazy {
+        NowPlayingRecyclerAdapter(
+            imageLoader
+        )
+    }
+    private val popularMoviesAdapter: PopularMoviesAdapter by lazy {
+        PopularMoviesAdapter(
+            imageLoader
+        )
+    }
+    private val topRatedMoviesAdapter: TopRatedMoviesAdapter by lazy {
+        TopRatedMoviesAdapter(
+            imageLoader
+        )
+    }
+    private val popularTvSeriesAdapter: PopularTvSeriesAdapter by lazy {
+        PopularTvSeriesAdapter(
+            imageLoader
+        )
+    }
+    private val topRatedTvSeriesAdapter: TopRatedTvSeriesAdapter by lazy {
+        TopRatedTvSeriesAdapter(
+            imageLoader
+        )
+    }
+
 
     private val viewModel: HomeViewModel by viewModels()
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val binding = FragmentHomeBinding.bind(view)
         _binding = binding
 
+        addCallback()
+        setupListenerSeeAllClickEvents()
         setupRecyclerAdapters()
         observeNetworkConnectivity()
         setAdaptersClickListener()
+
+        binding.btnNavigateUp.setOnClickListener {
+            hideRecyclerViewSeeAll()
+        }
+    }
+
+    private fun addCallback() {
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                hideRecyclerViewSeeAll()
+            }
+
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(callback)
+    }
+
+    private fun showRecyclerViewSeeAll(@StringRes toolBarTextId: Int) {
+        val context = requireContext()
+
+        binding?.let {
+            it.apply {
+                scrollView.visibility = View.GONE
+                recyclerViewSeeAllSection.visibility = View.VISIBLE
+                toolbarText.text = context.getString(toolBarTextId)
+                recyclerViewSeeAll.layoutManager = GridLayoutManager(requireContext(), 2)
+            }
+        }
+    }
+
+
+    private fun hideRecyclerViewSeeAll() {
+        binding?.let {
+            it.recyclerViewSeeAllSection.visibility = View.GONE
+            it.scrollView.visibility = View.VISIBLE
+            it.recyclerViewSeeAll.removeAllViews()
+        }
+    }
+
+    private fun setupListenerSeeAllClickEvents() {
+        binding?.let {
+            it.apply {
+                nowPlayingSeeAll.setOnClickListener {
+                    showRecyclerViewSeeAll(R.string.now_playing)
+                    recyclerViewSeeAll.adapter = nowPlayingAdapter
+                }
+                popularMoviesSeeAll.setOnClickListener {
+                    showRecyclerViewSeeAll(R.string.popular_movies)
+                    recyclerViewSeeAll.adapter = popularMoviesAdapter
+                }
+                popularTvSeeAll.setOnClickListener {
+                    showRecyclerViewSeeAll(R.string.popular_tv_series)
+                    recyclerViewSeeAll.adapter = popularTvSeriesAdapter
+                }
+                topRatedMoviesSeeAll.setOnClickListener {
+                    showRecyclerViewSeeAll(R.string.top_rated_movies)
+                    recyclerViewSeeAll.adapter = topRatedMoviesAdapter
+                }
+                topRatedTvSeriesSeeAll.setOnClickListener {
+                    showRecyclerViewSeeAll(R.string.top_rated_tv_series)
+                    recyclerViewSeeAll.adapter = topRatedTvSeriesAdapter
+                }
+            }
+        }
 
     }
 
@@ -60,7 +151,7 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
                             job?.cancel()
                         } else if (it == ConnectivityObserver.Status.Avaliable) {
                             job?.cancel()
-                            job = observeData()
+                            job = collectDataLifecycleAware()
                         }
                     }
                 }
@@ -78,7 +169,6 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
 
     }
 
-
     private fun setupRecyclerAdapters() {
         if (binding != null) {
             binding?.apply {
@@ -93,7 +183,7 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
 
     }
 
-    private fun observeData() =
+    private fun collectDataLifecycleAware() =
         viewLifecycleOwner.lifecycleScope.launch {
 
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -158,7 +248,6 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
             }
 
         }
-
 
     private fun setAdaptersClickListener() {
 

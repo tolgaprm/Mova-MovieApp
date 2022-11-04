@@ -62,4 +62,14 @@
         <item name="android:textColor">@color/chip_text_color</item>
     </style>
 
+    <style name="rippleText" parent="Widget.MaterialComponents.TextView">
+        <item name="android:layout_marginEnd">@dimen/medium_margin</item>
+        <item name="android:background">@drawable/text_ripple</item>
+        <item name="android:text">@string/see_all</item>
+        <item name="android:textAppearance">@style/Mova.Caption</item>
+        <item name="android:textColor">@color/red</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+    </style>
+
 </resources>
