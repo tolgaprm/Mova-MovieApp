@@ -76,7 +76,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         setupRecyclerAdapters()
         observeNetworkConnectivity()
         setAdaptersClickListener()
-
         binding.btnNavigateUp.setOnClickListener {
             hideRecyclerViewSeeAll()
         }
@@ -87,17 +86,15 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             override fun handleOnBackPressed() {
                 hideRecyclerViewSeeAll()
             }
-
         }
         requireActivity().onBackPressedDispatcher.addCallback(callback)
     }
 
-    private fun slideInLeftAnim(): Animation =
-        AnimationUtils.loadAnimation(requireContext(), R.anim.slide_in_left)
+    private fun slideInLeftAnim(): Animation = AnimationUtils.loadAnimation(requireContext(), R.anim.slide_in_left)
 
     private fun showRecyclerViewSeeAll(@StringRes toolBarTextId: Int) {
         val context = requireContext()
-
+        viewModel.setShowsRecyclerViewSeeAllSection(true)
         binding?.let {
             it.apply {
                 scrollView.visibility = View.GONE
@@ -109,8 +106,8 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         }
     }
 
-
     private fun hideRecyclerViewSeeAll() {
+        viewModel.setShowsRecyclerViewSeeAllSection(false)
         binding?.let {
             it.recyclerViewSeeAllSection.visibility = View.GONE
             it.scrollView.visibility = View.VISIBLE
@@ -123,28 +120,32 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         binding?.let {
             it.apply {
                 nowPlayingSeeAll.setOnClickListener {
-                    showRecyclerViewSeeAll(R.string.now_playing)
+                    setSeeAllPage(R.string.now_playing)
                     recyclerViewSeeAll.adapter = nowPlayingAdapter
                 }
                 popularMoviesSeeAll.setOnClickListener {
-                    showRecyclerViewSeeAll(R.string.popular_movies)
+                    setSeeAllPage(R.string.popular_movies)
                     recyclerViewSeeAll.adapter = popularMoviesAdapter
                 }
                 popularTvSeeAll.setOnClickListener {
-                    showRecyclerViewSeeAll(R.string.popular_tv_series)
+                    setSeeAllPage(R.string.popular_tv_series)
                     recyclerViewSeeAll.adapter = popularTvSeriesAdapter
                 }
                 topRatedMoviesSeeAll.setOnClickListener {
-                    showRecyclerViewSeeAll(R.string.top_rated_movies)
+                    setSeeAllPage(R.string.top_rated_movies)
                     recyclerViewSeeAll.adapter = topRatedMoviesAdapter
                 }
                 topRatedTvSeriesSeeAll.setOnClickListener {
-                    showRecyclerViewSeeAll(R.string.top_rated_tv_series)
+                    setSeeAllPage(R.string.top_rated_tv_series)
                     recyclerViewSeeAll.adapter = topRatedTvSeriesAdapter
                 }
             }
         }
+    }
 
+    private fun setSeeAllPage(@StringRes toolbarTextId: Int) {
+        showRecyclerViewSeeAll(toolbarTextId)
+        viewModel.setLatestShowsRecyclerViewSeeAllSection(toolbarTextId)
     }
 
     private fun observeNetworkConnectivity() {
@@ -170,6 +171,30 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                         }
                     }
                 }
+
+                launch {
+                    viewModel.isShowsRecyclerViewSeeAllSection.collectLatest { isShowsSeeAllPage ->
+                        if (isShowsSeeAllPage) {
+                            viewModel.latestShowsRecyclerViewSeeAllSectionToolBarText.collectLatest { textId ->
+                                showRecyclerViewSeeAll(textId)
+                                val adapter = when (textId) {
+                                    R.string.now_playing -> nowPlayingAdapter
+                                    R.string.popular_movies -> popularMoviesAdapter
+                                    R.string.popular_tv_series -> popularTvSeriesAdapter
+                                    R.string.top_rated_movies -> topRatedMoviesAdapter
+                                    R.string.top_rated_tv_series -> topRatedTvSeriesAdapter
+                                    else -> nowPlayingAdapter
+                                }
+                                binding?.let {
+                                    it.recyclerViewSeeAll.adapter = adapter
+                                }
+                            }
+                        } else {
+                            viewModel.setShowsRecyclerViewSeeAllSection(false)
+                            hideRecyclerViewSeeAll()
+                        }
+                    }
+                }
             }
 
         }
@@ -187,7 +212,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 topRatedTvSeriesRecyclerView.adapter = topRatedTvSeriesAdapter
             }
         }
-
     }
 
     private fun collectDataLifecycleAware() =

@@ -80,10 +80,8 @@
 
     <ImageButton
         android:id="@+id/ibFavoriteList"
-        android:layout_width="@dimen/iconSizeLarge"
-        android:layout_height="@dimen/iconSizeLarge"
+        style="@style/CircleImageButton"
         android:layout_marginTop="@dimen/medium_margin"
-        android:background="@drawable/icon_circle_shape"
         android:contentDescription="@string/add_list"
         android:paddingTop="2dp"
         android:src="@drawable/ic_baseline_favorite_border_24"
@@ -106,10 +104,8 @@
 
     <ImageButton
         android:id="@+id/ibClose"
-        android:layout_width="@dimen/iconSizeLarge"
-        android:layout_height="@dimen/iconSizeLarge"
+        style="@style/CircleImageButton"
         android:layout_margin="@dimen/medium_margin"
-        android:background="@drawable/icon_circle_shape"
         android:contentDescription="@string/add_list"
         android:padding="@dimen/small_padding"
         android:src="@drawable/ic_baseline_close_24"
@@ -118,11 +114,8 @@
 
     <ImageButton
         android:id="@+id/ibShare"
-        android:layout_width="@dimen/iconSizeLarge"
-        android:layout_height="@dimen/iconSizeLarge"
-        android:background="@drawable/icon_circle_shape"
+        style="@style/CircleImageButton"
         android:contentDescription="@string/share"
-
         android:src="@drawable/ic_share"
         app:layout_constraintBottom_toBottomOf="@+id/ibFavoriteList"
         app:layout_constraintEnd_toStartOf="@+id/ibWatchingList"
@@ -142,12 +135,8 @@
 
     <ImageButton
         android:id="@+id/ibWatchingList"
-        android:layout_width="@dimen/iconSizeLarge"
-        android:layout_height="@dimen/iconSizeLarge"
-        android:background="@drawable/icon_circle_shape"
-        android:clickable="true"
+        style="@style/CircleImageButton"
         android:contentDescription="@string/share"
-        android:focusable="true"
         android:padding="@dimen/small_padding"
         android:src="@drawable/ic_baseline_video_library_24"
         app:layout_constraintBottom_toBottomOf="@+id/ibFavoriteList"

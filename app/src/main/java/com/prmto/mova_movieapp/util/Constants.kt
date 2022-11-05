@@ -20,7 +20,11 @@ object Constants {
 
     const val DISCOVER_DATE_QUERY_FOR_TV = "first_air_date"
 
+    const val IS_SHOWS_SEE_ALL_PAGE="isShowsRecyclerViewSeeAllSection"
 
+    const val NOW_PLAYING_TEXT_ID=2131820679
+
+    const val  LATEST_SHOWS_SEE_ALL_PAGE_TOOLBAR_TEXT_ID= "latestRecyclerViewSeeAllSectionText"
 
     val supportedLanguages = listOf(
         "EN",
