@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolBar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:elevation="@dimen/medium_elevation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:subtitle="Settings"
+        app:subtitleTextAppearance="@style/Mova.H5"
+        app:subtitleTextColor="?attr/colorOnBackground" />
+
+
+    <com.google.android.material.divider.MaterialDivider
+        android:id="@+id/materialDivider4"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolBar" />
+
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/switchDarkTheme"
+        style="@style/Mova.H6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/large_padding"
+        android:text="@string/dark_theme"
+        android:textStyle="normal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/materialDivider4" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/medium_margin"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/switchDarkTheme">
+
+        <TextView
+            style="@style/Mova.H6"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="7"
+            android:padding="@dimen/large_padding"
+            android:text="@string/languages"
+            android:textColor="?attr/colorOnBackground"
+            android:textStyle="normal" />
+
+        <TextView
+            android:id="@+id/textView4"
+            style="@style/Mova.Caption"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:textAlignment="textEnd"
+            android:padding="@dimen/large_padding"
+            android:textColor="@color/gray"
+            android:textStyle="normal"
+            tools:text="English" />
+
+        <ImageView
+            android:layout_width="@dimen/iconSizeMedium"
+            android:layout_height="@dimen/iconSizeMedium"
+            android:layout_weight="1"
+            android:importantForAccessibility="no"
+            android:src="@drawable/ic_baseline_keyboard_arrow_right_24"
+            app:tint="@color/gray" />
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

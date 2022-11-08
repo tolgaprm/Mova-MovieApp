@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
+import com.prmto.mova_movieapp.R
 import com.prmto.mova_movieapp.domain.models.GenreList
 import com.prmto.mova_movieapp.domain.models.Movie
 import com.prmto.mova_movieapp.domain.models.TvSeries
@@ -13,7 +14,6 @@ import com.prmto.mova_movieapp.domain.repository.ConnectivityObserver
 import com.prmto.mova_movieapp.domain.use_case.HomeUseCases
 import com.prmto.mova_movieapp.util.Constants.IS_SHOWS_SEE_ALL_PAGE
 import com.prmto.mova_movieapp.util.Constants.LATEST_SHOWS_SEE_ALL_PAGE_TOOLBAR_TEXT_ID
-import com.prmto.mova_movieapp.util.Constants.NOW_PLAYING_TEXT_ID
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -38,7 +38,7 @@ class HomeViewModel @Inject constructor(
 
     val latestShowsRecyclerViewSeeAllSectionToolBarText = savedStateHandle.getStateFlow(
         LATEST_SHOWS_SEE_ALL_PAGE_TOOLBAR_TEXT_ID,
-        NOW_PLAYING_TEXT_ID
+        R.string.now_playing
     )
 
 
@@ -49,6 +49,8 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             _showSnackBarNoInternetConnectivity.emit("No Internet Connection")
         }
+
+
     }
 
 

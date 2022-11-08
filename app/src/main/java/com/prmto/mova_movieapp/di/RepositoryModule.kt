@@ -12,6 +12,7 @@ import com.prmto.mova_movieapp.domain.repository.DataStoreOperations
 import com.prmto.mova_movieapp.domain.repository.RemoteRepository
 import com.prmto.mova_movieapp.domain.use_case.ExploreUseCases
 import com.prmto.mova_movieapp.domain.use_case.HomeUseCases
+import com.prmto.mova_movieapp.domain.use_case.SettingUseCase
 import com.prmto.mova_movieapp.domain.use_case.discover_movie.DiscoverMovieUseCase
 import com.prmto.mova_movieapp.domain.use_case.discover_tv.DiscoverTvUseCase
 import com.prmto.mova_movieapp.domain.use_case.get_locale.GetLocaleUseCase
@@ -22,6 +23,8 @@ import com.prmto.mova_movieapp.domain.use_case.get_popular_tv_series.GetPopularT
 import com.prmto.mova_movieapp.domain.use_case.get_top_rated_movies.GetTopRatedMoviesUseCase
 import com.prmto.mova_movieapp.domain.use_case.get_top_rated_tv_series.GetTopRatedTvSeriesUseCase
 import com.prmto.mova_movieapp.domain.use_case.get_tv_genre_list.GetTvGenreListUseCase
+import com.prmto.mova_movieapp.domain.use_case.get_ui_mode.GetUIModeUseCase
+import com.prmto.mova_movieapp.domain.use_case.update_ui_mode.UpdateUIModeUseCase
 import com.prmto.mova_movieapp.util.DefaultDispatchers
 import com.prmto.mova_movieapp.util.DispatchersProvider
 import dagger.Module
@@ -71,6 +74,17 @@ object RepositoryModule {
             getLocaleUseCase = GetLocaleUseCase(dataStoreOperations),
             discoverMovieUseCase = DiscoverMovieUseCase(remoteRepository),
             discoverTvUseCase = DiscoverTvUseCase(remoteRepository)
+        )
+    }
+
+    @Provides
+    @Singleton
+    fun provideSettingsUseCases(
+        dataStoreOperations: DataStoreOperations
+    ): SettingUseCase {
+        return SettingUseCase(
+            getUIModeUseCase = GetUIModeUseCase(dataStoreOperations),
+            updateUIModeUseCase = UpdateUIModeUseCase(dataStoreOperations)
         )
     }
 

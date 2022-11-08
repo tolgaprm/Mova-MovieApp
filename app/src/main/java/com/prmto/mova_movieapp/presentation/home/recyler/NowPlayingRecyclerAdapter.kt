@@ -36,9 +36,12 @@ class NowPlayingRecyclerAdapter @Inject constructor(
         fun bind(movie: Movie, context: Context, onItemClickListener: (Movie) -> Unit = {}) {
             binding.movieTitle.text = movie.title
 
+            val voteCount = HandleUtils.handleVoteCount(movie.voteCount)
+
             binding.voteAverage.text = context.getString(
                 R.string.voteAverage,
-                movie.voteAverage.toString(), movie.voteCount.toString()
+                movie.voteAverage.toString(),
+                voteCount
             )
 
             binding.backdropImage.load(

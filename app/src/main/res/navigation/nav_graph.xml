@@ -60,4 +60,8 @@
             app:nullable="true"
             android:defaultValue="@null" />
     </dialog>
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.prmto.mova_movieapp.presentation.setting.SettingsFragment"
+        android:label="SettingsFragment" />
 </navigation>

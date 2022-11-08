@@ -9,4 +9,8 @@ interface DataStoreOperations {
     )
 
     fun getLocale(): Flow<String>
+
+    suspend fun updateUIMode(uiMode: Int)
+
+    fun getUIMode(): Flow<Int>
 }
