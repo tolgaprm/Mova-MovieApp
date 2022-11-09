@@ -1,17 +1,16 @@
 package com.prmto.mova_movieapp.data.repository
 
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.core.edit
-import androidx.datastore.preferences.core.emptyPreferences
-import androidx.datastore.preferences.core.stringPreferencesKey
+import androidx.datastore.preferences.core.*
 import com.prmto.mova_movieapp.domain.repository.DataStoreOperations
-import com.prmto.mova_movieapp.util.Constants
 import com.prmto.mova_movieapp.util.Constants.LOCALE_KEY
+import com.prmto.mova_movieapp.util.Constants.UI_MODE_KEY
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import okio.IOException
+import java.util.*
 import javax.inject.Inject
 
 
@@ -22,16 +21,17 @@ class DataOperationsImpl @Inject constructor(
 
     private object PreferencesKey {
         val localeKey = stringPreferencesKey(LOCALE_KEY)
+        val uiModeKey = intPreferencesKey(UI_MODE_KEY)
     }
 
 
-    override suspend fun updateCurrentLocale(locale: String) {
+    override suspend fun updateCurrentLanguageIsoCode(languageTag: String) {
         dataStore.edit {
-            it[PreferencesKey.localeKey] = locale
+            it[PreferencesKey.localeKey] = languageTag
         }
     }
 
-    override fun getLocale(): Flow<String> {
+    override fun getLanguageIsoCode(): Flow<String> {
         return dataStore.data
             .catch { exception ->
                 if (exception is IOException) {
@@ -40,8 +40,28 @@ class DataOperationsImpl @Inject constructor(
                     throw exception
                 }
             }.map {
-                val locale = it[PreferencesKey.localeKey] ?: Constants.DEFAULT_REGION
+                val locale = it[PreferencesKey.localeKey] ?: Locale.getDefault().toLanguageTag()
                 locale
             }
     }
+
+    override suspend fun updateUIMode(uiMode: Int) {
+        dataStore.edit {
+            it[PreferencesKey.uiModeKey] = uiMode
+        }
+    }
+
+    override fun getUIMode(): Flow<Int> {
+        return dataStore.data.catch { exception ->
+            if (exception is IOException) {
+                emit(emptyPreferences())
+            } else {
+                throw exception
+            }
+        }.map {
+            val uiMode = it[PreferencesKey.uiModeKey] ?: AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+            uiMode
+        }
+    }
 }
+

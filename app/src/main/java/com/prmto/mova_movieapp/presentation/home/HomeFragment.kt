@@ -70,7 +70,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         super.onViewCreated(view, savedInstanceState)
         val binding = FragmentHomeBinding.bind(view)
         _binding = binding
-
         addCallback()
         setupListenerSeeAllClickEvents()
         setupRecyclerAdapters()
@@ -90,7 +89,8 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         requireActivity().onBackPressedDispatcher.addCallback(callback)
     }
 
-    private fun slideInLeftAnim(): Animation = AnimationUtils.loadAnimation(requireContext(), R.anim.slide_in_left)
+    private fun slideInLeftAnim(): Animation =
+        AnimationUtils.loadAnimation(requireContext(), R.anim.slide_in_left)
 
     private fun showRecyclerViewSeeAll(@StringRes toolBarTextId: Int) {
         val context = requireContext()
@@ -176,7 +176,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                     viewModel.isShowsRecyclerViewSeeAllSection.collectLatest { isShowsSeeAllPage ->
                         if (isShowsSeeAllPage) {
                             viewModel.latestShowsRecyclerViewSeeAllSectionToolBarText.collectLatest { textId ->
-                                showRecyclerViewSeeAll(textId)
+
                                 val adapter = when (textId) {
                                     R.string.now_playing -> nowPlayingAdapter
                                     R.string.popular_movies -> popularMoviesAdapter
@@ -185,6 +185,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                                     R.string.top_rated_tv_series -> topRatedTvSeriesAdapter
                                     else -> nowPlayingAdapter
                                 }
+                                showRecyclerViewSeeAll(textId)
                                 binding?.let {
                                     it.recyclerViewSeeAll.adapter = adapter
                                 }
@@ -220,8 +221,8 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
 
                 launch {
-                    viewModel.getLanguage().collect {
-                        viewModel.setLanguage(it)
+                    viewModel.getLanguageIsoCode().collect {
+                        viewModel.setLanguageIsoCode(it)
                     }
                 }
 

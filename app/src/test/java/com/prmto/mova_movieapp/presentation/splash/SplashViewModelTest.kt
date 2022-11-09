@@ -3,7 +3,7 @@ package com.prmto.mova_movieapp.presentation.splash
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
-import com.prmto.mova_movieapp.domain.use_case.update_current_locale.UpdateLocalCurrentUseCase
+import com.prmto.mova_movieapp.domain.use_case.get_language_iso_code.GetLanguageIsoCodeUseCase
 import com.prmto.mova_movieapp.repository.FakeDataStoreOperations
 import com.prmto.mova_movieapp.util.TestDispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -26,7 +26,7 @@ class SplashViewModelTest {
     @Before
     fun setup() {
         viewModel = SplashViewModel(
-            updateLocalCurrentUseCase = UpdateLocalCurrentUseCase(FakeDataStoreOperations()),
+            getLanguageIsoCodeUseCase = GetLanguageIsoCodeUseCase(FakeDataStoreOperations()),
             dispatchers = TestDispatchers()
         )
     }

@@ -17,4 +17,9 @@
         android:icon="@drawable/bottom_nav_mylist_selector"
         android:title="@string/bottom_nav_my_list" />
 
+    <item
+        android:id="@+id/settingsFragment"
+        android:icon="@drawable/bottom_nav_setting_selector"
+        android:title="@string/settings"/>
+
 </menu>
