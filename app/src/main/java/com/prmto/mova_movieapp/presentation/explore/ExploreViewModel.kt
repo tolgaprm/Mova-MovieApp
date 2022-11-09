@@ -2,13 +2,10 @@ package com.prmto.mova_movieapp.presentation.explore
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.paging.PagingData
 import com.prmto.mova_movieapp.data.models.enums.Category
 import com.prmto.mova_movieapp.data.models.enums.Sort
 import com.prmto.mova_movieapp.domain.models.Genre
-import com.prmto.mova_movieapp.domain.models.Movie
 import com.prmto.mova_movieapp.domain.models.Period
-import com.prmto.mova_movieapp.domain.models.TvSeries
 import com.prmto.mova_movieapp.domain.use_case.ExploreUseCases
 import com.prmto.mova_movieapp.presentation.filter_bottom_sheet.state.FilterBottomState
 import com.prmto.mova_movieapp.util.Constants.DEFAULT_LANGUAGE
@@ -110,7 +107,7 @@ class ExploreViewModel @Inject constructor(
     }
 
     private fun getLocale(): Flow<String> {
-        return exploreUseCases.getLocaleUseCase.invoke()
+        return exploreUseCases.getLanguageIsoCodeUseCase.invoke()
     }
 
     fun setLocale(locale: String) {

@@ -9,7 +9,7 @@ import com.prmto.mova_movieapp.domain.models.Period
 import com.prmto.mova_movieapp.domain.use_case.ExploreUseCases
 import com.prmto.mova_movieapp.domain.use_case.discover_movie.DiscoverMovieUseCase
 import com.prmto.mova_movieapp.domain.use_case.discover_tv.DiscoverTvUseCase
-import com.prmto.mova_movieapp.domain.use_case.get_locale.GetLocaleUseCase
+import com.prmto.mova_movieapp.domain.use_case.get_language_iso_code.GetLanguageIsoCodeUseCase
 import com.prmto.mova_movieapp.domain.use_case.get_movie_genre_list.GetMovieGenreListUseCase
 import com.prmto.mova_movieapp.domain.use_case.get_tv_genre_list.GetTvGenreListUseCase
 import com.prmto.mova_movieapp.presentation.filter_bottom_sheet.state.FilterBottomState
@@ -47,7 +47,7 @@ class ExploreViewModelTest {
         val exploreUseCase = ExploreUseCases(
             tvGenreListUseCase = GetTvGenreListUseCase(fakeRemoteRepository),
             movieGenreListUseCase = GetMovieGenreListUseCase(fakeRemoteRepository),
-            getLocaleUseCase = GetLocaleUseCase(fakeDataStoreOperations),
+            getLanguageIsoCodeUseCase = GetLanguageIsoCodeUseCase(fakeDataStoreOperations),
             discoverTvUseCase = DiscoverTvUseCase(fakeRemoteRepository),
             discoverMovieUseCase = DiscoverMovieUseCase(fakeRemoteRepository)
         )

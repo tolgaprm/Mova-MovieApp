@@ -15,7 +15,7 @@ import com.prmto.mova_movieapp.domain.use_case.HomeUseCases
 import com.prmto.mova_movieapp.domain.use_case.SettingUseCase
 import com.prmto.mova_movieapp.domain.use_case.discover_movie.DiscoverMovieUseCase
 import com.prmto.mova_movieapp.domain.use_case.discover_tv.DiscoverTvUseCase
-import com.prmto.mova_movieapp.domain.use_case.get_locale.GetLocaleUseCase
+import com.prmto.mova_movieapp.domain.use_case.get_language_iso_code.GetLanguageIsoCodeUseCase
 import com.prmto.mova_movieapp.domain.use_case.get_movie_genre_list.GetMovieGenreListUseCase
 import com.prmto.mova_movieapp.domain.use_case.get_now_playing_movies.GetNowPlayingMoviesUseCase
 import com.prmto.mova_movieapp.domain.use_case.get_popular_movies.GetPopularMoviesUseCase
@@ -24,6 +24,7 @@ import com.prmto.mova_movieapp.domain.use_case.get_top_rated_movies.GetTopRatedM
 import com.prmto.mova_movieapp.domain.use_case.get_top_rated_tv_series.GetTopRatedTvSeriesUseCase
 import com.prmto.mova_movieapp.domain.use_case.get_tv_genre_list.GetTvGenreListUseCase
 import com.prmto.mova_movieapp.domain.use_case.get_ui_mode.GetUIModeUseCase
+import com.prmto.mova_movieapp.domain.use_case.update_current_language_iso_code.UpdateLanguageIsoCodeUseCase
 import com.prmto.mova_movieapp.domain.use_case.update_ui_mode.UpdateUIModeUseCase
 import com.prmto.mova_movieapp.util.DefaultDispatchers
 import com.prmto.mova_movieapp.util.DispatchersProvider
@@ -54,11 +55,12 @@ object RepositoryModule {
             getMovieGenreList = GetMovieGenreListUseCase(remoteRepository),
             getTvGenreList = GetTvGenreListUseCase(remoteRepository),
             getNowPlayingMoviesUseCase = GetNowPlayingMoviesUseCase(remoteRepository),
-            getLocaleUseCase = GetLocaleUseCase(dataStoreOperations),
+            getLanguageIsoCodeUseCase = GetLanguageIsoCodeUseCase(dataStoreOperations),
             getPopularMoviesUseCase = GetPopularMoviesUseCase(remoteRepository),
             getTopRatedMoviesUseCase = GetTopRatedMoviesUseCase(remoteRepository),
             getPopularTvSeries = GetPopularTvSeries(remoteRepository),
-            getTopRatedTvSeriesUseCase = GetTopRatedTvSeriesUseCase(remoteRepository)
+            getTopRatedTvSeriesUseCase = GetTopRatedTvSeriesUseCase(remoteRepository),
+            updateLanguageIsoCodeUseCase = UpdateLanguageIsoCodeUseCase(dataStoreOperations)
         )
     }
 
@@ -71,7 +73,7 @@ object RepositoryModule {
         return ExploreUseCases(
             tvGenreListUseCase = GetTvGenreListUseCase(remoteRepository),
             movieGenreListUseCase = GetMovieGenreListUseCase(remoteRepository),
-            getLocaleUseCase = GetLocaleUseCase(dataStoreOperations),
+            getLanguageIsoCodeUseCase = GetLanguageIsoCodeUseCase(dataStoreOperations),
             discoverMovieUseCase = DiscoverMovieUseCase(remoteRepository),
             discoverTvUseCase = DiscoverTvUseCase(remoteRepository)
         )
@@ -84,7 +86,9 @@ object RepositoryModule {
     ): SettingUseCase {
         return SettingUseCase(
             getUIModeUseCase = GetUIModeUseCase(dataStoreOperations),
-            updateUIModeUseCase = UpdateUIModeUseCase(dataStoreOperations)
+            updateUIModeUseCase = UpdateUIModeUseCase(dataStoreOperations),
+            updateLanguageIsoCodeUseCase = UpdateLanguageIsoCodeUseCase(dataStoreOperations),
+            getLanguageIsoCodeUseCase = GetLanguageIsoCodeUseCase(dataStoreOperations)
         )
     }
 

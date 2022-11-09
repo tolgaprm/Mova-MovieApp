@@ -28,7 +28,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = ActivityMainBinding.inflate(LayoutInflater.from(this))
         setContentView(binding.root)
 
@@ -50,7 +49,6 @@ class MainActivity : AppCompatActivity() {
         val navController = navHost.navController
 
 
-
         binding.bottomBar.setupWithNavController(navController)
         navController.addOnDestinationChangedListener { _, destination, _ ->
 
@@ -60,7 +58,6 @@ class MainActivity : AppCompatActivity() {
             }
 
             binding.bottomBar.isVisible = isVisibleBottomBar
-
         }
     }
 }

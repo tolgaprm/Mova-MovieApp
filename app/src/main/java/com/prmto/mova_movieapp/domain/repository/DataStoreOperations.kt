@@ -4,11 +4,11 @@ import kotlinx.coroutines.flow.Flow
 
 interface DataStoreOperations {
 
-    suspend fun updateCurrentLocale(
-        locale: String
+    suspend fun updateCurrentLanguageIsoCode(
+        languageTag: String
     )
 
-    fun getLocale(): Flow<String>
+    fun getLanguageIsoCode(): Flow<String>
 
     suspend fun updateUIMode(uiMode: Int)
 

@@ -221,8 +221,8 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
 
                 launch {
-                    viewModel.getLanguage().collect {
-                        viewModel.setLanguage(it)
+                    viewModel.getLanguageIsoCode().collect {
+                        viewModel.setLanguageIsoCode(it)
                     }
                 }
 

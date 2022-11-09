@@ -13,6 +13,7 @@ class SettingsViewModel @Inject constructor(
     private val settingUseCase: SettingUseCase
 ) : ViewModel() {
 
+
     fun getUIMode(): Flow<Int> {
         return settingUseCase.getUIModeUseCase()
     }
@@ -23,5 +24,15 @@ class SettingsViewModel @Inject constructor(
         }
     }
 
+
+    fun updateLanguageIsoCode(languageTag: String) {
+        viewModelScope.launch {
+            settingUseCase.updateLanguageIsoCodeUseCase(languageTag = languageTag)
+        }
+    }
+
+    fun getLanguageIsoCode(): Flow<String> {
+        return settingUseCase.getLanguageIsoCodeUseCase()
+    }
 
 }
