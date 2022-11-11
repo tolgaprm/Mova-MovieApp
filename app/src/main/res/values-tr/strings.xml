@@ -46,4 +46,6 @@
     <string name="language_spanish">Spanish</string>
     <string name="language_french">French</string>
     <string name="language_german">German</string>
+
+    <string name="overview">Overview</string>
 </resources>
