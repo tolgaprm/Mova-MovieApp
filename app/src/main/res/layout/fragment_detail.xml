@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+        <androidx.appcompat.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:elevation="@dimen/medium_margin"
+            android:background="@android:color/transparent"
+            app:contentInsetStart="0dp">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageButton
+                    android:id="@+id/btnNavigateUp"
+                    style="@style/CircleImageSmallButton"
+                    android:layout_marginStart="@dimen/medium_margin"
+                    android:elevation="@dimen/small_margin"
+                    android:src="@drawable/ic_baseline_arrow_back_24"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintHorizontal_chainStyle="spread"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:contentDescription="@string/navigate_up" />
+
+
+                <TextView
+                    android:id="@+id/txtToolBarTitle"
+                    style="@style/Mova.body1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/btnNavigateUp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginStart="@dimen/large_margin"
+                    tools:text="Spider-Man: No Way Home" />
+
+                <ImageView
+                    android:id="@+id/btnShare"
+                    style="@style/CircleImageSmallButton"
+                    android:src="@drawable/ic_share"
+                    android:contentDescription="@string/share"
+                    android:layout_marginEnd="@dimen/medium_margin"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+        </androidx.appcompat.widget.Toolbar>
+
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/imvPoster"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/movie_detail_poster_image_size"
+                android:importantForAccessibility="no"
+                android:scaleType="centerCrop"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@drawable/spiderman" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/txtMovieName"
+                style="@style/Mova.Title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/medium_margin"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imvPoster"
+                tools:text="Spider-Man: No Way Home" />
+
+            <RatingBar
+                android:id="@+id/ratingBar"
+                style="@style/RatingBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/medium_margin"
+                android:layout_marginTop="@dimen/small_margin"
+                app:layout_constraintStart_toStartOf="@+id/txtMovieName"
+                app:layout_constraintTop_toBottomOf="@+id/txtMovieName"
+                tools:rating="4.35" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/txtVoteAverage_Count"
+                style="@style/Mova.Subtitle1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/medium_margin"
+                app:layout_constraintBottom_toBottomOf="@+id/ratingBar"
+                app:layout_constraintStart_toEndOf="@+id/ratingBar"
+                app:layout_constraintTop_toTopOf="@+id/ratingBar"
+                tools:text="4.35 (1.19 k reviews)" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/txtGenres"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/medium_margin"
+                android:lines="1"
+                app:layout_constraintStart_toStartOf="@+id/ratingBar"
+                app:layout_constraintTop_toBottomOf="@+id/txtVoteAverage_Count"
+                tools:text="Action, Adventure, Science, Fiction" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/txtReleaseDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/medium_margin"
+                app:layout_constraintStart_toStartOf="@+id/txtGenres"
+                app:layout_constraintTop_toBottomOf="@+id/txtGenres"
+                tools:text="2021-12-15" />
+
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/medium_margin"
+                android:importantForAccessibility="no"
+                android:src="@drawable/ic_watch"
+                app:layout_constraintStart_toStartOf="@+id/txtReleaseDate"
+                app:layout_constraintTop_toBottomOf="@+id/txtReleaseDate"
+                app:tint="@color/dark_red_variant" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/txtRuntime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/medium_margin"
+                android:textColor="@color/dark_red_variant"
+                app:layout_constraintBottom_toBottomOf="@+id/imageView3"
+                app:layout_constraintStart_toEndOf="@+id/imageView3"
+                app:layout_constraintTop_toTopOf="@+id/imageView3"
+                tools:text="2:28" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/titleOverview"
+                style="@style/Mova.Title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/large_margin"
+                android:text="@string/overview"
+                app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/txtOverview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/small_margin"
+                android:padding="@dimen/medium_padding"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/titleOverview"
+                tools:text="Peter Parker is unmasked and no longer able to separate his normal life from the high-stakes of being a super-hero. When he asks for help from Doctor Strange the stakes become even more dangerous, forcing him to discover what it truly means to be Spider-Man." />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </ScrollView>
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
+

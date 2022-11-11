@@ -28,6 +28,8 @@
     <dimen name="movie_row_image_min_height">320dp</dimen>
     <dimen name="movie_row_image_height">200dp</dimen>
 
+    <dimen name="movie_detail_poster_image_size">550dp</dimen>
+
     <dimen name="edit_text_height">60dp</dimen>
     <dimen name="filter_button_size">60dp</dimen>
 
