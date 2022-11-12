@@ -78,11 +78,23 @@
         app:layout_constraintVertical_bias="0.187"
         tools:text="Bir hırsızlık olayında ağabeyi ölen yarı felçli Jake Sully, Pandora adındaki uzak bir gezegende görevinin başına geçmeye karar verir. Bu yerde Na’vi adında giderek tükenmekte olan bir halk yaşamaktadır. Askeri bir şirket, söz konusu yeri ve oradaki kaynakları mercek altına almak üzere Avatar adında bir program oluşturmuştur. Bu program insanları kısmen insan kısmen de Na’vi haline büründürerek misyon amaçlı Pandora’ya göndermektedir. Bu sisteme gönüllü dahil olan Botanist Dr. Grace Augustine ve Jake Sully için başka bir yaşam var olacaktır. Sully, Pandora’ya geçtiği anda felçli bedeni değişime uğrayarak işlevsel hale gelir. Bu sırada Na’vi halkından Prenses Neytiri ile karşı karşıya gelen Jake, ansızın bir farkındalık yaşar ve bir araştırma misyonu ile gönderildiği bu gezegeni, kendi dünyalısından korumaya karar verir." />
 
+
     <ImageButton
-        android:id="@+id/btnNavigateUp"
+        android:id="@+id/ibClose"
+        style="@style/CircleImageLargeButton"
+        android:layout_margin="@dimen/medium_margin"
+        android:contentDescription="@string/navigate_up"
+        android:padding="@dimen/small_padding"
+        android:src="@drawable/ic_baseline_close_24"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!--region share,favorite,watch btn section-->
+    <ImageButton
+        android:id="@+id/btnFavoriteList"
         style="@style/CircleImageLargeButton"
         android:layout_marginTop="@dimen/medium_margin"
-        android:contentDescription="@string/add_list"
+        android:contentDescription="@string/add_favorite_list"
         android:paddingTop="2dp"
         android:src="@drawable/ic_baseline_favorite_border_24"
         app:layout_constraintEnd_toEndOf="parent"
@@ -97,31 +109,23 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/small_padding"
         android:text="@string/favorite_list"
-        app:layout_constraintEnd_toEndOf="@+id/btnNavigateUp"
+        app:layout_constraintEnd_toEndOf="@+id/btnFavoriteList"
         app:layout_constraintHorizontal_bias="0.545"
-        app:layout_constraintStart_toStartOf="@+id/btnNavigateUp"
-        app:layout_constraintTop_toBottomOf="@+id/btnNavigateUp" />
+        app:layout_constraintStart_toStartOf="@+id/btnFavoriteList"
+        app:layout_constraintTop_toBottomOf="@+id/btnFavoriteList" />
 
-    <ImageButton
-        android:id="@+id/ibClose"
-        style="@style/CircleImageLargeButton"
-        android:layout_margin="@dimen/medium_margin"
-        android:contentDescription="@string/add_list"
-        android:padding="@dimen/small_padding"
-        android:src="@drawable/ic_baseline_close_24"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+
 
     <ImageButton
         android:id="@+id/ibShare"
         style="@style/CircleImageLargeButton"
         android:contentDescription="@string/share"
         android:src="@drawable/ic_share"
-        app:layout_constraintBottom_toBottomOf="@+id/btnNavigateUp"
+        app:layout_constraintBottom_toBottomOf="@+id/btnFavoriteList"
         app:layout_constraintEnd_toStartOf="@+id/ibWatchingList"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/btnNavigateUp"
-        app:layout_constraintTop_toTopOf="@+id/btnNavigateUp" />
+        app:layout_constraintStart_toEndOf="@+id/btnFavoriteList"
+        app:layout_constraintTop_toTopOf="@+id/btnFavoriteList" />
 
     <TextView
         android:id="@+id/textView7"
@@ -136,14 +140,14 @@
     <ImageButton
         android:id="@+id/ibWatchingList"
         style="@style/CircleImageLargeButton"
-        android:contentDescription="@string/share"
+        android:contentDescription="@string/add_watch_list"
         android:padding="@dimen/small_padding"
         android:src="@drawable/ic_baseline_video_library_24"
-        app:layout_constraintBottom_toBottomOf="@+id/btnNavigateUp"
+        app:layout_constraintBottom_toBottomOf="@+id/btnFavoriteList"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/ibShare"
-        app:layout_constraintTop_toTopOf="@+id/btnNavigateUp" />
+        app:layout_constraintTop_toTopOf="@+id/btnFavoriteList" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -154,6 +158,8 @@
         app:layout_constraintHorizontal_bias="0.461"
         app:layout_constraintStart_toStartOf="@+id/ibWatchingList"
         app:layout_constraintTop_toBottomOf="@+id/ibWatchingList" />
+
+    <!--endregion share,favorite,watch btn section-->
 
     <com.google.android.material.divider.MaterialDivider
         android:id="@+id/materialDivider3"

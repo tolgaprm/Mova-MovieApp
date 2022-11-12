@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="@dimen/small_margin"
+    android:layout_marginVertical="@dimen/medium_margin"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/imvProfilePhoto"
+        android:layout_width="@dimen/action_row_image_size"
+        android:layout_height="@dimen/action_row_image_size"
+        android:scaleType="centerCrop"
+        tools:src="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/txtActorName"
+        style="@style/Mova.Subtitle1"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/medium_margin"
+        android:textAlignment="center"
+        tools:text="Tom Holand" />
+
+</LinearLayout>

@@ -7,60 +7,51 @@
     android:layout_height="match_parent">
 
 
-        <androidx.appcompat.widget.Toolbar
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@android:color/transparent"
+        android:elevation="@dimen/medium_margin"
+        app:contentInsetStart="0dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:elevation="@dimen/medium_margin"
-            android:background="@android:color/transparent"
-            app:contentInsetStart="0dp">
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+            android:layout_height="match_parent">
 
-                <ImageButton
-                    android:id="@+id/btnNavigateUp"
-                    style="@style/CircleImageSmallButton"
-                    android:layout_marginStart="@dimen/medium_margin"
-                    android:elevation="@dimen/small_margin"
-                    android:src="@drawable/ic_baseline_arrow_back_24"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintHorizontal_chainStyle="spread"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:contentDescription="@string/navigate_up" />
+            <ImageButton
+                android:id="@+id/btnNavigateUp"
+                style="@style/CircleImageSmallButton"
+                android:layout_marginStart="@dimen/medium_margin"
+                android:contentDescription="@string/navigate_up"
+                android:elevation="@dimen/small_elevation"
+                android:src="@drawable/ic_baseline_arrow_back_24"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintHorizontal_chainStyle="spread"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="TouchTargetSizeCheck" />
 
 
-                <TextView
-                    android:id="@+id/txtToolBarTitle"
-                    style="@style/Mova.body1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:visibility="gone"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/btnNavigateUp"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:layout_marginStart="@dimen/large_margin"
-                    tools:text="Spider-Man: No Way Home" />
-
-                <ImageView
-                    android:id="@+id/btnShare"
-                    style="@style/CircleImageSmallButton"
-                    android:src="@drawable/ic_share"
-                    android:contentDescription="@string/share"
-                    android:layout_marginEnd="@dimen/medium_margin"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/txtToolBarTitle"
+                style="@style/Mova.body1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/large_margin"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/btnNavigateUp"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Spider-Man: No Way Home" />
 
 
-
-        </androidx.appcompat.widget.Toolbar>
-
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-    <ScrollView
+    </androidx.appcompat.widget.Toolbar>
+
+
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -71,6 +62,7 @@
             <ImageView
                 android:id="@+id/imvPoster"
                 android:layout_width="match_parent"
+
                 android:layout_height="@dimen/movie_detail_poster_image_size"
                 android:importantForAccessibility="no"
                 android:scaleType="centerCrop"
@@ -86,11 +78,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/medium_margin"
+                android:layout_marginEnd="@dimen/medium_margin"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imvPoster"
                 tools:text="Spider-Man: No Way Home" />
 
+            <!--region detailInfoSection-->
             <RatingBar
                 android:id="@+id/ratingBar"
                 style="@style/RatingBar"
@@ -154,13 +148,19 @@
                 app:layout_constraintTop_toTopOf="@+id/imageView3"
                 tools:text="2:28" />
 
+            <!--endregion detailInfoSection-->
+
+            <!--region overview Section-->
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/titleOverview"
                 style="@style/Mova.Title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/large_margin"
+                android:layout_marginEnd="@dimen/medium_margin"
                 android:text="@string/overview"
+                app:layout_constraintEnd_toEndOf="@+id/txtMovieName"
+                app:layout_constraintStart_toStartOf="@+id/txtMovieName"
                 app:layout_constraintTop_toBottomOf="@+id/imageView3" />
 
             <com.google.android.material.textview.MaterialTextView
@@ -168,17 +168,149 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/small_margin"
+                android:layout_marginStart="@dimen/medium_margin"
                 android:padding="@dimen/medium_padding"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/titleOverview"
+                app:layout_constraintStart_toStartOf="@+id/titleOverview"
                 app:layout_constraintTop_toBottomOf="@id/titleOverview"
                 tools:text="Peter Parker is unmasked and no longer able to separate his normal life from the high-stakes of being a super-hero. When he asks for help from Doctor Strange the stakes become even more dangerous, forcing him to discover what it truly means to be Spider-Man." />
+            <!--endregion overview-->
 
+            <!--region Btn share,favorite,watch Section -->
+            <ImageView
+                android:id="@+id/btnFavoriteList"
+                style="@style/CircleImageLargeButton"
+                android:contentDescription="@string/add_favorite_list"
+                android:src="@drawable/ic_baseline_favorite_border_24"
+                app:layout_constraintEnd_toStartOf="@+id/btnShare"
+                app:layout_constraintHorizontal_chainStyle="spread"
+                app:layout_constraintStart_toStartOf="parent"
+
+                app:layout_constraintTop_toTopOf="@id/btnShare" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/small_margin"
+                android:text="@string/favorite_list"
+                app:layout_constraintEnd_toEndOf="@id/btnFavoriteList"
+                app:layout_constraintStart_toStartOf="@id/btnFavoriteList"
+                app:layout_constraintTop_toBottomOf="@id/btnFavoriteList" />
+
+            <ImageView
+                android:id="@+id/btnShare"
+                style="@style/CircleImageLargeButton"
+                android:layout_marginTop="@dimen/large_margin"
+                android:contentDescription="@string/share"
+                android:src="@drawable/ic_share"
+                app:layout_constraintEnd_toStartOf="@+id/btnWatchList"
+                app:layout_constraintStart_toEndOf="@+id/btnFavoriteList"
+                app:layout_constraintTop_toBottomOf="@+id/txtOverview" />
+
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/txtShare"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/small_margin"
+                android:text="@string/share"
+                app:layout_constraintEnd_toEndOf="@id/btnShare"
+                app:layout_constraintStart_toStartOf="@id/btnShare"
+                app:layout_constraintTop_toBottomOf="@id/btnShare" />
+
+            <ImageView
+                android:id="@+id/btnWatchList"
+                style="@style/CircleImageLargeButton"
+                android:contentDescription="@string/add_watch_list"
+                android:src="@drawable/ic_baseline_video_library_24"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/btnShare"
+                app:layout_constraintTop_toTopOf="@id/btnShare" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/small_margin"
+                android:text="@string/watchList"
+                app:layout_constraintEnd_toEndOf="@id/btnWatchList"
+                app:layout_constraintStart_toStartOf="@id/btnWatchList"
+                app:layout_constraintTop_toBottomOf="@id/btnWatchList" />
+
+            <!--endregion Btn share,favorite,watch Section -->
+
+            <!--region actor and director info section-->
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/txtActor"
+                style="@style/Mova.H6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/medium_margin"
+                android:layout_marginTop="@dimen/large_margin"
+                android:paddingHorizontal="@dimen/medium_padding"
+                android:text="@string/actor"
+                android:textColor="?attr/colorPrimary"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/txtShare" />
+
+            <com.google.android.material.divider.MaterialDivider
+                android:id="@+id/dividerActor"
+                style="?attr/divider"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/detail_fragment_divider_height"
+                android:layout_marginHorizontal="@dimen/small_margin"
+                android:layout_marginTop="@dimen/small_margin"
+                app:dividerColor="?attr/colorPrimary"
+                app:layout_constraintEnd_toEndOf="@id/txtActor"
+                app:layout_constraintStart_toStartOf="@id/txtActor"
+                app:layout_constraintTop_toBottomOf="@id/txtActor" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/txtDirector"
+                style="@style/Mova.H6"
+                android:textColor="@color/gray"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/medium_margin"
+                android:layout_marginTop="@dimen/large_margin"
+                android:paddingHorizontal="@dimen/medium_padding"
+                android:text="@string/director"
+                app:layout_constraintStart_toEndOf="@+id/txtActor"
+                app:layout_constraintTop_toBottomOf="@id/txtShare" />
+
+            <com.google.android.material.divider.MaterialDivider
+                android:id="@+id/dividerDirector"
+                style="?attr/divider"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/detail_fragment_divider_height"
+                android:visibility="invisible"
+                android:layout_marginHorizontal="@dimen/small_margin"
+                android:layout_marginTop="@dimen/small_margin"
+                app:dividerColor="?attr/colorPrimary"
+                app:layout_constraintEnd_toEndOf="@id/txtDirector"
+                app:layout_constraintStart_toStartOf="@id/txtDirector"
+                app:layout_constraintTop_toBottomOf="@id/txtDirector" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewActorDirector"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/medium_margin"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintEnd_toEndOf="@+id/txtOverview"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="@id/txtActor"
+                app:layout_constraintTop_toBottomOf="@id/dividerActor"
+                tools:itemCount="5"
+                tools:listitem="@layout/actor_row" />
+
+
+            <!--endregion actor and director info section-->
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

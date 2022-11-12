@@ -20,12 +20,12 @@
     <string name="genre">Genre</string>
     <string name="voteAverage">%1$s (%2$s)</string>
     <string name="release_date_genre">%1$s  %2$s</string>
-    <string name="add_list">add_list</string>
     <string name="share">Paylaş</string>
     <string name="favorite_list">Favori Listem</string>
     <string name="watchList">İzleme Listem</string>
     <string name="detail_bottom_sheet_movie_info">Detaylar ve daha fazlası</string>
     <string name="detail_bottom_sheet_tv_info">Bölümler ve daha fazlası</string>
+
     <string name="time_periods">Time/Periods</string>
     <string name="retry">Yeniden Dene</string>
     <string name="sort">Sırala</string>
@@ -36,6 +36,7 @@
     <string name="error_didnt_download">Didn\'t download genre options. PLease check your internet connection</string>
     <string name="all_periods">All Periods</string>
     <string name="internet_error">"Oops! Please check your internet connection."</string>
+
     <string name="navigate_up">Navigate up</string>
     <string name="dark_theme">Karanlık Mod</string>
     <string name="languages">Diller</string>
@@ -48,4 +49,9 @@
     <string name="language_german">German</string>
 
     <string name="overview">Overview</string>
+    <string name="actor">Oyuncu Kadrosu</string>
+    <string name="director">Ekip</string>
+
+    <string name="add_favorite_list">Favori Listeme Ekle</string>
+    <string name="add_watch_list">İzleme Listeme Ekle</string>
 </resources>
