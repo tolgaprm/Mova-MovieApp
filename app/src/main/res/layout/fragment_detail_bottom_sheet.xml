@@ -57,6 +57,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/medium_margin"
         android:textColor="@color/subtitleColor"
+        app:layout_constraintBottom_toBottomOf="@+id/ibClose"
         app:layout_constraintStart_toEndOf="@+id/tvReleaseDate"
         app:layout_constraintTop_toTopOf="@+id/tvReleaseDate"
         tools:text="2sa. 42 dk. (2h 45m)" />
@@ -66,8 +67,9 @@
         android:id="@+id/tvOverview"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginTop="@dimen/medium_margin"
         android:layout_marginBottom="@dimen/small_margin"
-        android:paddingTop="@dimen/small_padding"
+        android:paddingTop="@dimen/medium_padding"
         android:scrollbars="vertical"
         android:textColor="?attr/colorOnBackground"
         app:layout_constraintBottom_toTopOf="@+id/guideline5"
