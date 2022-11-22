@@ -3,6 +3,9 @@ package com.prmto.mova_movieapp.data.repository
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
+import com.prmto.mova_movieapp.data.models.GenreList
+import com.prmto.mova_movieapp.data.models.detail.movie.MovieDetailDto
+import com.prmto.mova_movieapp.data.models.detail.tv.TvDetailDto
 import com.prmto.mova_movieapp.data.models.enums.MoviesApiFunction
 import com.prmto.mova_movieapp.data.models.enums.TvSeriesApiFunction
 import com.prmto.mova_movieapp.data.paging_source.DiscoverMoviePagingSource
@@ -10,7 +13,6 @@ import com.prmto.mova_movieapp.data.paging_source.DiscoverTvPagingSource
 import com.prmto.mova_movieapp.data.paging_source.MoviesPagingSource
 import com.prmto.mova_movieapp.data.paging_source.TvPagingSource
 import com.prmto.mova_movieapp.data.remote.TMDBApi
-import com.prmto.mova_movieapp.domain.models.GenreList
 import com.prmto.mova_movieapp.domain.models.Movie
 import com.prmto.mova_movieapp.domain.models.TvSeries
 import com.prmto.mova_movieapp.domain.repository.RemoteRepository
@@ -155,5 +157,19 @@ class RemoteRepositoryImpl @Inject constructor(
                 )
             }
         ).flow
+    }
+
+    override suspend fun getMovieDetail(language: String, movieId: Int): MovieDetailDto {
+        return tmdbApi.getMovieDetail(
+            language = language,
+            movieId = movieId
+        )
+    }
+
+    override suspend fun getTvDetail(language: String, tvId: Int): TvDetailDto {
+        return tmdbApi.getTvDetail(
+            language = language,
+            tvId = tvId
+        )
     }
 }

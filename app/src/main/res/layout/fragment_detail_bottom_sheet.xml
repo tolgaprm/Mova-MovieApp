@@ -115,7 +115,6 @@
         app:layout_constraintTop_toBottomOf="@+id/btnFavoriteList" />
 
 
-
     <ImageButton
         android:id="@+id/ibShare"
         style="@style/CircleImageLargeButton"
@@ -125,7 +124,8 @@
         app:layout_constraintEnd_toStartOf="@+id/ibWatchingList"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/btnFavoriteList"
-        app:layout_constraintTop_toTopOf="@+id/btnFavoriteList" />
+        app:layout_constraintTop_toTopOf="@+id/btnFavoriteList"
+        tools:ignore="DuplicateSpeakableTextCheck" />
 
     <TextView
         android:id="@+id/textView7"
@@ -171,9 +171,9 @@
         app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
     <LinearLayout
-        android:id="@+id/llDetail"
+        android:id="@+id/detailSection"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/iconSizeLarge"
         android:clickable="true"
         android:focusable="true"
         android:gravity="center_vertical"

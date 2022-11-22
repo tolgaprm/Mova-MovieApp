@@ -1,7 +1,7 @@
 package com.prmto.mova_movieapp.presentation.util
 
 import com.google.common.truth.Truth.assertThat
-import com.prmto.mova_movieapp.domain.models.Genre
+import com.prmto.mova_movieapp.data.models.Genre
 import com.prmto.mova_movieapp.domain.models.Movie
 import org.junit.Test
 

@@ -1,4 +1,4 @@
-package com.prmto.mova_movieapp.domain.models
+package com.prmto.mova_movieapp.data.models
 
 data class Genre(
     val id: Int,

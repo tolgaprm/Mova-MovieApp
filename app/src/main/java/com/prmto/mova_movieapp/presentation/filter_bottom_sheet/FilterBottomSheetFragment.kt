@@ -10,21 +10,19 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import androidx.paging.map
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.prmto.mova_movieapp.R
+import com.prmto.mova_movieapp.data.models.Genre
 import com.prmto.mova_movieapp.data.models.enums.Category
 import com.prmto.mova_movieapp.data.models.enums.Sort
 import com.prmto.mova_movieapp.databinding.FragmentBottomSheetBinding
-import com.prmto.mova_movieapp.domain.models.Genre
 import com.prmto.mova_movieapp.domain.models.Period
 import com.prmto.mova_movieapp.presentation.explore.ExploreViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import timber.log.Timber
 
 @AndroidEntryPoint
 class FilterBottomSheetFragment : BottomSheetDialogFragment() {

@@ -60,6 +60,9 @@ class DetailBottomSheet : BottomSheetDialogFragment() {
                 tvBottomInfoText.text =
                     requireContext().getString(R.string.detail_bottom_sheet_movie_info)
 
+                detailSection.setOnClickListener {
+                    navigateToDetailFragment(movie.id)
+                }
             }
 
             if (tvSeries != null) {
@@ -73,12 +76,32 @@ class DetailBottomSheet : BottomSheetDialogFragment() {
                 tvBottomInfoText.text =
                     requireContext().getString(R.string.detail_bottom_sheet_tv_info)
 
+
+                detailSection.setOnClickListener {
+                    navigateToDetailFragment(tvId = tvSeries.id)
+                }
+
             }
+
+
 
             tvOverview.movementMethod = ScrollingMovementMethod()
         }
 
 
+    }
+
+    private fun navigateToDetailFragment(movieId: Int? = null, tvId: Int? = null) {
+        val action = DetailBottomSheetDirections.actionDetailBottomSheetToDetailFragment()
+
+        movieId?.let {
+            action.movieId = movieId
+        }
+        tvId?.let {
+            action.tvId = tvId
+        }
+
+        findNavController().navigate(action)
     }
 
 

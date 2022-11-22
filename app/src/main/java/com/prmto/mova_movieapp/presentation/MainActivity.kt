@@ -53,8 +53,11 @@ class MainActivity : AppCompatActivity() {
         navController.addOnDestinationChangedListener { _, destination, _ ->
 
             val isVisibleBottomBar = when (destination.id) {
-                R.id.splashFragment -> false
-                else -> true
+                R.id.homeFragment -> true
+                R.id.exploreFragment -> true
+                R.id.myListFragment -> true
+                R.id.settingsFragment -> true
+                else -> false
             }
 
             binding.bottomBar.isVisible = isVisibleBottomBar

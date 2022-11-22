@@ -83,7 +83,13 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     private fun addCallback() {
         val callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                hideRecyclerViewSeeAll()
+                binding?.let {
+                    if (it.recyclerViewSeeAll.visibility == View.VISIBLE) {
+                        hideRecyclerViewSeeAll()
+                    } else {
+                        findNavController().popBackStack()
+                    }
+                }
             }
         }
         requireActivity().onBackPressedDispatcher.addCallback(callback)

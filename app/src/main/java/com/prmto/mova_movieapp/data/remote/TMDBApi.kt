@@ -1,15 +1,18 @@
 package com.prmto.mova_movieapp.data.remote
 
 import com.prmto.mova_movieapp.data.models.ApiResponse
+import com.prmto.mova_movieapp.data.models.GenreList
 import com.prmto.mova_movieapp.data.models.MovieDto
 import com.prmto.mova_movieapp.data.models.TvSeriesDto
+import com.prmto.mova_movieapp.data.models.detail.movie.MovieDetailDto
+import com.prmto.mova_movieapp.data.models.detail.tv.TvDetailDto
 import com.prmto.mova_movieapp.data.models.enums.Category
 import com.prmto.mova_movieapp.data.models.enums.Sort
-import com.prmto.mova_movieapp.domain.models.GenreList
 import com.prmto.mova_movieapp.presentation.util.toDiscoveryQueryString
 import com.prmto.mova_movieapp.util.Constants.API_KEY
 import com.prmto.mova_movieapp.util.Constants.STARTING_PAGE
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 
@@ -83,7 +86,21 @@ interface TMDBApi {
         @Query("language") language: String,
         @Query("with_genres") genres: String = "",
         @Query("first_air_date_year") firstAirDateYear: Int,
-        @Query("sort_by") sort: String=Sort.Popularity.toDiscoveryQueryString(Category.MOVIE)
+        @Query("sort_by") sort: String = Sort.Popularity.toDiscoveryQueryString(Category.MOVIE)
     ): ApiResponse<TvSeriesDto>
+
+    @GET("movie/{movie_id}")
+    suspend fun getMovieDetail(
+        @Path("movie_id") movieId: Int,
+        @Query("api_key") apiKey: String = API_KEY,
+        @Query("language") language: String
+    ): MovieDetailDto
+
+    @GET("tv/{tv_id}")
+    suspend fun getTvDetail(
+        @Path("tv_id") tvId: Int,
+        @Query("api_key") apiKey: String = API_KEY,
+        @Query("language") language: String
+    ): TvDetailDto
 
 }

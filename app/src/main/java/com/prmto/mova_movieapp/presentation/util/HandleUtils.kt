@@ -1,6 +1,6 @@
 package com.prmto.mova_movieapp.presentation.util
 
-import com.prmto.mova_movieapp.domain.models.Genre
+import com.prmto.mova_movieapp.data.models.Genre
 import com.prmto.mova_movieapp.domain.models.Movie
 
 object HandleUtils {
@@ -22,6 +22,23 @@ object HandleUtils {
                     genreNames += "${genre.name}, "
                 }
             }
+        }
+
+        if (genreNames.isNotEmpty()) {
+            return genreNames.subSequence(0, genreNames.length - 2).toString()
+        }
+
+        return genreNames
+    }
+
+    fun handleGenreText(genreList: List<Genre>): String {
+        var genreNames = ""
+        if (genreList.isEmpty()) {
+            return ""
+        }
+
+        genreList.forEach { genre ->
+            genreNames += "${genre.name}, "
         }
 
         if (genreNames.isNotEmpty()) {
@@ -65,5 +82,6 @@ object HandleUtils {
 
         return "${divide.toInt()}.$voteCountText k"
     }
+
 
 }

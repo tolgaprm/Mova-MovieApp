@@ -9,10 +9,10 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.ImageLoader
 import coil.load
 import com.prmto.mova_movieapp.R
+import com.prmto.mova_movieapp.data.models.Genre
 import com.prmto.mova_movieapp.data.remote.ImageApi
 import com.prmto.mova_movieapp.data.remote.ImageSize
 import com.prmto.mova_movieapp.databinding.NowPlayingRowBinding
-import com.prmto.mova_movieapp.domain.models.Genre
 import com.prmto.mova_movieapp.domain.models.Movie
 import com.prmto.mova_movieapp.domain.models.TvSeries
 import com.prmto.mova_movieapp.presentation.util.HandleUtils
