@@ -137,8 +137,32 @@
                 app:layout_constraintTop_toBottomOf="@+id/txtGenres"
                 tools:text="2021-12-15" />
 
+
             <ImageView
-                android:id="@+id/imageView3"
+                android:id="@+id/imvCircle"
+                android:layout_width="@dimen/iconSizeExtraSmall"
+                android:layout_height="@dimen/iconSizeExtraSmall"
+                android:src="@drawable/ic_circle"
+                app:tint="@color/dark_red_variant"
+                android:importantForAccessibility="no"
+                android:layout_marginStart="@dimen/small_margin"
+                app:layout_constraintBottom_toBottomOf="@+id/txtReleaseDate"
+                app:layout_constraintStart_toEndOf="@+id/txtReleaseDate"
+                app:layout_constraintTop_toTopOf="@+id/txtReleaseDate" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/txtSeason"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/small_margin"
+                android:textStyle="bold"
+                android:letterSpacing="0.05"
+                app:layout_constraintBaseline_toBaselineOf="@+id/txtReleaseDate"
+                app:layout_constraintStart_toEndOf="@+id/imvCircle"
+                tools:text="9 Seasons" />
+
+            <ImageView
+                android:id="@+id/imvClockIcon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/medium_margin"
@@ -154,9 +178,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/medium_margin"
                 android:textColor="@color/dark_red_variant"
-                app:layout_constraintBottom_toBottomOf="@+id/imageView3"
-                app:layout_constraintStart_toEndOf="@+id/imageView3"
-                app:layout_constraintTop_toTopOf="@+id/imageView3"
+                app:layout_constraintBottom_toBottomOf="@+id/imvClockIcon"
+                app:layout_constraintStart_toEndOf="@+id/imvClockIcon"
+                app:layout_constraintTop_toTopOf="@+id/imvClockIcon"
                 tools:text="2:28" />
 
             <!--endregion detailInfoSection-->
@@ -171,14 +195,14 @@
                 android:text="@string/overview"
                 app:layout_constraintEnd_toEndOf="@+id/txtMovieName"
                 app:layout_constraintStart_toStartOf="@+id/txtMovieName"
-                app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+                app:layout_constraintTop_toBottomOf="@+id/imvClockIcon" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/txtOverview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/medium_margin"
-                android:padding="@dimen/medium_padding"
+                android:paddingHorizontal="@dimen/medium_padding"
                 app:layout_constraintEnd_toEndOf="@+id/titleOverview"
                 app:layout_constraintStart_toStartOf="@+id/titleOverview"
                 app:layout_constraintTop_toBottomOf="@id/titleOverview"

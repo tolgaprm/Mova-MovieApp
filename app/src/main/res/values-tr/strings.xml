@@ -23,6 +23,7 @@
     <string name="voteAverageDetail">%1$s (%2$s reviews)</string>
     <string name="release_date_genre">%1$s  %2$s</string>
     <string name="runtime">%1$ss  %2$sdk</string>
+    <string name="season_count">%s Sezon</string>
 
     <string name="share">Paylaş</string>
     <string name="favorite_list">Favori Listem</string>

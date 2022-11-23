@@ -78,10 +78,20 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
             val firstAirDate = HandleUtils.handleReleaseDate(tvDetail.firstAirDate)
             releaseDate = if (tvDetail.status == TV_SERIES_STATUS_ENDED) {
                 val lastAirDate = HandleUtils.handleReleaseDate(tvDetail.lastAirDate)
-                "$firstAirDate-$lastAirDate"
+                "${firstAirDate}-${lastAirDate}"
             } else {
                 "$firstAirDate-"
             }
+            binding.txtRuntime.visibility = View.GONE
+            binding.imvClockIcon.visibility = View.GONE
+            binding.txtSeason.visibility = View.VISIBLE
+            binding.imvCircle.visibility = View.VISIBLE
+
+            binding.txtSeason.text = requireContext().getString(
+                R.string.season_count,
+                tvDetail.numberOfSeasons.toString()
+            )
+
         }
 
         movieDetail?.let {
@@ -104,6 +114,11 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
                     minutes.toString()
                 )
             }
+
+            binding.txtRuntime.visibility = View.VISIBLE
+            binding.imvClockIcon.visibility = View.VISIBLE
+            binding.txtSeason.visibility = View.GONE
+            binding.imvCircle.visibility = View.GONE
         }
 
         binding.apply {

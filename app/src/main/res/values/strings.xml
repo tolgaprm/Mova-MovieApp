@@ -22,6 +22,7 @@
     <string name="voteAverageDetail">%1$s (%2$s reviews)</string>
     <string name="release_date_genre">%1$s  %2$s</string>
     <string name="runtime">%1$sh %2$sm</string>
+    <string name="season_count">%s Seasons</string>
 
     <string name="share">Share</string>
     <string name="favorite_list">Favorite List</string>
