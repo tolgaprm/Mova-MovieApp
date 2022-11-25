@@ -11,6 +11,7 @@ data class TvDetail(
     @Json(name = "last_air_date") val lastAirDate: String,
     @Json(name = "number_of_seasons") val numberOfSeasons: Int,
     @Json(name = "original_name") val originalName: String,
+    val name: String,
     val overview: String,
     @Json(name = "poster_path") val posterPath: String?,
     val seasons: List<Season>,

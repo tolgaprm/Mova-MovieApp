@@ -137,7 +137,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/txtGenres"
                 tools:text="2021-12-15" />
 
-
+            <!--region if it is tvSeries show these-->
             <ImageView
                 android:id="@+id/imvCircle"
                 android:layout_width="@dimen/iconSizeExtraSmall"
@@ -160,6 +160,7 @@
                 app:layout_constraintBaseline_toBaselineOf="@+id/txtReleaseDate"
                 app:layout_constraintStart_toEndOf="@+id/imvCircle"
                 tools:text="9 Seasons" />
+            <!--endregion if it is tvSeries show these-->
 
             <ImageView
                 android:id="@+id/imvClockIcon"

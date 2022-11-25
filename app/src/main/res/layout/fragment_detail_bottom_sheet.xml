@@ -30,13 +30,14 @@
         style="@style/Mova.H5"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:lines="2"
+        android:ellipsize="end"
         android:layout_marginStart="@dimen/large_margin"
-        android:layout_marginTop="8dp"
         android:textSize="18sp"
         app:layout_constraintEnd_toStartOf="@+id/guideline4"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/materialCardView"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/ibClose"
         tools:text="Avatar" />
 
     <TextView
@@ -50,24 +51,11 @@
         app:layout_constraintTop_toBottomOf="@+id/tvName"
         tools:text="2009" />
 
-    <TextView
-        android:id="@+id/tvRuntime"
-        style="@style/Mova.Subtitle1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/medium_margin"
-        android:textColor="@color/subtitleColor"
-        app:layout_constraintBottom_toBottomOf="@+id/ibClose"
-        app:layout_constraintStart_toEndOf="@+id/tvReleaseDate"
-        app:layout_constraintTop_toTopOf="@+id/tvReleaseDate"
-        tools:text="2sa. 42 dk. (2h 45m)" />
-
 
     <TextView
         android:id="@+id/tvOverview"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="@dimen/medium_margin"
         android:layout_marginBottom="@dimen/small_margin"
         android:paddingTop="@dimen/medium_padding"
         android:scrollbars="vertical"
@@ -76,7 +64,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/tvReleaseDate"
-        app:layout_constraintTop_toBottomOf="@+id/tvRuntime"
+        app:layout_constraintTop_toBottomOf="@+id/tvReleaseDate"
         app:layout_constraintVertical_bias="0.187"
         tools:text="Bir hırsızlık olayında ağabeyi ölen yarı felçli Jake Sully, Pandora adındaki uzak bir gezegende görevinin başına geçmeye karar verir. Bu yerde Na’vi adında giderek tükenmekte olan bir halk yaşamaktadır. Askeri bir şirket, söz konusu yeri ve oradaki kaynakları mercek altına almak üzere Avatar adında bir program oluşturmuştur. Bu program insanları kısmen insan kısmen de Na’vi haline büründürerek misyon amaçlı Pandora’ya göndermektedir. Bu sisteme gönüllü dahil olan Botanist Dr. Grace Augustine ve Jake Sully için başka bir yaşam var olacaktır. Sully, Pandora’ya geçtiği anda felçli bedeni değişime uğrayarak işlevsel hale gelir. Bu sırada Na’vi halkından Prenses Neytiri ile karşı karşıya gelen Jake, ansızın bir farkındalık yaşar ve bir araştırma misyonu ile gönderildiği bu gezegeni, kendi dünyalısından korumaya karar verir." />
 
@@ -178,9 +166,10 @@
         android:layout_height="@dimen/iconSizeLarge"
         android:clickable="true"
         android:focusable="true"
+        android:layout_marginTop="@dimen/small_margin"
+        android:background="@drawable/text_ripple"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingTop="@dimen/medium_padding"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/materialDivider3">

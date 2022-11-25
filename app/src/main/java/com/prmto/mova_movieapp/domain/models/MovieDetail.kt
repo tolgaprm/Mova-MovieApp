@@ -8,6 +8,7 @@ data class MovieDetail(
     val genres: List<Genre>,
     @Json(name = "imdb_id") val imdbId: String?,
     @Json(name = "original_title") val originalTitle: String,
+    val title: String,
     val overview: String?,
     val popularity: Double,
     @Json(name = "poster_path") val posterPath: String?,

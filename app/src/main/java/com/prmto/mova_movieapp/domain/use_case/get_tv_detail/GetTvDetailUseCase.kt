@@ -8,6 +8,7 @@ import com.prmto.mova_movieapp.util.Resource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException
+import timber.log.Timber
 import javax.inject.Inject
 
 class GetTvDetailUseCase @Inject constructor(
@@ -28,6 +29,9 @@ class GetTvDetailUseCase @Inject constructor(
 
             } catch (e: HttpException) {
                 emit(Resource.Error(errorRes = R.string.internet_error))
+            } catch (e: Exception) {
+                emit(Resource.Error(errorRes = R.string.error))
+                Timber.e("Error", e)
             }
         }
     }

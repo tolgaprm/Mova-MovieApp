@@ -41,6 +41,7 @@ fun MovieDetailDto.toMovieDetail(): MovieDetail {
         genres = genres,
         imdbId = imdbId,
         originalTitle = originalTitle,
+        title = title,
         overview = overview,
         popularity = popularity,
         posterPath = posterPath,

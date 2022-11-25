@@ -43,7 +43,7 @@ object NetworkModule {
     @Singleton
     fun provideImageLoader(@ApplicationContext context: Context): ImageLoader {
         return ImageLoader.Builder(context)
-            .crossfade(true)
+            .crossfade(500)
             .placeholder(R.drawable.loading_animate)
             .build()
     }

@@ -49,6 +49,7 @@ fun TvDetailDto.toTvDetail(): TvDetail {
         lastAirDate = lastAirDate,
         numberOfSeasons = numberOfSeasons,
         originalName = originalName,
+        name = name,
         overview = overview,
         posterPath = posterPath,
         seasons = seasons,

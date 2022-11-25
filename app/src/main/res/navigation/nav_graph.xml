@@ -13,6 +13,7 @@
         <action
             android:id="@+id/actionToHomeFragment"
             app:destination="@id/homeFragment"
+            app:popEnterAnim="@anim/slide_in_left"
             app:popUpTo="@id/splashFragment"
             app:popUpToInclusive="true" />
     </fragment>
@@ -23,7 +24,8 @@
         tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_homeFragment_to_detailBottomSheet"
-            app:destination="@id/detailBottomSheet" />
+            app:destination="@id/detailBottomSheet"
+            app:popEnterAnim="@anim/slide_in_left" />
     </fragment>
     <fragment
         android:id="@+id/exploreFragment"
