@@ -2,7 +2,7 @@ package com.prmto.mova_movieapp.domain.use_case.get_tv_detail
 
 import com.prmto.mova_movieapp.R
 import com.prmto.mova_movieapp.data.models.detail.tv.toTvDetail
-import com.prmto.mova_movieapp.domain.models.TvDetail
+import com.prmto.mova_movieapp.domain.models.detail.TvDetail
 import com.prmto.mova_movieapp.domain.repository.RemoteRepository
 import com.prmto.mova_movieapp.util.Resource
 import kotlinx.coroutines.flow.Flow

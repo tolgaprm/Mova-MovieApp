@@ -1,8 +1,8 @@
 package com.prmto.mova_movieapp.presentation.detail
 
 import androidx.annotation.StringRes
-import com.prmto.mova_movieapp.domain.models.MovieDetail
-import com.prmto.mova_movieapp.domain.models.TvDetail
+import com.prmto.mova_movieapp.domain.models.detail.MovieDetail
+import com.prmto.mova_movieapp.domain.models.detail.TvDetail
 
 data class DetailState(
     val loading: Boolean = false,

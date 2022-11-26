@@ -60,5 +60,6 @@
 
     <string name="add_favorite_list">Add My Favorite List</string>
     <string name="add_watch_list">Add My Watch List</string>
+    <string name="go_movies_imdb_site">Go imdb url that the movie</string>
 
 </resources>

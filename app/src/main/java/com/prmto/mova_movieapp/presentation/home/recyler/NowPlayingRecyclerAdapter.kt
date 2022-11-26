@@ -36,7 +36,7 @@ class NowPlayingRecyclerAdapter @Inject constructor(
         fun bind(movie: Movie, context: Context, onItemClickListener: (Movie) -> Unit = {}) {
             binding.movieTitle.text = movie.title
 
-            val voteCount = HandleUtils.handleVoteCount(movie.voteCount)
+            val voteCount = HandleUtils.convertingVoteCountToString(movie.voteCount)
 
             binding.voteAverage.text = context.getString(
                 R.string.voteAverage,
@@ -53,7 +53,10 @@ class NowPlayingRecyclerAdapter @Inject constructor(
             )
             if (movie.genreIds.isNotEmpty()) {
                 binding.genresText.text =
-                    HandleUtils.handleGenreText(movieGenreList = movieGenreList, movie = movie)
+                    HandleUtils.convertGenreListToStringSeparatedByCommas(
+                        movieGenreList = movieGenreList,
+                        movie = movie
+                    )
             }
 
             binding.root.setOnClickListener {

@@ -28,6 +28,8 @@ object Constants {
     const val DETAIL_DEFAULT_ID = 0
     const val TV_SERIES_STATUS_ENDED = "Ended"
 
+    const val IMDB_MOVIE_URL = "https://www.imdb.com/title/"
+
     const val LATEST_SHOWS_SEE_ALL_PAGE_TOOLBAR_TEXT_ID = "latestRecyclerViewSeeAllSectionText"
 
 }

@@ -52,7 +52,7 @@ class DetailBottomSheet : BottomSheetDialogFragment() {
             if (movie != null) {
 
                 tvName.text = movie.title
-                tvReleaseDate.text = HandleUtils.handleReleaseDate(movie.releaseDate)
+                tvReleaseDate.text = HandleUtils.convertToYearFromDate(movie.releaseDate)
                 tvOverview.text = movie.overview
                 if (movie.posterPath != null) {
                     loadImage(posterPath = movie.posterPath)
@@ -69,7 +69,7 @@ class DetailBottomSheet : BottomSheetDialogFragment() {
 
                 tvName.text = tvSeries.name
                 tvOverview.text = tvSeries.overview
-                tvReleaseDate.text = HandleUtils.handleReleaseDate(tvSeries.firstAirDate)
+                tvReleaseDate.text = HandleUtils.convertToYearFromDate(tvSeries.firstAirDate)
                 if (tvSeries.posterPath != null) {
                     loadImage(posterPath = tvSeries.posterPath)
                 }

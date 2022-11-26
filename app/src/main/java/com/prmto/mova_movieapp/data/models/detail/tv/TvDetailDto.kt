@@ -4,7 +4,7 @@ import com.prmto.mova_movieapp.data.models.Genre
 import com.prmto.mova_movieapp.data.models.detail.ProductionCompany
 import com.prmto.mova_movieapp.data.models.detail.ProductionCountry
 import com.prmto.mova_movieapp.data.models.detail.SpokenLanguage
-import com.prmto.mova_movieapp.domain.models.TvDetail
+import com.prmto.mova_movieapp.domain.models.detail.TvDetail
 import com.squareup.moshi.Json
 
 data class TvDetailDto(

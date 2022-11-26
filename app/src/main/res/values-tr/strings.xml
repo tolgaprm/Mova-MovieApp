@@ -60,4 +60,5 @@
 
     <string name="add_favorite_list">Favori Listeme Ekle</string>
     <string name="add_watch_list">İzleme Listeme Ekle</string>
+    <string name="go_movies_imdb_site">Filmin imdb web sitesine git</string>
 </resources>
