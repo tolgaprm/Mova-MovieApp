@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.textview.MaterialTextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textColor="#5799ef"
+    android:background="@drawable/text_ripple"
+    android:padding="@dimen/small_padding"
+    android:clickable="true"
+    android:focusable="true"
+    android:textSize="14sp"
+    android:layout_marginEnd="@dimen/medium_margin"
+    tools:text="Creator Name" />

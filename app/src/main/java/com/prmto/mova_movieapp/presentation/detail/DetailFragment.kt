@@ -42,7 +42,8 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
 
         bindAttributesDetailFragment = BindAttributesDetailFragment(
             binding = binding,
-            imageLoader = imageLoader
+            imageLoader = imageLoader,
+            context = requireContext()
         )
 
         addOnBackPressedCallback()
@@ -122,15 +123,14 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
 
                 detailState.tvDetail?.let {
                     bindAttributesDetailFragment.bindTvDetail(
-                        tvDetail = it,
-                        context = requireContext()
+                        tvDetail = it
                     )
                 }
 
+
                 detailState.movieDetail?.let { movieDetail ->
                     bindAttributesDetailFragment.bindMovieDetail(
-                        movieDetail = movieDetail,
-                        context = requireContext()
+                        movieDetail = movieDetail
                     )
 
                     imdbImageClickListener(imdbUrl = movieDetail.getImdbUrl())

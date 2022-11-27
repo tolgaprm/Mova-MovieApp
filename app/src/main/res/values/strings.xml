@@ -61,5 +61,8 @@
     <string name="add_favorite_list">Add My Favorite List</string>
     <string name="add_watch_list">Add My Watch List</string>
     <string name="go_movies_imdb_site">Go imdb url that the movie</string>
+    <string name="director_title">Director: </string>
+    <string name="singular_creator_title">Creator: </string>
+    <string name="plural_creator_title">Creators: <br /> </string>
 
 </resources>

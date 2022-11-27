@@ -7,6 +7,7 @@ data class TvDetail(
     val id: Int,
     val genres: List<Genre>,
     val firstAirDate: String,
+    val createdBy: List<CreatedBy>,
     val lastAirDate: String,
     val numberOfSeasons: Int,
     val originalName: String,

@@ -9,7 +9,7 @@ import com.squareup.moshi.Json
 
 data class TvDetailDto(
     @Json(name = "backdrop_path") val backdropPath: String?,
-    @Json(name = "created_by") val createdBy: List<CreatedBy>,
+    @Json(name = "created_by") val createdBy: List<CreatedByDto>,
     @Json(name = "episode_run_time") val episodeRunTime: List<Int>,
     @Json(name = "first_air_date") val firstAirDate: String,
     val genres: List<Genre>,
@@ -47,6 +47,7 @@ fun TvDetailDto.toTvDetail(): TvDetail {
         genres = genres,
         firstAirDate = firstAirDate,
         lastAirDate = lastAirDate,
+        createdBy = createdBy.toListOfCreatedBy(),
         numberOfSeasons = numberOfSeasons,
         originalName = originalName,
         name = name,

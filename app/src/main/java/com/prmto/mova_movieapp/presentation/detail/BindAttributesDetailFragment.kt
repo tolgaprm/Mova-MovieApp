@@ -1,14 +1,17 @@
 package com.prmto.mova_movieapp.presentation.detail
 
 import android.content.Context
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
 import coil.ImageLoader
 import coil.load
+import com.google.android.material.textview.MaterialTextView
 import com.prmto.mova_movieapp.R
 import com.prmto.mova_movieapp.data.models.Genre
 import com.prmto.mova_movieapp.data.remote.ImageApi
 import com.prmto.mova_movieapp.databinding.FragmentDetailBinding
+import com.prmto.mova_movieapp.domain.models.detail.CreatedBy
 import com.prmto.mova_movieapp.domain.models.detail.MovieDetail
 import com.prmto.mova_movieapp.domain.models.detail.TvDetail
 import com.prmto.mova_movieapp.presentation.util.HandleUtils
@@ -16,37 +19,36 @@ import com.prmto.mova_movieapp.util.Constants
 
 class BindAttributesDetailFragment(
     val binding: FragmentDetailBinding,
-    val imageLoader: ImageLoader
+    val imageLoader: ImageLoader,
+    val context: Context,
 ) {
 
-    fun bindMovieDetail(movieDetail: MovieDetail, context: Context) {
+    fun bindMovieDetail(movieDetail: MovieDetail) {
         bindImage(posterPath = movieDetail.posterPath)
         bindMovieName(movieName = movieDetail.title)
         bindDetailInfoSection(
             voteAverage = movieDetail.voteAverage,
             voteCount = movieDetail.voteCount,
-            genreList = movieDetail.genres,
-            context = context
+            genreList = movieDetail.genres
         )
         hideSeasonText()
         showRuntimeTextAndClockIcon()
         showImdbImageIfImdbUrlExists(movieDetail.getImdbUrl())
         binding.txtReleaseDate.text = movieDetail.releaseDate
-        bindMovieRuntime(runtime = movieDetail.runtime, context = context)
+        bindMovieRuntime(runtime = movieDetail.runtime)
         bindOverview(overview = movieDetail.overview)
 
     }
 
-    fun bindTvDetail(tvDetail: TvDetail, context: Context) {
+    fun bindTvDetail(tvDetail: TvDetail) {
         bindImage(posterPath = tvDetail.posterPath)
         bindMovieName(movieName = tvDetail.name)
         bindDetailInfoSection(
             voteAverage = tvDetail.voteAverage,
             voteCount = tvDetail.voteCount,
-            genreList = tvDetail.genres,
-            context = context
+            genreList = tvDetail.genres
         )
-        showSeasonText(season = tvDetail.numberOfSeasons, context = context)
+        showSeasonText(season = tvDetail.numberOfSeasons)
         hideRuntimeTextAndClockIcon()
         hideImdbImage()
         bindTvFirstAndLastAirDate(
@@ -55,8 +57,38 @@ class BindAttributesDetailFragment(
             status = tvDetail.status
         )
         bindOverview(overview = tvDetail.overview)
+        bindCreatorNames(tvDetail.createdBy)
 
     }
+
+    private fun bindCreatorNames(createdBy: List<CreatedBy>) {
+
+        setCreatorNameByCountOfCreator(creatorCount = createdBy.count())
+
+        createdBy.forEach { creator ->
+            val creatorText = LayoutInflater.from(context)
+                .inflate(
+                    R.layout.creator_text,
+                    binding.creatorDirectorLinearLayout,
+                    false
+                ) as MaterialTextView
+
+            creatorText.text = creator.name
+            creatorText.id = creator.id
+
+            binding.creatorDirectorLinearLayout.addView(creatorText)
+
+        }
+    }
+
+    private fun setCreatorNameByCountOfCreator(creatorCount: Int) {
+        binding.txtDirectorOrCreatorName.text = if (creatorCount > 1) {
+            context.getString(R.string.plural_creator_title)
+        } else {
+            context.getString(R.string.singular_creator_title)
+        }
+    }
+
 
     private fun bindImage(posterPath: String?) {
         binding.imvPoster.load(
@@ -92,8 +124,7 @@ class BindAttributesDetailFragment(
     private fun bindDetailInfoSection(
         voteAverage: Double,
         voteCount: Int,
-        genreList: List<Genre>,
-        context: Context
+        genreList: List<Genre>
     ) {
         val ratingBarValue = ((voteAverage * 5) / 10).toFloat()
         val voteCountText = HandleUtils.convertingVoteCountToString(voteCount = voteCount)
@@ -127,7 +158,7 @@ class BindAttributesDetailFragment(
     }
 
 
-    private fun bindMovieRuntime(runtime: Int?, context: Context) {
+    private fun bindMovieRuntime(runtime: Int?) {
         runtime?.let { totalRuntime ->
             val hour = totalRuntime / 60
             val minutes = (totalRuntime % 60)
@@ -140,7 +171,7 @@ class BindAttributesDetailFragment(
         }
     }
 
-    private fun showSeasonText(season: Int, context: Context) {
+    private fun showSeasonText(season: Int) {
         binding.apply {
             imvCircle.visibility = View.VISIBLE
             txtSeason.visibility = View.VISIBLE
