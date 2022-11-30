@@ -146,6 +146,7 @@ class BindAttributesDetailFragment(
                 }
             )
             placeholder(R.drawable.loading_animate)
+
         }
     }
 

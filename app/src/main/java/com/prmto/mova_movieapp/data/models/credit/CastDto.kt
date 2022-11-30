@@ -24,7 +24,8 @@ fun List<CastDto>.toCast(): List<Cast> {
             id = it.id,
             originalName = it.originalName,
             name = it.name,
-            profilePath = it.profilePath
+            profilePath = it.profilePath,
+            character = it.character
         )
     }
 }

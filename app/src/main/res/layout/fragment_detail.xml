@@ -146,11 +146,11 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/medium_margin"
-                app:lineHeight="20dp"
                 app:layout_constraintEnd_toStartOf="@+id/guideline3"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/ratingBar"
                 app:layout_constraintTop_toBottomOf="@+id/txtVoteAverage_Count"
+                app:lineHeight="20dp"
                 tools:text="Action, Adventure, Science, Fiction" />
 
             <com.google.android.material.textview.MaterialTextView
@@ -251,7 +251,6 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:paddingStart="@dimen/medium_padding"
-                android:visibility="gone"
                 android:paddingEnd="0dp"
                 app:layout_constraintEnd_toEndOf="@+id/titleOverview"
                 app:layout_constraintStart_toStartOf="@+id/titleOverview"
@@ -331,59 +330,22 @@
                 android:layout_marginTop="@dimen/large_margin"
                 android:paddingHorizontal="@dimen/medium_padding"
                 android:text="@string/actor"
-                android:textColor="?attr/colorPrimary"
+                android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/txtShare" />
 
-            <com.google.android.material.divider.MaterialDivider
-                android:id="@+id/dividerActor"
-                style="?attr/divider"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/detail_fragment_divider_height"
-                android:layout_marginHorizontal="@dimen/small_margin"
-                android:layout_marginTop="@dimen/small_margin"
-                app:dividerColor="?attr/colorPrimary"
-                app:layout_constraintEnd_toEndOf="@id/txtActor"
-                app:layout_constraintStart_toStartOf="@id/txtActor"
-                app:layout_constraintTop_toBottomOf="@id/txtActor" />
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/txtDirector"
-                style="@style/Mova.H6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/medium_margin"
-                android:layout_marginTop="@dimen/large_margin"
-                android:paddingHorizontal="@dimen/medium_padding"
-                android:text="@string/director"
-                android:textColor="@color/gray"
-                app:layout_constraintStart_toEndOf="@+id/txtActor"
-                app:layout_constraintTop_toBottomOf="@id/txtShare" />
-
-            <com.google.android.material.divider.MaterialDivider
-                android:id="@+id/dividerDirector"
-                style="?attr/divider"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/detail_fragment_divider_height"
-                android:layout_marginHorizontal="@dimen/small_margin"
-                android:layout_marginTop="@dimen/small_margin"
-                android:visibility="invisible"
-                app:dividerColor="?attr/colorPrimary"
-                app:layout_constraintEnd_toEndOf="@id/txtDirector"
-                app:layout_constraintStart_toStartOf="@id/txtDirector"
-                app:layout_constraintTop_toBottomOf="@id/txtDirector" />
-
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerViewActorDirector"
+                android:id="@+id/recyclerViewActor"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/medium_margin"
                 android:orientation="horizontal"
+                android:padding="@dimen/medium_padding"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintEnd_toEndOf="@+id/creatorDirectorLinearLayout"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="@id/txtActor"
-                app:layout_constraintTop_toBottomOf="@id/dividerActor"
+                app:layout_constraintTop_toBottomOf="@id/txtActor"
                 tools:itemCount="5"
                 tools:listitem="@layout/actor_row" />
 

@@ -1,27 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginHorizontal="@dimen/small_margin"
-    android:layout_marginVertical="@dimen/medium_margin"
+    android:layout_height="@dimen/cast_image_size"
+    android:layout_marginEnd="@dimen/large_margin"
     android:gravity="center_horizontal"
-    android:orientation="vertical">
+    android:orientation="horizontal">
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/imvProfilePhoto"
-        android:layout_width="@dimen/action_row_image_size"
-        android:layout_height="@dimen/action_row_image_size"
-        android:scaleType="centerCrop"
-        tools:src="@tools:sample/avatars" />
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/materialCardView2"
+        android:layout_width="@dimen/cast_image_size"
+        android:layout_height="@dimen/cast_image_size"
+        app:cardCornerRadius="@dimen/shape_large"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/imvProfilePhoto"
+            android:layout_width="@dimen/cast_image_size"
+            android:layout_height="@dimen/cast_image_size"
+            android:importantForAccessibility="no"
+            android:scaleType="centerCrop"
+            tools:src="@tools:sample/avatars" />
+
+    </com.google.android.material.card.MaterialCardView>
 
     <TextView
         android:id="@+id/txtActorName"
-        style="@style/Mova.Subtitle1"
-        android:layout_width="60dp"
+        style="@style/Mova.H6"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/medium_margin"
         android:textAlignment="center"
+        android:textStyle="bold"
+        android:layout_marginStart="@dimen/medium_margin"
+        app:layout_constraintStart_toEndOf="@+id/materialCardView2"
+        app:layout_constraintTop_toTopOf="@+id/materialCardView2"
         tools:text="Tom Holand" />
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/txtCharacterName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:layout_marginTop="@dimen/medium_margin"
+        app:layout_constraintStart_toStartOf="@+id/txtActorName"
+        app:layout_constraintTop_toBottomOf="@+id/txtActorName"
+        tools:text="Peter Parker" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

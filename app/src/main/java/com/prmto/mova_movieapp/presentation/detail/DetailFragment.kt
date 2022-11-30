@@ -25,20 +25,23 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class DetailFragment : Fragment(R.layout.fragment_detail) {
 
-    private var _binding: FragmentDetailBinding? = null
-    private val binding get() = _binding!!
-    private val detailArgs by navArgs<DetailFragmentArgs>()
-
-    private lateinit var bindAttributesDetailFragment: BindAttributesDetailFragment
-
     @Inject
     lateinit var imageLoader: ImageLoader
+    private lateinit var bindAttributesDetailFragment: BindAttributesDetailFragment
 
+    private var _binding: FragmentDetailBinding? = null
+    private val binding get() = _binding!!
+
+    private val detailArgs by navArgs<DetailFragmentArgs>()
     private val viewModel: DetailViewModel by viewModels()
+
+    private lateinit var detailActorAdapter: DetailActorAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentDetailBinding.bind(view)
+
+        setupDetailActorAdapter()
 
         bindAttributesDetailFragment = BindAttributesDetailFragment(
             binding = binding,
@@ -55,7 +58,11 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
         setDetailIdToStateSavedHandle()
 
         collectDataLifecycleAware()
+    }
 
+    private fun setupDetailActorAdapter() {
+        detailActorAdapter = DetailActorAdapter(imageLoader)
+        binding.recyclerViewActor.adapter = detailActorAdapter
     }
 
 
@@ -125,6 +132,7 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
                     bindAttributesDetailFragment.bindTvDetail(
                         tvDetail = it
                     )
+                    detailActorAdapter.submitList(it.credit.cast)
                 }
 
 
@@ -132,6 +140,7 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
                     bindAttributesDetailFragment.bindMovieDetail(
                         movieDetail = movieDetail
                     )
+                    detailActorAdapter.submitList(movieDetail.credit.cast)
                 }
 
                 if (detailState.errorId != null) {

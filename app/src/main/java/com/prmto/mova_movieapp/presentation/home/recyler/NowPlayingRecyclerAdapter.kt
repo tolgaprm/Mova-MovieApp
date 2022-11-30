@@ -98,8 +98,6 @@ class NowPlayingRecyclerAdapter @Inject constructor(
 }
 
 class DiffUtilCallBack<T : Any> : DiffUtil.ItemCallback<T>() {
-
-
     override fun areItemsTheSame(oldItem: T, newItem: T): Boolean {
         return if (oldItem is Movie && newItem is Movie) {
             val old = oldItem as Movie
@@ -119,6 +117,4 @@ class DiffUtilCallBack<T : Any> : DiffUtil.ItemCallback<T>() {
             oldItem as TvSeries == newItem as TvSeries
         }
     }
-
-
 }
