@@ -44,7 +44,9 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
             binding = binding,
             imageLoader = imageLoader,
             context = requireContext()
-        )
+        ) { tmdbUrl ->
+            intentToImdbWebSite(tmdbUrl)
+        }
 
         addOnBackPressedCallback()
 
@@ -81,13 +83,11 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
         } else if (tvId != DETAIL_DEFAULT_ID) {
             viewModel.setTvDetailId(tvId)
         }
-
     }
 
     private fun collectDataLifecycleAware() {
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-
                 launch { collectTvId() }
 
                 launch { collectMovieId() }
@@ -132,8 +132,6 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
                     bindAttributesDetailFragment.bindMovieDetail(
                         movieDetail = movieDetail
                     )
-
-                    imdbImageClickListener(imdbUrl = movieDetail.getImdbUrl())
                 }
 
                 if (detailState.errorId != null) {
@@ -144,23 +142,13 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
                     ).show()
                 }
             }
-
         }
     }
 
-    private fun imdbImageClickListener(imdbUrl: String?) {
-        binding.imvImdb.setOnClickListener {
-            imdbUrl?.let { imdbUrl ->
-                val intent = intentToImdbWebSite(imdbUrl = imdbUrl)
-                startActivity(intent)
-            }
-        }
-    }
-
-    private fun intentToImdbWebSite(imdbUrl: String): Intent {
-        val intentToImdbWebSite = Intent(Intent.ACTION_VIEW)
-        intentToImdbWebSite.data = Uri.parse(imdbUrl)
-        return intentToImdbWebSite
+    private fun intentToImdbWebSite(tmdbUrl: String) {
+        val intent = Intent(Intent.ACTION_VIEW)
+        intent.data = Uri.parse(tmdbUrl)
+        startActivity(intent)
     }
 
     override fun onDestroyView() {

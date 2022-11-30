@@ -60,7 +60,7 @@
 
     <string name="add_favorite_list">Favori Listeme Ekle</string>
     <string name="add_watch_list">İzleme Listeme Ekle</string>
-    <string name="go_movies_imdb_site">Filmin imdb web sitesine git</string>
+    <string name="go_movies_tmdb_site">Filmin TMDB web sitesine git</string>
     <string name="director_title">Yönetmen: </string>
     <string name="singular_creator_title">Yapımcı: </string>
     <string name="plural_creator_title">Yapımcılar: <br /></string>

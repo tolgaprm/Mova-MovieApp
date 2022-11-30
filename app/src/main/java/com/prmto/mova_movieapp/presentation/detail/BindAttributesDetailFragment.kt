@@ -21,9 +21,21 @@ class BindAttributesDetailFragment(
     val binding: FragmentDetailBinding,
     val imageLoader: ImageLoader,
     val context: Context,
+    val onClickTmdbImage: (tmdbUrl: String) -> Unit
 ) {
 
+
+    private var isTvDetail = false
+    private var currentTvId = 0
+    private var currentMovieId = 0
+
+    init {
+        setTmdbImageOnClickListener()
+    }
+
     fun bindMovieDetail(movieDetail: MovieDetail) {
+        isTvDetail = false
+        currentMovieId = movieDetail.id
         bindImage(posterPath = movieDetail.posterPath)
         bindMovieName(movieName = movieDetail.title)
         bindDetailInfoSection(
@@ -33,7 +45,6 @@ class BindAttributesDetailFragment(
         )
         hideSeasonText()
         showRuntimeTextAndClockIcon()
-        showImdbImageIfImdbUrlExists(movieDetail.getImdbUrl())
         binding.txtReleaseDate.text = movieDetail.releaseDate
         bindMovieRuntime(runtime = movieDetail.runtime)
         bindOverview(overview = movieDetail.overview)
@@ -41,6 +52,8 @@ class BindAttributesDetailFragment(
     }
 
     fun bindTvDetail(tvDetail: TvDetail) {
+        isTvDetail = true
+        currentTvId = tvDetail.id
         bindImage(posterPath = tvDetail.posterPath)
         bindMovieName(movieName = tvDetail.name)
         bindDetailInfoSection(
@@ -50,16 +63,16 @@ class BindAttributesDetailFragment(
         )
         showSeasonText(season = tvDetail.numberOfSeasons)
         hideRuntimeTextAndClockIcon()
-        hideImdbImage()
         bindTvFirstAndLastAirDate(
             firstAirDate = tvDetail.firstAirDate,
             lastAirDate = tvDetail.lastAirDate,
             status = tvDetail.status
         )
         bindOverview(overview = tvDetail.overview)
+        binding.creatorDirectorLinearLayout.removeAllViews()
         bindCreatorNames(tvDetail.createdBy)
-
     }
+
 
     private fun bindCreatorNames(createdBy: List<CreatedBy>) {
 
@@ -199,15 +212,15 @@ class BindAttributesDetailFragment(
         binding.imvClockIcon.visibility = View.GONE
     }
 
-    private fun showImdbImageIfImdbUrlExists(imdbUrl: String?) {
-        if (imdbUrl != null) {
-            binding.imvImdb.visibility = View.VISIBLE
-        } else {
-            hideImdbImage()
-        }
-    }
+    private fun setTmdbImageOnClickListener() {
+        binding.imvTmdb.setOnClickListener {
+            val tmdbUrl = if (isTvDetail) {
+                "${Constants.TMDB_TV_URL}$currentTvId"
+            } else {
+                "${Constants.TMDB_MOVIE_URL}$currentMovieId"
+            }
 
-    private fun hideImdbImage() {
-        binding.imvImdb.visibility = View.GONE
+            onClickTmdbImage(tmdbUrl)
+        }
     }
 }

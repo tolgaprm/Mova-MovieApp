@@ -67,13 +67,14 @@
                 app:layout_constraintGuide_end="102dp" />
 
             <ImageView
-                android:id="@+id/imvImdb"
+                android:id="@+id/imvTmdb"
                 android:layout_width="@dimen/iconSizeExtraLarge"
                 android:layout_height="0dp"
-                android:contentDescription="@string/go_movies_imdb_site"
-                android:src="@drawable/ic_imdb"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="@+id/txtReleaseDate"
+                android:padding="@dimen/small_padding"
+                android:background="#0d253f"
+                android:contentDescription="@string/go_movies_tmdb_site"
+                android:src="@drawable/tmdb_logo"
+                app:layout_constraintBottom_toBottomOf="@+id/txtGenres"
                 app:layout_constraintEnd_toEndOf="@+id/txtMovieName"
                 app:layout_constraintStart_toStartOf="@+id/guideline3"
                 app:layout_constraintTop_toTopOf="@+id/txtVoteAverage_Count"
@@ -237,7 +238,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/medium_margin"
                 android:text="@string/overview"
-                app:layout_constraintEnd_toEndOf="@+id/imvImdb"
+                app:layout_constraintEnd_toEndOf="@+id/imvTmdb"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/creatorDirectorLinearLayout" />
