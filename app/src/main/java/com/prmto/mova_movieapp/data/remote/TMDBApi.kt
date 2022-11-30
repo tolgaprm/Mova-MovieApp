@@ -10,6 +10,7 @@ import com.prmto.mova_movieapp.data.models.enums.Category
 import com.prmto.mova_movieapp.data.models.enums.Sort
 import com.prmto.mova_movieapp.presentation.util.toDiscoveryQueryString
 import com.prmto.mova_movieapp.util.Constants.API_KEY
+import com.prmto.mova_movieapp.util.Constants.QUERY_APPEND_TO_RESPONSE
 import com.prmto.mova_movieapp.util.Constants.STARTING_PAGE
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -93,14 +94,16 @@ interface TMDBApi {
     suspend fun getMovieDetail(
         @Path("movie_id") movieId: Int,
         @Query("api_key") apiKey: String = API_KEY,
-        @Query("language") language: String
+        @Query("language") language: String,
+        @Query("append_to_response") appendToResponse: String = QUERY_APPEND_TO_RESPONSE
     ): MovieDetailDto
 
     @GET("tv/{tv_id}")
     suspend fun getTvDetail(
         @Path("tv_id") tvId: Int,
         @Query("api_key") apiKey: String = API_KEY,
-        @Query("language") language: String
+        @Query("language") language: String,
+        @Query("append_to_response") appendToResponse: String = QUERY_APPEND_TO_RESPONSE
     ): TvDetailDto
 
 }

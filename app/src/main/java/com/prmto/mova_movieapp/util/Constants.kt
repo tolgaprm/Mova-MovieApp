@@ -31,6 +31,8 @@ object Constants {
     const val TMDB_MOVIE_URL = "https://www.themoviedb.org/movie/"
     const val TMDB_TV_URL = "https://www.themoviedb.org/tv/"
 
+    const val QUERY_APPEND_TO_RESPONSE = "credits,watch/providers"
+
     const val LATEST_SHOWS_SEE_ALL_PAGE_TOOLBAR_TEXT_ID = "latestRecyclerViewSeeAllSectionText"
 
 }

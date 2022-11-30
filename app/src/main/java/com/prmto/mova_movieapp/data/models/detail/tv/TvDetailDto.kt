@@ -1,6 +1,8 @@
 package com.prmto.mova_movieapp.data.models.detail.tv
 
 import com.prmto.mova_movieapp.data.models.Genre
+import com.prmto.mova_movieapp.data.models.credit.CreditDto
+import com.prmto.mova_movieapp.data.models.credit.toCredit
 import com.prmto.mova_movieapp.data.models.detail.ProductionCompany
 import com.prmto.mova_movieapp.data.models.detail.ProductionCountry
 import com.prmto.mova_movieapp.data.models.detail.SpokenLanguage
@@ -38,7 +40,8 @@ data class TvDetailDto(
     val tagline: String,
     val type: String,
     @Json(name = "vote_average") val voteAverage: Double,
-    @Json(name = "vote_count") val voteCount: Int
+    @Json(name = "vote_count") val voteCount: Int,
+    val credits: CreditDto
 )
 
 fun TvDetailDto.toTvDetail(): TvDetail {
@@ -56,6 +59,7 @@ fun TvDetailDto.toTvDetail(): TvDetail {
         seasons = seasons,
         status = status,
         voteAverage = voteAverage,
-        voteCount = voteCount
+        voteCount = voteCount,
+        credit = credits.toCredit()
     )
 }

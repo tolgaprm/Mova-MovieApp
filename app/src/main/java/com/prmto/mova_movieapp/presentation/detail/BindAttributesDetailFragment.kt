@@ -11,6 +11,7 @@ import com.prmto.mova_movieapp.R
 import com.prmto.mova_movieapp.data.models.Genre
 import com.prmto.mova_movieapp.data.remote.ImageApi
 import com.prmto.mova_movieapp.databinding.FragmentDetailBinding
+import com.prmto.mova_movieapp.domain.models.credit.Crew
 import com.prmto.mova_movieapp.domain.models.detail.CreatedBy
 import com.prmto.mova_movieapp.domain.models.detail.MovieDetail
 import com.prmto.mova_movieapp.domain.models.detail.TvDetail
@@ -28,6 +29,8 @@ class BindAttributesDetailFragment(
     private var isTvDetail = false
     private var currentTvId = 0
     private var currentMovieId = 0
+
+    private val DIRECTION_DEPARTMENT_NAME = "Directing"
 
     init {
         setTmdbImageOnClickListener()
@@ -48,7 +51,30 @@ class BindAttributesDetailFragment(
         binding.txtReleaseDate.text = movieDetail.releaseDate
         bindMovieRuntime(runtime = movieDetail.runtime)
         bindOverview(overview = movieDetail.overview)
+        binding.creatorDirectorLinearLayout.removeViewsInLayout(
+            1,
+            binding.creatorDirectorLinearLayout.childCount - 1
+        )
+        bindDirectorName(movieDetail.credit.crew)
+    }
 
+    private fun bindDirectorName(crews: List<Crew>) {
+        val director = crews.find {
+            it.department == DIRECTION_DEPARTMENT_NAME
+        }
+        director?.let {
+            binding.txtDirectorOrCreatorName.text = context.getString(R.string.director_title)
+            val directorText = LayoutInflater.from(context)
+                .inflate(
+                    R.layout.creator_text,
+                    binding.creatorDirectorLinearLayout,
+                    false
+                ) as MaterialTextView
+
+            directorText.text = director.name
+            directorText.id = director.id
+            binding.creatorDirectorLinearLayout.addView(directorText)
+        }
     }
 
     fun bindTvDetail(tvDetail: TvDetail) {
@@ -69,15 +95,20 @@ class BindAttributesDetailFragment(
             status = tvDetail.status
         )
         bindOverview(overview = tvDetail.overview)
-        binding.creatorDirectorLinearLayout.removeAllViews()
+        binding.creatorDirectorLinearLayout.removeViewsInLayout(
+            1,
+            binding.creatorDirectorLinearLayout.childCount - 1
+        )
         bindCreatorNames(tvDetail.createdBy)
     }
 
 
     private fun bindCreatorNames(createdBy: List<CreatedBy>) {
-
+        if (createdBy.isEmpty()) {
+            binding.creatorDirectorLinearLayout.removeAllViews()
+            return
+        }
         setCreatorNameByCountOfCreator(creatorCount = createdBy.count())
-
         createdBy.forEach { creator ->
             val creatorText = LayoutInflater.from(context)
                 .inflate(
@@ -85,12 +116,9 @@ class BindAttributesDetailFragment(
                     binding.creatorDirectorLinearLayout,
                     false
                 ) as MaterialTextView
-
             creatorText.text = creator.name
             creatorText.id = creator.id
-
             binding.creatorDirectorLinearLayout.addView(creatorText)
-
         }
     }
 
@@ -101,7 +129,6 @@ class BindAttributesDetailFragment(
             context.getString(R.string.singular_creator_title)
         }
     }
-
 
     private fun bindImage(posterPath: String?) {
         binding.imvPoster.load(
@@ -120,8 +147,6 @@ class BindAttributesDetailFragment(
             )
             placeholder(R.drawable.loading_animate)
         }
-
-
     }
 
     private fun bindMovieName(movieName: String) {
@@ -146,7 +171,6 @@ class BindAttributesDetailFragment(
             ratingBar.rating = ratingBarValue
             txtGenres.text =
                 HandleUtils.convertGenreListToStringSeparatedByCommas(genreList = genreList)
-
             txtVoteAverageCount.text = context.getString(
                 R.string.voteAverageDetail,
                 voteAverage.toString().subSequence(0, 3),
@@ -161,7 +185,6 @@ class BindAttributesDetailFragment(
         status: String
     ) {
         val firstAirDateValue = HandleUtils.convertToYearFromDate(firstAirDate)
-
         binding.txtReleaseDate.text = if (status == Constants.TV_SERIES_STATUS_ENDED) {
             val lastAirDateValue = HandleUtils.convertToYearFromDate(lastAirDate)
             "${firstAirDateValue}-${lastAirDateValue}"
@@ -170,12 +193,10 @@ class BindAttributesDetailFragment(
         }
     }
 
-
     private fun bindMovieRuntime(runtime: Int?) {
         runtime?.let { totalRuntime ->
             val hour = totalRuntime / 60
             val minutes = (totalRuntime % 60)
-
             binding.txtRuntime.text = context.getString(
                 R.string.runtime,
                 hour.toString(),
@@ -219,7 +240,6 @@ class BindAttributesDetailFragment(
             } else {
                 "${Constants.TMDB_MOVIE_URL}$currentMovieId"
             }
-
             onClickTmdbImage(tmdbUrl)
         }
     }

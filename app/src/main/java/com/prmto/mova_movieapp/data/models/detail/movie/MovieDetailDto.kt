@@ -1,9 +1,12 @@
 package com.prmto.mova_movieapp.data.models.detail.movie
 
 import com.prmto.mova_movieapp.data.models.Genre
+import com.prmto.mova_movieapp.data.models.credit.CreditDto
+import com.prmto.mova_movieapp.data.models.credit.toCredit
 import com.prmto.mova_movieapp.data.models.detail.ProductionCompany
 import com.prmto.mova_movieapp.data.models.detail.ProductionCountry
 import com.prmto.mova_movieapp.data.models.detail.SpokenLanguage
+import com.prmto.mova_movieapp.data.models.watch_provider.WatchProviders
 import com.prmto.mova_movieapp.domain.models.detail.MovieDetail
 import com.squareup.moshi.Json
 
@@ -32,7 +35,9 @@ data class MovieDetailDto(
     val title: String,
     val video: Boolean,
     @Json(name = "vote_average") val voteAverage: Double,
-    @Json(name = "vote_count") val voteCount: Int
+    @Json(name = "vote_count") val voteCount: Int,
+    val credits: CreditDto,
+    @Json(name = "watch/providers") val watchProviders: WatchProviders
 )
 
 fun MovieDetailDto.toMovieDetail(): MovieDetail {
@@ -48,6 +53,8 @@ fun MovieDetailDto.toMovieDetail(): MovieDetail {
         releaseDate = releaseDate,
         runtime = runtime,
         voteAverage = voteAverage,
-        voteCount = voteCount
+        voteCount = voteCount,
+        credit = credits.toCredit(),
+        watchProviders = watchProviders
     )
 }
