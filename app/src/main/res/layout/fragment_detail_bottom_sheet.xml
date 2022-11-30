@@ -30,13 +30,14 @@
         style="@style/Mova.H5"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:lines="2"
+        android:ellipsize="end"
         android:layout_marginStart="@dimen/large_margin"
-        android:layout_marginTop="8dp"
         android:textSize="18sp"
         app:layout_constraintEnd_toStartOf="@+id/guideline4"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/materialCardView"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/ibClose"
         tools:text="Avatar" />
 
     <TextView
@@ -50,39 +51,40 @@
         app:layout_constraintTop_toBottomOf="@+id/tvName"
         tools:text="2009" />
 
-    <TextView
-        android:id="@+id/tvRuntime"
-        style="@style/Mova.Subtitle1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/medium_margin"
-        android:textColor="@color/subtitleColor"
-        app:layout_constraintStart_toEndOf="@+id/tvReleaseDate"
-        app:layout_constraintTop_toTopOf="@+id/tvReleaseDate"
-        tools:text="2sa. 42 dk. (2h 45m)" />
-
 
     <TextView
         android:id="@+id/tvOverview"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginBottom="@dimen/small_margin"
-        android:paddingTop="@dimen/small_padding"
+        android:paddingTop="@dimen/medium_padding"
         android:scrollbars="vertical"
         android:textColor="?attr/colorOnBackground"
         app:layout_constraintBottom_toTopOf="@+id/guideline5"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/tvReleaseDate"
-        app:layout_constraintTop_toBottomOf="@+id/tvRuntime"
+        app:layout_constraintTop_toBottomOf="@+id/tvReleaseDate"
         app:layout_constraintVertical_bias="0.187"
         tools:text="Bir hırsızlık olayında ağabeyi ölen yarı felçli Jake Sully, Pandora adındaki uzak bir gezegende görevinin başına geçmeye karar verir. Bu yerde Na’vi adında giderek tükenmekte olan bir halk yaşamaktadır. Askeri bir şirket, söz konusu yeri ve oradaki kaynakları mercek altına almak üzere Avatar adında bir program oluşturmuştur. Bu program insanları kısmen insan kısmen de Na’vi haline büründürerek misyon amaçlı Pandora’ya göndermektedir. Bu sisteme gönüllü dahil olan Botanist Dr. Grace Augustine ve Jake Sully için başka bir yaşam var olacaktır. Sully, Pandora’ya geçtiği anda felçli bedeni değişime uğrayarak işlevsel hale gelir. Bu sırada Na’vi halkından Prenses Neytiri ile karşı karşıya gelen Jake, ansızın bir farkındalık yaşar ve bir araştırma misyonu ile gönderildiği bu gezegeni, kendi dünyalısından korumaya karar verir." />
 
+
     <ImageButton
-        android:id="@+id/ibFavoriteList"
-        style="@style/CircleImageButton"
+        android:id="@+id/ibClose"
+        style="@style/CircleImageLargeButton"
+        android:layout_margin="@dimen/medium_margin"
+        android:contentDescription="@string/navigate_up"
+        android:padding="@dimen/small_padding"
+        android:src="@drawable/ic_baseline_close_24"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!--region share,favorite,watch btn section-->
+    <ImageButton
+        android:id="@+id/btnFavoriteList"
+        style="@style/CircleImageLargeButton"
         android:layout_marginTop="@dimen/medium_margin"
-        android:contentDescription="@string/add_list"
+        android:contentDescription="@string/add_favorite_list"
         android:paddingTop="2dp"
         android:src="@drawable/ic_baseline_favorite_border_24"
         app:layout_constraintEnd_toEndOf="parent"
@@ -97,31 +99,23 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/small_padding"
         android:text="@string/favorite_list"
-        app:layout_constraintEnd_toEndOf="@+id/ibFavoriteList"
+        app:layout_constraintEnd_toEndOf="@+id/btnFavoriteList"
         app:layout_constraintHorizontal_bias="0.545"
-        app:layout_constraintStart_toStartOf="@+id/ibFavoriteList"
-        app:layout_constraintTop_toBottomOf="@+id/ibFavoriteList" />
+        app:layout_constraintStart_toStartOf="@+id/btnFavoriteList"
+        app:layout_constraintTop_toBottomOf="@+id/btnFavoriteList" />
 
-    <ImageButton
-        android:id="@+id/ibClose"
-        style="@style/CircleImageButton"
-        android:layout_margin="@dimen/medium_margin"
-        android:contentDescription="@string/add_list"
-        android:padding="@dimen/small_padding"
-        android:src="@drawable/ic_baseline_close_24"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
         android:id="@+id/ibShare"
-        style="@style/CircleImageButton"
+        style="@style/CircleImageLargeButton"
         android:contentDescription="@string/share"
         android:src="@drawable/ic_share"
-        app:layout_constraintBottom_toBottomOf="@+id/ibFavoriteList"
+        app:layout_constraintBottom_toBottomOf="@+id/btnFavoriteList"
         app:layout_constraintEnd_toStartOf="@+id/ibWatchingList"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/ibFavoriteList"
-        app:layout_constraintTop_toTopOf="@+id/ibFavoriteList" />
+        app:layout_constraintStart_toEndOf="@+id/btnFavoriteList"
+        app:layout_constraintTop_toTopOf="@+id/btnFavoriteList"
+        tools:ignore="DuplicateSpeakableTextCheck" />
 
     <TextView
         android:id="@+id/textView7"
@@ -135,15 +129,15 @@
 
     <ImageButton
         android:id="@+id/ibWatchingList"
-        style="@style/CircleImageButton"
-        android:contentDescription="@string/share"
+        style="@style/CircleImageLargeButton"
+        android:contentDescription="@string/add_watch_list"
         android:padding="@dimen/small_padding"
         android:src="@drawable/ic_baseline_video_library_24"
-        app:layout_constraintBottom_toBottomOf="@+id/ibFavoriteList"
+        app:layout_constraintBottom_toBottomOf="@+id/btnFavoriteList"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/ibShare"
-        app:layout_constraintTop_toTopOf="@+id/ibFavoriteList" />
+        app:layout_constraintTop_toTopOf="@+id/btnFavoriteList" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -155,6 +149,8 @@
         app:layout_constraintStart_toStartOf="@+id/ibWatchingList"
         app:layout_constraintTop_toBottomOf="@+id/ibWatchingList" />
 
+    <!--endregion share,favorite,watch btn section-->
+
     <com.google.android.material.divider.MaterialDivider
         android:id="@+id/materialDivider3"
         android:layout_width="wrap_content"
@@ -165,14 +161,15 @@
         app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
     <LinearLayout
-        android:id="@+id/llDetail"
+        android:id="@+id/detailSection"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/iconSizeLarge"
         android:clickable="true"
         android:focusable="true"
+        android:layout_marginTop="@dimen/small_margin"
+        android:background="@drawable/text_ripple"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingTop="@dimen/medium_padding"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/materialDivider3">

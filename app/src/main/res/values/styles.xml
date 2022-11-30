@@ -73,11 +73,24 @@
     </style>
 
 
-    <style name="CircleImageButton" parent="Widget.AppCompat.ImageButton">
+    <style name="CircleImageLargeButton" parent="Widget.AppCompat.ImageButton">
         <item name="android:layout_width">@dimen/iconSizeLarge</item>
         <item name="android:layout_height">@dimen/iconSizeLarge</item>
         <item name="android:background">@drawable/text_ripple</item>
         <item name="tint">?attr/colorPrimary</item>
+    </style>
+
+    <style name="CircleImageSmallButton" parent="Widget.AppCompat.ImageButton">
+        <item name="android:layout_width">@dimen/iconSizeMedium</item>
+        <item name="android:layout_height">@dimen/iconSizeMedium</item>
+        <item name="android:background">@drawable/text_ripple</item>
+        <item name="tint">?attr/colorPrimary</item>
+    </style>
+
+    <style name="RatingBar"
+        parent="android:style/Widget.Material.RatingBar.Small">
+        <item name="android:stepSize">0.5</item>
+        <item name="android:progressTint">@color/progressTint</item>
     </style>
 
 </resources>

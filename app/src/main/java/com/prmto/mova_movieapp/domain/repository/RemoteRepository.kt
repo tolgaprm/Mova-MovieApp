@@ -1,7 +1,9 @@
 package com.prmto.mova_movieapp.domain.repository
 
 import androidx.paging.PagingData
-import com.prmto.mova_movieapp.domain.models.GenreList
+import com.prmto.mova_movieapp.data.models.GenreList
+import com.prmto.mova_movieapp.data.models.detail.movie.MovieDetailDto
+import com.prmto.mova_movieapp.data.models.detail.tv.TvDetailDto
 import com.prmto.mova_movieapp.domain.models.Movie
 import com.prmto.mova_movieapp.domain.models.TvSeries
 import com.prmto.mova_movieapp.presentation.filter_bottom_sheet.state.FilterBottomState
@@ -49,4 +51,14 @@ interface RemoteRepository {
         language: String,
         filterBottomState: FilterBottomState
     ): Flow<PagingData<TvSeries>>
+
+    suspend fun getMovieDetail(
+        language: String,
+        movieId: Int
+    ): MovieDetailDto
+
+    suspend fun getTvDetail(
+        language: String,
+        tvId: Int
+    ): TvDetailDto
 }

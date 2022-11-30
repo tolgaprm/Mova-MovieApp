@@ -6,8 +6,8 @@ import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.prmto.mova_movieapp.R
+import com.prmto.mova_movieapp.data.models.Genre
 import com.prmto.mova_movieapp.databinding.MovieRowBinding
-import com.prmto.mova_movieapp.domain.models.Genre
 import com.prmto.mova_movieapp.domain.models.Movie
 import com.prmto.mova_movieapp.domain.models.TvSeries
 import com.prmto.mova_movieapp.presentation.home.recyler.DiffUtilCallBack
@@ -25,9 +25,10 @@ abstract class BaseMovieAndTvRecyclerAdapter<T : Any>(
         fun bindMovie(movie: Movie, genreList: List<Genre>, context: Context) {
 
             binding.tvMovieTvName.text = movie.title
-            val genre = HandleUtils.handleGenreOneText(genreList, movie.genreIds)
-            val voteCount = HandleUtils.handleVoteCount(movie.voteCount)
-            val releaseDate = HandleUtils.handleReleaseDate(movie.releaseDate)
+            val genre =
+                HandleUtils.handleConvertingGenreListToOneGenreString(genreList, movie.genreIds)
+            val voteCount = HandleUtils.convertingVoteCountToString(movie.voteCount)
+            val releaseDate = HandleUtils.convertToYearFromDate(movie.releaseDate)
 
             binding.tvReleaseDateGenre.text =
                 context.getString(R.string.release_date_genre, releaseDate, genre)
@@ -42,9 +43,10 @@ abstract class BaseMovieAndTvRecyclerAdapter<T : Any>(
         fun bindTvSeries(tv: TvSeries, genreList: List<Genre>, context: Context) {
             binding.tvMovieTvName.text = tv.name
 
-            val genre = HandleUtils.handleGenreOneText(genreList, tv.genreIds)
-            val releaseDate = HandleUtils.handleReleaseDate(tv.firstAirDate)
-            val voteCount = HandleUtils.handleVoteCount(tv.voteCount)
+            val genre =
+                HandleUtils.handleConvertingGenreListToOneGenreString(genreList, tv.genreIds)
+            val releaseDate = HandleUtils.convertToYearFromDate(tv.firstAirDate)
+            val voteCount = HandleUtils.convertingVoteCountToString(tv.voteCount)
 
             binding.tvReleaseDateGenre.text =
                 context.getString(R.string.release_date_genre, releaseDate, genre)

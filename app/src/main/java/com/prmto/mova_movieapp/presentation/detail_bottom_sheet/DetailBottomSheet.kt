@@ -52,7 +52,7 @@ class DetailBottomSheet : BottomSheetDialogFragment() {
             if (movie != null) {
 
                 tvName.text = movie.title
-                tvReleaseDate.text = HandleUtils.handleReleaseDate(movie.releaseDate)
+                tvReleaseDate.text = HandleUtils.convertToYearFromDate(movie.releaseDate)
                 tvOverview.text = movie.overview
                 if (movie.posterPath != null) {
                     loadImage(posterPath = movie.posterPath)
@@ -60,25 +60,48 @@ class DetailBottomSheet : BottomSheetDialogFragment() {
                 tvBottomInfoText.text =
                     requireContext().getString(R.string.detail_bottom_sheet_movie_info)
 
+                detailSection.setOnClickListener {
+                    navigateToDetailFragment(movie.id)
+                }
             }
 
             if (tvSeries != null) {
 
                 tvName.text = tvSeries.name
                 tvOverview.text = tvSeries.overview
-                tvReleaseDate.text = HandleUtils.handleReleaseDate(tvSeries.firstAirDate)
+                tvReleaseDate.text = HandleUtils.convertToYearFromDate(tvSeries.firstAirDate)
                 if (tvSeries.posterPath != null) {
                     loadImage(posterPath = tvSeries.posterPath)
                 }
                 tvBottomInfoText.text =
                     requireContext().getString(R.string.detail_bottom_sheet_tv_info)
 
+
+                detailSection.setOnClickListener {
+                    navigateToDetailFragment(tvId = tvSeries.id)
+                }
+
             }
+
+
 
             tvOverview.movementMethod = ScrollingMovementMethod()
         }
 
 
+    }
+
+    private fun navigateToDetailFragment(movieId: Int? = null, tvId: Int? = null) {
+        val action = DetailBottomSheetDirections.actionDetailBottomSheetToDetailFragment()
+
+        movieId?.let {
+            action.movieId = movieId
+        }
+        tvId?.let {
+            action.tvId = tvId
+        }
+
+        findNavController().navigate(action)
     }
 
 

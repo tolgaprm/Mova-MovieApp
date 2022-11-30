@@ -1,6 +1,6 @@
 package com.prmto.mova_movieapp.domain.use_case.get_tv_genre_list
 
-import com.prmto.mova_movieapp.domain.models.GenreList
+import com.prmto.mova_movieapp.data.models.GenreList
 import com.prmto.mova_movieapp.domain.repository.RemoteRepository
 import javax.inject.Inject
 

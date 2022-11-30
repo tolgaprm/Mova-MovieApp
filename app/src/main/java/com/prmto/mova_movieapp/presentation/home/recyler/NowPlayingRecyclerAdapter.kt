@@ -9,10 +9,10 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.ImageLoader
 import coil.load
 import com.prmto.mova_movieapp.R
+import com.prmto.mova_movieapp.data.models.Genre
 import com.prmto.mova_movieapp.data.remote.ImageApi
 import com.prmto.mova_movieapp.data.remote.ImageSize
 import com.prmto.mova_movieapp.databinding.NowPlayingRowBinding
-import com.prmto.mova_movieapp.domain.models.Genre
 import com.prmto.mova_movieapp.domain.models.Movie
 import com.prmto.mova_movieapp.domain.models.TvSeries
 import com.prmto.mova_movieapp.presentation.util.HandleUtils
@@ -36,7 +36,7 @@ class NowPlayingRecyclerAdapter @Inject constructor(
         fun bind(movie: Movie, context: Context, onItemClickListener: (Movie) -> Unit = {}) {
             binding.movieTitle.text = movie.title
 
-            val voteCount = HandleUtils.handleVoteCount(movie.voteCount)
+            val voteCount = HandleUtils.convertingVoteCountToString(movie.voteCount)
 
             binding.voteAverage.text = context.getString(
                 R.string.voteAverage,
@@ -53,7 +53,10 @@ class NowPlayingRecyclerAdapter @Inject constructor(
             )
             if (movie.genreIds.isNotEmpty()) {
                 binding.genresText.text =
-                    HandleUtils.handleGenreText(movieGenreList = movieGenreList, movie = movie)
+                    HandleUtils.convertGenreListToStringSeparatedByCommas(
+                        movieGenreList = movieGenreList,
+                        movie = movie
+                    )
             }
 
             binding.root.setOnClickListener {
@@ -95,8 +98,6 @@ class NowPlayingRecyclerAdapter @Inject constructor(
 }
 
 class DiffUtilCallBack<T : Any> : DiffUtil.ItemCallback<T>() {
-
-
     override fun areItemsTheSame(oldItem: T, newItem: T): Boolean {
         return if (oldItem is Movie && newItem is Movie) {
             val old = oldItem as Movie
@@ -116,6 +117,4 @@ class DiffUtilCallBack<T : Any> : DiffUtil.ItemCallback<T>() {
             oldItem as TvSeries == newItem as TvSeries
         }
     }
-
-
 }

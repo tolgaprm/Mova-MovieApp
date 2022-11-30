@@ -17,14 +17,19 @@
     <string name="movie">Movie</string>
     <string name="tv_series">Tv Series</string>
     <string name="genre">Genre</string>
+
     <string name="voteAverage">%1$s (%2$s)</string>
+    <string name="voteAverageDetail">%1$s (%2$s reviews)</string>
     <string name="release_date_genre">%1$s  %2$s</string>
-    <string name="add_list">add_list</string>
+    <string name="runtime">%1$sh %2$sm</string>
+    <string name="season_count">%s Seasons</string>
+
     <string name="share">Share</string>
     <string name="favorite_list">Favorite List</string>
     <string name="watchList">Watch List</string>
     <string name="detail_bottom_sheet_movie_info">Details and More</string>
     <string name="detail_bottom_sheet_tv_info">Episodes and More</string>
+
     <string name="time_periods">Time/Periods</string>
     <string name="retry">Retry</string>
     <string name="sort">Sort</string>
@@ -35,6 +40,8 @@
     <string name="error_didnt_download">Didn\'t download genre options. PLease check your internet connection</string>
     <string name="all_periods">All Periods</string>
     <string name="internet_error">"Oops! Please check your internet connection."</string>
+    <string name="error">"An unknown error occurred"</string>
+
     <string name="navigate_up">Navigate up</string>
     <string name="dark_theme">Dark Theme</string>
     <string name="languages">Languages</string>
@@ -45,5 +52,17 @@
     <string name="language_spanish">Spanish</string>
     <string name="language_french">French</string>
     <string name="language_german">German</string>
+
+
+    <string name="overview">Overview</string>
+    <string name="actor">Actor</string>
+    <string name="director">Director</string>
+
+    <string name="add_favorite_list">Add My Favorite List</string>
+    <string name="add_watch_list">Add My Watch List</string>
+    <string name="go_movies_tmdb_site">Go tmdb url that the movie</string>
+    <string name="director_title">Director: </string>
+    <string name="singular_creator_title">Creator: </string>
+    <string name="plural_creator_title">Creators: <br /> </string>
 
 </resources>

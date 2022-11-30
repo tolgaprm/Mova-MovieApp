@@ -1,8 +1,10 @@
 package com.prmto.mova_movieapp.repository
 
 import androidx.paging.PagingData
-import com.prmto.mova_movieapp.domain.models.Genre
-import com.prmto.mova_movieapp.domain.models.GenreList
+import com.prmto.mova_movieapp.data.models.Genre
+import com.prmto.mova_movieapp.data.models.GenreList
+import com.prmto.mova_movieapp.data.models.detail.movie.MovieDetailDto
+import com.prmto.mova_movieapp.data.models.detail.tv.TvDetailDto
 import com.prmto.mova_movieapp.domain.models.Movie
 import com.prmto.mova_movieapp.domain.models.TvSeries
 import com.prmto.mova_movieapp.domain.repository.RemoteRepository
@@ -114,5 +116,13 @@ class FakeRemoteRepository : RemoteRepository {
             PagingData.empty<TvSeries>()
         }
 
+    }
+
+    override suspend fun getMovieDetail(language: String, movieId: Int): MovieDetailDto {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getTvDetail(language: String, tvId: Int): TvDetailDto {
+        TODO("Not yet implemented")
     }
 }

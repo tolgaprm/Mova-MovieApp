@@ -27,6 +27,8 @@
     <color name="chip_state_check_text_color">@color/white</color>
 
 
+    <color name="progressTint">#FFEB3B</color>
+
     <color name="reset_button_background">@color/light_red</color>
     <color name="reset_button_text">@color/red</color>
 

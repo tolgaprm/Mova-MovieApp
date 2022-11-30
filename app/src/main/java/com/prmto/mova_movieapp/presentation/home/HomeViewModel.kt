@@ -7,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.prmto.mova_movieapp.R
-import com.prmto.mova_movieapp.domain.models.GenreList
+import com.prmto.mova_movieapp.data.models.GenreList
 import com.prmto.mova_movieapp.domain.models.Movie
 import com.prmto.mova_movieapp.domain.models.TvSeries
 import com.prmto.mova_movieapp.domain.repository.ConnectivityObserver
