@@ -17,6 +17,8 @@ import com.prmto.mova_movieapp.domain.models.detail.MovieDetail
 import com.prmto.mova_movieapp.domain.models.detail.TvDetail
 import com.prmto.mova_movieapp.presentation.util.HandleUtils
 import com.prmto.mova_movieapp.util.Constants
+import com.prmto.mova_movieapp.util.Constants.HOUR_KEY
+import com.prmto.mova_movieapp.util.Constants.MINUTES_KEY
 
 class BindAttributesDetailFragment(
     val binding: FragmentDetailBinding,
@@ -44,12 +46,13 @@ class BindAttributesDetailFragment(
         bindDetailInfoSection(
             voteAverage = movieDetail.voteAverage,
             voteCount = movieDetail.voteCount,
-            genreList = movieDetail.genres
+            genreList = movieDetail.genres,
+            ratingBarValue = movieDetail.ratingValue
         )
         hideSeasonText()
         showRuntimeTextAndClockIcon()
         binding.txtReleaseDate.text = movieDetail.releaseDate
-        bindMovieRuntime(runtime = movieDetail.runtime)
+        bindMovieRuntime(convertedRuntime = movieDetail.convertedRuntime)
         bindOverview(overview = movieDetail.overview)
         binding.creatorDirectorLinearLayout.removeViewsInLayout(
             1,
@@ -85,21 +88,18 @@ class BindAttributesDetailFragment(
         bindDetailInfoSection(
             voteAverage = tvDetail.voteAverage,
             voteCount = tvDetail.voteCount,
-            genreList = tvDetail.genres
+            genreList = tvDetail.genres,
+            ratingBarValue = tvDetail.ratingValue
         )
         showSeasonText(season = tvDetail.numberOfSeasons)
         hideRuntimeTextAndClockIcon()
-        bindTvFirstAndLastAirDate(
-            firstAirDate = tvDetail.firstAirDate,
-            lastAirDate = tvDetail.lastAirDate,
-            status = tvDetail.status
-        )
         bindOverview(overview = tvDetail.overview)
         binding.creatorDirectorLinearLayout.removeViewsInLayout(
             1,
             binding.creatorDirectorLinearLayout.childCount - 1
         )
         bindCreatorNames(tvDetail.createdBy)
+        binding.txtReleaseDate.text = tvDetail.releaseDate
     }
 
 
@@ -163,11 +163,10 @@ class BindAttributesDetailFragment(
     private fun bindDetailInfoSection(
         voteAverage: Double,
         voteCount: Int,
+        ratingBarValue: Float,
         genreList: List<Genre>
     ) {
-        val ratingBarValue = ((voteAverage * 5) / 10).toFloat()
         val voteCountText = HandleUtils.convertingVoteCountToString(voteCount = voteCount)
-
         binding.apply {
             ratingBar.rating = ratingBarValue
             txtGenres.text =
@@ -180,28 +179,12 @@ class BindAttributesDetailFragment(
         }
     }
 
-    private fun bindTvFirstAndLastAirDate(
-        firstAirDate: String,
-        lastAirDate: String,
-        status: String
-    ) {
-        val firstAirDateValue = HandleUtils.convertToYearFromDate(firstAirDate)
-        binding.txtReleaseDate.text = if (status == Constants.TV_SERIES_STATUS_ENDED) {
-            val lastAirDateValue = HandleUtils.convertToYearFromDate(lastAirDate)
-            "${firstAirDateValue}-${lastAirDateValue}"
-        } else {
-            "$firstAirDateValue-"
-        }
-    }
-
-    private fun bindMovieRuntime(runtime: Int?) {
-        runtime?.let { totalRuntime ->
-            val hour = totalRuntime / 60
-            val minutes = (totalRuntime % 60)
+    private fun bindMovieRuntime(convertedRuntime: Map<String, String>) {
+        if (convertedRuntime.isNotEmpty()) {
             binding.txtRuntime.text = context.getString(
                 R.string.runtime,
-                hour.toString(),
-                minutes.toString()
+                convertedRuntime[HOUR_KEY],
+                convertedRuntime[MINUTES_KEY]
             )
         }
     }

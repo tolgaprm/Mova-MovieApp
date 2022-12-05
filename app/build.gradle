@@ -89,6 +89,9 @@ dependencies {
     //Carousel
     implementation 'com.github.sparrow007:carouselrecyclerview:1.2.5'
 
+    // Swipe Refresh Layout
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
+
     //Coil
     implementation("io.coil-kt:coil:1.4.0")
     implementation("io.coil-kt:coil-svg:1.2.0")

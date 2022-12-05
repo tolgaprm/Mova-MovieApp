@@ -11,12 +11,13 @@ data class MovieDetail(
     val originalTitle: String,
     val title: String,
     val overview: String?,
-    val popularity: Double,
     val posterPath: String?,
     val releaseDate: String,
     val runtime: Int?,
     val voteAverage: Double,
     val voteCount: Int,
+    var convertedRuntime: Map<String, String> = emptyMap(),
     val credit: Credit,
+    var ratingValue: Float = 0f,
     val watchProviders: WatchProviders
 )

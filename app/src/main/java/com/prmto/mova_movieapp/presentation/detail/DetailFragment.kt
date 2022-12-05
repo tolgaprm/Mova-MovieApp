@@ -18,6 +18,7 @@ import com.prmto.mova_movieapp.R
 import com.prmto.mova_movieapp.databinding.FragmentDetailBinding
 import com.prmto.mova_movieapp.util.Constants.DETAIL_DEFAULT_ID
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -28,13 +29,13 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
     @Inject
     lateinit var imageLoader: ImageLoader
     private lateinit var bindAttributesDetailFragment: BindAttributesDetailFragment
+    private var job: Job? = null
 
     private var _binding: FragmentDetailBinding? = null
     private val binding get() = _binding!!
 
     private val detailArgs by navArgs<DetailFragmentArgs>()
     private val viewModel: DetailViewModel by viewModels()
-
     private lateinit var detailActorAdapter: DetailActorAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -58,6 +59,11 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
         setDetailIdToStateSavedHandle()
 
         collectDataLifecycleAware()
+
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            job?.cancel()
+            collectDataLifecycleAware()
+        }
     }
 
     private fun setupDetailActorAdapter() {
@@ -93,7 +99,7 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
     }
 
     private fun collectDataLifecycleAware() {
-        viewLifecycleOwner.lifecycleScope.launch {
+        job = viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch { collectTvId() }
 
@@ -121,7 +127,6 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
     }
 
     private suspend fun collectDetailState() {
-
         viewModel.detailState.collectLatest { detailState ->
             if (detailState.loading) {
                 binding.progressBar.visibility = View.VISIBLE
@@ -144,15 +149,19 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
                 }
 
                 if (detailState.errorId != null) {
+                    binding.swipeRefreshLayout.isEnabled = true
                     Toast.makeText(
                         requireContext(),
                         requireContext().getString(detailState.errorId),
                         Toast.LENGTH_LONG
                     ).show()
+                } else {
+                    binding.swipeRefreshLayout.isEnabled = false
                 }
             }
         }
     }
+
 
     private fun intentToImdbWebSite(tmdbUrl: String) {
         val intent = Intent(Intent.ACTION_VIEW)

@@ -19,5 +19,7 @@ data class TvDetail(
     val status: String,
     val voteAverage: Double,
     val voteCount: Int,
+    var ratingValue: Float = 0f,
+    var releaseDate: String = "",
     val credit: Credit
 )

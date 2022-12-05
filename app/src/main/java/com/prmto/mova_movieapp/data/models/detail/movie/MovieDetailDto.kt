@@ -48,13 +48,12 @@ fun MovieDetailDto.toMovieDetail(): MovieDetail {
         originalTitle = originalTitle,
         title = title,
         overview = overview,
-        popularity = popularity,
         posterPath = posterPath,
         releaseDate = releaseDate,
         runtime = runtime,
         voteAverage = voteAverage,
         voteCount = voteCount,
         credit = credits.toCredit(),
-        watchProviders = watchProviders
+        watchProviders = watchProviders,
     )
 }
