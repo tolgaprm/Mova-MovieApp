@@ -15,7 +15,9 @@ import com.prmto.mova_movieapp.domain.use_case.HomeUseCases
 import com.prmto.mova_movieapp.util.Constants.IS_SHOWS_SEE_ALL_PAGE
 import com.prmto.mova_movieapp.util.Constants.LATEST_SHOWS_SEE_ALL_PAGE_TOOLBAR_TEXT_ID
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -29,10 +31,6 @@ class HomeViewModel @Inject constructor(
     private val _languageIsoCode = MutableStateFlow("")
     val languageIsoCode: StateFlow<String> get() = _languageIsoCode
 
-    private val _showSnackBarNoInternetConnectivity = MutableSharedFlow<String>()
-    val showSnackBarNoInternetConnectivity: SharedFlow<String> get() = _showSnackBarNoInternetConnectivity
-
-
     val isShowsRecyclerViewSeeAllSection =
         savedStateHandle.getStateFlow(IS_SHOWS_SEE_ALL_PAGE, false)
 
@@ -41,16 +39,7 @@ class HomeViewModel @Inject constructor(
         R.string.now_playing
     )
 
-
     fun observeNetworkConnectivity() = networkConnectivityObserver.observe()
-
-
-    fun showSnackbar() {
-        viewModelScope.launch {
-            _showSnackBarNoInternetConnectivity.emit("No Internet Connection")
-        }
-    }
-
 
     fun setShowsRecyclerViewSeeAllSection(value: Boolean) {
         savedStateHandle[IS_SHOWS_SEE_ALL_PAGE] = value

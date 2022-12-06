@@ -1,6 +1,5 @@
 package com.prmto.mova_movieapp.presentation.util
 
-import com.prmto.mova_movieapp.data.models.Genre
 import com.prmto.mova_movieapp.domain.models.Movie
 
 object HandleUtils {
@@ -11,7 +10,7 @@ object HandleUtils {
 
 
     fun convertGenreListToStringSeparatedByCommas(
-        movieGenreList: List<Genre>,
+        movieGenreList: List<com.prmto.mova_movieapp.data.models.Genre>,
         movie: Movie
     ): String {
         var genreNames = ""
@@ -35,7 +34,7 @@ object HandleUtils {
         return genreNames
     }
 
-    fun convertGenreListToStringSeparatedByCommas(genreList: List<Genre>): String {
+    fun convertGenreListToStringSeparatedByCommas(genreList: List<com.prmto.mova_movieapp.data.models.Genre>): String {
         var genreNames = ""
         if (genreList.isEmpty()) {
             return ""
@@ -53,11 +52,11 @@ object HandleUtils {
     }
 
     fun handleConvertingGenreListToOneGenreString(
-        movieGenreList: List<Genre>,
+        movieGenreList: List<com.prmto.mova_movieapp.data.models.Genre>,
         genreIds: List<Int>
     ): String {
 
-        for (genre: Genre in movieGenreList) {
+        for (genre: com.prmto.mova_movieapp.data.models.Genre in movieGenreList) {
             for (genreId: Int in genreIds) {
                 if (genreId == genre.id) {
                     return genre.name

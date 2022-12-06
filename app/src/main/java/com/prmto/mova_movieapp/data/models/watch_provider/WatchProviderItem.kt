@@ -9,7 +9,6 @@ data class WatchProviderItem(
     val buy: List<WatchProviderItemDetail>?
 )
 
-
 data class WatchProviderItemDetail(
     @Json(name = "display_priority") val displayPriority: Int,
     @Json(name = "logo_path") val logoPath: String,

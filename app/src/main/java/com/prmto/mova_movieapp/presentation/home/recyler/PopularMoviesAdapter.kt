@@ -3,7 +3,6 @@ package com.prmto.mova_movieapp.presentation.home.recyler
 import android.content.Context
 import coil.ImageLoader
 import coil.load
-import com.prmto.mova_movieapp.data.models.Genre
 import com.prmto.mova_movieapp.data.remote.ImageApi
 import com.prmto.mova_movieapp.data.remote.ImageSize
 import com.prmto.mova_movieapp.databinding.MovieRowBinding
@@ -41,7 +40,7 @@ class PopularMoviesAdapter @Inject constructor(
 
 
     override
-    fun passMovieGenreList(genreList: List<Genre>) {
+    fun passMovieGenreList(genreList: List<com.prmto.mova_movieapp.data.models.Genre>) {
         this.genreList = genreList
     }
 }

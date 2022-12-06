@@ -64,4 +64,10 @@
     <string name="director_title">Yönetmen: </string>
     <string name="singular_creator_title">Yapımcı: </string>
     <string name="plural_creator_title">Yapımcılar: <br /></string>
+
+
+    <string name="watch_now">Şimdi İzle</string>
+    <string name="stream">Yayın</string>
+    <string name="rent">Kirala</string>
+    <string name="buy">Satın Al</string>
 </resources>

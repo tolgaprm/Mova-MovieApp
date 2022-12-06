@@ -3,7 +3,6 @@ package com.prmto.mova_movieapp.data.repository
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
-import com.prmto.mova_movieapp.data.models.GenreList
 import com.prmto.mova_movieapp.data.models.detail.movie.MovieDetailDto
 import com.prmto.mova_movieapp.data.models.detail.tv.TvDetailDto
 import com.prmto.mova_movieapp.data.models.enums.MoviesApiFunction
@@ -24,7 +23,7 @@ import javax.inject.Inject
 class RemoteRepositoryImpl @Inject constructor(
     private val tmdbApi: TMDBApi
 ) : RemoteRepository {
-    override suspend fun getMovieGenreList(language: String): GenreList {
+    override suspend fun getMovieGenreList(language: String): com.prmto.mova_movieapp.data.models.GenreList {
 
         return try {
             tmdbApi.getMovieGenreList(language = language)
@@ -35,7 +34,7 @@ class RemoteRepositoryImpl @Inject constructor(
 
     }
 
-    override suspend fun getTvGenreList(language: String): GenreList {
+    override suspend fun getTvGenreList(language: String): com.prmto.mova_movieapp.data.models.GenreList {
         return try {
             tmdbApi.getTvGenreList(language = language)
         } catch (e: Exception) {

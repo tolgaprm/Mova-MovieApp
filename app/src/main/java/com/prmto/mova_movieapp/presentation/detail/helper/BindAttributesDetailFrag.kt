@@ -1,4 +1,4 @@
-package com.prmto.mova_movieapp.presentation.detail
+package com.prmto.mova_movieapp.presentation.detail.helper
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -8,7 +8,7 @@ import coil.ImageLoader
 import coil.load
 import com.google.android.material.textview.MaterialTextView
 import com.prmto.mova_movieapp.R
-import com.prmto.mova_movieapp.data.models.Genre
+import com.prmto.mova_movieapp.data.models.watch_provider.WatchProviderRegion
 import com.prmto.mova_movieapp.data.remote.ImageApi
 import com.prmto.mova_movieapp.databinding.FragmentDetailBinding
 import com.prmto.mova_movieapp.domain.models.credit.Crew
@@ -20,14 +20,12 @@ import com.prmto.mova_movieapp.util.Constants
 import com.prmto.mova_movieapp.util.Constants.HOUR_KEY
 import com.prmto.mova_movieapp.util.Constants.MINUTES_KEY
 
-class BindAttributesDetailFragment(
+class BindAttributesDetailFrag(
     val binding: FragmentDetailBinding,
     val imageLoader: ImageLoader,
     val context: Context,
     val onClickTmdbImage: (tmdbUrl: String) -> Unit
 ) {
-
-
     private var isTvDetail = false
     private var currentTvId = 0
     private var currentMovieId = 0
@@ -59,6 +57,36 @@ class BindAttributesDetailFragment(
             binding.creatorDirectorLinearLayout.childCount - 1
         )
         bindDirectorName(movieDetail.credit.crew)
+        bindWatchProviders(movieDetail.watchProviders.results)
+    }
+
+    private fun bindWatchProviders(providerRegion: WatchProviderRegion?) {
+        providerRegion?.let { it ->
+            val streamLogoPath = it.tr?.flatRate?.first()?.logoPath
+            val buyLogoPath = it.tr?.buy?.first()?.logoPath
+            val rentLogoPath = it.tr?.rent?.first()?.logoPath
+
+            streamLogoPath?.let {
+                binding.imvStream.load(
+                    ImageApi.getImage(imageUrl = it),
+                    imageLoader = imageLoader
+                )
+            }
+
+            buyLogoPath?.let {
+                binding.imvBuy.load(
+                    ImageApi.getImage(imageUrl = it),
+                    imageLoader = imageLoader
+                )
+            }
+
+            rentLogoPath?.let {
+                binding.imvRent.load(
+                    ImageApi.getImage(imageUrl = it),
+                    imageLoader = imageLoader
+                )
+            }
+        }
     }
 
     private fun bindDirectorName(crews: List<Crew>) {
@@ -164,7 +192,7 @@ class BindAttributesDetailFragment(
         voteAverage: Double,
         voteCount: Int,
         ratingBarValue: Float,
-        genreList: List<Genre>
+        genreList: List<com.prmto.mova_movieapp.data.models.Genre>
     ) {
         val voteCountText = HandleUtils.convertingVoteCountToString(voteCount = voteCount)
         binding.apply {

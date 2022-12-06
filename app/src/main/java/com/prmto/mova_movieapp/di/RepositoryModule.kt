@@ -108,18 +108,18 @@ object RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideDataStoreOperations(
-        dataStore: DataStore<Preferences>
-    ): DataStoreOperations {
-        return DataOperationsImpl(dataStore = dataStore)
-    }
-
-    @Provides
-    @Singleton
     fun provideConnectivityManager(
         @ApplicationContext context: Context
     ): ConnectivityObserver {
         return NetworkConnectivityObserver(context)
+    }
+
+    @Provides
+    @Singleton
+    fun provideDataStoreOperations(
+        dataStore: DataStore<Preferences>
+    ): DataStoreOperations {
+        return DataOperationsImpl(dataStore = dataStore)
     }
 
 

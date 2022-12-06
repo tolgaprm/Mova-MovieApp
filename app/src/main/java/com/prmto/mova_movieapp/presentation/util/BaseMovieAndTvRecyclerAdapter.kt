@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.prmto.mova_movieapp.R
-import com.prmto.mova_movieapp.data.models.Genre
 import com.prmto.mova_movieapp.databinding.MovieRowBinding
 import com.prmto.mova_movieapp.domain.models.Movie
 import com.prmto.mova_movieapp.domain.models.TvSeries
@@ -22,7 +21,11 @@ abstract class BaseMovieAndTvRecyclerAdapter<T : Any>(
         val binding: MovieRowBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bindMovie(movie: Movie, genreList: List<Genre>, context: Context) {
+        fun bindMovie(
+            movie: Movie,
+            genreList: List<com.prmto.mova_movieapp.data.models.Genre>,
+            context: Context
+        ) {
 
             binding.tvMovieTvName.text = movie.title
             val genre =
@@ -40,7 +43,11 @@ abstract class BaseMovieAndTvRecyclerAdapter<T : Any>(
 
         }
 
-        fun bindTvSeries(tv: TvSeries, genreList: List<Genre>, context: Context) {
+        fun bindTvSeries(
+            tv: TvSeries,
+            genreList: List<com.prmto.mova_movieapp.data.models.Genre>,
+            context: Context
+        ) {
             binding.tvMovieTvName.text = tv.name
 
             val genre =
@@ -90,8 +97,8 @@ abstract class BaseMovieAndTvRecyclerAdapter<T : Any>(
         itemClickListener = listener
     }
 
-    var genreList: List<Genre> = emptyList()
+    var genreList: List<com.prmto.mova_movieapp.data.models.Genre> = emptyList()
 
-    abstract fun passMovieGenreList(genreList: List<Genre>)
+    abstract fun passMovieGenreList(genreList: List<com.prmto.mova_movieapp.data.models.Genre>)
 }
 

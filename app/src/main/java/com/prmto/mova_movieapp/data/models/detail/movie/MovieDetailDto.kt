@@ -1,6 +1,5 @@
 package com.prmto.mova_movieapp.data.models.detail.movie
 
-import com.prmto.mova_movieapp.data.models.Genre
 import com.prmto.mova_movieapp.data.models.credit.CreditDto
 import com.prmto.mova_movieapp.data.models.credit.toCredit
 import com.prmto.mova_movieapp.data.models.detail.ProductionCompany
@@ -15,7 +14,7 @@ data class MovieDetailDto(
     @Json(name = "backdrop_path") val backdropPath: String?,
     @Json(name = "belongs_to_collection") val belongsToCollection: Any?,
     val budget: Int,
-    val genres: List<Genre>,
+    val genres: List<com.prmto.mova_movieapp.data.models.Genre>,
     val homepage: String?,
     val id: Int,
     @Json(name = "imdb_id") val imdbId: String?,

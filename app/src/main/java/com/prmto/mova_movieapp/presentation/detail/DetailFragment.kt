@@ -16,6 +16,8 @@ import androidx.navigation.fragment.navArgs
 import coil.ImageLoader
 import com.prmto.mova_movieapp.R
 import com.prmto.mova_movieapp.databinding.FragmentDetailBinding
+import com.prmto.mova_movieapp.presentation.detail.adapter.DetailActorAdapter
+import com.prmto.mova_movieapp.presentation.detail.helper.BindAttributesDetailFrag
 import com.prmto.mova_movieapp.util.Constants.DETAIL_DEFAULT_ID
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
@@ -26,25 +28,30 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class DetailFragment : Fragment(R.layout.fragment_detail) {
 
-    @Inject
-    lateinit var imageLoader: ImageLoader
-    private lateinit var bindAttributesDetailFragment: BindAttributesDetailFragment
     private var job: Job? = null
+
+    private lateinit var bindAttributesDetailFrag: BindAttributesDetailFrag
 
     private var _binding: FragmentDetailBinding? = null
     private val binding get() = _binding!!
 
+    @Inject
+    lateinit var imageLoader: ImageLoader
+
+    @Inject
+    lateinit var detailActorAdapter: DetailActorAdapter
+
+
     private val detailArgs by navArgs<DetailFragmentArgs>()
     private val viewModel: DetailViewModel by viewModels()
-    private lateinit var detailActorAdapter: DetailActorAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        _binding = FragmentDetailBinding.bind(view)
 
+        _binding = FragmentDetailBinding.bind(view)
         setupDetailActorAdapter()
 
-        bindAttributesDetailFragment = BindAttributesDetailFragment(
+        bindAttributesDetailFrag = BindAttributesDetailFrag(
             binding = binding,
             imageLoader = imageLoader,
             context = requireContext()
@@ -67,7 +74,6 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
     }
 
     private fun setupDetailActorAdapter() {
-        detailActorAdapter = DetailActorAdapter(imageLoader)
         binding.recyclerViewActor.adapter = detailActorAdapter
     }
 
@@ -134,7 +140,7 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
                 binding.progressBar.visibility = View.GONE
 
                 detailState.tvDetail?.let {
-                    bindAttributesDetailFragment.bindTvDetail(
+                    bindAttributesDetailFrag.bindTvDetail(
                         tvDetail = it
                     )
                     detailActorAdapter.submitList(it.credit.cast)
@@ -142,7 +148,7 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
 
 
                 detailState.movieDetail?.let { movieDetail ->
-                    bindAttributesDetailFragment.bindMovieDetail(
+                    bindAttributesDetailFrag.bindMovieDetail(
                         movieDetail = movieDetail
                     )
                     detailActorAdapter.submitList(movieDetail.credit.cast)
@@ -162,10 +168,10 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
         }
     }
 
-
     private fun intentToImdbWebSite(tmdbUrl: String) {
         val intent = Intent(Intent.ACTION_VIEW)
-        intent.data = Uri.parse(tmdbUrl)
+        val tmdbUrlWithLanguage = tmdbUrl.plus("?language=${viewModel.languageIsoCode.value}")
+        intent.data = Uri.parse(tmdbUrlWithLanguage)
         startActivity(intent)
     }
 

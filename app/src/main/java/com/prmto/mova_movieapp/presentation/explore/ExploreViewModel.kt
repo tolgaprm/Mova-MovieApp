@@ -2,7 +2,6 @@ package com.prmto.mova_movieapp.presentation.explore
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.prmto.mova_movieapp.data.models.Genre
 import com.prmto.mova_movieapp.data.models.enums.Category
 import com.prmto.mova_movieapp.data.models.enums.Sort
 import com.prmto.mova_movieapp.domain.models.Period
@@ -27,7 +26,8 @@ class ExploreViewModel @Inject constructor(
     private val _language = MutableStateFlow<String>(DEFAULT_LANGUAGE)
     val language = _language.asStateFlow()
 
-    private val _genreList = MutableStateFlow<List<Genre>>(emptyList())
+    private val _genreList =
+        MutableStateFlow<List<com.prmto.mova_movieapp.data.models.Genre>>(emptyList())
     val genreList = _genreList.asStateFlow()
 
     private val _filterBottomSheetState = MutableStateFlow(FilterBottomState())
@@ -41,8 +41,6 @@ class ExploreViewModel @Inject constructor(
 
 
     init {
-
-
         setupTimePeriods()
         viewModelScope.launch() {
             getLocale().collectLatest {

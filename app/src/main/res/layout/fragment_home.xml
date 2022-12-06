@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:paddingTop="@dimen/large_padding">
 
+    <!--region seeAllSection that when click see all, the linear layout visible-->
     <LinearLayout
         android:id="@+id/recyclerViewSeeAllSection"
         android:layout_width="match_parent"
@@ -43,8 +44,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:paddingEnd="@dimen/iconSizeLarge"
                     android:paddingStart="0dp"
+                    android:paddingEnd="@dimen/iconSizeLarge"
                     android:textAlignment="center"
                     tools:text="Now Playing" />
             </LinearLayout>
@@ -59,6 +60,7 @@
             android:paddingStart="@dimen/medium_padding"
             android:paddingEnd="@dimen/medium_padding" />
     </LinearLayout>
+    <!--endregion -->
 
     <ScrollView
         android:id="@+id/scrollView"
@@ -70,9 +72,10 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:paddingBottom="@dimen/extra_large_padding"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/extra_large_padding">
 
+            <!--region nowPlaying -->
             <TextView
                 android:id="@+id/now_playing_text"
                 style="@style/Mova.Title"
@@ -95,7 +98,9 @@
                 app:layout_constraintBaseline_toBaselineOf="@+id/now_playing_text"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/now_playing_text" />
+                app:layout_constraintStart_toEndOf="@+id/now_playing_text"
+                tools:ignore="TouchTargetSizeCheck" />
+
 
             <com.jackandphantom.carouselrecyclerview.CarouselRecyclerview
                 android:id="@+id/nowPlayingRecyclerView"
@@ -111,13 +116,14 @@
                 tools:listitem="@layout/now_playing_row">
 
             </com.jackandphantom.carouselrecyclerview.CarouselRecyclerview>
+            <!--endregion nowPlaying-->
 
+            <!--region PopularMovies -->
             <TextView
                 android:id="@+id/popular_movies_text"
                 style="@style/Mova.Title"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/large_margin"
                 android:text="@string/popular_movies"
                 app:layout_constraintEnd_toStartOf="@+id/nowPlayingSeeAll"
                 app:layout_constraintStart_toStartOf="parent"
@@ -131,9 +137,13 @@
                 android:paddingHorizontal="@dimen/large_padding"
                 android:paddingVertical="@dimen/medium_padding"
                 app:layout_constraintBaseline_toBaselineOf="@+id/popular_movies_text"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:ignore="TouchTargetSizeCheck" />
 
 
+            <!--endregion PopularMovies -->
+
+            <!--region PopularTvSeries -->
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/popularMoviesRecyclerView"
                 android:layout_width="match_parent"
@@ -142,11 +152,11 @@
                 android:orientation="horizontal"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/popular_movies_text"
                 tools:itemCount="3"
                 tools:listitem="@layout/movie_row" />
-
 
             <TextView
                 android:id="@+id/popular_tv_text"
@@ -167,7 +177,8 @@
                 android:paddingHorizontal="@dimen/large_padding"
                 android:paddingVertical="@dimen/medium_padding"
                 app:layout_constraintBaseline_toBaselineOf="@+id/popular_tv_text"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:ignore="TouchTargetSizeCheck" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/popularTvSeriesRecyclerView"
@@ -181,8 +192,9 @@
                 app:layout_constraintTop_toBottomOf="@+id/popular_tv_text"
                 tools:itemCount="3"
                 tools:listitem="@layout/movie_row" />
+            <!--endregion PopularTvSeries -->
 
-
+            <!--region TopRatedMovies -->
             <TextView
                 android:id="@+id/topRatedMovies"
                 style="@style/Mova.Title"
@@ -216,7 +228,9 @@
                 app:layout_constraintTop_toBottomOf="@+id/topRatedMovies"
                 tools:itemCount="3"
                 tools:listitem="@layout/movie_row" />
+            <!--endregion TopRatedMovies -->
 
+            <!--region TopRatedTvSeries-->
             <TextView
                 android:id="@+id/topRatedTvSeries"
                 style="@style/Mova.Title"
@@ -236,7 +250,8 @@
                 android:paddingHorizontal="@dimen/large_padding"
                 android:paddingVertical="@dimen/medium_padding"
                 app:layout_constraintBaseline_toBaselineOf="@+id/topRatedTvSeries"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:ignore="TouchTargetSizeCheck" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/topRatedTvSeriesRecyclerView"
@@ -250,6 +265,8 @@
                 app:layout_constraintTop_toBottomOf="@+id/topRatedTvSeries"
                 tools:itemCount="3"
                 tools:listitem="@layout/movie_row" />
+
+            <!--region TopRatedTvSeries-->
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -65,4 +65,9 @@
     <string name="singular_creator_title">Creator: </string>
     <string name="plural_creator_title">Creators: <br /> </string>
 
+    <string name="watch_now">Watch Now</string>
+    <string name="stream">Stream</string>
+    <string name="rent">Rent</string>
+    <string name="buy">Buy</string>
+
 </resources>

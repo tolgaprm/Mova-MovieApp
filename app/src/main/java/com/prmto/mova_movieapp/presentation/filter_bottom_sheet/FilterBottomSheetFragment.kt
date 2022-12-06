@@ -14,7 +14,6 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.prmto.mova_movieapp.R
-import com.prmto.mova_movieapp.data.models.Genre
 import com.prmto.mova_movieapp.data.models.enums.Category
 import com.prmto.mova_movieapp.data.models.enums.Sort
 import com.prmto.mova_movieapp.databinding.FragmentBottomSheetBinding
@@ -97,7 +96,10 @@ class FilterBottomSheetFragment : BottomSheetDialogFragment() {
      * Add Chips in parentChip
      * @param parentChip The main chip-group to which chips will be added
      */
-    private fun inflateGenreChips(chips: List<Genre>, parentChip: ChipGroup) {
+    private fun inflateGenreChips(
+        chips: List<com.prmto.mova_movieapp.data.models.Genre>,
+        parentChip: ChipGroup
+    ) {
         chips.forEach {
             val chip = LayoutInflater.from(requireContext()).inflate(
                 R.layout.chip, parentChip, false

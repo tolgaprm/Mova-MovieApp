@@ -323,6 +323,85 @@
 
                 <!--endregion Btn share,favorite,watch Section -->
 
+                <!--region Watch Provider -->
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/titleWatchProvider"
+                    style="@style/Mova.Title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/medium_margin"
+                    android:text="@string/watch_now"
+                    app:layout_constraintBottom_toTopOf="@id/txtStream"
+                    app:layout_constraintEnd_toEndOf="@+id/txtOverview"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/txtShare" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/txtStream"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/medium_margin"
+                    android:paddingHorizontal="@dimen/medium_padding"
+                    android:text="@string/stream"
+                    android:textSize="20sp"
+                    app:layout_constraintEnd_toStartOf="@+id/txtRent"
+                    app:layout_constraintHorizontal_chainStyle="spread"
+                    app:layout_constraintStart_toStartOf="@+id/titleWatchProvider"
+                    app:layout_constraintTop_toBottomOf="@+id/titleWatchProvider" />
+
+                <ImageView
+                    android:id="@+id/imvStream"
+                    android:layout_width="@dimen/watchProvidersImageSize"
+                    android:layout_height="@dimen/watchProvidersImageSize"
+                    android:layout_marginTop="@dimen/medium_margin"
+                    app:layout_constraintEnd_toEndOf="@id/txtStream"
+                    app:layout_constraintStart_toStartOf="@id/txtStream"
+                    app:layout_constraintTop_toBottomOf="@id/txtStream" />
+
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/txtRent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="@dimen/medium_padding"
+                    android:text="@string/rent"
+                    android:textSize="20sp"
+                    app:layout_constraintEnd_toStartOf="@+id/txtBuy"
+                    app:layout_constraintStart_toEndOf="@+id/txtStream"
+                    app:layout_constraintTop_toTopOf="@+id/txtStream" />
+
+                <ImageView
+                    android:id="@+id/imvRent"
+                    android:layout_width="@dimen/watchProvidersImageSize"
+                    android:layout_height="@dimen/watchProvidersImageSize"
+                    android:layout_marginTop="@dimen/medium_margin"
+                    app:layout_constraintEnd_toEndOf="@id/txtRent"
+                    app:layout_constraintStart_toStartOf="@id/txtRent"
+                    app:layout_constraintTop_toBottomOf="@id/txtRent" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/txtBuy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="@dimen/medium_padding"
+                    android:text="@string/buy"
+                    android:textSize="20sp"
+                    app:layout_constraintEnd_toEndOf="@+id/titleWatchProvider"
+                    app:layout_constraintStart_toEndOf="@+id/txtRent"
+                    app:layout_constraintTop_toTopOf="@+id/txtRent" />
+
+                <ImageView
+                    android:id="@+id/imvBuy"
+                    android:layout_width="@dimen/watchProvidersImageSize"
+                    android:layout_height="@dimen/watchProvidersImageSize"
+                    android:layout_marginTop="@dimen/medium_margin"
+                    app:layout_constraintEnd_toEndOf="@id/txtBuy"
+                    app:layout_constraintStart_toStartOf="@id/txtBuy"
+                    app:layout_constraintTop_toBottomOf="@id/txtBuy" />
+
+                <!--endregion Watch Provider -->
+
+
                 <!--region actor and director info section-->
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/txtActor"
@@ -335,7 +414,7 @@
                     android:text="@string/actor"
                     android:textSize="20sp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/txtShare" />
+                    app:layout_constraintTop_toBottomOf="@id/imvStream" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerViewActor"

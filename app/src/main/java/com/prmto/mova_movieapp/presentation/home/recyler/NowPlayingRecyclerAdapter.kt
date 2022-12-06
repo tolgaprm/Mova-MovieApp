@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.ImageLoader
 import coil.load
 import com.prmto.mova_movieapp.R
-import com.prmto.mova_movieapp.data.models.Genre
 import com.prmto.mova_movieapp.data.remote.ImageApi
 import com.prmto.mova_movieapp.data.remote.ImageSize
 import com.prmto.mova_movieapp.databinding.NowPlayingRowBinding
@@ -23,13 +22,13 @@ class NowPlayingRecyclerAdapter @Inject constructor(
 ) :
     PagingDataAdapter<Movie, NowPlayingRecyclerAdapter.MovieViewHolder>(DiffUtilCallBack<Movie>()) {
 
-    private var movieGenreList: List<Genre> = emptyList()
+    private var movieGenreList: List<com.prmto.mova_movieapp.data.models.Genre> = emptyList()
 
     private var onItemClickListener: (Movie) -> Unit = {}
 
     class MovieViewHolder(
         private val binding: NowPlayingRowBinding,
-        val movieGenreList: List<Genre>,
+        val movieGenreList: List<com.prmto.mova_movieapp.data.models.Genre>,
         val imageLoader: ImageLoader
     ) : RecyclerView.ViewHolder(binding.root) {
 
@@ -87,7 +86,7 @@ class NowPlayingRecyclerAdapter @Inject constructor(
     }
 
 
-    fun passMovieGenreList(movieGenreList: List<Genre>) {
+    fun passMovieGenreList(movieGenreList: List<com.prmto.mova_movieapp.data.models.Genre>) {
         this.movieGenreList = movieGenreList
     }
 

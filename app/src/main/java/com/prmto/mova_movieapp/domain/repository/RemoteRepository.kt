@@ -1,7 +1,6 @@
 package com.prmto.mova_movieapp.domain.repository
 
 import androidx.paging.PagingData
-import com.prmto.mova_movieapp.data.models.GenreList
 import com.prmto.mova_movieapp.data.models.detail.movie.MovieDetailDto
 import com.prmto.mova_movieapp.data.models.detail.tv.TvDetailDto
 import com.prmto.mova_movieapp.domain.models.Movie
@@ -14,11 +13,11 @@ interface RemoteRepository {
 
     suspend fun getMovieGenreList(
         language: String
-    ): GenreList
+    ): com.prmto.mova_movieapp.data.models.GenreList
 
     suspend fun getTvGenreList(
         language: String
-    ): GenreList
+    ): com.prmto.mova_movieapp.data.models.GenreList
 
     fun getNowPlayingMovies(
         language: String,

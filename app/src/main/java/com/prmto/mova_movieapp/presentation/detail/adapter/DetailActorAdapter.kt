@@ -1,4 +1,4 @@
-package com.prmto.mova_movieapp.presentation.detail
+package com.prmto.mova_movieapp.presentation.detail.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

@@ -32,7 +32,7 @@ class DetailViewModel @Inject constructor(
     private val _detailState = MutableStateFlow<DetailState>(DetailState())
     val detailState: StateFlow<DetailState> = _detailState.asStateFlow()
 
-    private val _languageIsoCode = MutableStateFlow<String>(DEFAULT_LANGUAGE)
+    private val _languageIsoCode = MutableStateFlow(DEFAULT_LANGUAGE)
     val languageIsoCode: StateFlow<String> = _languageIsoCode.asStateFlow()
 
     init {
@@ -153,5 +153,4 @@ class DetailViewModel @Inject constructor(
             "$firstAirDateValue-"
         }
     }
-
 }
