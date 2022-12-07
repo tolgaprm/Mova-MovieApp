@@ -8,5 +8,6 @@ data class WatchProviderRegion(
     @Json(name = "DE") val de: WatchProviderItem?,
     @Json(name = "FR") val fr: WatchProviderItem?,
     @Json(name = "EN") val en: WatchProviderItem?,
+    @Json(name = "US") val us: WatchProviderItem?,
 )
 

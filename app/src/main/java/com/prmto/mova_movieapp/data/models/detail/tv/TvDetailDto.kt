@@ -5,6 +5,7 @@ import com.prmto.mova_movieapp.data.models.credit.toCredit
 import com.prmto.mova_movieapp.data.models.detail.ProductionCompany
 import com.prmto.mova_movieapp.data.models.detail.ProductionCountry
 import com.prmto.mova_movieapp.data.models.detail.SpokenLanguage
+import com.prmto.mova_movieapp.data.models.watch_provider.WatchProviders
 import com.prmto.mova_movieapp.domain.models.detail.TvDetail
 import com.squareup.moshi.Json
 
@@ -40,7 +41,8 @@ data class TvDetailDto(
     val type: String,
     @Json(name = "vote_average") val voteAverage: Double,
     @Json(name = "vote_count") val voteCount: Int,
-    val credits: CreditDto
+    val credits: CreditDto,
+    @Json(name = "watch/providers") val watchProviders: WatchProviders
 )
 
 fun TvDetailDto.toTvDetail(): TvDetail {
@@ -59,6 +61,7 @@ fun TvDetailDto.toTvDetail(): TvDetail {
         status = status,
         voteAverage = voteAverage,
         voteCount = voteCount,
+        watchProviders = watchProviders,
         credit = credits.toCredit()
     )
 }

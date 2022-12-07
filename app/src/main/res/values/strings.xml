@@ -69,5 +69,6 @@
     <string name="stream">Stream</string>
     <string name="rent">Rent</string>
     <string name="buy">Buy</string>
+    <string name="provides_now_watch_information_by_justwatch">Provides \'Now Watch Information\' by <font color="#FFEB3B">JustWatch</font></string>
 
 </resources>

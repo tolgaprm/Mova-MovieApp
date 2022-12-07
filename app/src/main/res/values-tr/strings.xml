@@ -70,4 +70,6 @@
     <string name="stream">Yayın</string>
     <string name="rent">Kirala</string>
     <string name="buy">Satın Al</string>
+    <string name="provides_now_watch_information_by_justwatch">Şimdi İzle bilgileri <font color="#FFEB3B">JustWatch</font> tarafından sağlanıyor.</string>
+    >
 </resources>

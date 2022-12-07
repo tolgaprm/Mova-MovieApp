@@ -129,6 +129,7 @@ class DetailViewModel @Inject constructor(
         return ((voteAverage * 5) / 10).toFloat()
     }
 
+
     private fun convertRuntime(runtime: Int?): Map<String, String> {
         runtime?.let {
             val hour = runtime / 60

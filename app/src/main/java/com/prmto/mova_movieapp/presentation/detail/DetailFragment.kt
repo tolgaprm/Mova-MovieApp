@@ -54,10 +54,11 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
         bindAttributesDetailFrag = BindAttributesDetailFrag(
             binding = binding,
             imageLoader = imageLoader,
-            context = requireContext()
-        ) { tmdbUrl ->
-            intentToImdbWebSite(tmdbUrl)
-        }
+            context = requireContext(),
+            onClickTmdbImage = { tmdbUrl ->
+                intentToTmdbWebSite(tmdbUrl)
+            }
+        )
 
         addOnBackPressedCallback()
 
@@ -168,7 +169,7 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
         }
     }
 
-    private fun intentToImdbWebSite(tmdbUrl: String) {
+    private fun intentToTmdbWebSite(tmdbUrl: String) {
         val intent = Intent(Intent.ACTION_VIEW)
         val tmdbUrlWithLanguage = tmdbUrl.plus("?language=${viewModel.languageIsoCode.value}")
         intent.data = Uri.parse(tmdbUrlWithLanguage)

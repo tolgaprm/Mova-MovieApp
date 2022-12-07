@@ -1,11 +1,13 @@
 package com.prmto.mova_movieapp.domain.models.detail
 
+import com.prmto.mova_movieapp.data.models.Genre
 import com.prmto.mova_movieapp.data.models.detail.tv.Season
+import com.prmto.mova_movieapp.data.models.watch_provider.WatchProviders
 import com.prmto.mova_movieapp.domain.models.credit.Credit
 
 data class TvDetail(
     val id: Int,
-    val genres: List<com.prmto.mova_movieapp.data.models.Genre>,
+    val genres: List<Genre>,
     val firstAirDate: String,
     val createdBy: List<CreatedBy>,
     val lastAirDate: String,
@@ -20,5 +22,6 @@ data class TvDetail(
     val voteCount: Int,
     var ratingValue: Float = 0f,
     var releaseDate: String = "",
-    val credit: Credit
+    val credit: Credit,
+    val watchProviders: WatchProviders
 )

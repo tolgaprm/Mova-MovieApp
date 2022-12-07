@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.*
 import com.prmto.mova_movieapp.domain.repository.DataStoreOperations
-import com.prmto.mova_movieapp.util.Constants.COUNTRY_KEY
 import com.prmto.mova_movieapp.util.Constants.LOCALE_KEY
 import com.prmto.mova_movieapp.util.Constants.UI_MODE_KEY
 import kotlinx.coroutines.flow.Flow
@@ -23,7 +22,6 @@ class DataOperationsImpl @Inject constructor(
     private object PreferencesKey {
         val localeKey = stringPreferencesKey(LOCALE_KEY)
         val uiModeKey = intPreferencesKey(UI_MODE_KEY)
-        val countryCodeKey = stringPreferencesKey(COUNTRY_KEY)
     }
 
 

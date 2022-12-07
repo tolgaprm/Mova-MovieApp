@@ -355,9 +355,23 @@
                     android:layout_width="@dimen/watchProvidersImageSize"
                     android:layout_height="@dimen/watchProvidersImageSize"
                     android:layout_marginTop="@dimen/medium_margin"
+                    android:backgroundTint="@color/dark_red_variant"
                     app:layout_constraintEnd_toEndOf="@id/txtStream"
                     app:layout_constraintStart_toStartOf="@id/txtStream"
                     app:layout_constraintTop_toBottomOf="@id/txtStream" />
+
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/txtCopyright"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="@dimen/medium_margin"
+                    android:paddingHorizontal="@dimen/medium_padding"
+                    android:text="@string/provides_now_watch_information_by_justwatch"
+                    android:textSize="11sp"
+                    app:layout_constraintEnd_toEndOf="@+id/txtBuy"
+                    app:layout_constraintStart_toStartOf="@+id/txtStream"
+                    app:layout_constraintTop_toBottomOf="@+id/imvStream" />
 
 
                 <com.google.android.material.textview.MaterialTextView
@@ -376,6 +390,7 @@
                     android:layout_width="@dimen/watchProvidersImageSize"
                     android:layout_height="@dimen/watchProvidersImageSize"
                     android:layout_marginTop="@dimen/medium_margin"
+                    android:backgroundTint="@color/dark_red_variant"
                     app:layout_constraintEnd_toEndOf="@id/txtRent"
                     app:layout_constraintStart_toStartOf="@id/txtRent"
                     app:layout_constraintTop_toBottomOf="@id/txtRent" />
@@ -396,6 +411,7 @@
                     android:layout_width="@dimen/watchProvidersImageSize"
                     android:layout_height="@dimen/watchProvidersImageSize"
                     android:layout_marginTop="@dimen/medium_margin"
+                    android:backgroundTint="@color/dark_red_variant"
                     app:layout_constraintEnd_toEndOf="@id/txtBuy"
                     app:layout_constraintStart_toStartOf="@id/txtBuy"
                     app:layout_constraintTop_toBottomOf="@id/txtBuy" />
@@ -410,12 +426,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/medium_margin"
-                    android:layout_marginTop="@dimen/large_margin"
+                    android:layout_marginTop="8dp"
                     android:paddingHorizontal="@dimen/medium_padding"
                     android:text="@string/actor"
                     android:textSize="20sp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/imvStream" />
+                    app:layout_constraintTop_toBottomOf="@+id/txtCopyright" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerViewActor"
