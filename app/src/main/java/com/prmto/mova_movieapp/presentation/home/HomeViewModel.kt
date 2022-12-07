@@ -68,10 +68,6 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun getCountryIsoCode(): Flow<String> {
-        return homeUseCases.getCountryIsoCodeUseCase()
-    }
-
     fun setCountryIsoCode(countryIsoCode: String) {
         _countryIsoCode.value = countryIsoCode
     }
@@ -108,13 +104,13 @@ class HomeViewModel @Inject constructor(
     fun getPopularTvSeries(): Flow<PagingData<TvSeries>> {
         return homeUseCases.getPopularTvSeries(
             language = _languageIsoCode.value.lowercase()
-        )
+        ).cachedIn(viewModelScope)
     }
 
     fun getTopRatedTvSeries(): Flow<PagingData<TvSeries>> {
         return homeUseCases.getTopRatedTvSeriesUseCase(
             language = _languageIsoCode.value.lowercase()
-        )
+        ).cachedIn(viewModelScope)
     }
 
 

@@ -21,6 +21,7 @@ import com.prmto.mova_movieapp.R
 import com.prmto.mova_movieapp.databinding.FragmentHomeBinding
 import com.prmto.mova_movieapp.domain.repository.ConnectivityObserver
 import com.prmto.mova_movieapp.presentation.home.recyler.*
+import com.prmto.mova_movieapp.util.getCountryIsoCode
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.collectLatest
@@ -107,9 +108,8 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                     }
 
                     launch {
-                        viewModel.getCountryIsoCode().collect {
-                            viewModel.setCountryIsoCode(it)
-                        }
+                        val countryIsoCode = requireContext().getCountryIsoCode().uppercase()
+                        viewModel.setCountryIsoCode(countryIsoCode)
                     }
 
                     launch {

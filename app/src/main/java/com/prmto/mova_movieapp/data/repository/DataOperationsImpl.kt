@@ -47,25 +47,6 @@ class DataOperationsImpl @Inject constructor(
             }
     }
 
-    override fun getUserCountryIsoCode(): Flow<String> {
-        return dataStore.data
-            .catch { exception ->
-                if (exception is IOException) {
-                    emit(emptyPreferences())
-                } else {
-                    throw exception
-                }
-            }.map {
-                val userCountryCode = it[PreferencesKey.countryCodeKey] ?: ""
-                userCountryCode
-            }
-    }
-
-    override suspend fun updateUserCountryIsoCode(countryIsoCode: String) {
-        dataStore.edit {
-            it[PreferencesKey.countryCodeKey] = countryIsoCode
-        }
-    }
 
     override suspend fun updateUIMode(uiMode: Int) {
         dataStore.edit {
