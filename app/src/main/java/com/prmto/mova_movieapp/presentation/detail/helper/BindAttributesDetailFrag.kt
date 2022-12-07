@@ -19,6 +19,8 @@ import com.prmto.mova_movieapp.presentation.util.HandleUtils
 import com.prmto.mova_movieapp.util.Constants
 import com.prmto.mova_movieapp.util.Constants.HOUR_KEY
 import com.prmto.mova_movieapp.util.Constants.MINUTES_KEY
+import com.prmto.mova_movieapp.util.getCountryIsoCode
+import timber.log.Timber
 
 class BindAttributesDetailFrag(
     val binding: FragmentDetailBinding,
@@ -62,6 +64,9 @@ class BindAttributesDetailFrag(
 
     private fun bindWatchProviders(providerRegion: WatchProviderRegion?) {
         providerRegion?.let { it ->
+
+            val countryIsoCode = context.getCountryIsoCode()
+            Timber.d(countryIsoCode)
             val streamLogoPath = it.tr?.flatRate?.first()?.logoPath
             val buyLogoPath = it.tr?.buy?.first()?.logoPath
             val rentLogoPath = it.tr?.rent?.first()?.logoPath

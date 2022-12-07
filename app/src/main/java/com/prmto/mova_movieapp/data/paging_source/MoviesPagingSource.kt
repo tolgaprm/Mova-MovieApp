@@ -33,13 +33,15 @@ class MoviesPagingSource @Inject constructor(
                 MoviesApiFunction.POPULAR_MOVIES -> {
                     tmdbApi.getPopularMovies(
                         page = nextPage,
-                        language = language
+                        language = language,
+                        region = region
                     )
                 }
                 MoviesApiFunction.TOP_RATED_MOVIES -> {
                     tmdbApi.getTopRatedMovies(
                         page = nextPage,
-                        language = language
+                        language = language,
+                        region = region
                     )
                 }
             }

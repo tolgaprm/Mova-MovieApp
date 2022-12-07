@@ -73,13 +73,13 @@ class FakeRemoteRepository : RemoteRepository {
         }
     }
 
-    override fun getPopularMovies(language: String): Flow<PagingData<Movie>> {
+    override fun getPopularMovies(language: String, region: String): Flow<PagingData<Movie>> {
         return flow {
             PagingData.empty<Movie>()
         }
     }
 
-    override fun getTopRatedMovies(language: String): Flow<PagingData<Movie>> {
+    override fun getTopRatedMovies(language: String, region: String): Flow<PagingData<Movie>> {
         return flow {
             PagingData.empty<Movie>()
         }

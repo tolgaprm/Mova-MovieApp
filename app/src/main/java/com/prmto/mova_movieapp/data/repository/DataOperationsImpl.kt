@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.*
 import com.prmto.mova_movieapp.domain.repository.DataStoreOperations
+import com.prmto.mova_movieapp.util.Constants.COUNTRY_KEY
 import com.prmto.mova_movieapp.util.Constants.LOCALE_KEY
 import com.prmto.mova_movieapp.util.Constants.UI_MODE_KEY
 import kotlinx.coroutines.flow.Flow
@@ -22,6 +23,7 @@ class DataOperationsImpl @Inject constructor(
     private object PreferencesKey {
         val localeKey = stringPreferencesKey(LOCALE_KEY)
         val uiModeKey = intPreferencesKey(UI_MODE_KEY)
+        val countryCodeKey = stringPreferencesKey(COUNTRY_KEY)
     }
 
 
@@ -43,6 +45,26 @@ class DataOperationsImpl @Inject constructor(
                 val locale = it[PreferencesKey.localeKey] ?: Locale.getDefault().toLanguageTag()
                 locale
             }
+    }
+
+    override fun getUserCountryIsoCode(): Flow<String> {
+        return dataStore.data
+            .catch { exception ->
+                if (exception is IOException) {
+                    emit(emptyPreferences())
+                } else {
+                    throw exception
+                }
+            }.map {
+                val userCountryCode = it[PreferencesKey.countryCodeKey] ?: ""
+                userCountryCode
+            }
+    }
+
+    override suspend fun updateUserCountryIsoCode(countryIsoCode: String) {
+        dataStore.edit {
+            it[PreferencesKey.countryCodeKey] = countryIsoCode
+        }
     }
 
     override suspend fun updateUIMode(uiMode: Int) {

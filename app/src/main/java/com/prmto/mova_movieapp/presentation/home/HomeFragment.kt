@@ -107,6 +107,12 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                     }
 
                     launch {
+                        viewModel.getCountryIsoCode().collect {
+                            viewModel.setCountryIsoCode(it)
+                        }
+                    }
+
+                    launch {
                         viewModel.getNowPlayingMovies().collectLatest { pagingData ->
                             nowPlayingAdapter.submitData(pagingData)
                         }

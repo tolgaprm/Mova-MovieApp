@@ -62,7 +62,7 @@ class RemoteRepositoryImpl @Inject constructor(
         ).flow
     }
 
-    override fun getPopularMovies(language: String): Flow<PagingData<Movie>> {
+    override fun getPopularMovies(language: String, region: String): Flow<PagingData<Movie>> {
         return Pager(
             config = PagingConfig(
                 pageSize = ITEMS_PER_PAGE
@@ -77,7 +77,7 @@ class RemoteRepositoryImpl @Inject constructor(
         ).flow
     }
 
-    override fun getTopRatedMovies(language: String): Flow<PagingData<Movie>> {
+    override fun getTopRatedMovies(language: String, region: String): Flow<PagingData<Movie>> {
         return Pager(
             config = PagingConfig(
                 pageSize = ITEMS_PER_PAGE

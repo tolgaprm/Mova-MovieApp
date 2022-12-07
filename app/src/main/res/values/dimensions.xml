@@ -43,6 +43,6 @@
     <dimen name="iconSizeSmall">16dp</dimen>
     <dimen name="iconSizeExtraSmall">8dp</dimen>
 
-    <dimen name="watchProvidersImageSize">70dp</dimen>
+    <dimen name="watchProvidersImageSize">30dp</dimen>
 
 </resources>

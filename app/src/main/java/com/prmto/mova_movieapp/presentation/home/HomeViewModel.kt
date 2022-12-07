@@ -31,6 +31,10 @@ class HomeViewModel @Inject constructor(
     private val _languageIsoCode = MutableStateFlow("")
     val languageIsoCode: StateFlow<String> get() = _languageIsoCode
 
+    private val _countryIsoCode = MutableStateFlow("")
+    val countryIsoCode: StateFlow<String> get() = _countryIsoCode
+
+
     val isShowsRecyclerViewSeeAllSection =
         savedStateHandle.getStateFlow(IS_SHOWS_SEE_ALL_PAGE, false)
 
@@ -49,7 +53,6 @@ class HomeViewModel @Inject constructor(
         savedStateHandle[LATEST_SHOWS_SEE_ALL_PAGE_TOOLBAR_TEXT_ID] = toolbarTextId
     }
 
-
     fun getLanguageIsoCode(): Flow<String> {
         return homeUseCases.getLanguageIsoCodeUseCase()
     }
@@ -65,6 +68,14 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+    fun getCountryIsoCode(): Flow<String> {
+        return homeUseCases.getCountryIsoCodeUseCase()
+    }
+
+    fun setCountryIsoCode(countryIsoCode: String) {
+        _countryIsoCode.value = countryIsoCode
+    }
+
     suspend fun getMovieGenreList(): GenreList {
         return homeUseCases.getMovieGenreList(_languageIsoCode.value.lowercase())
     }
@@ -75,19 +86,22 @@ class HomeViewModel @Inject constructor(
 
     fun getNowPlayingMovies(): Flow<PagingData<Movie>> {
         return homeUseCases.getNowPlayingMoviesUseCase(
-            language = _languageIsoCode.value.lowercase()
+            language = _languageIsoCode.value.lowercase(),
+            region = _countryIsoCode.value
         ).cachedIn(viewModelScope)
     }
 
     fun getPopularMovies(): Flow<PagingData<Movie>> {
         return homeUseCases.getPopularMoviesUseCase(
-            language = _languageIsoCode.value.lowercase()
+            language = _languageIsoCode.value.lowercase(),
+            region = _countryIsoCode.value
         ).cachedIn(viewModelScope)
     }
 
     fun getTopRatedMovies(): Flow<PagingData<Movie>> {
         return homeUseCases.getTopRatedMoviesUseCase(
-            language = _languageIsoCode.value.lowercase()
+            language = _languageIsoCode.value.lowercase(),
+            region = _countryIsoCode.value
         ).cachedIn(viewModelScope)
     }
 

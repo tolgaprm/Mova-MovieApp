@@ -1,5 +1,7 @@
 package com.prmto.mova_movieapp.data.remote
 
+import com.prmto.mova_movieapp.data.models.ApiResponse
+import com.prmto.mova_movieapp.data.models.GenreList
 import com.prmto.mova_movieapp.data.models.MovieDto
 import com.prmto.mova_movieapp.data.models.TvSeriesDto
 import com.prmto.mova_movieapp.data.models.detail.movie.MovieDetailDto
@@ -21,13 +23,13 @@ interface TMDBApi {
     suspend fun getMovieGenreList(
         @Query("api_key") apiKey: String = API_KEY,
         @Query("language") language: String
-    ): com.prmto.mova_movieapp.data.models.GenreList
+    ): GenreList
 
     @GET("genre/tv/list")
     suspend fun getTvGenreList(
         @Query("api_key") apiKey: String = API_KEY,
         @Query("language") language: String
-    ): com.prmto.mova_movieapp.data.models.GenreList
+    ): GenreList
 
     @GET("movie/now_playing")
     suspend fun getNowPlayingMovies(
@@ -35,21 +37,23 @@ interface TMDBApi {
         @Query("page") page: Int,
         @Query("region") region: String,
         @Query("language") language: String
-    ): com.prmto.mova_movieapp.data.models.ApiResponse<MovieDto>
+    ): ApiResponse<MovieDto>
 
     @GET("movie/popular")
     suspend fun getPopularMovies(
         @Query("api_key") apiKey: String = API_KEY,
         @Query("page") page: Int = STARTING_PAGE,
+        @Query("region") region: String,
         @Query("language") language: String
-    ): com.prmto.mova_movieapp.data.models.ApiResponse<MovieDto>
+    ): ApiResponse<MovieDto>
 
     @GET("movie/top_rated")
     suspend fun getTopRatedMovies(
         @Query("api_key") apiKey: String = API_KEY,
         @Query("page") page: Int = STARTING_PAGE,
+        @Query("region") region: String,
         @Query("language") language: String
-    ): com.prmto.mova_movieapp.data.models.ApiResponse<MovieDto>
+    ): ApiResponse<MovieDto>
 
 
     @GET("tv/popular")
@@ -57,14 +61,14 @@ interface TMDBApi {
         @Query("api_key") apiKey: String = API_KEY,
         @Query("page") page: Int = STARTING_PAGE,
         @Query("language") language: String,
-    ): com.prmto.mova_movieapp.data.models.ApiResponse<TvSeriesDto>
+    ): ApiResponse<TvSeriesDto>
 
     @GET("tv/top_rated")
     suspend fun getTopRatedTvs(
         @Query("api_key") apiKey: String = API_KEY,
         @Query("page") page: Int = STARTING_PAGE,
         @Query("language") language: String,
-    ): com.prmto.mova_movieapp.data.models.ApiResponse<TvSeriesDto>
+    ): ApiResponse<TvSeriesDto>
 
 
     @GET("discover/movie")
@@ -75,7 +79,7 @@ interface TMDBApi {
         @Query("with_genres") genres: String = "",
         @Query("primary_release_year") releaseYear: Int,
         @Query("sort_by") sort: String = Sort.Popularity.toDiscoveryQueryString(Category.MOVIE)
-    ): com.prmto.mova_movieapp.data.models.ApiResponse<MovieDto>
+    ): ApiResponse<MovieDto>
 
 
     @GET("discover/tv")
@@ -86,7 +90,7 @@ interface TMDBApi {
         @Query("with_genres") genres: String = "",
         @Query("first_air_date_year") firstAirDateYear: Int,
         @Query("sort_by") sort: String = Sort.Popularity.toDiscoveryQueryString(Category.MOVIE)
-    ): com.prmto.mova_movieapp.data.models.ApiResponse<TvSeriesDto>
+    ): ApiResponse<TvSeriesDto>
 
     @GET("movie/{movie_id}")
     suspend fun getMovieDetail(

@@ -11,9 +11,11 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.prmto.mova_movieapp.R
+import com.prmto.mova_movieapp.util.getCountryIsoCode
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import java.util.*
 
 @AndroidEntryPoint
 class SplashFragment : Fragment(R.layout.fragment_splash) {
@@ -28,7 +30,6 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
 
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-
                 launch {
                     viewModel.navigateToHomeFragment()
                     viewModel.isNavigateToHomeFragment.collect {
@@ -46,8 +47,10 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
                             language
                         )
                     )
-                }
 
+                    val countryIsoCode = requireContext().getCountryIsoCode().uppercase(Locale.ROOT)
+                    viewModel.updateCountryIsoCode(countryIsoCode)
+                }
             }
         }
     }

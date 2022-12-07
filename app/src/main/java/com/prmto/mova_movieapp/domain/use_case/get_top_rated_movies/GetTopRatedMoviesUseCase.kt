@@ -11,10 +11,12 @@ class GetTopRatedMoviesUseCase @Inject constructor(
 ) {
 
     operator fun invoke(
-        language: String
+        language: String,
+        region: String
     ): Flow<PagingData<Movie>> {
         return repository.getTopRatedMovies(
-            language = language
+            language = language,
+            region = region
         )
     }
 }

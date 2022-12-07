@@ -9,7 +9,13 @@ import javax.inject.Inject
 class GetPopularMoviesUseCase @Inject constructor(
     private val remoteRepository: RemoteRepository
 ) {
-    operator fun invoke(language: String): Flow<PagingData<Movie>> {
-        return remoteRepository.getPopularMovies(language = language)
+    operator fun invoke(
+        language: String,
+        region: String
+    ): Flow<PagingData<Movie>> {
+        return remoteRepository.getPopularMovies(
+            language = language,
+            region = region,
+        )
     }
 }

@@ -101,6 +101,7 @@
                     android:id="@+id/imvPoster"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/movie_detail_poster_image_size"
+                    android:layout_marginTop="8dp"
                     android:importantForAccessibility="no"
                     android:scaleType="centerCrop"
                     app:layout_constraintEnd_toEndOf="parent"
