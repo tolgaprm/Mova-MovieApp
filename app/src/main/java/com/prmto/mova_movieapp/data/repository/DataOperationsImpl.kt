@@ -40,8 +40,9 @@ class DataOperationsImpl @Inject constructor(
                     throw exception
                 }
             }.map {
-                val locale = it[PreferencesKey.localeKey] ?: Locale.getDefault().toLanguageTag()
-                locale
+                val languageTag =
+                    it[PreferencesKey.localeKey] ?: Locale.getDefault().toLanguageTag()
+                languageTag
             }
     }
 

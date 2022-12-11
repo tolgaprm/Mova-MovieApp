@@ -35,6 +35,7 @@ class DetailViewModel @Inject constructor(
     private val _languageIsoCode = MutableStateFlow(DEFAULT_LANGUAGE)
     val languageIsoCode: StateFlow<String> = _languageIsoCode.asStateFlow()
 
+
     init {
         viewModelScope.launch {
             _languageIsoCode.value = dataStoreOperations.getLanguageIsoCode().first()
@@ -71,18 +72,24 @@ class DetailViewModel @Inject constructor(
 
     fun getMovieDetail() {
         viewModelScope.launch {
+            _detailState.value = _detailState.value.copy(
+                loading = true
+            )
             detailUseCases.movieDetailUseCase(
                 language = _languageIsoCode.value,
                 movieId = movieDetailId.value
             ).collect { resource ->
                 when (resource) {
-                    is Resource.Loading -> {
-                        _detailState.value = DetailState(loading = true)
-                    }
                     is Resource.Error -> {
-                        _detailState.value = DetailState(errorId = resource.errorRes)
+                        _detailState.value = _detailState.value.copy(
+                            loading = false
+                        )
+                        _detailState.value = DetailState(error = resource.uiText)
                     }
                     is Resource.Success -> {
+                        _detailState.value = _detailState.value.copy(
+                            loading = false
+                        )
                         val movieDetail = resource.data
                         movieDetail?.let {
                             it.ratingValue = calculateRatingBarValue(voteAverage = it.voteAverage)
@@ -97,18 +104,24 @@ class DetailViewModel @Inject constructor(
 
     fun getTvDetail() {
         viewModelScope.launch {
+            _detailState.value = _detailState.value.copy(
+                loading = true
+            )
             detailUseCases.tvDetailUseCase(
                 language = _languageIsoCode.value,
                 tvId = tvDetailId.value
             ).collect { resource ->
                 when (resource) {
-                    is Resource.Loading -> {
-                        _detailState.value = DetailState(loading = true)
-                    }
                     is Resource.Error -> {
-                        _detailState.value = DetailState(errorId = resource.errorRes)
+                        _detailState.value = DetailState(error = resource.uiText)
+                        _detailState.value = _detailState.value.copy(
+                            loading = false
+                        )
                     }
                     is Resource.Success -> {
+                        _detailState.value = _detailState.value.copy(
+                            loading = false
+                        )
                         val tvDetail = resource.data
                         tvDetail?.let {
                             it.ratingValue = calculateRatingBarValue(voteAverage = it.voteAverage)

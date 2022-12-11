@@ -43,9 +43,9 @@ class ExploreViewModel @Inject constructor(
     init {
         setupTimePeriods()
         viewModelScope.launch() {
-            getLocale().collectLatest {
+         /*   getLocale().collectLatest {
                 _language.value = it
-            }
+            }*/
         }
     }
 
@@ -104,9 +104,9 @@ class ExploreViewModel @Inject constructor(
         }
     }
 
-    private fun getLocale(): Flow<String> {
+   /* private fun getLocale(): Flow<String> {
         return exploreUseCases.getLanguageIsoCodeUseCase.invoke()
-    }
+    }*/
 
     fun setLocale(locale: String) {
         _language.value = locale
