@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.flow
 class FakeDataStoreOperations : DataStoreOperations {
 
     private var locale: String = "tr"
-    private var uiMode: Int = AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+    private var uiMode: Int = AppCompatDelegate.MODE_NIGHT_NO
 
 
     override suspend fun updateCurrentLanguageIsoCode(languageTag: String) {
