@@ -20,9 +20,6 @@ class HomeViewModel @Inject constructor(
     private val networkConnectivityObserver: ConnectivityObserver
 ) : ViewModel() {
 
-    private val _languageIsoCode = MutableStateFlow("")
-    val languageIsoCode: StateFlow<String> get() = _languageIsoCode
-
     private val _homeState = MutableStateFlow(HomeState())
     val homeState: StateFlow<HomeState> get() = _homeState
 
@@ -32,18 +29,22 @@ class HomeViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             launch {
-                homeUseCases.getLanguageIsoCodeUseCase().collect {
-                    _languageIsoCode.value = it
+                homeUseCases.getLanguageIsoCodeUseCase().collect { languageIsoCode ->
+                    _homeState.value = _homeState.value.copy(
+                        languageIsoCode = languageIsoCode
+                    )
                 }
             }
             launch {
-                val movieGenreList = homeUseCases.getMovieGenreList(languageIsoCode.value).genres
+                val movieGenreList =
+                    homeUseCases.getMovieGenreList(homeState.value.languageIsoCode).genres
                 _homeState.value = _homeState.value.copy(
                     movieGenreList = movieGenreList
                 )
             }
             launch {
-                val tvGenreList = homeUseCases.getTvGenreList(languageIsoCode.value).genres
+                val tvGenreList =
+                    homeUseCases.getTvGenreList(homeState.value.languageIsoCode).genres
                 _homeState.value = _homeState.value.copy(
                     tvGenreList = tvGenreList
                 )
@@ -82,40 +83,36 @@ class HomeViewModel @Inject constructor(
 
     fun observeNetworkConnectivity() = networkConnectivityObserver.observe()
 
-    fun getLanguageIsoCode(): Flow<String> {
-        return homeUseCases.getLanguageIsoCodeUseCase()
-    }
-
     fun getNowPlayingMovies(): Flow<PagingData<Movie>> {
         return homeUseCases.getNowPlayingMoviesUseCase(
-            language = languageIsoCode.value,
+            language = homeState.value.languageIsoCode,
             region = homeState.value.countryIsoCode
         ).cachedIn(viewModelScope)
     }
 
     fun getPopularMovies(): Flow<PagingData<Movie>> {
         return homeUseCases.getPopularMoviesUseCase(
-            language = languageIsoCode.value,
+            language = homeState.value.languageIsoCode,
             region = homeState.value.countryIsoCode
         ).cachedIn(viewModelScope)
     }
 
     fun getTopRatedMovies(): Flow<PagingData<Movie>> {
         return homeUseCases.getTopRatedMoviesUseCase(
-            language = languageIsoCode.value,
+            language = homeState.value.languageIsoCode,
             region = homeState.value.countryIsoCode
         ).cachedIn(viewModelScope)
     }
 
     fun getPopularTvSeries(): Flow<PagingData<TvSeries>> {
         return homeUseCases.getPopularTvSeries(
-            language = languageIsoCode.value
+            language = homeState.value.languageIsoCode
         ).cachedIn(viewModelScope)
     }
 
     fun getTopRatedTvSeries(): Flow<PagingData<TvSeries>> {
         return homeUseCases.getTopRatedTvSeriesUseCase(
-            language = languageIsoCode.value
+            language = homeState.value.languageIsoCode
         ).cachedIn(viewModelScope)
     }
 }
