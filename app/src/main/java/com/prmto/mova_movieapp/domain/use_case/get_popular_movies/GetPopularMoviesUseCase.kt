@@ -14,7 +14,7 @@ class GetPopularMoviesUseCase @Inject constructor(
         region: String
     ): Flow<PagingData<Movie>> {
         return remoteRepository.getPopularMovies(
-            language = language,
+            language = language.lowercase(),
             region = region,
         )
     }

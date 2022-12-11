@@ -8,6 +8,6 @@ class UpdateLanguageIsoCodeUseCase @Inject constructor(
 ) {
 
     suspend operator fun invoke(languageTag: String) {
-        dataStoreOperations.updateCurrentLanguageIsoCode(languageTag = languageTag)
+        dataStoreOperations.updateCurrentLanguageIsoCode(languageTag = languageTag.lowercase())
     }
 }

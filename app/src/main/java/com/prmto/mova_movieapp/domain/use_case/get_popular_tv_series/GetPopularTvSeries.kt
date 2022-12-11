@@ -12,7 +12,7 @@ class GetPopularTvSeries @Inject constructor(
 
     operator fun invoke(language: String): Flow<PagingData<TvSeries>> {
         return remoteRepository.getPopularTvs(
-            language = language
+            language = language.lowercase()
         )
     }
 }

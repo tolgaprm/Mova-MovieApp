@@ -11,7 +11,7 @@ class GetTopRatedTvSeriesUseCase @Inject constructor(
 ) {
     operator fun invoke(language: String): Flow<PagingData<TvSeries>> {
         return remoteRepository.getTopRatedTvs(
-            language = language
+            language = language.lowercase()
         )
     }
 }

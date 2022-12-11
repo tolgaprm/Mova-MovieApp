@@ -52,4 +52,6 @@ class SplashFragmentTest {
             view.isVisible
         }
     }
+
+
 }

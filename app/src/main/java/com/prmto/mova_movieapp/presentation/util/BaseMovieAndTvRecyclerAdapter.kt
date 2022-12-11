@@ -26,8 +26,8 @@ abstract class BaseMovieAndTvRecyclerAdapter<T : Any>(
             genreList: List<com.prmto.mova_movieapp.data.models.Genre>,
             context: Context
         ) {
-
             binding.tvMovieTvName.text = movie.title
+
             val genre =
                 HandleUtils.handleConvertingGenreListToOneGenreString(genreList, movie.genreIds)
             val voteCount = HandleUtils.convertingVoteCountToString(movie.voteCount)

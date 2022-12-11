@@ -9,7 +9,6 @@ import com.prmto.mova_movieapp.domain.use_case.get_ui_mode.GetUIModeUseCase
 import com.prmto.mova_movieapp.repository.FakeDataStoreOperations
 import com.prmto.mova_movieapp.util.MainDispatcherRule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
@@ -43,7 +42,7 @@ class SplashViewModelTest {
                 cancelAndConsumeRemainingEvents()
             }
         }
-        viewModel.getLanguageIsoCode().first()
+        viewModel.getLanguageIsoCode()
         job.join()
         job.cancel()
     }
@@ -56,7 +55,7 @@ class SplashViewModelTest {
                 cancelAndConsumeRemainingEvents()
             }
         }
-        viewModel.getUiMode().first()
+        viewModel.getUiMode()
         job.join()
         job.cancel()
     }
@@ -65,7 +64,7 @@ class SplashViewModelTest {
     fun `After all collect events, check is eventFlow NavigateTo`() = runTest {
         val job = launch {
             viewModel.eventFlow.test {
-                assertThat(awaitItem()).isEqualTo(SplashEvent.UpdateUiMode(AppCompatDelegate.MODE_NIGHT_NO))
+                assertThat(awaitItem()).isEqualTo(SplashEvent.NavigateTo(SplashFragmentDirections.actionToHomeFragment()))
                 cancelAndConsumeRemainingEvents()
             }
         }

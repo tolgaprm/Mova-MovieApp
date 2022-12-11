@@ -7,7 +7,7 @@
 
     <!--region seeAllSection that when click see all, the linear layout visible-->
     <LinearLayout
-        android:id="@+id/recyclerViewSeeAllSection"
+        android:id="@+id/seeAllPage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"

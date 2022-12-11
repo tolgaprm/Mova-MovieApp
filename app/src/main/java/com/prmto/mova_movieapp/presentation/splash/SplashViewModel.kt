@@ -8,7 +8,6 @@ import com.prmto.mova_movieapp.domain.use_case.get_language_iso_code.GetLanguage
 import com.prmto.mova_movieapp.domain.use_case.get_ui_mode.GetUIModeUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.first
@@ -25,24 +24,23 @@ class SplashViewModel @Inject constructor(
     val eventFlow = _eventFlow.asSharedFlow()
 
     init {
+        getLanguageIsoCode()
+        getUiMode()
+        navigateToHomeFragment()
+    }
+
+    @VisibleForTesting
+    fun getLanguageIsoCode() {
         viewModelScope.launch {
-            _eventFlow.emit(SplashEvent.UpdateAppLanguage(getLanguageIsoCode().first()))
-
-            _eventFlow.emit(SplashEvent.UpdateUiMode(getUiMode().first()))
-
-            navigateToHomeFragment()
-
+            _eventFlow.emit(SplashEvent.UpdateAppLanguage(getLanguageIsoCodeUseCase().first()))
         }
     }
 
     @VisibleForTesting
-    fun getLanguageIsoCode(): Flow<String> {
-        return getLanguageIsoCodeUseCase()
-    }
-
-    @VisibleForTesting
-    fun getUiMode(): Flow<Int> {
-        return getUIModeUseCase()
+    fun getUiMode() {
+        viewModelScope.launch {
+            _eventFlow.emit(SplashEvent.UpdateUiMode(getUIModeUseCase().first()))
+        }
     }
 
     @VisibleForTesting

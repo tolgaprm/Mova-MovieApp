@@ -15,7 +15,7 @@ class GetTopRatedMoviesUseCase @Inject constructor(
         region: String
     ): Flow<PagingData<Movie>> {
         return repository.getTopRatedMovies(
-            language = language,
+            language = language.lowercase(),
             region = region
         )
     }
