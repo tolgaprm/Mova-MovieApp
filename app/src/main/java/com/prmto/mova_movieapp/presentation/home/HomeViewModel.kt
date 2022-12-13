@@ -2,13 +2,15 @@ package com.prmto.mova_movieapp.presentation.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavDirections
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
+import com.prmto.mova_movieapp.R
 import com.prmto.mova_movieapp.domain.models.Movie
 import com.prmto.mova_movieapp.domain.models.TvSeries
 import com.prmto.mova_movieapp.domain.repository.ConnectivityObserver
 import com.prmto.mova_movieapp.domain.use_case.HomeUseCases
-import com.prmto.mova_movieapp.presentation.util.UiEvent
+import com.prmto.mova_movieapp.presentation.util.UiText
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -23,7 +25,11 @@ class HomeViewModel @Inject constructor(
     private val _homeState = MutableStateFlow(HomeState())
     val homeState: StateFlow<HomeState> get() = _homeState
 
-    private val _eventFlow = MutableSharedFlow<UiEvent>()
+    private val _adapterLoadState =
+        MutableStateFlow<PagingAdapterLoadState>(PagingAdapterLoadState())
+    val adapterLoadState: StateFlow<PagingAdapterLoadState> get() = _adapterLoadState
+
+    private val _eventFlow = MutableSharedFlow<HomeUiEvent>()
     val eventFlow = _eventFlow.asSharedFlow()
 
     init {
@@ -49,6 +55,15 @@ class HomeViewModel @Inject constructor(
                     tvGenreList = tvGenreList
                 )
             }
+            launch {
+                networkConnectivityObserver.observe().collectLatest {
+                    if (it == ConnectivityObserver.Status.Unavaliable || it == ConnectivityObserver.Status.Lost) {
+                        emitErrorForShowSnackBar(UiText.StringResource(R.string.internet_error))
+                    } else if (it == ConnectivityObserver.Status.Avaliable) {
+                        _eventFlow.emit(HomeUiEvent.RetryAllAdapters)
+                    }
+                }
+            }
         }
     }
 
@@ -64,7 +79,7 @@ class HomeViewModel @Inject constructor(
             is HomeEvent.OnBackPressed -> hideSeeAllPage()
             is HomeEvent.NavigateToDetailBottomSheet -> {
                 viewModelScope.launch {
-                    _eventFlow.emit(UiEvent.NavigateTo(event.directions))
+                    _eventFlow.emit(HomeUiEvent.NavigateTo(event.directions))
                 }
             }
             is HomeEvent.UpdateCountryIsoCode -> {
@@ -75,13 +90,138 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+    fun onAdapterLoadStateEvent(event: AdapterLoadStateEvent) {
+        val adapterState = _adapterLoadState.value
+        when (event) {
+            is AdapterLoadStateEvent.NowPlayingLoading -> {
+                _adapterLoadState.value = _adapterLoadState.value.copy(
+                    adapterState.nowPlayingState.copy(
+                        isLoading = true
+                    )
+                )
+            }
+            is AdapterLoadStateEvent.NowPlayingNotLoading -> {
+                _adapterLoadState.value = _adapterLoadState.value.copy(
+                    adapterState.nowPlayingState.copy(
+                        isLoading = false
+                    )
+                )
+            }
+            is AdapterLoadStateEvent.NowPlayingError -> {
+                _adapterLoadState.value = _adapterLoadState.value.copy(
+                    adapterState.nowPlayingState.copy(
+                        error = event.uiText,
+                        isLoading = false
+                    )
+                )
+                emitErrorForShowSnackBar(event.uiText)
+            }
+
+            is AdapterLoadStateEvent.PopularMoviesLoading -> {
+                _adapterLoadState.value = _adapterLoadState.value.copy(
+                    adapterState.popularMoviesState.copy(
+                        isLoading = true
+                    )
+                )
+            }
+            is AdapterLoadStateEvent.PopularMoviesNotLoading -> {
+                _adapterLoadState.value = _adapterLoadState.value.copy(
+                    adapterState.popularMoviesState.copy(
+                        isLoading = false
+                    )
+                )
+            }
+            is AdapterLoadStateEvent.PopularMoviesError -> {
+                _adapterLoadState.value = _adapterLoadState.value.copy(
+                    adapterState.popularMoviesState.copy(
+                        isLoading = false,
+                        error = event.uiText
+                    )
+                )
+                emitErrorForShowSnackBar(event.uiText)
+            }
+            is AdapterLoadStateEvent.PopularTvSeriesLoading -> {
+                _adapterLoadState.value = _adapterLoadState.value.copy(
+                    adapterState.popularTvSeriesState.copy(
+                        isLoading = true
+                    )
+                )
+            }
+            is AdapterLoadStateEvent.PopularTvSeriesNotLoading -> {
+                adapterState.popularTvSeriesState.copy(
+                    isLoading = false
+                )
+            }
+            is AdapterLoadStateEvent.PopularTvSeriesError -> {
+                adapterState.popularTvSeriesState.copy(
+                    isLoading = false,
+                    error = event.uiText
+                )
+                emitErrorForShowSnackBar(event.uiText)
+            }
+            is AdapterLoadStateEvent.TopRatedMoviesLoading -> {
+                _adapterLoadState.value = _adapterLoadState.value.copy(
+                    adapterState.topRatedMoviesState.copy(
+                        isLoading = true
+                    )
+                )
+            }
+            is AdapterLoadStateEvent.TopRatedMoviesNotLoading -> {
+                _adapterLoadState.value = _adapterLoadState.value.copy(
+                    adapterState.topRatedMoviesState.copy(
+                        isLoading = false
+                    )
+                )
+            }
+            is AdapterLoadStateEvent.TopRatedMoviesError -> {
+                _adapterLoadState.value = _adapterLoadState.value.copy(
+                    adapterState.topRatedMoviesState.copy(
+                        isLoading = false,
+                        error = event.uiText
+                    )
+                )
+                emitErrorForShowSnackBar(event.uiText)
+            }
+
+            is AdapterLoadStateEvent.TopRatedTvSeriesLoading -> {
+                _adapterLoadState.value = _adapterLoadState.value.copy(
+                    adapterState.topRatedTvSeriesState.copy(
+                        isLoading = true
+                    )
+                )
+            }
+            is AdapterLoadStateEvent.TopRatedTvSeriesNotLoading -> {
+
+                _adapterLoadState.value = _adapterLoadState.value.copy(
+                    adapterState.topRatedTvSeriesState.copy(
+                        isLoading = false
+                    )
+                )
+            }
+            is AdapterLoadStateEvent.TopRatedTvSeriesError -> {
+
+                _adapterLoadState.value = _adapterLoadState.value.copy(
+                    adapterState.topRatedTvSeriesState.copy(
+                        isLoading = false,
+                        error = event.uiText
+                    )
+                )
+                emitErrorForShowSnackBar(event.uiText)
+            }
+        }
+    }
+
+    private fun emitErrorForShowSnackBar(uiText: UiText) {
+        viewModelScope.launch {
+            _eventFlow.emit(HomeUiEvent.ShowSnackbar(uiText))
+        }
+    }
+
     private fun hideSeeAllPage() {
         _homeState.value = _homeState.value.copy(
             isShowsSeeAllPage = false
         )
     }
-
-    fun observeNetworkConnectivity() = networkConnectivityObserver.observe()
 
     fun getNowPlayingMovies(): Flow<PagingData<Movie>> {
         return homeUseCases.getNowPlayingMoviesUseCase(
@@ -114,5 +254,11 @@ class HomeViewModel @Inject constructor(
         return homeUseCases.getTopRatedTvSeriesUseCase(
             language = homeState.value.languageIsoCode
         ).cachedIn(viewModelScope)
+    }
+
+    sealed class HomeUiEvent {
+        data class NavigateTo(val directions: NavDirections) : HomeUiEvent()
+        data class ShowSnackbar(val uiText: UiText) : HomeUiEvent()
+        object RetryAllAdapters : HomeUiEvent()
     }
 }

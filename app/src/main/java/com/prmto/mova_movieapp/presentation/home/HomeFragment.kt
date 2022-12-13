@@ -13,16 +13,17 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.GridLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import com.prmto.mova_movieapp.R
 import com.prmto.mova_movieapp.data.models.Genre
 import com.prmto.mova_movieapp.databinding.FragmentHomeBinding
-import com.prmto.mova_movieapp.domain.repository.ConnectivityObserver
 import com.prmto.mova_movieapp.presentation.home.recyler.*
-import com.prmto.mova_movieapp.presentation.util.UiEvent
 import com.prmto.mova_movieapp.presentation.util.UiText
 import com.prmto.mova_movieapp.presentation.util.asString
 import com.prmto.mova_movieapp.util.getCountryIsoCode
+import com.prmto.mova_movieapp.util.isErrorWithLoadState
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.collectLatest
@@ -65,12 +66,35 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         _binding = binding
         updateCountryIsoCode()
         collectDataLifecycleAware()
-        addCallback()
-        setupListenerSeeAllClickEvents()
         setupRecyclerAdapters()
+        setupAdaptersLoadState()
         setAdaptersClickListener()
+        setupListenerSeeAllClickEvents()
+        addCallback()
         binding.btnNavigateUp.setOnClickListener {
             viewModel.onEvent(HomeEvent.NavigateUpFromSeeAllSection)
+        }
+    }
+
+    private fun setupAdaptersLoadState() {
+        nowPlayingAdapter.addLoadStateListener { it ->
+            val error = it.isErrorWithLoadState()
+
+            if (it.refresh is LoadState.Loading) {
+                viewModel.onAdapterLoadStateEvent(AdapterLoadStateEvent.NowPlayingLoading)
+            } else if (it.refresh is LoadState.NotLoading) {
+                viewModel.onAdapterLoadStateEvent(AdapterLoadStateEvent.NowPlayingNotLoading)
+            }
+
+            error?.let {
+                viewModel.onAdapterLoadStateEvent(
+                    AdapterLoadStateEvent.NowPlayingError(
+                        UiText.DynamicText(
+                            error.error.stackTraceToString()
+                        )
+                    )
+                )
+            }
         }
     }
 
@@ -108,13 +132,27 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                     }
 
                     launch {
-                        observeNetworkConnectivity()
+                        viewModel.adapterLoadState.collectLatest {
+                            binding.nowPlayingShimmerLayout.isVisible = it.nowPlayingState.isLoading
+                        }
                     }
 
                     launch {
                         viewModel.eventFlow.collect { uiEvent ->
                             when (uiEvent) {
-                                is UiEvent.NavigateTo -> findNavController().navigate(uiEvent.directions)
+                                is HomeViewModel.HomeUiEvent.NavigateTo -> findNavController().navigate(
+                                    uiEvent.directions
+                                )
+                                is HomeViewModel.HomeUiEvent.RetryAllAdapters -> {
+                                    retryAllPagingAdapter()
+                                }
+                                is HomeViewModel.HomeUiEvent.ShowSnackbar -> {
+                                    Snackbar.make(
+                                        requireView(),
+                                        uiEvent.uiText.asString(requireContext()),
+                                        Snackbar.LENGTH_LONG
+                                    ).show()
+                                }
                             }
                         }
                     }
@@ -151,16 +189,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 }
             }
         }
-
-    private suspend fun observeNetworkConnectivity() {
-        viewModel.observeNetworkConnectivity().collectLatest {
-            if (it == ConnectivityObserver.Status.Unavaliable || it == ConnectivityObserver.Status.Lost) {
-                return@collectLatest
-            } else if (it == ConnectivityObserver.Status.Avaliable) {
-                retryAllPagingAdapter()
-            }
-        }
-    }
 
     private fun showSeeAllPage(uiText: UiText?) {
         binding.apply {

@@ -102,6 +102,20 @@
                 tools:ignore="TouchTargetSizeCheck" />
 
 
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/nowPlayingShimmerLayout"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/now_playing_row_backdrop_size"
+                android:layout_marginTop="@dimen/medium_margin"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/now_playing_text">
+
+                <include layout="@layout/now_playing_row_shimmer_item" />
+
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
             <com.jackandphantom.carouselrecyclerview.CarouselRecyclerview
                 android:id="@+id/nowPlayingRecyclerView"
                 android:layout_width="match_parent"

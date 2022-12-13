@@ -4,11 +4,15 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
+import com.prmto.mova_movieapp.R
 import com.prmto.mova_movieapp.domain.use_case.get_language_iso_code.GetLanguageIsoCodeUseCase
 import com.prmto.mova_movieapp.domain.use_case.get_ui_mode.GetUIModeUseCase
+import com.prmto.mova_movieapp.presentation.util.UiText
 import com.prmto.mova_movieapp.repository.FakeDataStoreOperations
+import com.prmto.mova_movieapp.repository.FakeNetworkConnectivityObserver
 import com.prmto.mova_movieapp.util.MainDispatcherRule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
@@ -30,7 +34,8 @@ class SplashViewModelTest {
     fun setup() {
         viewModel = SplashViewModel(
             getLanguageIsoCodeUseCase = GetLanguageIsoCodeUseCase(FakeDataStoreOperations()),
-            getUIModeUseCase = GetUIModeUseCase(FakeDataStoreOperations())
+            getUIModeUseCase = GetUIModeUseCase(FakeDataStoreOperations()),
+            networkConnectivityObserver = FakeNetworkConnectivityObserver()
         )
     }
 
@@ -61,15 +66,28 @@ class SplashViewModelTest {
     }
 
     @Test
-    fun `After all collect events, check is eventFlow NavigateTo`() = runTest {
-        val job = launch {
-            viewModel.eventFlow.test {
-                assertThat(awaitItem()).isEqualTo(SplashEvent.NavigateTo(SplashFragmentDirections.actionToHomeFragment()))
-                cancelAndConsumeRemainingEvents()
+    fun `connectivityObserver, if connectivity is avaliable eventFlow navigateTo else networkError`() =
+        runTest {
+            val job = launch {
+                viewModel.eventFlow.test {
+                    assertThat(awaitItem()).isEqualTo(
+                        SplashEvent.NetworkError(
+                            UiText.StringResource(
+                                R.string.internet_error
+                            )
+                        )
+                    )
+                    delay(1000)
+                    assertThat(awaitItem()).isEqualTo(
+                        SplashEvent.NavigateTo(
+                            SplashFragmentDirections.actionToHomeFragment()
+                        )
+                    )
+                    cancelAndConsumeRemainingEvents()
+                }
             }
-        }
-        viewModel.navigateToHomeFragment()
-        job.join()
+            viewModel.observeNetwork()
+            job.join()
         job.cancel()
     }
 

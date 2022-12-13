@@ -2,8 +2,6 @@ package com.prmto.mova_movieapp.presentation.home
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.SavedStateHandle
-import app.cash.turbine.test
-import com.google.common.truth.Truth.assertThat
 import com.prmto.mova_movieapp.domain.use_case.HomeUseCases
 import com.prmto.mova_movieapp.domain.use_case.get_language_iso_code.GetLanguageIsoCodeUseCase
 import com.prmto.mova_movieapp.domain.use_case.get_movie_genre_list.GetMovieGenreListUseCase
@@ -19,10 +17,8 @@ import com.prmto.mova_movieapp.repository.FakeNetworkConnectivityObserver
 import com.prmto.mova_movieapp.repository.FakeRemoteRepository
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
-import org.junit.Test
 
 @ExperimentalCoroutinesApi
 class HomeViewModelTest {
@@ -55,30 +51,8 @@ class HomeViewModelTest {
 
         homeViewModel = HomeViewModel(
             homeUseCases = homeUseCases,
-            networkConnectivityObserver = fakeNetworkConnectivityObserver,
-            savedStateHandle = savedStateHandle
+            networkConnectivityObserver = fakeNetworkConnectivityObserver
         )
-    }
-
-    @Test
-    fun `check that is language default value tr`() = runTest {
-        homeViewModel.getLanguageIsoCode().test {
-            val language = awaitItem()
-            assertThat(language).isEqualTo("tr")
-            cancelAndConsumeRemainingEvents()
-        }
-    }
-
-    @Test
-    fun `update language value to 'us' and check is it updated`() = runTest {
-        homeViewModel.setLanguageIsoCode("us")
-
-        homeViewModel.languageIsoCode.test {
-            val language = awaitItem()
-            assertThat(language).isEqualTo("us")
-            cancelAndConsumeRemainingEvents()
-        }
-
     }
 
 }

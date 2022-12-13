@@ -96,12 +96,14 @@ dependencies {
     implementation("io.coil-kt:coil:1.4.0")
     implementation("io.coil-kt:coil-svg:1.2.0")
 
+    // Shimmer
+    implementation 'com.facebook.shimmer:shimmer:0.5.0'
+
     //Paging Library
     implementation("androidx.paging:paging-runtime:$paging_version")
 
     // Circle Image View
     implementation 'de.hdodenhof:circleimageview:3.1.0'
-
 
 
     // Local Unit Tests
