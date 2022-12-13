@@ -7,11 +7,11 @@ import com.prmto.mova_movieapp.data.models.detail.movie.MovieDetailDto
 import com.prmto.mova_movieapp.data.models.detail.tv.TvDetailDto
 import com.prmto.mova_movieapp.data.models.enums.MoviesApiFunction
 import com.prmto.mova_movieapp.data.models.enums.TvSeriesApiFunction
-import com.prmto.mova_movieapp.data.paging_source.DiscoverMoviePagingSource
-import com.prmto.mova_movieapp.data.paging_source.DiscoverTvPagingSource
-import com.prmto.mova_movieapp.data.paging_source.MoviesPagingSource
-import com.prmto.mova_movieapp.data.paging_source.TvPagingSource
 import com.prmto.mova_movieapp.data.remote.TMDBApi
+import com.prmto.mova_movieapp.data.remote.paging_source.DiscoverMoviePagingSource
+import com.prmto.mova_movieapp.data.remote.paging_source.DiscoverTvPagingSource
+import com.prmto.mova_movieapp.data.remote.paging_source.MoviesPagingSource
+import com.prmto.mova_movieapp.data.remote.paging_source.TvPagingSource
 import com.prmto.mova_movieapp.domain.models.Movie
 import com.prmto.mova_movieapp.domain.models.TvSeries
 import com.prmto.mova_movieapp.domain.repository.RemoteRepository
