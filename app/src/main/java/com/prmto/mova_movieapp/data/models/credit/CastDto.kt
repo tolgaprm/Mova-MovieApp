@@ -12,7 +12,6 @@ data class CastDto(
     @Json(name = "original_name") val originalName: String,
     val popularity: Double,
     @Json(name = "profile_path") val profilePath: String?,
-    @Json(name = "cast_id") val castId: Int?,
     val character: String,
     @Json(name = "credit_id") val creditId: String,
     val order: Int

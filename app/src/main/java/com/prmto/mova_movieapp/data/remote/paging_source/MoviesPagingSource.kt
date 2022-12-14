@@ -1,4 +1,4 @@
-package com.prmto.mova_movieapp.data.paging_source
+package com.prmto.mova_movieapp.data.remote.paging_source
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
@@ -8,6 +8,8 @@ import com.prmto.mova_movieapp.data.remote.TMDBApi
 import com.prmto.mova_movieapp.domain.models.Movie
 import com.prmto.mova_movieapp.util.Constants.DEFAULT_REGION
 import com.prmto.mova_movieapp.util.Constants.STARTING_PAGE
+import okio.IOException
+import retrofit2.HttpException
 import javax.inject.Inject
 
 class MoviesPagingSource @Inject constructor(
@@ -20,8 +22,8 @@ class MoviesPagingSource @Inject constructor(
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Movie> {
 
         val nextPage = params.key ?: STARTING_PAGE
-        return try {
 
+        return try {
             val response = when (apiFunc) {
                 MoviesApiFunction.NOW_PLAYING_MOVIES -> {
                     tmdbApi.getNowPlayingMovies(
@@ -45,7 +47,6 @@ class MoviesPagingSource @Inject constructor(
                     )
                 }
             }
-
             LoadResult.Page(
                 data = response.results.toMovieList(),
                 prevKey = if (nextPage == 1) null else nextPage - 1,
@@ -53,7 +54,9 @@ class MoviesPagingSource @Inject constructor(
                     response.page.plus(1) else null
             )
 
-        } catch (e: Exception) {
+        } catch (e: IOException) {
+            LoadResult.Error(throwable = e)
+        } catch (e: HttpException) {
             LoadResult.Error(throwable = e)
         }
     }

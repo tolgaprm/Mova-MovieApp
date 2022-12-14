@@ -18,6 +18,7 @@ import com.prmto.mova_movieapp.R
 import com.prmto.mova_movieapp.databinding.FragmentDetailBinding
 import com.prmto.mova_movieapp.presentation.detail.adapter.DetailActorAdapter
 import com.prmto.mova_movieapp.presentation.detail.helper.BindAttributesDetailFrag
+import com.prmto.mova_movieapp.presentation.util.asString
 import com.prmto.mova_movieapp.util.Constants.DETAIL_DEFAULT_ID
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
@@ -155,11 +156,11 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
                     detailActorAdapter.submitList(movieDetail.credit.cast)
                 }
 
-                if (detailState.errorId != null) {
+                if (detailState.error != null) {
                     binding.swipeRefreshLayout.isEnabled = true
                     Toast.makeText(
                         requireContext(),
-                        requireContext().getString(detailState.errorId),
+                        detailState.error.asString(requireContext()),
                         Toast.LENGTH_LONG
                     ).show()
                 } else {

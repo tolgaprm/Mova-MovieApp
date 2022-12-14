@@ -22,32 +22,15 @@ import javax.inject.Inject
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-
-    @Inject
-    lateinit var getUIModeUseCase: GetUIModeUseCase
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(LayoutInflater.from(this))
         setContentView(binding.root)
 
-        lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                getUIModeUseCase().collectLatest { uiMode ->
-                    if (uiMode == AppCompatDelegate.MODE_NIGHT_YES) {
-                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-                    } else {
-                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-                    }
-                }
-            }
-        }
-
         val navHost =
             supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
 
         val navController = navHost.navController
-
 
         binding.bottomBar.setupWithNavController(navController)
         navController.addOnDestinationChangedListener { _, destination, _ ->

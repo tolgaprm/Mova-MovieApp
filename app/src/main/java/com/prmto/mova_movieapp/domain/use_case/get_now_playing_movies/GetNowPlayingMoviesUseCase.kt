@@ -17,7 +17,7 @@ class GetNowPlayingMoviesUseCase @Inject constructor(
     ): Flow<PagingData<Movie>> {
 
         return remoteRepository.getNowPlayingMovies(
-            language = language,
+            language = language.lowercase(),
             region = region
         )
     }

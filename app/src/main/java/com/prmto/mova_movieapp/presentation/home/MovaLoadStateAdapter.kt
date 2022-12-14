@@ -27,7 +27,7 @@ class MovaLoadStateAdapter(private val retry: () -> Unit) :
         fun bind(loadState: LoadState, context: Context) {
 
             if (loadState is LoadState.Error) {
-                binding.errorMsg.text = context.getString(R.string.error)
+                binding.errorMsg.text = context.getString(R.string.unknown_error)
             }
 
             binding.progressBar.isVisible = loadState is LoadState.Loading

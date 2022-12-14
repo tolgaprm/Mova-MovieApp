@@ -1,5 +1,6 @@
 package com.prmto.mova_movieapp.data.models.detail.tv
 
+import com.prmto.mova_movieapp.data.models.Genre
 import com.prmto.mova_movieapp.data.models.credit.CreditDto
 import com.prmto.mova_movieapp.data.models.credit.toCredit
 import com.prmto.mova_movieapp.data.models.detail.ProductionCompany
@@ -14,7 +15,7 @@ data class TvDetailDto(
     @Json(name = "created_by") val createdBy: List<CreatedByDto>,
     @Json(name = "episode_run_time") val episodeRunTime: List<Int>,
     @Json(name = "first_air_date") val firstAirDate: String,
-    val genres: List<com.prmto.mova_movieapp.data.models.Genre>,
+    val genres: List<Genre>,
     val homepage: String,
     val id: Int,
     @Json(name = "in_production") val inProduction: Boolean,
