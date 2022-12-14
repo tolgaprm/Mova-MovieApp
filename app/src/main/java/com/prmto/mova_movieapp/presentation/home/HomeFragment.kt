@@ -13,17 +13,19 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import androidx.paging.LoadState
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.prmto.mova_movieapp.R
 import com.prmto.mova_movieapp.data.models.Genre
 import com.prmto.mova_movieapp.databinding.FragmentHomeBinding
+import com.prmto.mova_movieapp.domain.models.Movie
+import com.prmto.mova_movieapp.domain.models.TvSeries
+import com.prmto.mova_movieapp.presentation.home.event.AdapterLoadStateEvent
+import com.prmto.mova_movieapp.presentation.home.event.HomeEvent
 import com.prmto.mova_movieapp.presentation.home.recyler.*
 import com.prmto.mova_movieapp.presentation.util.UiText
 import com.prmto.mova_movieapp.presentation.util.asString
 import com.prmto.mova_movieapp.util.getCountryIsoCode
-import com.prmto.mova_movieapp.util.isErrorWithLoadState
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.collectLatest
@@ -67,7 +69,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         updateCountryIsoCode()
         collectDataLifecycleAware()
         setupRecyclerAdapters()
-        setupAdaptersLoadState()
+        handlePagingLoadStates()
         setAdaptersClickListener()
         setupListenerSeeAllClickEvents()
         addCallback()
@@ -76,27 +78,48 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         }
     }
 
-    private fun setupAdaptersLoadState() {
-        nowPlayingAdapter.addLoadStateListener { it ->
-            val error = it.isErrorWithLoadState()
+    private fun handlePagingLoadStates() {
+        HandlePagingLoadStates<Movie>(
+            nowPlayingRecyclerAdapter = nowPlayingAdapter,
+            onLoading = { viewModel.onAdapterLoadStateEvent(AdapterLoadStateEvent.NowPlayingLoading) },
+            onNotLoading = { viewModel.onAdapterLoadStateEvent(AdapterLoadStateEvent.NowPlayingNotLoading) },
+            onError = { eventToPagingError(it) }
+        )
 
-            if (it.refresh is LoadState.Loading) {
-                viewModel.onAdapterLoadStateEvent(AdapterLoadStateEvent.NowPlayingLoading)
-            } else if (it.refresh is LoadState.NotLoading) {
-                viewModel.onAdapterLoadStateEvent(AdapterLoadStateEvent.NowPlayingNotLoading)
-            }
+        HandlePagingLoadStates<Movie>(
+            pagingAdapter = popularMoviesAdapter,
+            onLoading = { viewModel.onAdapterLoadStateEvent(AdapterLoadStateEvent.PopularMoviesLoading) },
+            onNotLoading = { viewModel.onAdapterLoadStateEvent(AdapterLoadStateEvent.PopularMoviesNotLoading) },
+            onError = { eventToPagingError(it) }
+        )
 
-            error?.let {
-                viewModel.onAdapterLoadStateEvent(
-                    AdapterLoadStateEvent.NowPlayingError(
-                        UiText.DynamicText(
-                            error.error.stackTraceToString()
-                        )
-                    )
-                )
-            }
-        }
+        HandlePagingLoadStates<Movie>(
+            pagingAdapter = topRatedMoviesAdapter,
+            onLoading = { viewModel.onAdapterLoadStateEvent(AdapterLoadStateEvent.TopRatedMoviesLoading) },
+            onNotLoading = { viewModel.onAdapterLoadStateEvent(AdapterLoadStateEvent.TopRatedMoviesNotLoading) },
+            onError = { eventToPagingError(it) }
+        )
+
+        HandlePagingLoadStates<TvSeries>(
+            pagingAdapter = popularTvSeriesAdapter,
+            onLoading = { viewModel.onAdapterLoadStateEvent(AdapterLoadStateEvent.PopularTvSeriesLoading) },
+            onNotLoading = { viewModel.onAdapterLoadStateEvent(AdapterLoadStateEvent.PopularTvSeriesNotLoading) },
+            onError = { eventToPagingError(it) }
+        )
+
+        HandlePagingLoadStates<TvSeries>(
+            pagingAdapter = topRatedTvSeriesAdapter,
+            onLoading = { viewModel.onAdapterLoadStateEvent(AdapterLoadStateEvent.TopRatedTvSeriesLoading) },
+            onNotLoading = { viewModel.onAdapterLoadStateEvent(AdapterLoadStateEvent.TopRatedTvSeriesNotLoading) },
+            onError = { eventToPagingError(it) }
+        )
+
     }
+
+    private fun eventToPagingError(uiText: UiText) {
+        viewModel.onAdapterLoadStateEvent(AdapterLoadStateEvent.PagingError(uiText))
+    }
+
 
     private fun updateCountryIsoCode() {
         val countryIsoCode = requireContext().getCountryIsoCode().uppercase()
@@ -134,6 +157,14 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                     launch {
                         viewModel.adapterLoadState.collectLatest {
                             binding.nowPlayingShimmerLayout.isVisible = it.nowPlayingState.isLoading
+                            binding.popularMoviesShimmerLayout.isVisible =
+                                it.popularMoviesState.isLoading
+                            binding.popularTvSeriesShimmerLayout.isVisible =
+                                it.popularTvSeriesState.isLoading
+                            binding.topRatedMoviesShimmerLayout.isVisible =
+                                it.topRatedMoviesState.isLoading
+                            binding.topRatedTvSeriesShimmerLayout.isVisible =
+                                it.topRatedTvSeriesState.isLoading
                         }
                     }
 

@@ -19,3 +19,12 @@ fun CombinedLoadStates.isErrorWithLoadState(): LoadState.Error? {
         else -> null
     }
 }
+
+fun CombinedLoadStates.isLoading(): Boolean {
+
+    return when (this.refresh) {
+        is LoadState.Loading -> true
+        is LoadState.NotLoading -> false
+        else -> false
+    }
+}

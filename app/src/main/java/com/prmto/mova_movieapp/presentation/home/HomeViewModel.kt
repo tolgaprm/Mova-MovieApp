@@ -10,6 +10,10 @@ import com.prmto.mova_movieapp.domain.models.Movie
 import com.prmto.mova_movieapp.domain.models.TvSeries
 import com.prmto.mova_movieapp.domain.repository.ConnectivityObserver
 import com.prmto.mova_movieapp.domain.use_case.HomeUseCases
+import com.prmto.mova_movieapp.presentation.home.event.AdapterLoadStateEvent
+import com.prmto.mova_movieapp.presentation.home.event.HomeEvent
+import com.prmto.mova_movieapp.presentation.home.state.HomeState
+import com.prmto.mova_movieapp.presentation.home.state.PagingAdapterLoadState
 import com.prmto.mova_movieapp.presentation.util.UiText
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
@@ -91,122 +95,66 @@ class HomeViewModel @Inject constructor(
     }
 
     fun onAdapterLoadStateEvent(event: AdapterLoadStateEvent) {
-        val adapterState = _adapterLoadState.value
         when (event) {
-            is AdapterLoadStateEvent.NowPlayingLoading -> {
-                _adapterLoadState.value = _adapterLoadState.value.copy(
-                    adapterState.nowPlayingState.copy(
-                        isLoading = true
-                    )
-                )
-            }
-            is AdapterLoadStateEvent.NowPlayingNotLoading -> {
-                _adapterLoadState.value = _adapterLoadState.value.copy(
-                    adapterState.nowPlayingState.copy(
-                        isLoading = false
-                    )
-                )
-            }
-            is AdapterLoadStateEvent.NowPlayingError -> {
-                _adapterLoadState.value = _adapterLoadState.value.copy(
-                    adapterState.nowPlayingState.copy(
-                        error = event.uiText,
-                        isLoading = false
-                    )
-                )
-                emitErrorForShowSnackBar(event.uiText)
-            }
-
-            is AdapterLoadStateEvent.PopularMoviesLoading -> {
-                _adapterLoadState.value = _adapterLoadState.value.copy(
-                    adapterState.popularMoviesState.copy(
-                        isLoading = true
-                    )
-                )
-            }
-            is AdapterLoadStateEvent.PopularMoviesNotLoading -> {
-                _adapterLoadState.value = _adapterLoadState.value.copy(
-                    adapterState.popularMoviesState.copy(
-                        isLoading = false
-                    )
-                )
-            }
-            is AdapterLoadStateEvent.PopularMoviesError -> {
-                _adapterLoadState.value = _adapterLoadState.value.copy(
-                    adapterState.popularMoviesState.copy(
-                        isLoading = false,
-                        error = event.uiText
-                    )
-                )
-                emitErrorForShowSnackBar(event.uiText)
-            }
-            is AdapterLoadStateEvent.PopularTvSeriesLoading -> {
-                _adapterLoadState.value = _adapterLoadState.value.copy(
-                    adapterState.popularTvSeriesState.copy(
-                        isLoading = true
-                    )
-                )
-            }
-            is AdapterLoadStateEvent.PopularTvSeriesNotLoading -> {
-                adapterState.popularTvSeriesState.copy(
-                    isLoading = false
-                )
-            }
-            is AdapterLoadStateEvent.PopularTvSeriesError -> {
-                adapterState.popularTvSeriesState.copy(
-                    isLoading = false,
+            is AdapterLoadStateEvent.PagingError -> {
+                _adapterLoadState.value = PagingAdapterLoadState(
                     error = event.uiText
                 )
                 emitErrorForShowSnackBar(event.uiText)
             }
+
+            is AdapterLoadStateEvent.NowPlayingLoading -> {
+                _adapterLoadState.update {
+                    it.copy(nowPlayingState = it.nowPlayingState.copy(isLoading = true))
+                }
+            }
+            is AdapterLoadStateEvent.NowPlayingNotLoading -> {
+                _adapterLoadState.update {
+                    it.copy(nowPlayingState = it.nowPlayingState.copy(isLoading = false))
+                }
+            }
+
+            is AdapterLoadStateEvent.PopularMoviesLoading -> {
+                _adapterLoadState.update {
+                    it.copy(popularMoviesState = it.popularMoviesState.copy(isLoading = true))
+                }
+            }
+            is AdapterLoadStateEvent.PopularMoviesNotLoading -> {
+                _adapterLoadState.update {
+                    it.copy(popularMoviesState = it.popularMoviesState.copy(isLoading = false))
+                }
+            }
+
+            is AdapterLoadStateEvent.PopularTvSeriesLoading -> {
+                _adapterLoadState.update {
+                    it.copy(popularTvSeriesState = it.popularTvSeriesState.copy(isLoading = true))
+                }
+            }
+            is AdapterLoadStateEvent.PopularTvSeriesNotLoading -> {
+                _adapterLoadState.update {
+                    it.copy(popularTvSeriesState = it.popularTvSeriesState.copy(isLoading = false))
+                }
+            }
             is AdapterLoadStateEvent.TopRatedMoviesLoading -> {
-                _adapterLoadState.value = _adapterLoadState.value.copy(
-                    adapterState.topRatedMoviesState.copy(
-                        isLoading = true
-                    )
-                )
+                _adapterLoadState.update {
+                    it.copy(topRatedMoviesState = it.topRatedMoviesState.copy(isLoading = true))
+                }
             }
             is AdapterLoadStateEvent.TopRatedMoviesNotLoading -> {
-                _adapterLoadState.value = _adapterLoadState.value.copy(
-                    adapterState.topRatedMoviesState.copy(
-                        isLoading = false
-                    )
-                )
-            }
-            is AdapterLoadStateEvent.TopRatedMoviesError -> {
-                _adapterLoadState.value = _adapterLoadState.value.copy(
-                    adapterState.topRatedMoviesState.copy(
-                        isLoading = false,
-                        error = event.uiText
-                    )
-                )
-                emitErrorForShowSnackBar(event.uiText)
+                _adapterLoadState.update {
+                    it.copy(topRatedMoviesState = it.topRatedMoviesState.copy(isLoading = false))
+                }
             }
 
             is AdapterLoadStateEvent.TopRatedTvSeriesLoading -> {
-                _adapterLoadState.value = _adapterLoadState.value.copy(
-                    adapterState.topRatedTvSeriesState.copy(
-                        isLoading = true
-                    )
-                )
+                _adapterLoadState.update {
+                    it.copy(topRatedTvSeriesState = it.topRatedTvSeriesState.copy(isLoading = true))
+                }
             }
             is AdapterLoadStateEvent.TopRatedTvSeriesNotLoading -> {
-
-                _adapterLoadState.value = _adapterLoadState.value.copy(
-                    adapterState.topRatedTvSeriesState.copy(
-                        isLoading = false
-                    )
-                )
-            }
-            is AdapterLoadStateEvent.TopRatedTvSeriesError -> {
-
-                _adapterLoadState.value = _adapterLoadState.value.copy(
-                    adapterState.topRatedTvSeriesState.copy(
-                        isLoading = false,
-                        error = event.uiText
-                    )
-                )
-                emitErrorForShowSnackBar(event.uiText)
+                _adapterLoadState.update {
+                    it.copy(topRatedTvSeriesState = it.topRatedTvSeriesState.copy(isLoading = false))
+                }
             }
         }
     }

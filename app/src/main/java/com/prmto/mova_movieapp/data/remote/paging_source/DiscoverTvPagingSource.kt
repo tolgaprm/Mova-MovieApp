@@ -9,6 +9,8 @@ import com.prmto.mova_movieapp.presentation.filter_bottom_sheet.state.FilterBott
 import com.prmto.mova_movieapp.presentation.util.toDiscoveryQueryString
 import com.prmto.mova_movieapp.presentation.util.toSeparateWithComma
 import com.prmto.mova_movieapp.util.Constants
+import okio.IOException
+import retrofit2.HttpException
 import javax.inject.Inject
 
 
@@ -40,9 +42,10 @@ class DiscoverTvPagingSource @Inject constructor(
                 nextKey = if (nextPage < apiResponse.totalPages) nextPage.plus(1) else null
             )
 
-        } catch (e: Exception) {
-            LoadResult.Error(e)
+        } catch (e: IOException) {
+            LoadResult.Error(throwable = e)
+        } catch (e: HttpException) {
+            LoadResult.Error(throwable = e)
         }
-
     }
 }

@@ -1,5 +1,6 @@
-package com.prmto.mova_movieapp.presentation.home
+package com.prmto.mova_movieapp.presentation.home.event
 
+import com.prmto.mova_movieapp.presentation.home.HomeFragmentDirections
 import com.prmto.mova_movieapp.presentation.util.UiText
 
 

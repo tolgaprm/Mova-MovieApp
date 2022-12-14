@@ -8,6 +8,8 @@ import com.prmto.mova_movieapp.data.remote.TMDBApi
 import com.prmto.mova_movieapp.domain.models.Movie
 import com.prmto.mova_movieapp.util.Constants.DEFAULT_REGION
 import com.prmto.mova_movieapp.util.Constants.STARTING_PAGE
+import okio.IOException
+import retrofit2.HttpException
 import javax.inject.Inject
 
 class MoviesPagingSource @Inject constructor(
@@ -22,7 +24,6 @@ class MoviesPagingSource @Inject constructor(
         val nextPage = params.key ?: STARTING_PAGE
 
         return try {
-
             val response = when (apiFunc) {
                 MoviesApiFunction.NOW_PLAYING_MOVIES -> {
                     tmdbApi.getNowPlayingMovies(
@@ -53,7 +54,9 @@ class MoviesPagingSource @Inject constructor(
                     response.page.plus(1) else null
             )
 
-        } catch (e: Exception) {
+        } catch (e: IOException) {
+            LoadResult.Error(throwable = e)
+        } catch (e: HttpException) {
             LoadResult.Error(throwable = e)
         }
     }

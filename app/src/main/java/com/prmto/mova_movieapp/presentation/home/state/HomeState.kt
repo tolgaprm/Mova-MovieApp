@@ -1,4 +1,4 @@
-package com.prmto.mova_movieapp.presentation.home
+package com.prmto.mova_movieapp.presentation.home.state
 
 import com.prmto.mova_movieapp.data.models.Genre
 import com.prmto.mova_movieapp.presentation.util.UiText
