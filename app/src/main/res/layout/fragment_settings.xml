@@ -12,7 +12,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:subtitle="Settings"
+        app:subtitle="@string/settings"
         app:subtitleTextAppearance="@style/Mova.H5"
         app:subtitleTextColor="?attr/colorOnBackground" />
 

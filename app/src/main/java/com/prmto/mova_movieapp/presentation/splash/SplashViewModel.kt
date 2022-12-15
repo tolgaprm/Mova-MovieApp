@@ -10,6 +10,7 @@ import com.prmto.mova_movieapp.domain.use_case.get_language_iso_code.GetLanguage
 import com.prmto.mova_movieapp.domain.use_case.get_ui_mode.GetUIModeUseCase
 import com.prmto.mova_movieapp.presentation.util.UiText
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.first
@@ -49,6 +50,7 @@ class SplashViewModel @Inject constructor(
     @VisibleForTesting
     fun observeNetwork() {
         viewModelScope.launch {
+            delay(200)
             networkConnectivityObserver.observe().collect {
                 if (it == ConnectivityObserver.Status.Unavaliable || it == ConnectivityObserver.Status.Lost) {
                     _eventFlow.emit(

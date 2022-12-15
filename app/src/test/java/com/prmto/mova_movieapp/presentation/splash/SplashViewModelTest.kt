@@ -41,6 +41,7 @@ class SplashViewModelTest {
 
     @Test
     fun `After get language iso code, check is eventFlow UpdateAppLanguage`() = runTest {
+        delay(1000)
         val job = launch {
             viewModel.eventFlow.test {
                 assertThat(awaitItem()).isEqualTo(SplashEvent.UpdateAppLanguage("tr"))
@@ -54,6 +55,7 @@ class SplashViewModelTest {
 
     @Test
     fun `After get uiMode, check is eventFlow UpdateUiMode`() = runTest {
+        delay(1000)
         val job = launch {
             viewModel.eventFlow.test {
                 assertThat(awaitItem()).isEqualTo(SplashEvent.UpdateUiMode(AppCompatDelegate.MODE_NIGHT_NO))
@@ -68,6 +70,7 @@ class SplashViewModelTest {
     @Test
     fun `connectivityObserver, if connectivity is avaliable eventFlow navigateTo else networkError`() =
         runTest {
+            delay(1000)
             val job = launch {
                 viewModel.eventFlow.test {
                     assertThat(awaitItem()).isEqualTo(
@@ -77,7 +80,7 @@ class SplashViewModelTest {
                             )
                         )
                     )
-                    delay(1000)
+                    delay(500)
                     assertThat(awaitItem()).isEqualTo(
                         SplashEvent.NavigateTo(
                             SplashFragmentDirections.actionToHomeFragment()
@@ -88,7 +91,7 @@ class SplashViewModelTest {
             }
             viewModel.observeNetwork()
             job.join()
-        job.cancel()
+            job.cancel()
     }
 
 
