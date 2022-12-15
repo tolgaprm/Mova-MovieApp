@@ -1,4 +1,4 @@
-package com.prmto.mova_movieapp.repository
+package com.prmto.mova_movieapp.data.repository
 
 import com.prmto.mova_movieapp.domain.repository.ConnectivityObserver
 import kotlinx.coroutines.delay
@@ -10,7 +10,7 @@ class FakeNetworkConnectivityObserver : ConnectivityObserver {
     override fun observe(): Flow<ConnectivityObserver.Status> {
         return flow {
             emit(ConnectivityObserver.Status.Unavaliable)
-            delay(500)
+            delay(1000)
             emit(ConnectivityObserver.Status.Avaliable)
         }
     }

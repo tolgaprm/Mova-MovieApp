@@ -1,21 +1,22 @@
 package com.prmto.mova_movieapp.presentation.util
 
 import com.google.common.truth.Truth.assertThat
+import com.prmto.mova_movieapp.data.models.Genre
 import com.prmto.mova_movieapp.domain.models.Movie
 import org.junit.Test
 
 class HandleUtilsTest {
 
 
-    private val movieGenreList = listOf<com.prmto.mova_movieapp.data.models.Genre>(
-        com.prmto.mova_movieapp.data.models.Genre(id = 1, "Action"),
-        com.prmto.mova_movieapp.data.models.Genre(id = 2, "Drama"),
-        com.prmto.mova_movieapp.data.models.Genre(id = 3, "Animation"),
-        com.prmto.mova_movieapp.data.models.Genre(id = 4, "Adventure"),
-        com.prmto.mova_movieapp.data.models.Genre(id = 5, "Comedy"),
-        com.prmto.mova_movieapp.data.models.Genre(id = 6, "Crime"),
-        com.prmto.mova_movieapp.data.models.Genre(id = 7, "Family"),
-        com.prmto.mova_movieapp.data.models.Genre(id = 8, "Horror"),
+    private val movieGenreList = listOf(
+        Genre(id = 1, "Action"),
+        Genre(id = 2, "Drama"),
+        Genre(id = 3, "Animation"),
+        Genre(id = 4, "Adventure"),
+        Genre(id = 5, "Comedy"),
+        Genre(id = 6, "Crime"),
+        Genre(id = 7, "Family"),
+        Genre(id = 8, "Horror"),
     )
 
     @Test
@@ -49,11 +50,22 @@ class HandleUtilsTest {
                 movie = movie
             )
         ).matches("Drama, Animation, Crime")
-
     }
 
     @Test
-    fun `If the movie genreList is empty, return empty string`(){
+    fun `Given a genre list, check is genre separated with comma`() {
+        val genreList = listOf(
+            Genre(0, "Adventure"),
+            Genre(1, "Comedy"),
+            Genre(2, "Horror"),
+        )
+
+        assertThat(HandleUtils.convertGenreListToStringSeparatedByCommas(genreList))
+            .matches("Adventure, Comedy, Horror")
+    }
+
+    @Test
+    fun `If the movie genreList is empty, return empty string`() {
         val movie = Movie(
             id = 1,
             overview = "",

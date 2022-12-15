@@ -23,7 +23,7 @@ import javax.inject.Inject
 class DetailBottomSheet : BottomSheetDialogFragment() {
 
     private var _binding: FragmentDetailBottomSheetBinding? = null
-    private val binding get() = _binding
+    private val binding get() = _binding!!
 
     private val arguments: DetailBottomSheetArgs by navArgs()
 
@@ -48,7 +48,7 @@ class DetailBottomSheet : BottomSheetDialogFragment() {
 
         setupButtonClickListeners()
 
-        binding?.apply {
+        binding.apply {
             if (movie != null) {
 
                 tvName.text = movie.title
@@ -82,9 +82,6 @@ class DetailBottomSheet : BottomSheetDialogFragment() {
                 }
 
             }
-
-
-
             tvOverview.movementMethod = ScrollingMovementMethod()
         }
 
@@ -106,7 +103,7 @@ class DetailBottomSheet : BottomSheetDialogFragment() {
 
 
     private fun loadImage(posterPath: String) {
-        binding?.let {
+        binding.let {
             it.ivPoster.load(
                 ImageApi.getImage(
                     imageSize = ImageSize.W185.path,
@@ -120,7 +117,7 @@ class DetailBottomSheet : BottomSheetDialogFragment() {
 
 
     private fun setupButtonClickListeners() {
-        binding?.apply {
+        binding.apply {
             ibClose.setOnClickListener {
                 findNavController().popBackStack()
             }

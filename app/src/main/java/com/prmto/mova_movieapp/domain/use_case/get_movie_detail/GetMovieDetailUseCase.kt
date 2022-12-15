@@ -4,6 +4,7 @@ import com.prmto.mova_movieapp.R
 import com.prmto.mova_movieapp.data.models.detail.movie.toMovieDetail
 import com.prmto.mova_movieapp.domain.models.detail.MovieDetail
 import com.prmto.mova_movieapp.domain.repository.RemoteRepository
+import com.prmto.mova_movieapp.presentation.util.HandleUtils
 import com.prmto.mova_movieapp.presentation.util.UiText
 import com.prmto.mova_movieapp.util.Resource
 import kotlinx.coroutines.flow.Flow
@@ -25,7 +26,13 @@ class GetMovieDetailUseCase @Inject constructor(
             try {
                 val response =
                     remoteRepository.getMovieDetail(language = language, movieId = movieId)
-                val movieDetail = response.toMovieDetail()
+                val result = response.toMovieDetail()
+
+                val movieDetail = result.copy(
+                    ratingValue = HandleUtils.calculateRatingBarValue(result.voteAverage),
+                    convertedRuntime = HandleUtils.convertRuntimeAsHourAndMinutes(result.runtime)
+                )
+
                 emit(Resource.Success(movieDetail))
 
             } catch (e: IOException) {

@@ -3,13 +3,14 @@ package com.prmto.mova_movieapp.presentation.splash
 import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.NavDirections
 import com.prmto.mova_movieapp.R
 import com.prmto.mova_movieapp.domain.repository.ConnectivityObserver
 import com.prmto.mova_movieapp.domain.use_case.get_language_iso_code.GetLanguageIsoCodeUseCase
 import com.prmto.mova_movieapp.domain.use_case.get_ui_mode.GetUIModeUseCase
+import com.prmto.mova_movieapp.presentation.splash.event.SplashEvent
 import com.prmto.mova_movieapp.presentation.util.UiText
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.first
@@ -49,6 +50,7 @@ class SplashViewModel @Inject constructor(
     @VisibleForTesting
     fun observeNetwork() {
         viewModelScope.launch {
+            delay(200)
             networkConnectivityObserver.observe().collect {
                 if (it == ConnectivityObserver.Status.Unavaliable || it == ConnectivityObserver.Status.Lost) {
                     _eventFlow.emit(
@@ -64,11 +66,4 @@ class SplashViewModel @Inject constructor(
             }
         }
     }
-}
-
-sealed class SplashEvent {
-    data class NavigateTo(val directions: NavDirections) : SplashEvent()
-    data class UpdateAppLanguage(val language: String) : SplashEvent()
-    data class UpdateUiMode(val uiMode: Int) : SplashEvent()
-    data class NetworkError(val uiText: UiText) : SplashEvent()
 }

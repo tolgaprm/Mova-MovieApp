@@ -2,7 +2,6 @@ package com.prmto.mova_movieapp.presentation.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.NavDirections
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.prmto.mova_movieapp.R
@@ -12,6 +11,7 @@ import com.prmto.mova_movieapp.domain.repository.ConnectivityObserver
 import com.prmto.mova_movieapp.domain.use_case.HomeUseCases
 import com.prmto.mova_movieapp.presentation.home.event.AdapterLoadStateEvent
 import com.prmto.mova_movieapp.presentation.home.event.HomeEvent
+import com.prmto.mova_movieapp.presentation.home.event.HomeUiEvent
 import com.prmto.mova_movieapp.presentation.home.state.HomeState
 import com.prmto.mova_movieapp.presentation.home.state.PagingAdapterLoadState
 import com.prmto.mova_movieapp.presentation.util.UiText
@@ -30,7 +30,7 @@ class HomeViewModel @Inject constructor(
     val homeState: StateFlow<HomeState> get() = _homeState
 
     private val _adapterLoadState =
-        MutableStateFlow<PagingAdapterLoadState>(PagingAdapterLoadState())
+        MutableStateFlow(PagingAdapterLoadState())
     val adapterLoadState: StateFlow<PagingAdapterLoadState> get() = _adapterLoadState
 
     private val _eventFlow = MutableSharedFlow<HomeUiEvent>()
@@ -202,11 +202,5 @@ class HomeViewModel @Inject constructor(
         return homeUseCases.getTopRatedTvSeriesUseCase(
             language = homeState.value.languageIsoCode
         ).cachedIn(viewModelScope)
-    }
-
-    sealed class HomeUiEvent {
-        data class NavigateTo(val directions: NavDirections) : HomeUiEvent()
-        data class ShowSnackbar(val uiText: UiText) : HomeUiEvent()
-        object RetryAllAdapters : HomeUiEvent()
     }
 }

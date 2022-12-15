@@ -2,8 +2,10 @@ package com.prmto.mova_movieapp.presentation.explore
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
 import com.prmto.mova_movieapp.data.models.enums.Category
 import com.prmto.mova_movieapp.data.models.enums.Sort
+import com.prmto.mova_movieapp.domain.models.Movie
 import com.prmto.mova_movieapp.domain.models.Period
 import com.prmto.mova_movieapp.domain.use_case.ExploreUseCases
 import com.prmto.mova_movieapp.presentation.filter_bottom_sheet.state.FilterBottomState
@@ -19,7 +21,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ExploreViewModel @Inject constructor(
-    private val exploreUseCases: ExploreUseCases
+    val exploreUseCases: ExploreUseCases
 ) : ViewModel() {
 
 
@@ -42,13 +44,15 @@ class ExploreViewModel @Inject constructor(
 
     init {
         setupTimePeriods()
-        viewModelScope.launch() {
-         /*   getLocale().collectLatest {
-                _language.value = it
-            }*/
-        }
     }
 
+
+    fun discoverMovie(): Flow<PagingData<Movie>> {
+        return exploreUseCases.discoverMovieUseCase(
+            language.value,
+            filterBottomState = filterBottomSheetState.value
+        )
+    }
 
     fun setCategoryState(newCategory: Category) {
         if (newCategory == _filterBottomSheetState.value.categoryState) {
@@ -104,10 +108,6 @@ class ExploreViewModel @Inject constructor(
         }
     }
 
-   /* private fun getLocale(): Flow<String> {
-        return exploreUseCases.getLanguageIsoCodeUseCase.invoke()
-    }*/
-
     fun setLocale(locale: String) {
         _language.value = locale
     }
@@ -118,9 +118,9 @@ class ExploreViewModel @Inject constructor(
             try {
                 _genreList.value =
                     if (_filterBottomSheetState.value.categoryState == Category.TV) {
-                        exploreUseCases.tvGenreListUseCase.invoke(language).genres
+                        exploreUseCases.tvGenreListUseCase(language).genres
                     } else {
-                        exploreUseCases.movieGenreListUseCase.invoke(language).genres
+                        exploreUseCases.movieGenreListUseCase(language).genres
                     }
             } catch (e: Exception) {
                 _isDownloadGenreOptions.emit(true)
@@ -129,7 +129,6 @@ class ExploreViewModel @Inject constructor(
         }
 
     }
-
 
 
     private fun setupTimePeriods() {

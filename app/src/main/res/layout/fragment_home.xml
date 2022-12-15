@@ -180,7 +180,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/popularMoviesRecyclerView"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/movie_row_height"
+                android:layout_height="@dimen/home_fragment_recycler_height"
                 android:layout_marginTop="@dimen/medium_margin"
                 android:orientation="horizontal"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
@@ -243,7 +243,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/popularTvSeriesRecyclerView"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/movie_row_height"
+                android:layout_height="@dimen/home_fragment_recycler_height"
                 android:layout_marginTop="@dimen/medium_margin"
                 android:orientation="horizontal"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
@@ -305,7 +305,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/topRatedMoviesRecyclerView"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/movie_row_height"
+                android:layout_height="@dimen/home_fragment_recycler_height"
                 android:layout_marginTop="@dimen/medium_margin"
                 android:orientation="horizontal"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
@@ -367,7 +367,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/topRatedTvSeriesRecyclerView"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/movie_row_height"
+                android:layout_height="@dimen/home_fragment_recycler_height"
                 android:layout_marginTop="@dimen/medium_margin"
                 android:orientation="horizontal"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
