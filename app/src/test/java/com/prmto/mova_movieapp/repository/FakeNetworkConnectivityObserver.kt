@@ -10,7 +10,7 @@ class FakeNetworkConnectivityObserver : ConnectivityObserver {
     override fun observe(): Flow<ConnectivityObserver.Status> {
         return flow {
             emit(ConnectivityObserver.Status.Unavaliable)
-            delay(1000)
+            delay(500)
             emit(ConnectivityObserver.Status.Avaliable)
         }
     }

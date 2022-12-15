@@ -30,6 +30,8 @@
     <dimen name="movie_row_height">300dp</dimen>
     <dimen name="movie_row_image_height">200dp</dimen>
 
+    <dimen name="home_fragment_recycler_height">320dp</dimen>
+
     <dimen name="movie_detail_poster_image_size">550dp</dimen>
 
     <dimen name="action_row_image_size">50dp</dimen>

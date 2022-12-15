@@ -1,100 +1,94 @@
 package com.prmto.mova_movieapp.presentation.detail
 
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.prmto.mova_movieapp.domain.repository.DataStoreOperations
 import com.prmto.mova_movieapp.domain.use_case.DetailUseCases
-import com.prmto.mova_movieapp.presentation.util.HandleUtils
+import com.prmto.mova_movieapp.presentation.detail.event.DetailEvent
+import com.prmto.mova_movieapp.presentation.detail.event.DetailUiEvent
+import com.prmto.mova_movieapp.presentation.util.UiText
 import com.prmto.mova_movieapp.util.Constants.DEFAULT_LANGUAGE
 import com.prmto.mova_movieapp.util.Constants.DETAIL_DEFAULT_ID
-import com.prmto.mova_movieapp.util.Constants.HOUR_KEY
-import com.prmto.mova_movieapp.util.Constants.MINUTES_KEY
-import com.prmto.mova_movieapp.util.Constants.MOVIE_DETAIL_ID
-import com.prmto.mova_movieapp.util.Constants.TV_DETAIL_ID
-import com.prmto.mova_movieapp.util.Constants.TV_SERIES_STATUS_ENDED
 import com.prmto.mova_movieapp.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class DetailViewModel @Inject constructor(
     private val detailUseCases: DetailUseCases,
-    private val dataStoreOperations: DataStoreOperations,
-    private val savedStateHandle: SavedStateHandle
+    private val dataStoreOperations: DataStoreOperations
 ) : ViewModel() {
 
-    private val _detailState = MutableStateFlow<DetailState>(DetailState())
+    private val _detailState = MutableStateFlow(DetailState())
     val detailState: StateFlow<DetailState> = _detailState.asStateFlow()
 
-    private val _languageIsoCode = MutableStateFlow(DEFAULT_LANGUAGE)
-    val languageIsoCode: StateFlow<String> = _languageIsoCode.asStateFlow()
+    private val languageIsoCode = MutableStateFlow(DEFAULT_LANGUAGE)
 
+    private val _eventUiFlow = MutableSharedFlow<DetailUiEvent>()
+    val eventUiFlow: SharedFlow<DetailUiEvent> = _eventUiFlow.asSharedFlow()
 
     init {
         viewModelScope.launch {
-            _languageIsoCode.value = dataStoreOperations.getLanguageIsoCode().first()
+            languageIsoCode.value = dataStoreOperations.getLanguageIsoCode().first()
         }
     }
 
-    val movieDetailId = savedStateHandle.getStateFlow<Int>(
-        MOVIE_DETAIL_ID,
-        DETAIL_DEFAULT_ID
-    )
-
-    val tvDetailId = savedStateHandle.getStateFlow<Int>(
-        TV_DETAIL_ID,
-        DETAIL_DEFAULT_ID
-    )
-
-    fun setMovieDetailId(movieId: Int) {
-        savedStateHandle[MOVIE_DETAIL_ID] = movieId
-        setDefaultTvId()
+    fun onEvent(event: DetailEvent) {
+        when (event) {
+            is DetailEvent.UpdateMovieId -> {
+                _detailState.update {
+                    it.copy(
+                        movieId = event.movieId,
+                        tvId = DETAIL_DEFAULT_ID
+                    )
+                }
+            }
+            is DetailEvent.UpdateTvSeriesId -> {
+                _detailState.update {
+                    it.copy(
+                        movieId = DETAIL_DEFAULT_ID,
+                        tvId = event.tvSeriesId
+                    )
+                }
+            }
+            is DetailEvent.IntentToImdbWebSite -> {
+                emitUiEventFlow(DetailUiEvent.IntentToImdbWebSite(addLanguageQueryToTmdbUrl(event.url)))
+            }
+            is DetailEvent.OnBackPressed -> {
+                emitUiEventFlow(DetailUiEvent.NavigateUp)
+            }
+        }
     }
 
-    fun setTvDetailId(tvId: Int) {
-        savedStateHandle[TV_DETAIL_ID] = tvId
-        setDefaultMovieId()
+    private fun emitUiEventFlow(detailUiEvent: DetailUiEvent) {
+        viewModelScope.launch {
+            _eventUiFlow.emit(detailUiEvent)
+        }
     }
 
-    private fun setDefaultMovieId() {
-        savedStateHandle[MOVIE_DETAIL_ID] = DETAIL_DEFAULT_ID
-    }
-
-    private fun setDefaultTvId() {
-        savedStateHandle[TV_DETAIL_ID] = DETAIL_DEFAULT_ID
+    private fun addLanguageQueryToTmdbUrl(tmdbUrl: String): String {
+        return tmdbUrl.plus("?language=${languageIsoCode.value}")
     }
 
     fun getMovieDetail() {
         viewModelScope.launch {
-            _detailState.value = _detailState.value.copy(
-                loading = true
-            )
+            _detailState.value = _detailState.value.copy(loading = true)
             detailUseCases.movieDetailUseCase(
-                language = _languageIsoCode.value,
-                movieId = movieDetailId.value
+                language = languageIsoCode.value,
+                movieId = detailState.value.movieId
             ).collect { resource ->
                 when (resource) {
                     is Resource.Error -> {
-                        _detailState.value = _detailState.value.copy(
-                            loading = false
+                        _detailState.update { it.copy(loading = false) }
+                        _eventUiFlow.emit(
+                            DetailUiEvent.ShowSnackbar(
+                                resource.uiText ?: UiText.unknownError()
+                            )
                         )
-                        _detailState.value = DetailState(error = resource.uiText)
                     }
                     is Resource.Success -> {
-                        _detailState.value = _detailState.value.copy(
-                            loading = false
-                        )
-                        val movieDetail = resource.data
-                        movieDetail?.let {
-                            it.ratingValue = calculateRatingBarValue(voteAverage = it.voteAverage)
-                            it.convertedRuntime = convertRuntime(it.runtime)
-                        }
                         _detailState.value = DetailState(movieDetail = resource.data)
                     }
                 }
@@ -104,67 +98,25 @@ class DetailViewModel @Inject constructor(
 
     fun getTvDetail() {
         viewModelScope.launch {
-            _detailState.value = _detailState.value.copy(
-                loading = true
-            )
+            _detailState.update { it.copy(loading = true) }
             detailUseCases.tvDetailUseCase(
-                language = _languageIsoCode.value,
-                tvId = tvDetailId.value
+                language = languageIsoCode.value,
+                tvId = detailState.value.tvId
             ).collect { resource ->
                 when (resource) {
                     is Resource.Error -> {
-                        _detailState.value = DetailState(error = resource.uiText)
-                        _detailState.value = _detailState.value.copy(
-                            loading = false
+                        _detailState.update { it.copy(loading = false) }
+                        _eventUiFlow.emit(
+                            DetailUiEvent.ShowSnackbar(
+                                resource.uiText ?: UiText.unknownError()
+                            )
                         )
                     }
                     is Resource.Success -> {
-                        _detailState.value = _detailState.value.copy(
-                            loading = false
-                        )
-                        val tvDetail = resource.data
-                        tvDetail?.let {
-                            it.ratingValue = calculateRatingBarValue(voteAverage = it.voteAverage)
-                            it.releaseDate = handleTvSeriesReleaseDate(
-                                firstAirDate = it.firstAirDate,
-                                lastAirDate = it.lastAirDate,
-                                status = it.status
-                            )
-                        }
                         _detailState.value = DetailState(tvDetail = resource.data)
                     }
                 }
             }
-        }
-    }
-
-    private fun calculateRatingBarValue(voteAverage: Double): Float {
-        return ((voteAverage * 5) / 10).toFloat()
-    }
-
-
-    private fun convertRuntime(runtime: Int?): Map<String, String> {
-        runtime?.let {
-            val hour = runtime / 60
-            val minutes = (runtime % 60)
-            return mapOf(
-                HOUR_KEY to hour.toString(),
-                MINUTES_KEY to minutes.toString()
-            )
-        } ?: return emptyMap()
-    }
-
-    private fun handleTvSeriesReleaseDate(
-        firstAirDate: String,
-        lastAirDate: String,
-        status: String
-    ): String {
-        val firstAirDateValue = HandleUtils.convertToYearFromDate(firstAirDate)
-        return if (status == TV_SERIES_STATUS_ENDED) {
-            val lastAirDateValue = HandleUtils.convertToYearFromDate(lastAirDate)
-            "${firstAirDateValue}-${lastAirDateValue}"
-        } else {
-            "$firstAirDateValue-"
         }
     }
 }

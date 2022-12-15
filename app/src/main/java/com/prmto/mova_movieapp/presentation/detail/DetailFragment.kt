@@ -4,8 +4,8 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -14,9 +14,12 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import coil.ImageLoader
+import com.google.android.material.snackbar.Snackbar
 import com.prmto.mova_movieapp.R
 import com.prmto.mova_movieapp.databinding.FragmentDetailBinding
 import com.prmto.mova_movieapp.presentation.detail.adapter.DetailActorAdapter
+import com.prmto.mova_movieapp.presentation.detail.event.DetailEvent
+import com.prmto.mova_movieapp.presentation.detail.event.DetailUiEvent
 import com.prmto.mova_movieapp.presentation.detail.helper.BindAttributesDetailFrag
 import com.prmto.mova_movieapp.presentation.util.asString
 import com.prmto.mova_movieapp.util.Constants.DETAIL_DEFAULT_ID
@@ -57,15 +60,17 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
             imageLoader = imageLoader,
             context = requireContext(),
             onClickTmdbImage = { tmdbUrl ->
-                intentToTmdbWebSite(tmdbUrl)
+                viewModel.onEvent(DetailEvent.IntentToImdbWebSite(tmdbUrl))
             }
         )
 
+        binding.btnNavigateUp.setOnClickListener {
+            viewModel.onEvent(DetailEvent.OnBackPressed)
+        }
+
         addOnBackPressedCallback()
 
-        navigateUp()
-
-        setDetailIdToStateSavedHandle()
+        setDetailIdToViewModel()
 
         collectDataLifecycleAware()
 
@@ -79,101 +84,85 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
         binding.recyclerViewActor.adapter = detailActorAdapter
     }
 
-
-    private fun navigateUp() {
-        binding.btnNavigateUp.setOnClickListener {
-            findNavController().popBackStack()
-        }
-    }
-
     private fun addOnBackPressedCallback() {
         val callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                findNavController().popBackStack()
+                viewModel.onEvent(DetailEvent.OnBackPressed)
             }
         }
         requireActivity().onBackPressedDispatcher.addCallback(callback)
     }
 
-    private fun setDetailIdToStateSavedHandle() {
+    private fun setDetailIdToViewModel() {
         val movieId = detailArgs.movieId
         val tvId = detailArgs.tvId
 
         if (movieId != DETAIL_DEFAULT_ID) {
-            viewModel.setMovieDetailId(movieId)
+            viewModel.onEvent(DetailEvent.UpdateMovieId(movieId))
         } else if (tvId != DETAIL_DEFAULT_ID) {
-            viewModel.setTvDetailId(tvId)
+            viewModel.onEvent(DetailEvent.UpdateTvSeriesId(tvId))
         }
     }
 
     private fun collectDataLifecycleAware() {
         job = viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                launch { collectTvId() }
-
-                launch { collectMovieId() }
-
-                launch { collectDetailState() }
-            }
-        }
-    }
-
-    private suspend fun collectMovieId() {
-        viewModel.movieDetailId.collectLatest { movieId ->
-            if (movieId != DETAIL_DEFAULT_ID) {
-                viewModel.getMovieDetail()
-            }
-        }
-    }
-
-    private suspend fun collectTvId() {
-        viewModel.tvDetailId.collectLatest { tvId ->
-            if (tvId != DETAIL_DEFAULT_ID) {
-                viewModel.getTvDetail()
+                launch {
+                    collectDetailState()
+                }
+                launch {
+                    viewModel.eventUiFlow.collectLatest { uiEvent ->
+                        when (uiEvent) {
+                            is DetailUiEvent.NavigateUp -> {
+                                findNavController().popBackStack()
+                            }
+                            is DetailUiEvent.ShowSnackbar -> {
+                                binding.swipeRefreshLayout.isEnabled = true
+                                Snackbar.make(
+                                    requireView(),
+                                    uiEvent.uiText.asString(requireContext()),
+                                    Snackbar.LENGTH_SHORT
+                                ).show()
+                            }
+                            is DetailUiEvent.IntentToImdbWebSite -> {
+                                intentToTmdbWebSite(uiEvent.url)
+                            }
+                        }
+                    }
+                }
             }
         }
     }
 
     private suspend fun collectDetailState() {
         viewModel.detailState.collectLatest { detailState ->
-            if (detailState.loading) {
-                binding.progressBar.visibility = View.VISIBLE
-            } else {
-                binding.progressBar.visibility = View.GONE
+            if (detailState.tvId != DETAIL_DEFAULT_ID) {
+                viewModel.getTvDetail()
+            } else if (detailState.movieId != DETAIL_DEFAULT_ID) {
+                viewModel.getMovieDetail()
+            }
 
-                detailState.tvDetail?.let {
-                    bindAttributesDetailFrag.bindTvDetail(
-                        tvDetail = it
-                    )
-                    detailActorAdapter.submitList(it.credit.cast)
-                }
+            binding.progressBar.isVisible = detailState.loading
 
+            detailState.tvDetail?.let {
+                bindAttributesDetailFrag.bindTvDetail(
+                    tvDetail = it
+                )
+                detailActorAdapter.submitList(it.credit.cast)
+            }
 
-                detailState.movieDetail?.let { movieDetail ->
-                    bindAttributesDetailFrag.bindMovieDetail(
-                        movieDetail = movieDetail
-                    )
-                    detailActorAdapter.submitList(movieDetail.credit.cast)
-                }
-
-                if (detailState.error != null) {
-                    binding.swipeRefreshLayout.isEnabled = true
-                    Toast.makeText(
-                        requireContext(),
-                        detailState.error.asString(requireContext()),
-                        Toast.LENGTH_LONG
-                    ).show()
-                } else {
-                    binding.swipeRefreshLayout.isEnabled = false
-                }
+            detailState.movieDetail?.let { movieDetail ->
+                bindAttributesDetailFrag.bindMovieDetail(
+                    movieDetail = movieDetail
+                )
+                detailActorAdapter.submitList(movieDetail.credit.cast)
             }
         }
     }
 
     private fun intentToTmdbWebSite(tmdbUrl: String) {
         val intent = Intent(Intent.ACTION_VIEW)
-        val tmdbUrlWithLanguage = tmdbUrl.plus("?language=${viewModel.languageIsoCode.value}")
-        intent.data = Uri.parse(tmdbUrlWithLanguage)
+        intent.data = Uri.parse(tmdbUrl)
         startActivity(intent)
     }
 
