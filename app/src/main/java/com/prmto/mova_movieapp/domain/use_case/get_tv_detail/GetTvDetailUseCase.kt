@@ -4,7 +4,7 @@ import com.prmto.mova_movieapp.R
 import com.prmto.mova_movieapp.data.models.detail.tv.toTvDetail
 import com.prmto.mova_movieapp.domain.models.detail.TvDetail
 import com.prmto.mova_movieapp.domain.repository.RemoteRepository
-import com.prmto.mova_movieapp.presentation.util.HandleUtils
+import com.prmto.mova_movieapp.domain.util.HandleUtils
 import com.prmto.mova_movieapp.presentation.util.UiText
 import com.prmto.mova_movieapp.util.Resource
 import kotlinx.coroutines.flow.Flow

@@ -7,6 +7,7 @@ import com.google.common.truth.Truth.assertThat
 import com.prmto.mova_movieapp.R
 import com.prmto.mova_movieapp.domain.use_case.get_language_iso_code.GetLanguageIsoCodeUseCase
 import com.prmto.mova_movieapp.domain.use_case.get_ui_mode.GetUIModeUseCase
+import com.prmto.mova_movieapp.presentation.splash.event.SplashEvent
 import com.prmto.mova_movieapp.presentation.util.UiText
 import com.prmto.mova_movieapp.repository.FakeDataStoreOperations
 import com.prmto.mova_movieapp.repository.FakeNetworkConnectivityObserver

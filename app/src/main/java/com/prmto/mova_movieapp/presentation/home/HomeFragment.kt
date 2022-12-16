@@ -22,6 +22,7 @@ import com.prmto.mova_movieapp.domain.models.Movie
 import com.prmto.mova_movieapp.domain.models.TvSeries
 import com.prmto.mova_movieapp.presentation.home.event.AdapterLoadStateEvent
 import com.prmto.mova_movieapp.presentation.home.event.HomeEvent
+import com.prmto.mova_movieapp.presentation.home.event.HomeUiEvent
 import com.prmto.mova_movieapp.presentation.home.recyler.*
 import com.prmto.mova_movieapp.presentation.util.UiText
 import com.prmto.mova_movieapp.presentation.util.asString
@@ -171,13 +172,13 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                     launch {
                         viewModel.eventFlow.collect { uiEvent ->
                             when (uiEvent) {
-                                is HomeViewModel.HomeUiEvent.NavigateTo -> findNavController().navigate(
+                                is HomeUiEvent.NavigateTo -> findNavController().navigate(
                                     uiEvent.directions
                                 )
-                                is HomeViewModel.HomeUiEvent.RetryAllAdapters -> {
+                                is HomeUiEvent.RetryAllAdapters -> {
                                     retryAllPagingAdapter()
                                 }
-                                is HomeViewModel.HomeUiEvent.ShowSnackbar -> {
+                                is HomeUiEvent.ShowSnackbar -> {
                                     Snackbar.make(
                                         requireView(),
                                         uiEvent.uiText.asString(requireContext()),

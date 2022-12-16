@@ -10,8 +10,8 @@ import com.prmto.mova_movieapp.util.isLoading
 import okio.IOException
 
 class HandlePagingLoadStates<T : Any>(
-    private val nowPlayingRecyclerAdapter: NowPlayingRecyclerAdapter? = null,
-    private val pagingAdapter: BaseMovieAndTvRecyclerAdapter<T>? = null,
+    nowPlayingRecyclerAdapter: NowPlayingRecyclerAdapter? = null,
+    pagingAdapter: BaseMovieAndTvRecyclerAdapter<T>? = null,
     onLoading: () -> Unit,
     onNotLoading: () -> Unit,
     onError: (UiText) -> Unit
@@ -50,7 +50,7 @@ class HandlePagingLoadStates<T : Any>(
             if (loadStateError.error is IOException) {
                 onError(UiText.StringResource(R.string.internet_error))
             } else {
-                onError(UiText.StringResource(R.string.unknown_error))
+                onError(UiText.StringResource(R.string.oops_something_went_wrong))
             }
         }
     }

@@ -4,7 +4,7 @@ import com.prmto.mova_movieapp.R
 import com.prmto.mova_movieapp.data.models.detail.movie.toMovieDetail
 import com.prmto.mova_movieapp.domain.models.detail.MovieDetail
 import com.prmto.mova_movieapp.domain.repository.RemoteRepository
-import com.prmto.mova_movieapp.presentation.util.HandleUtils
+import com.prmto.mova_movieapp.domain.util.HandleUtils
 import com.prmto.mova_movieapp.presentation.util.UiText
 import com.prmto.mova_movieapp.util.Resource
 import kotlinx.coroutines.flow.Flow
@@ -38,10 +38,10 @@ class GetMovieDetailUseCase @Inject constructor(
             } catch (e: IOException) {
                 emit(Resource.Error(UiText.StringResource(R.string.internet_error)))
             } catch (e: HttpException) {
-                emit(Resource.Error(UiText.StringResource(R.string.unknown_error)))
+                emit(Resource.Error(UiText.StringResource(R.string.oops_something_went_wrong)))
             } catch (e: Exception) {
                 Timber.e(e)
-                emit(Resource.Error(UiText.StringResource(R.string.unknown_error)))
+                emit(Resource.Error(UiText.StringResource(R.string.oops_something_went_wrong)))
             }
         }
     }
