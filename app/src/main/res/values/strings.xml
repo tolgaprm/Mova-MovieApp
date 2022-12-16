@@ -40,7 +40,8 @@
     <string name="error_didnt_download">Didn\'t download genre options. PLease check your internet connection</string>
     <string name="all_periods">All Periods</string>
     <string name="internet_error">"Oops! Please check your internet connection."</string>
-    <string name="unknown_error">"An unknown error occurred"</string>
+    <string name="oops_something_went_wrong">Oops! Something went wrong. Please try again.</string>
+    <string name="unknown_error">An unknown error occurred</string>
 
     <string name="navigate_up">Navigate up</string>
     <string name="dark_theme">Dark Theme</string>

@@ -48,25 +48,41 @@ Demoya gif veya bağlantı ekleyin
   
 ## Tech stack & Open-source libraries
 
-- Minimun SDK level 24+
-- 100% [Kotlin](https://kotlinlang.org/) based [Coroutines](https://github.com/Kotlin/kotlinx.coroutines) + [Flow](https://developer.android.com/kotlin/flow) for asynchronous.
+- Minimum SDK level 24+
+- 100% [Kotlin](https://kotlinlang.org/)
+  based [Coroutines](https://github.com/Kotlin/kotlinx.coroutines)
+  + [Flow](https://developer.android.com/kotlin/flow) for asynchronous.
 
-- [Android Architecture Components](https://developer.android.com/topic/architecture) - Collection of libraries that help you design robust, testable, and maintainable apps.
-    - A single-activity architecture, using the [Navigation](https://developer.android.com/guide/navigation) to manage composable transactions.
-    - [Lifecycle](https://developer.android.com/topic/libraries/architecture/lifecycle) - perform an action when lifecycle state change
-    - [ViewModel](https://developer.android.com/topic/libraries/architecture/viewmodel) - Stores UI-related data that isn't destroyed on UI changes.
-    - [UseCases](https://developer.android.com/topic/architecture/domain-layer) - Located domain layer that sits between the UI layer and the data layer.
-    - [Repository](https://developer.android.com/topic/architecture/data-layer) - Located in data layer that contains application data and business logic
+- [Android Architecture Components](https://developer.android.com/topic/architecture) - Collection
+  of libraries that help you design robust, testable, and maintainable apps.
+  - A single-activity architecture, using
+    the [Navigation](https://developer.android.com/guide/navigation) to manage composable
+    transactions.
+  - [Lifecycle](https://developer.android.com/topic/libraries/architecture/lifecycle) - perform an
+    action when lifecycle state change
+  - [ViewModel](https://developer.android.com/topic/libraries/architecture/viewmodel) - Stores
+    UI-related data that isn't destroyed on UI changes.
+  - [UseCases](https://developer.android.com/topic/architecture/domain-layer) - Located domain layer
+    that sits between the UI layer and the data layer.
+  - [Repository](https://developer.android.com/topic/architecture/data-layer) - Located in data
+    layer that contains application data and business logic
 
-- [Hilt](https://developer.android.com/training/dependency-injection/hilt-android) -Dependency Injection Library
-- [Paging](https://developer.android.com/topic/libraries/architecture/paging/v3-overview) - The Paging library makes it easier for you to load data incrementally and gracefully within your app's UI
-- [Navigation](https://developer.android.com/guide/navigation) - Manage transaction among the fragments
-- [Retrofit](https://github.com/square/retrofit) - A type-safe HTTP client for Android and Java. 
+- [Hilt](https://developer.android.com/training/dependency-injection/hilt-android) -Dependency
+  Injection Library
+- [Paging](https://developer.android.com/topic/libraries/architecture/paging/v3-overview) - The
+  Paging library makes it easier for you to load data incrementally and gracefully within your app's
+  UI
+- [Navigation](https://developer.android.com/guide/navigation) - Manage transaction among the
+  fragments
+- [Retrofit2 & OkHttp3](https://github.com/square/retrofit) - construct the REST APIs and paging
+  network data.
 - [Moshi](https://github.com/square/moshi) - A modern JSON library for Android, Java and Kotlin
-- [Coil](https://github.com/coil-kt/coil) - An image loading library for Android backed by Kotlin Coroutines.
-- Testing 
-    - [ Flow Turbine](https://github.com/cashapp/turbine) - Turbine is a small testing library for kotlinx.coroutines Flow.
-    - [Truth](https://truth.dev/) - A library for performing assertions in tests
+- [Coil](https://github.com/coil-kt/coil) - An image loading library for Android backed by Kotlin
+  Coroutines.
+- Testing
+  - [ Flow Turbine](https://github.com/cashapp/turbine) - Turbine is a small testing library for
+    kotlinx.coroutines Flow.
+  - [Truth](https://truth.dev/) - A library for performing assertions in tests
 ## Upcoming
 
  - To able to searching movies and TvSeries
