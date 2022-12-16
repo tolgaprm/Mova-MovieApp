@@ -1,8 +1,8 @@
 package com.prmto.mova_movieapp.di
 
 import coil.ImageLoader
-import com.prmto.mova_movieapp.presentation.detail.adapter.DetailActorAdapter
-import com.prmto.mova_movieapp.presentation.home.recyler.*
+import com.prmto.mova_movieapp.feature_home.presentation.home.recyler.*
+import com.prmto.mova_movieapp.feature_movie_tv_detail.presentation.detail.adapter.DetailActorAdapter
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

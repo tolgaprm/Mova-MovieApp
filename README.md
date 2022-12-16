@@ -85,11 +85,13 @@ Demoya gif veya bağlantı ekleyin
   - [Truth](https://truth.dev/) - A library for performing assertions in tests
 ## Upcoming
 
- - To able to searching movies and TvSeries
- - To able to add favorite list and watch list
- - To able to watching trailer for movie and TvSeries
- - To able to see the detail of actors and directors
- - UI and Unit Tests
+- Modularization
+- CI Support
+- To able to searching movies and TvSeries
+- To able to add favorite list and watch list
+- To able to watching trailer for movie and TvSeries
+- To able to see the detail of actors and directors
+- UI and Unit Tests
 ## Find this repository useful? 
 Don't forget give a star. ⭐
   

@@ -1,7 +1,7 @@
 package com.prmto.mova_movieapp.data.repository
 
 import androidx.appcompat.app.AppCompatDelegate
-import com.prmto.mova_movieapp.domain.repository.DataStoreOperations
+import com.prmto.mova_movieapp.core.domain.repository.DataStoreOperations
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
