@@ -1,7 +1,6 @@
 package com.prmto.mova_movieapp.core.presentation.util
 
-import com.prmto.mova_movieapp.core.data.models.enums.Category
-import com.prmto.mova_movieapp.core.data.models.enums.Sort
+import com.prmto.mova_movieapp.core.data.models.enums.*
 import com.prmto.mova_movieapp.core.util.Constants
 
 
@@ -9,6 +8,10 @@ fun List<Int>.toSeparateWithComma(): String {
 
     if (this.isEmpty()) {
         return ""
+    }
+
+    if (this.size == 1) {
+        return this[0].toString()
     }
 
     val stringBuilder = StringBuilder()
@@ -27,12 +30,13 @@ fun Sort.toDiscoveryQueryString(movieCategory: Category): String {
 
     val stringBuilder = StringBuilder()
 
-    if (this.name == Sort.Popularity.name) {
-        stringBuilder.append(this.name)
+    if (this.isPopularity()) {
+        stringBuilder.append(this.value)
+        return stringBuilder.append(".desc").toString()
     }
 
-    if (this.name == Sort.LatestRelease.name && movieCategory == com.prmto.mova_movieapp.core.data.models.enums.Category.MOVIE) {
-        stringBuilder.append(this.name)
+    if (this.isLatestRelease() && movieCategory.isMovie()) {
+        stringBuilder.append(this.value)
     } else {
         stringBuilder.append(Constants.DISCOVER_DATE_QUERY_FOR_TV)
     }

@@ -16,19 +16,19 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.prmto.mova_movieapp.R
-import com.prmto.mova_movieapp.core.data.dto.Genre
 import com.prmto.mova_movieapp.core.presentation.util.UiText
 import com.prmto.mova_movieapp.core.presentation.util.asString
 import com.prmto.mova_movieapp.core.util.getCountryIsoCode
 import com.prmto.mova_movieapp.databinding.FragmentHomeBinding
 import com.prmto.mova_movieapp.feature_home.domain.models.Movie
 import com.prmto.mova_movieapp.feature_home.domain.models.TvSeries
+import com.prmto.mova_movieapp.feature_home.presentation.home.adapter.*
 import com.prmto.mova_movieapp.feature_home.presentation.home.event.AdapterLoadStateEvent
 import com.prmto.mova_movieapp.feature_home.presentation.home.event.HomeEvent
 import com.prmto.mova_movieapp.feature_home.presentation.home.event.HomeUiEvent
-import com.prmto.mova_movieapp.feature_home.presentation.home.recyler.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.supervisorScope
@@ -63,14 +63,17 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
     private val viewModel: HomeViewModel by viewModels()
 
+    private var job: Job? = null
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val binding = FragmentHomeBinding.bind(view)
         _binding = binding
+
         updateCountryIsoCode()
-        collectDataLifecycleAware()
         setupRecyclerAdapters()
         handlePagingLoadStates()
+        collectDataLifecycleAware()
         setAdaptersClickListener()
         setupListenerSeeAllClickEvents()
         addCallback()
@@ -137,12 +140,10 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
     private fun collectDataLifecycleAware() =
         viewLifecycleOwner.lifecycleScope.launch(handler) {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
                 supervisorScope {
                     launch {
                         viewModel.homeState.collectLatest { homeState ->
-                            passTvGenreListToRecyclerAdapter(homeState.tvGenreList)
-                            passMovieGenreListToRecyclerAdapter(homeState.movieGenreList)
                             binding.apply {
                                 seeAllPage.isVisible = homeState.isShowsSeeAllPage
                                 scrollView.isVisible = !homeState.isShowsSeeAllPage
@@ -188,6 +189,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                             }
                         }
                     }
+
 
                     launch {
                         viewModel.getNowPlayingMovies().collectLatest { pagingData ->
@@ -237,21 +239,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         binding.apply {
             scrollView.animation = slideInLeftAnim()
             recyclerViewSeeAll.removeAllViews()
-        }
-    }
-
-    private fun passTvGenreListToRecyclerAdapter(tvGenreList: List<Genre>) {
-        if (tvGenreList.isNotEmpty()) {
-            popularTvSeriesAdapter.passMovieGenreList(tvGenreList)
-        }
-    }
-
-    private fun passMovieGenreListToRecyclerAdapter(movieGenreList: List<Genre>) {
-        if (movieGenreList.isNotEmpty()) {
-            nowPlayingAdapter.passMovieGenreList(movieGenreList)
-            popularMoviesAdapter.passMovieGenreList(movieGenreList)
-            topRatedMoviesAdapter.passMovieGenreList(movieGenreList)
-            topRatedTvSeriesAdapter.passMovieGenreList(movieGenreList)
         }
     }
 
@@ -329,28 +316,34 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
     private fun setAdaptersClickListener() {
         val action = HomeFragmentDirections.actionHomeFragmentToDetailBottomSheet(null, null)
+
         popularMoviesAdapter.setOnItemClickListener { movie ->
             action.movie = movie
+            action.tvSeries = null
             viewModel.onEvent(HomeEvent.NavigateToDetailBottomSheet(action))
         }
 
         topRatedMoviesAdapter.setOnItemClickListener { movie ->
             action.movie = movie
+            action.tvSeries = null
             viewModel.onEvent(HomeEvent.NavigateToDetailBottomSheet(action))
         }
 
         nowPlayingAdapter.setOnClickListener { movie ->
             action.movie = movie
+            action.tvSeries = null
             viewModel.onEvent(HomeEvent.NavigateToDetailBottomSheet(action))
         }
 
         popularTvSeriesAdapter.setOnItemClickListener { tvSeries ->
             action.tvSeries = tvSeries
+            action.movie = null
             viewModel.onEvent(HomeEvent.NavigateToDetailBottomSheet(action))
         }
 
         topRatedTvSeriesAdapter.setOnItemClickListener { tvSeries ->
             action.tvSeries = tvSeries
+            action.movie = null
             viewModel.onEvent(HomeEvent.NavigateToDetailBottomSheet(action))
         }
 

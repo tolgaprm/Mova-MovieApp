@@ -1,4 +1,4 @@
-package com.prmto.mova_movieapp.feature_home.data_source.remote
+package com.prmto.mova_movieapp.feature_home.data.remote
 
 import com.prmto.mova_movieapp.core.data.dto.ApiResponse
 import com.prmto.mova_movieapp.core.util.Constants

@@ -113,7 +113,7 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
                 launch {
                     viewModel.eventUiFlow.collectLatest { uiEvent ->
                         when (uiEvent) {
-                            is DetailUiEvent.NavigateUp -> {
+                            is DetailUiEvent.PopBackStack -> {
                                 findNavController().popBackStack()
                             }
                             is DetailUiEvent.ShowSnackbar -> {

@@ -9,5 +9,6 @@ data class ExploreUseCases(
     val movieGenreListUseCase: GetMovieGenreListUseCase,
     val getLanguageIsoCodeUseCase: GetLanguageIsoCodeUseCase,
     val discoverTvUseCase: DiscoverTvUseCase,
-    val discoverMovieUseCase: DiscoverMovieUseCase
+    val discoverMovieUseCase: DiscoverMovieUseCase,
+    val multiSearchUseCase: MultiSearchUseCase
 )

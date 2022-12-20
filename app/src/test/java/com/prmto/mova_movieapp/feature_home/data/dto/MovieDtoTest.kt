@@ -39,7 +39,6 @@ class MovieDtoTest {
         assertThat(movieEntity.title).isEqualTo("The Godfather")
         assertThat(movieEntity.originalTitle).isEqualTo("The Godfather")
         assertThat(movieEntity.posterPath).isEqualTo("posterPath.jpg")
-        assertThat(movieEntity.backdropPath).isEqualTo("backdropPath.jpg")
         assertThat(movieEntity.releaseDate).isEqualTo("1972-03-14")
         assertThat(movieEntity.genreIds).isEqualTo(listOf(18, 80))
         assertThat(movieEntity.voteCount).isEqualTo(17034)

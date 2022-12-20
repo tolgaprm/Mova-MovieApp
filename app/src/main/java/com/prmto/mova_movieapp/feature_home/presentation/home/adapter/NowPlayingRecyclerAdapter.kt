@@ -1,4 +1,4 @@
-package com.prmto.mova_movieapp.feature_home.presentation.home.recyler
+package com.prmto.mova_movieapp.feature_home.presentation.home.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -11,11 +11,11 @@ import coil.load
 import com.prmto.mova_movieapp.R
 import com.prmto.mova_movieapp.core.data.data_source.remote.ImageApi
 import com.prmto.mova_movieapp.core.data.data_source.remote.ImageSize
-import com.prmto.mova_movieapp.core.data.dto.Genre
 import com.prmto.mova_movieapp.core.presentation.util.HandleUtils
 import com.prmto.mova_movieapp.databinding.NowPlayingRowBinding
 import com.prmto.mova_movieapp.feature_home.domain.models.Movie
 import com.prmto.mova_movieapp.feature_home.domain.models.TvSeries
+import timber.log.Timber
 import javax.inject.Inject
 
 class NowPlayingRecyclerAdapter @Inject constructor(
@@ -23,13 +23,10 @@ class NowPlayingRecyclerAdapter @Inject constructor(
 ) :
     PagingDataAdapter<Movie, NowPlayingRecyclerAdapter.MovieViewHolder>(DiffUtilCallBack<Movie>()) {
 
-    private var movieGenreList: List<Genre> = emptyList()
-
     private var onItemClickListener: (Movie) -> Unit = {}
 
     class MovieViewHolder(
         private val binding: NowPlayingRowBinding,
-        val movieGenreList: List<Genre>,
         val imageLoader: ImageLoader
     ) : RecyclerView.ViewHolder(binding.root) {
 
@@ -51,13 +48,11 @@ class NowPlayingRecyclerAdapter @Inject constructor(
                 ),
                 imageLoader = imageLoader
             )
-            if (movie.genreIds.isNotEmpty()) {
-                binding.genresText.text =
-                    HandleUtils.convertGenreListToStringSeparatedByCommas(
-                        movieGenreList = movieGenreList,
-                        movie = movie
-                    )
-            }
+
+            Timber.d(movie.genresBySeparatedByComma)
+
+            binding.genresText.text = movie.genresBySeparatedByComma
+
 
             binding.root.setOnClickListener {
                 onItemClickListener.invoke(movie)
@@ -80,15 +75,9 @@ class NowPlayingRecyclerAdapter @Inject constructor(
         val layoutInflater = LayoutInflater.from(parent.context)
         val binding = NowPlayingRowBinding.inflate(layoutInflater, parent, false)
         return MovieViewHolder(
-            binding,
-            movieGenreList = movieGenreList,
+            binding = binding,
             imageLoader = imageLoader
         )
-    }
-
-
-    fun passMovieGenreList(movieGenreList: List<Genre>) {
-        this.movieGenreList = movieGenreList
     }
 
     fun setOnClickListener(listener: (Movie) -> Unit) {

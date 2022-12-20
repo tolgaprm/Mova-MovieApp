@@ -6,11 +6,10 @@ import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.prmto.mova_movieapp.R
-import com.prmto.mova_movieapp.core.data.dto.Genre
 import com.prmto.mova_movieapp.databinding.MovieRowBinding
 import com.prmto.mova_movieapp.feature_home.domain.models.Movie
 import com.prmto.mova_movieapp.feature_home.domain.models.TvSeries
-import com.prmto.mova_movieapp.feature_home.presentation.home.recyler.DiffUtilCallBack
+import com.prmto.mova_movieapp.feature_home.presentation.home.adapter.DiffUtilCallBack
 
 abstract class BaseMovieAndTvRecyclerAdapter<T : Any>(
 ) : PagingDataAdapter<
@@ -24,45 +23,41 @@ abstract class BaseMovieAndTvRecyclerAdapter<T : Any>(
 
         fun bindMovie(
             movie: Movie,
-            genreList: List<Genre>,
             context: Context
         ) {
             binding.tvMovieTvName.text = movie.title
 
-            val genre =
-                HandleUtils.handleConvertingGenreListToOneGenreString(genreList, movie.genreIds)
-            val voteCount = HandleUtils.convertingVoteCountToString(movie.voteCount)
-            val releaseDate = HandleUtils.convertToYearFromDate(movie.releaseDate)
-
-            binding.tvReleaseDateGenre.text =
-                context.getString(R.string.release_date_genre, releaseDate, genre)
+            movie.releaseDate?.let { releaseDateYear ->
+                binding.tvReleaseDateGenre.text =
+                    context.getString(
+                        R.string.release_date_genre,
+                        releaseDateYear,
+                        movie.genreByOne
+                    )
+            }
 
             binding.voteAverage.text = context.getString(
                 R.string.voteAverage,
-                movie.voteAverage.toString(), voteCount
+                movie.voteAverage.toString(), movie.voteCountByString
             )
 
         }
 
         fun bindTvSeries(
             tv: TvSeries,
-            genreList: List<Genre>,
             context: Context
         ) {
             binding.tvMovieTvName.text = tv.name
 
-            val genre =
-                HandleUtils.handleConvertingGenreListToOneGenreString(genreList, tv.genreIds)
-            val releaseDate = HandleUtils.convertToYearFromDate(tv.firstAirDate)
-            val voteCount = HandleUtils.convertingVoteCountToString(tv.voteCount)
-
-            binding.tvReleaseDateGenre.text =
-                context.getString(R.string.release_date_genre, releaseDate, genre)
+            tv.firstAirDate?.let {
+                binding.tvReleaseDateGenre.text =
+                    context.getString(R.string.release_date_genre, tv.firstAirDate, tv.genreByOne)
+            }
 
             binding.voteAverage.text = context.getString(
                 R.string.voteAverage,
                 tv.voteAverage.toString(),
-                voteCount
+                tv.voteCountByString
             )
         }
     }
@@ -73,11 +68,11 @@ abstract class BaseMovieAndTvRecyclerAdapter<T : Any>(
 
         if (item is Movie) {
 
-            holder.bindMovie(movie = item, genreList = genreList, context = context)
+            holder.bindMovie(movie = item, context = context)
         }
 
         if (item is TvSeries) {
-            holder.bindTvSeries(tv = item, genreList = genreList, context = context)
+            holder.bindTvSeries(tv = item, context = context)
         }
 
         onBindViewHold(binding = holder.binding, position = position, context = context)
@@ -97,9 +92,5 @@ abstract class BaseMovieAndTvRecyclerAdapter<T : Any>(
     fun setOnItemClickListener(listener: (T) -> Unit) {
         itemClickListener = listener
     }
-
-    var genreList: List<Genre> = emptyList()
-
-    abstract fun passMovieGenreList(genreList: List<Genre>)
 }
 

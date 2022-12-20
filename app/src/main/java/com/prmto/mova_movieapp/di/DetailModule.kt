@@ -1,6 +1,6 @@
 package com.prmto.mova_movieapp.di
 
-import com.prmto.mova_movieapp.feature_movie_tv_detail.data.data_source.remote.DetailApi
+import com.prmto.mova_movieapp.feature_movie_tv_detail.data.remote.DetailApi
 import com.prmto.mova_movieapp.feature_movie_tv_detail.data.repository.DetailRepositoryImpl
 import com.prmto.mova_movieapp.feature_movie_tv_detail.domain.repository.DetailRepository
 import com.prmto.mova_movieapp.feature_movie_tv_detail.domain.use_cases.DetailUseCases

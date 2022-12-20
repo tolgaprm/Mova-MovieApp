@@ -42,7 +42,6 @@ class TvSeriesDtoTest {
         assertThat(tvSeriesEntity.name).isEqualTo("The D'Amelio Show")
         assertThat(tvSeriesEntity.originalName).isEqualTo("The D'Amelio Show")
         assertThat(tvSeriesEntity.posterPath).isEqualTo("/z0iCS5Znx7TeRwlYSd4c01Z0lFx.jpg")
-        assertThat(tvSeriesEntity.backdropPath).isEqualTo("/7q448EVOnuE3gVAx24krzO7SNXM.jpg")
         assertThat(tvSeriesEntity.firstAirDate).isEqualTo("2021-09-03")
         assertThat(tvSeriesEntity.genreIds).isEqualTo(listOf(10764))
         assertThat(tvSeriesEntity.voteCount).isEqualTo(3147)

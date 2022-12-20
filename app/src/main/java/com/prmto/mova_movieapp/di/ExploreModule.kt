@@ -5,12 +5,13 @@ import com.prmto.mova_movieapp.core.domain.repository.RemoteRepository
 import com.prmto.mova_movieapp.core.domain.use_case.GetLanguageIsoCodeUseCase
 import com.prmto.mova_movieapp.core.domain.use_case.GetMovieGenreListUseCase
 import com.prmto.mova_movieapp.core.domain.use_case.GetTvGenreListUseCase
-import com.prmto.mova_movieapp.feature_explore.data.data_source.remote.ExploreApi
+import com.prmto.mova_movieapp.feature_explore.data.remote.ExploreApi
 import com.prmto.mova_movieapp.feature_explore.data.repository.ExploreRepositoryImpl
 import com.prmto.mova_movieapp.feature_explore.domain.repository.ExploreRepository
 import com.prmto.mova_movieapp.feature_explore.domain.use_case.DiscoverMovieUseCase
 import com.prmto.mova_movieapp.feature_explore.domain.use_case.DiscoverTvUseCase
 import com.prmto.mova_movieapp.feature_explore.domain.use_case.ExploreUseCases
+import com.prmto.mova_movieapp.feature_explore.domain.use_case.MultiSearchUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -47,8 +48,9 @@ object ExploreModule {
             tvGenreListUseCase = GetTvGenreListUseCase(remoteRepository),
             movieGenreListUseCase = GetMovieGenreListUseCase(remoteRepository),
             getLanguageIsoCodeUseCase = GetLanguageIsoCodeUseCase(dataStoreOperations),
-            discoverMovieUseCase = DiscoverMovieUseCase(exploreRepository),
-            discoverTvUseCase = DiscoverTvUseCase(exploreRepository)
+            discoverMovieUseCase = DiscoverMovieUseCase(exploreRepository,GetMovieGenreListUseCase(remoteRepository)),
+            discoverTvUseCase = DiscoverTvUseCase(exploreRepository),
+            multiSearchUseCase = MultiSearchUseCase(exploreRepository)
         )
     }
 }

@@ -7,5 +7,4 @@ data class FilterBottomState(
     val categoryState: Category = Category.MOVIE,
     val checkedGenreIdsState: List<Int> = emptyList(),
     val checkedSortState: Sort = Sort.Popularity,
-    val checkedPeriodId: Int = 0
 )

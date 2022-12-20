@@ -5,154 +5,142 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import com.prmto.mova_movieapp.core.data.dto.Genre
 import com.prmto.mova_movieapp.core.data.models.enums.Category
-import com.prmto.mova_movieapp.core.data.models.enums.Sort
 import com.prmto.mova_movieapp.core.util.Constants.DEFAULT_LANGUAGE
+import com.prmto.mova_movieapp.feature_explore.data.dto.SearchDto
 import com.prmto.mova_movieapp.feature_explore.domain.use_case.ExploreUseCases
+import com.prmto.mova_movieapp.feature_explore.presentation.event.ExploreBottomSheetEvent
+import com.prmto.mova_movieapp.feature_explore.presentation.event.ExploreFragmentEvent
+import com.prmto.mova_movieapp.feature_explore.presentation.event.ExploreUiEvent
 import com.prmto.mova_movieapp.feature_explore.presentation.filter_bottom_sheet.state.FilterBottomState
 import com.prmto.mova_movieapp.feature_home.domain.models.Movie
-import com.prmto.mova_movieapp.feature_movie_tv_detail.domain.models.Period
+import com.prmto.mova_movieapp.feature_home.domain.models.TvSeries
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import timber.log.Timber
-import java.text.SimpleDateFormat
-import java.util.*
 import javax.inject.Inject
 
 
 @HiltViewModel
 class ExploreViewModel @Inject constructor(
-    val exploreUseCases: ExploreUseCases
+    private val exploreUseCases: ExploreUseCases,
 ) : ViewModel() {
 
 
-    private val _language = MutableStateFlow<String>(DEFAULT_LANGUAGE)
+    private val _language = MutableStateFlow(DEFAULT_LANGUAGE)
     val language = _language.asStateFlow()
 
-    private val _genreList =
-        MutableStateFlow<List<Genre>>(emptyList())
+    private val _genreList = MutableStateFlow<List<Genre>>(emptyList())
     val genreList = _genreList.asStateFlow()
+
+    private val _query = MutableStateFlow("")
+    val query: StateFlow<String> get() = _query
 
     private val _filterBottomSheetState = MutableStateFlow(FilterBottomState())
     val filterBottomSheetState = _filterBottomSheetState.asStateFlow()
 
-    private val _periodState = MutableStateFlow<List<Period>>(emptyList())
-    val periodState = _periodState.asStateFlow()
-
-    private val _isDownloadGenreOptions = MutableSharedFlow<Boolean>()
-    val isDownloadGenreOptions = _isDownloadGenreOptions.asSharedFlow()
+    private val _eventFlow = MutableSharedFlow<ExploreUiEvent>()
+    val eventFlow = _eventFlow.asSharedFlow()
 
 
     init {
-        setupTimePeriods()
-    }
-
-
-    fun discoverMovie(): Flow<PagingData<Movie>> {
-        return exploreUseCases.discoverMovieUseCase(
-            language.value,
-            filterBottomState = filterBottomSheetState.value
-        )
-    }
-
-    fun setCategoryState(newCategory: Category) {
-        if (newCategory == _filterBottomSheetState.value.categoryState) {
-            return
-        }
-        _filterBottomSheetState.update {
-            it.copy(
-                categoryState = newCategory
-            )
-        }
-        resetSelectedGenreIdsState()
-
-    }
-
-    private fun resetSelectedGenreIdsState() {
-        _filterBottomSheetState.update {
-            it.copy(
-                checkedGenreIdsState = emptyList()
-            )
-        }
-    }
-
-    fun setGenreList(checkedIds: List<Int>) {
-
-        resetSelectedGenreIdsState()
-
-        _filterBottomSheetState.update {
-            it.copy(
-                checkedGenreIdsState = checkedIds
-            )
-        }
-    }
-
-    fun setCheckedSortState(checkedSort: Sort) {
-        _filterBottomSheetState.update {
-            it.copy(
-                checkedSortState = checkedSort
-            )
-        }
-    }
-
-    fun setCheckedPeriods(checkedPeriodId: Int) {
-        _filterBottomSheetState.update {
-            it.copy(
-                checkedPeriodId = checkedPeriodId
-            )
-        }
-    }
-
-    fun resetFilterBottomState() {
-        _filterBottomSheetState.update {
-            FilterBottomState()
-        }
-    }
-
-    fun setLocale(locale: String) {
-        _language.value = locale
-    }
-
-    fun getGenreListByCategoriesState(language: String) {
-
         viewModelScope.launch {
-            try {
-                _genreList.value =
-                    if (_filterBottomSheetState.value.categoryState == Category.TV) {
-                        exploreUseCases.tvGenreListUseCase(language).genres
-                    } else {
-                        exploreUseCases.movieGenreListUseCase(language).genres
-                    }
-            } catch (e: Exception) {
-                _isDownloadGenreOptions.emit(true)
-                Timber.e("Didn't download genreList $e")
+            exploreUseCases.getLanguageIsoCodeUseCase().collectLatest { language ->
+                _language.value = language
+             //   getGenreListByCategoriesState(language)
             }
         }
 
     }
 
-
-    private fun setupTimePeriods() {
-
-        val periods = mutableListOf<String>()
-
-        val formatter = SimpleDateFormat("y", Locale.getDefault())
-        val calendar = Calendar.getInstance()
-
-
-        var year = formatter.format(calendar.time).toInt()
-
-        periods.add("All Periods")
-        repeat(35) {
-            periods.add(year.toString())
-            year--
+    fun multiSearch(query: String): Flow<PagingData<SearchDto>> {
+        return if (query.isNotEmpty()) {
+            exploreUseCases.multiSearchUseCase(query = query, language = language.value)
+        } else {
+            flow { PagingData.empty<SearchDto>() }
         }
-
-        _periodState.value = periods.mapIndexed { index, s ->
-            Period(id = index, time = s)
-        }
-
     }
+
+    fun discoverMovie(): Flow<PagingData<Movie>> {
+        return exploreUseCases.discoverMovieUseCase(
+            language = language.value,
+            filterBottomState = filterBottomSheetState.value
+        )
+    }
+
+    fun discoverTv(): Flow<PagingData<TvSeries>> {
+        return exploreUseCases.discoverTvUseCase(
+            language = language.value,
+            filterBottomState = filterBottomSheetState.value
+        )
+    }
+
+
+    fun onEventExploreFragment(event: ExploreFragmentEvent) {
+        when (event) {
+            is ExploreFragmentEvent.MultiSearch -> {
+                _query.value = event.query
+                if (query.value.isNotEmpty()) {
+                    _filterBottomSheetState.update { it.copy(categoryState = Category.SEARCH) }
+                } else {
+                    _filterBottomSheetState.update { it.copy(categoryState = Category.MOVIE) }
+                }
+            }
+            is ExploreFragmentEvent.RemoveQuery -> {
+                _query.value = ""
+            }
+        }
+    }
+
+    fun onEventBottomSheet(event: ExploreBottomSheetEvent) {
+        when (event) {
+            is ExploreBottomSheetEvent.UpdateCategory -> {
+                if (event.checkedCategory == filterBottomSheetState.value.categoryState) {
+                    return
+                }
+                _filterBottomSheetState.update { it.copy(categoryState = event.checkedCategory) }
+           //     getGenreListByCategoriesState(language.value)
+                resetSelectedGenreIdsState()
+            }
+
+            is ExploreBottomSheetEvent.UpdateGenreList -> {
+                resetSelectedGenreIdsState()
+                _filterBottomSheetState.update { it.copy(checkedGenreIdsState = event.checkedList) }
+            }
+
+            is ExploreBottomSheetEvent.UpdateSort -> {
+                _filterBottomSheetState.update { it.copy(checkedSortState = event.checkedSort) }
+            }
+
+            is ExploreBottomSheetEvent.ResetFilterBottomState -> {
+                _filterBottomSheetState.value = FilterBottomState()
+            }
+
+            is ExploreBottomSheetEvent.Apply -> {
+                viewModelScope.launch { _eventFlow.emit(ExploreUiEvent.PopBackStack) }
+            }
+        }
+    }
+
+    private fun resetSelectedGenreIdsState() {
+        _filterBottomSheetState.update { it.copy(checkedGenreIdsState = emptyList()) }
+    }
+
+ /*   private fun getGenreListByCategoriesState(language: String) {
+        viewModelScope.launch {
+            try {
+                _genreList.value =
+                    if (_filterBottomSheetState.value.categoryState.isTv()) {
+                        exploreUseCases.tvGenreListUseCase(language).genres
+                    } else {
+                        exploreUseCases.movieGenreListUseCase(language).genres
+                    }
+            } catch (e: Exception) {
+                _eventFlow.emit(ExploreUiEvent.ShowSnackbar(UiText.StringResource(R.string.internet_error)))
+                Timber.e("Didn't download genreList $e")
+            }
+        }
+
+    }*/
 
 }
 

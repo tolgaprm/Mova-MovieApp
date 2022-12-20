@@ -6,9 +6,9 @@ import androidx.paging.PagingData
 import com.prmto.mova_movieapp.core.data.models.enums.MoviesApiFunction
 import com.prmto.mova_movieapp.core.data.models.enums.TvSeriesApiFunction
 import com.prmto.mova_movieapp.core.util.Constants
-import com.prmto.mova_movieapp.feature_home.data_source.paging_source.MoviesPagingSource
-import com.prmto.mova_movieapp.feature_home.data_source.paging_source.TvPagingSource
-import com.prmto.mova_movieapp.feature_home.data_source.remote.HomeApi
+import com.prmto.mova_movieapp.feature_home.data.paging_source.MoviesPagingSource
+import com.prmto.mova_movieapp.feature_home.data.paging_source.TvPagingSource
+import com.prmto.mova_movieapp.feature_home.data.remote.HomeApi
 import com.prmto.mova_movieapp.feature_home.domain.models.Movie
 import com.prmto.mova_movieapp.feature_home.domain.models.TvSeries
 import com.prmto.mova_movieapp.feature_home.domain.repository.HomeRepository

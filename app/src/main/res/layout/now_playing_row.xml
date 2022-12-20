@@ -11,6 +11,23 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+
+        <TextView
+            android:id="@+id/txtCategory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/small_margin"
+            android:background="@drawable/shimmer_shape"
+            android:backgroundTint="?attr/colorSurface"
+            android:backgroundTintMode="src_over"
+            android:elevation="@dimen/medium_elevation"
+            android:padding="@dimen/small_padding"
+            android:textSize="16sp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@string/movie" />
+
         <ImageView
             android:id="@+id/backdropImage"
             android:layout_width="match_parent"

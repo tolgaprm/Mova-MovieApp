@@ -6,7 +6,7 @@ import com.prmto.mova_movieapp.core.presentation.util.BaseMovieAndTvRecyclerAdap
 import com.prmto.mova_movieapp.core.presentation.util.UiText
 import com.prmto.mova_movieapp.core.util.isErrorWithLoadState
 import com.prmto.mova_movieapp.core.util.isLoading
-import com.prmto.mova_movieapp.feature_home.presentation.home.recyler.NowPlayingRecyclerAdapter
+import com.prmto.mova_movieapp.feature_home.presentation.home.adapter.NowPlayingRecyclerAdapter
 import okio.IOException
 
 class HandlePagingLoadStates<T : Any>(

@@ -4,9 +4,11 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.prmto.mova_movieapp.core.util.Constants
-import com.prmto.mova_movieapp.feature_explore.data.data_source.paging_source.DiscoverMoviePagingSource
-import com.prmto.mova_movieapp.feature_explore.data.data_source.paging_source.DiscoverTvPagingSource
-import com.prmto.mova_movieapp.feature_explore.data.data_source.remote.ExploreApi
+import com.prmto.mova_movieapp.feature_explore.data.dto.SearchDto
+import com.prmto.mova_movieapp.feature_explore.data.paging_source.DiscoverMoviePagingSource
+import com.prmto.mova_movieapp.feature_explore.data.paging_source.DiscoverTvPagingSource
+import com.prmto.mova_movieapp.feature_explore.data.paging_source.MultiSearchPagingSource
+import com.prmto.mova_movieapp.feature_explore.data.remote.ExploreApi
 import com.prmto.mova_movieapp.feature_explore.domain.repository.ExploreRepository
 import com.prmto.mova_movieapp.feature_explore.presentation.filter_bottom_sheet.state.FilterBottomState
 import com.prmto.mova_movieapp.feature_home.domain.models.Movie
@@ -48,6 +50,21 @@ class ExploreRepositoryImpl @Inject constructor(
                 DiscoverTvPagingSource(
                     exploreApi = exploreApi,
                     filterBottomState = filterBottomState,
+                    language = language
+                )
+            }
+        ).flow
+    }
+
+    override fun multiSearch(query: String, language: String): Flow<PagingData<SearchDto>> {
+        return Pager(
+            config = PagingConfig(
+                pageSize = Constants.ITEMS_PER_PAGE
+            ),
+            pagingSourceFactory = {
+                MultiSearchPagingSource(
+                    exploreApi = exploreApi,
+                    query = query,
                     language = language
                 )
             }

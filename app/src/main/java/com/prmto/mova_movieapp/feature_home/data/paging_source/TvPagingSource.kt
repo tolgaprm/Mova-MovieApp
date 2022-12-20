@@ -1,11 +1,11 @@
-package com.prmto.mova_movieapp.feature_home.data_source.paging_source
+package com.prmto.mova_movieapp.feature_home.data.paging_source
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.prmto.mova_movieapp.core.data.models.enums.TvSeriesApiFunction
 import com.prmto.mova_movieapp.core.util.Constants.STARTING_PAGE
 import com.prmto.mova_movieapp.feature_home.data.dto.toTvSeries
-import com.prmto.mova_movieapp.feature_home.data_source.remote.HomeApi
+import com.prmto.mova_movieapp.feature_home.data.remote.HomeApi
 import com.prmto.mova_movieapp.feature_home.domain.models.TvSeries
 import okio.IOException
 import retrofit2.HttpException

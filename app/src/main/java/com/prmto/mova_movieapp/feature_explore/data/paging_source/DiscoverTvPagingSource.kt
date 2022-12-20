@@ -1,11 +1,11 @@
-package com.prmto.mova_movieapp.feature_explore.data.data_source.paging_source
+package com.prmto.mova_movieapp.feature_explore.data.paging_source
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.prmto.mova_movieapp.core.presentation.util.toDiscoveryQueryString
 import com.prmto.mova_movieapp.core.presentation.util.toSeparateWithComma
 import com.prmto.mova_movieapp.core.util.Constants
-import com.prmto.mova_movieapp.feature_explore.data.data_source.remote.ExploreApi
+import com.prmto.mova_movieapp.feature_explore.data.remote.ExploreApi
 import com.prmto.mova_movieapp.feature_explore.presentation.filter_bottom_sheet.state.FilterBottomState
 import com.prmto.mova_movieapp.feature_home.data.dto.toTvSeries
 import com.prmto.mova_movieapp.feature_home.domain.models.TvSeries
@@ -32,7 +32,6 @@ class DiscoverTvPagingSource @Inject constructor(
                 page = nextPage,
                 language = language,
                 genres = filterBottomState.checkedGenreIdsState.toSeparateWithComma(),
-                firstAirDateYear = filterBottomState.checkedPeriodId,
                 sort = filterBottomState.checkedSortState.toDiscoveryQueryString(filterBottomState.categoryState),
             )
 

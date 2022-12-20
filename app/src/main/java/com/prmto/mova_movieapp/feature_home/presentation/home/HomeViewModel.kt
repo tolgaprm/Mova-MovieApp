@@ -29,8 +29,7 @@ class HomeViewModel @Inject constructor(
     private val _homeState = MutableStateFlow(HomeState())
     val homeState: StateFlow<HomeState> get() = _homeState
 
-    private val _adapterLoadState =
-        MutableStateFlow(PagingAdapterLoadState())
+    private val _adapterLoadState = MutableStateFlow(PagingAdapterLoadState())
     val adapterLoadState: StateFlow<PagingAdapterLoadState> get() = _adapterLoadState
 
     private val _eventFlow = MutableSharedFlow<HomeUiEvent>()
@@ -44,20 +43,6 @@ class HomeViewModel @Inject constructor(
                         languageIsoCode = languageIsoCode
                     )
                 }
-            }
-            launch {
-                val movieGenreList =
-                    homeUseCases.getMovieGenreList(homeState.value.languageIsoCode).genres
-                _homeState.value = _homeState.value.copy(
-                    movieGenreList = movieGenreList
-                )
-            }
-            launch {
-                val tvGenreList =
-                    homeUseCases.getTvGenreList(homeState.value.languageIsoCode).genres
-                _homeState.value = _homeState.value.copy(
-                    tvGenreList = tvGenreList
-                )
             }
             launch {
                 networkConnectivityObserver.observe().collectLatest {

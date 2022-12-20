@@ -57,7 +57,7 @@ class DetailViewModel @Inject constructor(
                 emitUiEventFlow(DetailUiEvent.IntentToImdbWebSite(addLanguageQueryToTmdbUrl(event.url)))
             }
             is DetailEvent.OnBackPressed -> {
-                emitUiEventFlow(DetailUiEvent.NavigateUp)
+                emitUiEventFlow(DetailUiEvent.PopBackStack)
             }
         }
     }
@@ -81,7 +81,13 @@ class DetailViewModel @Inject constructor(
             ).collect { resource ->
                 when (resource) {
                     is Resource.Error -> {
-                        _detailState.update { it.copy(loading = false) }
+                        _detailState.update {
+                            it.copy(
+                                loading = false,
+                                tvId = DETAIL_DEFAULT_ID,
+                                movieId = DETAIL_DEFAULT_ID
+                            )
+                        }
                         _eventUiFlow.emit(
                             DetailUiEvent.ShowSnackbar(
                                 resource.uiText ?: UiText.unknownError()
@@ -105,7 +111,13 @@ class DetailViewModel @Inject constructor(
             ).collect { resource ->
                 when (resource) {
                     is Resource.Error -> {
-                        _detailState.update { it.copy(loading = false) }
+                        _detailState.update {
+                            it.copy(
+                                loading = false,
+                                tvId = DETAIL_DEFAULT_ID,
+                                movieId = DETAIL_DEFAULT_ID
+                            )
+                        }
                         _eventUiFlow.emit(
                             DetailUiEvent.ShowSnackbar(
                                 resource.uiText ?: UiText.unknownError()

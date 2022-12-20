@@ -7,7 +7,7 @@
     android:layout_height="match_parent">
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/edtQuery"
         android:layout_width="0dp"
         android:layout_height="@dimen/edit_text_height"
         android:layout_margin="@dimen/large_margin"
@@ -32,14 +32,14 @@
         android:padding="@dimen/medium_padding"
         android:src="@drawable/filter"
         android:contentDescription="@string/filter"
-        app:layout_constraintBottom_toBottomOf="@+id/editText"
+        app:layout_constraintBottom_toBottomOf="@+id/edtQuery"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/editText"
+        app:layout_constraintTop_toTopOf="@+id/edtQuery"
         app:tint="@color/red" />
 
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler"
+        android:id="@+id/recyclerSearch"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:padding="@dimen/large_padding"
@@ -47,10 +47,39 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText"
+        app:layout_constraintTop_toBottomOf="@+id/edtQuery"
+        app:spanCount="2"
+        tools:itemCount="6"
+        tools:listitem="@layout/now_playing_row" />
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recylerDiscoverMovie"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:padding="@dimen/large_padding"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edtQuery"
+        app:spanCount="2"
+        tools:itemCount="6"
+        tools:listitem="@layout/now_playing_row" />
+
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recylerDiscoverTv"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:padding="@dimen/large_padding"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edtQuery"
         app:spanCount="2"
         tools:itemCount="6"
         tools:listitem="@layout/movie_row" />
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

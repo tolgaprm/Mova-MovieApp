@@ -121,7 +121,7 @@ class HandleUtilsTest {
 
         assertThat(
             HandleUtils.handleConvertingGenreListToOneGenreString(
-                movieGenreList = movieGenreList,
+                genreList = movieGenreList,
                 genreIds = genreIds
             )
         ).matches("Animation")
