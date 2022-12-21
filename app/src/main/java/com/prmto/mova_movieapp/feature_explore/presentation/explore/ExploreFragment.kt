@@ -14,9 +14,9 @@ import com.prmto.mova_movieapp.R
 import com.prmto.mova_movieapp.core.data.models.enums.Category
 import com.prmto.mova_movieapp.core.presentation.util.asString
 import com.prmto.mova_movieapp.databinding.FragmentExploreBinding
-import com.prmto.mova_movieapp.feature_explore.presentation.adapter.SearchMoviesAdapter
+import com.prmto.mova_movieapp.feature_explore.presentation.adapter.FilterMoviesAdapter
+import com.prmto.mova_movieapp.feature_explore.presentation.adapter.FilterTvSeriesAdapter
 import com.prmto.mova_movieapp.feature_explore.presentation.adapter.SearchRecyclerAdapter
-import com.prmto.mova_movieapp.feature_explore.presentation.adapter.SearchTvSeriesAdapter
 import com.prmto.mova_movieapp.feature_explore.presentation.event.ExploreFragmentEvent
 import com.prmto.mova_movieapp.feature_explore.presentation.event.ExploreUiEvent
 import dagger.hilt.android.AndroidEntryPoint
@@ -40,10 +40,10 @@ class ExploreFragment @Inject constructor(
     lateinit var searchRecyclerAdapter: SearchRecyclerAdapter
 
     @Inject
-    lateinit var movieSearchAdapter: SearchMoviesAdapter
+    lateinit var movieSearchAdapter: FilterMoviesAdapter
 
     @Inject
-    lateinit var tvSearchAdapter: SearchTvSeriesAdapter
+    lateinit var tvSearchAdapter: FilterTvSeriesAdapter
 
     private var movieDiscoverJob: Job? = null
     private var tvDiscoverJob: Job? = null
@@ -56,8 +56,8 @@ class ExploreFragment @Inject constructor(
         val binding = FragmentExploreBinding.bind(view)
         _binding = binding
         binding.recyclerSearch.adapter = searchRecyclerAdapter
-        binding.recylerDiscoverMovie.adapter = movieSearchAdapter
-        binding.recylerDiscoverTv.adapter = tvSearchAdapter
+        binding.recyclerDiscoverMovie.adapter = movieSearchAdapter
+        binding.recyclerDiscoverTv.adapter = tvSearchAdapter
 
         collectData()
 
@@ -68,7 +68,7 @@ class ExploreFragment @Inject constructor(
         binding.edtQuery.addTextChangedListener {
             searchJob?.cancel()
             searchJob = lifecycleScope.launch {
-                delay(1000)
+                delay(400)
                 it?.let {
                     viewModel.onEventExploreFragment(ExploreFragmentEvent.MultiSearch(query = it.toString()))
                 }
@@ -94,7 +94,7 @@ class ExploreFragment @Inject constructor(
                                     viewModel.discoverMovie().collectLatest {
                                         hideTvAndSearchAdapters()
                                         cancelTvAndSearchJobs()
-                                        binding.recylerDiscoverMovie.visibility = View.VISIBLE
+                                        binding.recyclerDiscoverMovie.visibility = View.VISIBLE
                                         movieSearchAdapter.submitData(it)
                                     }
                                 }
@@ -106,19 +106,22 @@ class ExploreFragment @Inject constructor(
                                     viewModel.discoverTv().collectLatest {
                                         cancelMovieAndSearchJobs()
                                         hideMoviesAndSearchAdapter()
-                                        binding.recylerDiscoverTv.visibility = View.VISIBLE
+                                        binding.recyclerDiscoverTv.visibility = View.VISIBLE
                                         tvSearchAdapter.submitData(it)
                                     }
                                 }
                             }
 
                             Category.SEARCH -> {
-                                searchJob = launch {
-                                    viewModel.multiSearch(viewModel.query.value).collectLatest {
-                                        cancelTvAndMovieJobs()
-                                        hideTvAndMovieAdapters()
-                                        binding.recyclerSearch.visibility = View.VISIBLE
-                                        searchRecyclerAdapter.submitData(it)
+                                viewModel.query.collectLatest { query ->
+                                    binding.edtQuery.setSelection(query.length)
+                                    searchJob = launch {
+                                        viewModel.multiSearch(query).collectLatest {
+                                            cancelTvAndMovieJobs()
+                                            hideTvAndMovieAdapters()
+                                            binding.recyclerSearch.visibility = View.VISIBLE
+                                            searchRecyclerAdapter.submitData(it)
+                                        }
                                     }
                                 }
                             }
@@ -162,20 +165,19 @@ class ExploreFragment @Inject constructor(
     }
 
     private fun hideMoviesAndSearchAdapter() {
-        binding.recylerDiscoverMovie.visibility = View.GONE
+        binding.recyclerDiscoverMovie.visibility = View.GONE
         binding.recyclerSearch.visibility = View.GONE
     }
 
     private fun hideTvAndSearchAdapters() {
         binding.recyclerSearch.visibility = View.GONE
-        binding.recylerDiscoverTv.visibility = View.GONE
+        binding.recyclerDiscoverTv.visibility = View.GONE
     }
 
     private fun hideTvAndMovieAdapters() {
-        binding.recylerDiscoverTv.visibility = View.GONE
-        binding.recylerDiscoverMovie.visibility = View.GONE
+        binding.recyclerDiscoverTv.visibility = View.GONE
+        binding.recyclerDiscoverMovie.visibility = View.GONE
     }
-
 
     override fun onDestroyView() {
         super.onDestroyView()

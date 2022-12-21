@@ -15,7 +15,6 @@ import com.prmto.mova_movieapp.core.presentation.util.HandleUtils
 import com.prmto.mova_movieapp.databinding.NowPlayingRowBinding
 import com.prmto.mova_movieapp.feature_home.domain.models.Movie
 import com.prmto.mova_movieapp.feature_home.domain.models.TvSeries
-import timber.log.Timber
 import javax.inject.Inject
 
 class NowPlayingRecyclerAdapter @Inject constructor(
@@ -48,8 +47,6 @@ class NowPlayingRecyclerAdapter @Inject constructor(
                 ),
                 imageLoader = imageLoader
             )
-
-            Timber.d(movie.genresBySeparatedByComma)
 
             binding.genresText.text = movie.genresBySeparatedByComma
 

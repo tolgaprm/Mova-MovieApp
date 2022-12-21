@@ -10,5 +10,7 @@ data class MovieSearch(
     var releaseDate: String,
     val genreIds: List<Int>,
     val voteCount: Int,
-    val voteAverage: Double
+    val voteAverage: Double,
+    val genreByOneForMovie: String = "",
+    val voteCountByString: String = ""
 )

@@ -1,9 +1,9 @@
 package com.prmto.mova_movieapp.di
 
 import coil.ImageLoader
-import com.prmto.mova_movieapp.feature_explore.presentation.adapter.SearchMoviesAdapter
+import com.prmto.mova_movieapp.feature_explore.presentation.adapter.FilterMoviesAdapter
+import com.prmto.mova_movieapp.feature_explore.presentation.adapter.FilterTvSeriesAdapter
 import com.prmto.mova_movieapp.feature_explore.presentation.adapter.SearchRecyclerAdapter
-import com.prmto.mova_movieapp.feature_explore.presentation.adapter.SearchTvSeriesAdapter
 import com.prmto.mova_movieapp.feature_home.presentation.home.adapter.*
 import com.prmto.mova_movieapp.feature_movie_tv_detail.presentation.detail.adapter.DetailActorAdapter
 import dagger.Module
@@ -75,15 +75,15 @@ object AdapterModule {
     @FragmentScoped
     fun provideSearchMoviesAdapter(
         imageLoader: ImageLoader
-    ): SearchMoviesAdapter {
-        return SearchMoviesAdapter(imageLoader)
+    ): FilterMoviesAdapter {
+        return FilterMoviesAdapter(imageLoader)
     }
 
     @Provides
     @FragmentScoped
     fun provideSearchTvSeriesAdapter(
         imageLoader: ImageLoader
-    ): SearchTvSeriesAdapter {
-        return SearchTvSeriesAdapter(imageLoader)
+    ): FilterTvSeriesAdapter {
+        return FilterTvSeriesAdapter(imageLoader)
     }
 }

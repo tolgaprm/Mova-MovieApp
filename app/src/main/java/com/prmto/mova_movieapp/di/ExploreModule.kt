@@ -48,9 +48,19 @@ object ExploreModule {
             tvGenreListUseCase = GetTvGenreListUseCase(remoteRepository),
             movieGenreListUseCase = GetMovieGenreListUseCase(remoteRepository),
             getLanguageIsoCodeUseCase = GetLanguageIsoCodeUseCase(dataStoreOperations),
-            discoverMovieUseCase = DiscoverMovieUseCase(exploreRepository,GetMovieGenreListUseCase(remoteRepository)),
-            discoverTvUseCase = DiscoverTvUseCase(exploreRepository),
-            multiSearchUseCase = MultiSearchUseCase(exploreRepository)
+            discoverMovieUseCase = DiscoverMovieUseCase(
+                exploreRepository,
+                GetMovieGenreListUseCase(remoteRepository)
+            ),
+            discoverTvUseCase = DiscoverTvUseCase(
+                exploreRepository,
+                GetTvGenreListUseCase(remoteRepository)
+            ),
+            multiSearchUseCase = MultiSearchUseCase(
+                exploreRepository,
+                GetMovieGenreListUseCase(remoteRepository),
+                GetTvGenreListUseCase(remoteRepository)
+            )
         )
     }
 }

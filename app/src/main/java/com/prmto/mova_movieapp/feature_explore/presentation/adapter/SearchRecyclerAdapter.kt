@@ -1,77 +1,84 @@
 package com.prmto.mova_movieapp.feature_explore.presentation.adapter
 
-import android.content.Context
-import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import coil.ImageLoader
-import coil.load
-import com.prmto.mova_movieapp.R
-import com.prmto.mova_movieapp.core.data.data_source.remote.ImageApi
-import com.prmto.mova_movieapp.core.data.data_source.remote.ImageSize
 import com.prmto.mova_movieapp.core.data.dto.Genre
-import com.prmto.mova_movieapp.databinding.NowPlayingRowBinding
 import com.prmto.mova_movieapp.feature_explore.data.dto.SearchDto
 import com.prmto.mova_movieapp.feature_explore.data.dto.toMovieSearch
-import com.prmto.mova_movieapp.feature_explore.domain.model.MovieSearch
+import com.prmto.mova_movieapp.feature_explore.data.dto.toPersonSearch
+import com.prmto.mova_movieapp.feature_explore.data.dto.toTvSearch
 import com.prmto.mova_movieapp.feature_explore.domain.util.MediaType
+import com.prmto.mova_movieapp.feature_explore.presentation.adapter.viewHolder.SearchMovieViewHolder
+import com.prmto.mova_movieapp.feature_explore.presentation.adapter.viewHolder.SearchPersonViewHolder
+import com.prmto.mova_movieapp.feature_explore.presentation.adapter.viewHolder.SearchTvViewHolder
 import com.prmto.mova_movieapp.feature_home.domain.models.Movie
 import javax.inject.Inject
 
 class SearchRecyclerAdapter @Inject constructor(
     private val imageLoader: ImageLoader
 ) :
-    PagingDataAdapter<SearchDto, SearchRecyclerAdapter.MovieViewHolder>(diffCallback = diffCallback) {
+    PagingDataAdapter<SearchDto, ViewHolder>(diffCallback = diffCallback) {
 
     private var movieGenreList: List<Genre> = emptyList()
 
     private var onItemClickListener: (Movie) -> Unit = {}
 
-    class MovieViewHolder(
-        private val binding: NowPlayingRowBinding,
-        val imageLoader: ImageLoader,
-        val context: Context
-    ) : RecyclerView.ViewHolder(binding.root) {
-        fun bindMovie(movieSearch: MovieSearch) {
-            binding.backdropImage.load(
-                ImageApi.getImage(
-                    imageUrl = movieSearch.posterPath,
-                    imageSize = ImageSize.W500.path
-                ),
-                imageLoader = imageLoader
-            )
 
-            binding.movieTitle.textSize = 16f
-            binding.movieTitle.text = movieSearch.title
-            binding.txtCategory.visibility = View.VISIBLE
-            binding.txtCategory.text = context.getString(R.string.movie)
+    override fun getItemViewType(position: Int): Int {
+        val item = getItem(position)
+        item?.let { searchDto ->
+            return when (searchDto.mediaType) {
+                MediaType.MOVIE.value -> SearchViewType.MOVIE.ordinal
+                MediaType.TV_SERIES.value -> SearchViewType.TV.ordinal
+                MediaType.PERSON.value -> SearchViewType.PERSON.ordinal
+                else -> SearchViewType.MOVIE.ordinal
+            }
         }
+        return super.getItemViewType(position)
     }
 
-    override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val searchDto = getItem(position)
         searchDto?.let {
-            if (searchDto.mediaType == MediaType.MOVIE.value) {
-                val movieSearch = searchDto.toMovieSearch()!!
-                holder.itemView.id = movieSearch.id
-                holder.bindMovie(movieSearch)
+            when (searchDto.mediaType) {
+                MediaType.MOVIE.value -> {
+                    val movieSearch = searchDto.toMovieSearch()!!
+                    val movieViewHolder = holder as SearchMovieViewHolder
+                    movieViewHolder.bindMovie(movieSearch = movieSearch)
+                }
+                MediaType.TV_SERIES.value -> {
+                    val tvSearch = searchDto.toTvSearch()!!
+                    val tvViewHolder = holder as SearchTvViewHolder
+                    tvViewHolder.bindSearchTv(searchTv = tvSearch)
+                }
+                MediaType.PERSON.value -> {
+                    val personSearch = searchDto.toPersonSearch()!!
+                    val searchMovieHolder = holder as SearchPersonViewHolder
+                    searchMovieHolder.bindPerson(search = personSearch)
+                }
             }
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
-        val layoutInflater = LayoutInflater.from(parent.context)
-        val binding = NowPlayingRowBinding.inflate(layoutInflater, parent, false)
-        return MovieViewHolder(
-            binding = binding,
-            imageLoader = imageLoader,
-            context = parent.context
-        )
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        return when (viewType) {
+            SearchViewType.MOVIE.ordinal -> {
+                SearchMovieViewHolder.from(parent, imageLoader)
+            }
+            SearchViewType.TV.ordinal -> {
+                SearchTvViewHolder.from(parent, imageLoader)
+            }
+            SearchViewType.PERSON.ordinal -> {
+                SearchPersonViewHolder.from(parent, imageLoader)
+            }
+            else -> {
+                SearchTvViewHolder.from(parent, imageLoader)
+            }
+        }
     }
-
 
 }
 
@@ -84,5 +91,10 @@ val diffCallback = object : DiffUtil.ItemCallback<SearchDto>() {
     override fun areContentsTheSame(oldItem: SearchDto, newItem: SearchDto): Boolean {
         return oldItem == newItem
     }
+}
 
+enum class SearchViewType {
+    MOVIE,
+    TV,
+    PERSON
 }

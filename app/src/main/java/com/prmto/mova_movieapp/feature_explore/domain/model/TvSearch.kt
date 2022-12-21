@@ -6,8 +6,10 @@ data class TvSearch(
     val name: String,
     val originalName: String,
     val posterPath: String?,
-    val firstAirDate: String,
+    val firstAirDate: String?,
     val genreIds: List<Int>,
     val voteCount: Int,
-    val voteAverage: Double
+    val voteAverage: Double,
+    val genreByOneForTv: String = "",
+    val voteCountByString: String = ""
 )

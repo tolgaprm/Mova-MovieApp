@@ -3,8 +3,11 @@ package com.prmto.mova_movieapp.feature_explore.presentation.explore
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
+import com.prmto.mova_movieapp.R
 import com.prmto.mova_movieapp.core.data.dto.Genre
 import com.prmto.mova_movieapp.core.data.models.enums.Category
+import com.prmto.mova_movieapp.core.data.models.enums.isTv
+import com.prmto.mova_movieapp.core.presentation.util.UiText
 import com.prmto.mova_movieapp.core.util.Constants.DEFAULT_LANGUAGE
 import com.prmto.mova_movieapp.feature_explore.data.dto.SearchDto
 import com.prmto.mova_movieapp.feature_explore.domain.use_case.ExploreUseCases
@@ -17,6 +20,7 @@ import com.prmto.mova_movieapp.feature_home.domain.models.TvSeries
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 
@@ -46,7 +50,7 @@ class ExploreViewModel @Inject constructor(
         viewModelScope.launch {
             exploreUseCases.getLanguageIsoCodeUseCase().collectLatest { language ->
                 _language.value = language
-             //   getGenreListByCategoriesState(language)
+                getGenreListByCategoriesState()
             }
         }
 
@@ -94,11 +98,8 @@ class ExploreViewModel @Inject constructor(
     fun onEventBottomSheet(event: ExploreBottomSheetEvent) {
         when (event) {
             is ExploreBottomSheetEvent.UpdateCategory -> {
-                if (event.checkedCategory == filterBottomSheetState.value.categoryState) {
-                    return
-                }
                 _filterBottomSheetState.update { it.copy(categoryState = event.checkedCategory) }
-           //     getGenreListByCategoriesState(language.value)
+                getGenreListByCategoriesState()
                 resetSelectedGenreIdsState()
             }
 
@@ -125,23 +126,36 @@ class ExploreViewModel @Inject constructor(
         _filterBottomSheetState.update { it.copy(checkedGenreIdsState = emptyList()) }
     }
 
- /*   private fun getGenreListByCategoriesState(language: String) {
+    private fun getGenreListByCategoriesState() {
         viewModelScope.launch {
             try {
-                _genreList.value =
-                    if (_filterBottomSheetState.value.categoryState.isTv()) {
-                        exploreUseCases.tvGenreListUseCase(language).genres
-                    } else {
-                        exploreUseCases.movieGenreListUseCase(language).genres
-                    }
+                if (_filterBottomSheetState.value.categoryState.isTv()) {
+                    getTvGenreList()
+                } else {
+                    getMovieGenreList()
+                }
             } catch (e: Exception) {
                 _eventFlow.emit(ExploreUiEvent.ShowSnackbar(UiText.StringResource(R.string.internet_error)))
                 Timber.e("Didn't download genreList $e")
             }
         }
+    }
 
-    }*/
+    private fun getMovieGenreList() {
+        viewModelScope.launch {
+            exploreUseCases.movieGenreListUseCase(language.value).collectLatest { genreList ->
+                _genreList.value = genreList
+            }
+        }
+    }
 
+    private fun getTvGenreList() {
+        viewModelScope.launch {
+            exploreUseCases.tvGenreListUseCase(language.value).collectLatest { genreList ->
+                _genreList.value = genreList
+            }
+        }
+    }
 }
 
 

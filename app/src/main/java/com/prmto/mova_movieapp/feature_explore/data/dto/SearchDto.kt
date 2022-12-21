@@ -29,7 +29,10 @@ data class SearchDto(
     val title: String?,
     val video: Boolean?,
     @Json(name = "vote_average") val voteAverage: Double?,
-    @Json(name = "vote_count") val voteCount: Int?
+    @Json(name = "vote_count") val voteCount: Int?,
+    val genreByOneForMovie: String = "",
+    val genreByOneForTv: String = "",
+    val voteCountByString: String = ""
 )
 
 
@@ -44,7 +47,9 @@ fun SearchDto.toMovieSearch(): MovieSearch? {
             releaseDate = releaseDate!!,
             genreIds = genreIds!!,
             voteCount = voteCount!!,
-            voteAverage = voteAverage!!
+            voteAverage = voteAverage!!,
+            genreByOneForMovie = genreByOneForMovie,
+            voteCountByString = voteCountByString
         )
     }
     return null
@@ -59,10 +64,12 @@ fun SearchDto.toTvSearch(): TvSearch? {
             overview = overview!!,
             originalName = originalName!!,
             posterPath = posterPath,
-            firstAirDate = firstAirDate!!,
+            firstAirDate = firstAirDate,
             genreIds = genreIds!!,
             voteCount = voteCount!!,
-            voteAverage = voteAverage!!
+            voteAverage = voteAverage!!,
+            genreByOneForTv = genreByOneForTv,
+            voteCountByString = voteCountByString
         )
     }
     return null
@@ -74,6 +81,7 @@ fun SearchDto.toPersonSearch(): PersonSearch? {
             id = id,
             name = name!!,
             profilePath = profilePath,
+            knownForDepartment = knownForDepartment,
             knownFor = knownForDto!!.toKnownForSearch()
         )
     }
