@@ -19,7 +19,10 @@ class SearchMovieViewHolder(
     val context: Context
 ) : RecyclerView.ViewHolder(binding.root) {
 
-    fun bindMovie(movieSearch: MovieSearch) {
+    fun bindMovie(
+        movieSearch: MovieSearch,
+        onMovieSearchItemClick: (MovieSearch) -> Unit = {}
+    ) {
         binding.backdropImage.load(
             ImageApi.getImage(
                 imageUrl = movieSearch.posterPath,
@@ -41,6 +44,10 @@ class SearchMovieViewHolder(
         binding.movieTitle.text = movieSearch.title
         binding.txtCategory.visibility = View.VISIBLE
         binding.txtCategory.text = context.getString(R.string.movie)
+
+        binding.root.setOnClickListener {
+            onMovieSearchItemClick(movieSearch)
+        }
     }
 
     companion object {

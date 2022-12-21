@@ -137,6 +137,7 @@
                 style="@style/Mova.Title"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/large_margin"
                 android:text="@string/popular_movies"
                 app:layout_constraintEnd_toStartOf="@+id/nowPlayingSeeAll"
                 app:layout_constraintStart_toStartOf="parent"

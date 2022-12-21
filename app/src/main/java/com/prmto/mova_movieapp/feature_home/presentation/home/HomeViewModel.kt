@@ -4,8 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.prmto.mova_movieapp.R
-import com.prmto.mova_movieapp.core.domain.repository.ConnectivityObserver
 import com.prmto.mova_movieapp.core.presentation.util.UiText
 import com.prmto.mova_movieapp.feature_home.domain.models.Movie
 import com.prmto.mova_movieapp.feature_home.domain.models.TvSeries
@@ -22,8 +20,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val homeUseCases: HomeUseCases,
-    private val networkConnectivityObserver: ConnectivityObserver
+    private val homeUseCases: HomeUseCases
 ) : ViewModel() {
 
     private val _homeState = MutableStateFlow(HomeState())
@@ -35,6 +32,7 @@ class HomeViewModel @Inject constructor(
     private val _eventFlow = MutableSharedFlow<HomeUiEvent>()
     val eventFlow = _eventFlow.asSharedFlow()
 
+
     init {
         viewModelScope.launch {
             launch {
@@ -42,15 +40,6 @@ class HomeViewModel @Inject constructor(
                     _homeState.value = _homeState.value.copy(
                         languageIsoCode = languageIsoCode
                     )
-                }
-            }
-            launch {
-                networkConnectivityObserver.observe().collectLatest {
-                    if (it == ConnectivityObserver.Status.Unavaliable || it == ConnectivityObserver.Status.Lost) {
-                        emitErrorForShowSnackBar(UiText.StringResource(R.string.internet_error))
-                    } else if (it == ConnectivityObserver.Status.Avaliable) {
-                        _eventFlow.emit(HomeUiEvent.RetryAllAdapters)
-                    }
                 }
             }
         }
@@ -151,9 +140,7 @@ class HomeViewModel @Inject constructor(
     }
 
     private fun hideSeeAllPage() {
-        _homeState.value = _homeState.value.copy(
-            isShowsSeeAllPage = false
-        )
+        _homeState.value = _homeState.value.copy(isShowsSeeAllPage = false)
     }
 
     fun getNowPlayingMovies(): Flow<PagingData<Movie>> {

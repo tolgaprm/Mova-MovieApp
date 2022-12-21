@@ -16,23 +16,20 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.prmto.mova_movieapp.R
+import com.prmto.mova_movieapp.core.domain.repository.ConnectivityObserver
 import com.prmto.mova_movieapp.core.presentation.util.UiText
 import com.prmto.mova_movieapp.core.presentation.util.asString
 import com.prmto.mova_movieapp.core.util.getCountryIsoCode
 import com.prmto.mova_movieapp.databinding.FragmentHomeBinding
 import com.prmto.mova_movieapp.feature_home.domain.models.Movie
-import com.prmto.mova_movieapp.feature_home.domain.models.TvSeries
 import com.prmto.mova_movieapp.feature_home.presentation.home.adapter.*
 import com.prmto.mova_movieapp.feature_home.presentation.home.event.AdapterLoadStateEvent
 import com.prmto.mova_movieapp.feature_home.presentation.home.event.HomeEvent
 import com.prmto.mova_movieapp.feature_home.presentation.home.event.HomeUiEvent
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.supervisorScope
-import timber.log.Timber
 import javax.inject.Inject
 
 
@@ -42,9 +39,8 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
-    private val handler = CoroutineExceptionHandler { _, throwable ->
-        Timber.e("Caught Exception $throwable")
-    }
+    @Inject
+    lateinit var connectivityObserver: ConnectivityObserver
 
     @Inject
     lateinit var nowPlayingAdapter: NowPlayingRecyclerAdapter
@@ -70,15 +66,68 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         val binding = FragmentHomeBinding.bind(view)
         _binding = binding
 
+
+        observeConnectivityStatus()
+        handlePagingLoadStates()
+        collectHomeUiEventsAndLoadState()
         updateCountryIsoCode()
         setupRecyclerAdapters()
-        handlePagingLoadStates()
-        collectDataLifecycleAware()
         setAdaptersClickListener()
         setupListenerSeeAllClickEvents()
         addCallback()
         binding.btnNavigateUp.setOnClickListener {
             viewModel.onEvent(HomeEvent.NavigateUpFromSeeAllSection)
+        }
+    }
+
+    private fun observeConnectivityStatus() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                connectivityObserver.observe().collectLatest {
+                    if (it == ConnectivityObserver.Status.Avaliable) {
+                        job?.cancel()
+                        collectDataLifecycleAware()
+                    } else {
+                        job?.cancel()
+                    }
+                }
+            }
+        }
+    }
+
+    private fun collectHomeUiEventsAndLoadState() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                launch {
+                    viewModel.eventFlow.collectLatest { uiEvent ->
+                        when (uiEvent) {
+                            is HomeUiEvent.NavigateTo -> findNavController().navigate(
+                                uiEvent.directions
+                            )
+                            is HomeUiEvent.ShowSnackbar -> {
+                                Snackbar.make(
+                                    requireView(),
+                                    uiEvent.uiText.asString(requireContext()),
+                                    Snackbar.LENGTH_LONG
+                                ).show()
+                            }
+                        }
+                    }
+                }
+                launch {
+                    viewModel.adapterLoadState.collectLatest {
+                        binding.nowPlayingShimmerLayout.isVisible = it.nowPlayingState.isLoading
+                        binding.popularMoviesShimmerLayout.isVisible =
+                            it.popularMoviesState.isLoading
+                        binding.popularTvSeriesShimmerLayout.isVisible =
+                            it.popularTvSeriesState.isLoading
+                        binding.topRatedMoviesShimmerLayout.isVisible =
+                            it.topRatedMoviesState.isLoading
+                        binding.topRatedTvSeriesShimmerLayout.isVisible =
+                            it.topRatedTvSeriesState.isLoading
+                    }
+                }
+            }
         }
     }
 
@@ -90,28 +139,28 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             onError = { eventToPagingError(it) }
         )
 
-        HandlePagingLoadStates<Movie>(
+        HandlePagingLoadStates(
             pagingAdapter = popularMoviesAdapter,
             onLoading = { viewModel.onAdapterLoadStateEvent(AdapterLoadStateEvent.PopularMoviesLoading) },
             onNotLoading = { viewModel.onAdapterLoadStateEvent(AdapterLoadStateEvent.PopularMoviesNotLoading) },
             onError = { eventToPagingError(it) }
         )
 
-        HandlePagingLoadStates<Movie>(
+        HandlePagingLoadStates(
             pagingAdapter = topRatedMoviesAdapter,
             onLoading = { viewModel.onAdapterLoadStateEvent(AdapterLoadStateEvent.TopRatedMoviesLoading) },
             onNotLoading = { viewModel.onAdapterLoadStateEvent(AdapterLoadStateEvent.TopRatedMoviesNotLoading) },
             onError = { eventToPagingError(it) }
         )
 
-        HandlePagingLoadStates<TvSeries>(
+        HandlePagingLoadStates(
             pagingAdapter = popularTvSeriesAdapter,
             onLoading = { viewModel.onAdapterLoadStateEvent(AdapterLoadStateEvent.PopularTvSeriesLoading) },
             onNotLoading = { viewModel.onAdapterLoadStateEvent(AdapterLoadStateEvent.PopularTvSeriesNotLoading) },
             onError = { eventToPagingError(it) }
         )
 
-        HandlePagingLoadStates<TvSeries>(
+        HandlePagingLoadStates(
             pagingAdapter = topRatedTvSeriesAdapter,
             onLoading = { viewModel.onAdapterLoadStateEvent(AdapterLoadStateEvent.TopRatedTvSeriesLoading) },
             onNotLoading = { viewModel.onAdapterLoadStateEvent(AdapterLoadStateEvent.TopRatedTvSeriesNotLoading) },
@@ -124,24 +173,40 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         viewModel.onAdapterLoadStateEvent(AdapterLoadStateEvent.PagingError(uiText))
     }
 
+    override fun onStart() {
+        super.onStart()
+        val context = requireContext()
+        binding.seeAllPage.isVisible = true
+        val adapter = when (viewModel.homeState.value.seeAllPageToolBarText?.asString(context)) {
+            context.getString(R.string.now_playing) -> {
+                nowPlayingAdapter
+            }
+            context.getString(R.string.popular_movies) -> {
+                popularMoviesAdapter
+            }
+            context.getString(R.string.popular_tv_series) -> {
+                popularTvSeriesAdapter
+            }
+            context.getString(R.string.top_rated_movies) -> {
+                topRatedMoviesAdapter
+            }
+            context.getString(R.string.top_rated_tv_series) -> {
+                topRatedTvSeriesAdapter
+            }
+            else -> popularMoviesAdapter
+        }
+        binding.recyclerViewSeeAll.adapter = adapter
+    }
 
     private fun updateCountryIsoCode() {
         val countryIsoCode = requireContext().getCountryIsoCode().uppercase()
         viewModel.onEvent(HomeEvent.UpdateCountryIsoCode(countryIsoCode))
     }
 
-    private fun retryAllPagingAdapter() {
-        nowPlayingAdapter.retry()
-        popularMoviesAdapter.retry()
-        popularTvSeriesAdapter.retry()
-        topRatedMoviesAdapter.retry()
-        topRatedTvSeriesAdapter.retry()
-    }
-
     private fun collectDataLifecycleAware() =
-        viewLifecycleOwner.lifecycleScope.launch(handler) {
+        viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                supervisorScope {
+                job = launch {
                     launch {
                         viewModel.homeState.collectLatest { homeState ->
                             binding.apply {
@@ -155,41 +220,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                             }
                         }
                     }
-
-                    launch {
-                        viewModel.adapterLoadState.collectLatest {
-                            binding.nowPlayingShimmerLayout.isVisible = it.nowPlayingState.isLoading
-                            binding.popularMoviesShimmerLayout.isVisible =
-                                it.popularMoviesState.isLoading
-                            binding.popularTvSeriesShimmerLayout.isVisible =
-                                it.popularTvSeriesState.isLoading
-                            binding.topRatedMoviesShimmerLayout.isVisible =
-                                it.topRatedMoviesState.isLoading
-                            binding.topRatedTvSeriesShimmerLayout.isVisible =
-                                it.topRatedTvSeriesState.isLoading
-                        }
-                    }
-
-                    launch {
-                        viewModel.eventFlow.collect { uiEvent ->
-                            when (uiEvent) {
-                                is HomeUiEvent.NavigateTo -> findNavController().navigate(
-                                    uiEvent.directions
-                                )
-                                is HomeUiEvent.RetryAllAdapters -> {
-                                    retryAllPagingAdapter()
-                                }
-                                is HomeUiEvent.ShowSnackbar -> {
-                                    Snackbar.make(
-                                        requireView(),
-                                        uiEvent.uiText.asString(requireContext()),
-                                        Snackbar.LENGTH_LONG
-                                    ).show()
-                                }
-                            }
-                        }
-                    }
-
 
                     launch {
                         viewModel.getNowPlayingMovies().collectLatest { pagingData ->
@@ -227,8 +257,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     private fun showSeeAllPage(uiText: UiText?) {
         binding.apply {
             seeAllPage.animation = slideInLeftAnim()
-            recyclerViewSeeAll.layoutManager =
-                GridLayoutManager(requireContext(), 2)
+            recyclerViewSeeAll.layoutManager = GridLayoutManager(requireContext(), 2)
             uiText?.let {
                 toolbarText.text = it.asString(requireContext())
             }
@@ -299,24 +328,15 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         binding.apply {
             nowPlayingRecyclerView.adapter = nowPlayingAdapter
             nowPlayingRecyclerView.setAlpha(true)
-            popularMoviesRecyclerView.adapter = popularMoviesAdapter.withLoadStateFooter(
-                footer = MovaLoadStateAdapter { popularMoviesAdapter.retry() }
-            )
-            topRatedMoviesRecyclerView.adapter = topRatedMoviesAdapter.withLoadStateFooter(
-                footer = MovaLoadStateAdapter { topRatedMoviesAdapter.retry() }
-            )
-            popularTvSeriesRecyclerView.adapter = popularTvSeriesAdapter.withLoadStateFooter(
-                footer = MovaLoadStateAdapter { popularTvSeriesAdapter.retry() }
-            )
-            topRatedTvSeriesRecyclerView.adapter = topRatedTvSeriesAdapter.withLoadStateFooter(
-                footer = MovaLoadStateAdapter { topRatedTvSeriesAdapter.retry() }
-            )
+            popularMoviesRecyclerView.adapter = popularMoviesAdapter
+            topRatedMoviesRecyclerView.adapter = topRatedMoviesAdapter
+            popularTvSeriesRecyclerView.adapter = popularTvSeriesAdapter
+            topRatedTvSeriesRecyclerView.adapter = topRatedTvSeriesAdapter
         }
     }
 
     private fun setAdaptersClickListener() {
         val action = HomeFragmentDirections.actionHomeFragmentToDetailBottomSheet(null, null)
-
         popularMoviesAdapter.setOnItemClickListener { movie ->
             action.movie = movie
             action.tvSeries = null

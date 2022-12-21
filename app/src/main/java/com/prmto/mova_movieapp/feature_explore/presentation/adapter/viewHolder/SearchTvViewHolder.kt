@@ -19,7 +19,10 @@ class SearchTvViewHolder(
     val context: Context
 ) : ViewHolder(binding.root) {
 
-    fun bindSearchTv(searchTv: TvSearch) {
+    fun bindSearchTv(
+        searchTv: TvSearch,
+        onSearchTvItemClick: (TvSearch) -> Unit = {}
+    ) {
         binding.backdropImage.load(
             ImageApi.getImage(
                 imageUrl = searchTv.posterPath,
@@ -40,6 +43,10 @@ class SearchTvViewHolder(
         binding.movieTitle.text = searchTv.name
         binding.txtCategory.visibility = View.VISIBLE
         binding.txtCategory.text = context.getString(R.string.tv)
+
+        binding.root.setOnClickListener {
+            onSearchTvItemClick(searchTv)
+        }
     }
 
     companion object {

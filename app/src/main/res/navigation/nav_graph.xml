@@ -35,6 +35,9 @@
         <action
             android:id="@+id/action_exploreFragment_to_filterBottomSheetFragment"
             app:destination="@id/filterBottomSheetFragment" />
+        <action
+            android:id="@+id/action_exploreFragment_to_detailBottomSheet"
+            app:destination="@id/detailBottomSheet" />
     </fragment>
     <fragment
         android:id="@+id/myListFragment"

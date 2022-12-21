@@ -64,6 +64,8 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
             }
         )
 
+        binding.swipeRefreshLayout.isEnabled = false
+
         binding.btnNavigateUp.setOnClickListener {
             viewModel.onEvent(DetailEvent.OnBackPressed)
         }
@@ -77,6 +79,7 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
         binding.swipeRefreshLayout.setOnRefreshListener {
             job?.cancel()
             collectDataLifecycleAware()
+            binding.swipeRefreshLayout.isRefreshing = false
         }
     }
 

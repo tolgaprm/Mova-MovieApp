@@ -37,6 +37,10 @@ class FilterMoviesAdapter @Inject constructor(
             binding.root.setOnClickListener {
                 this.itemClickListener(movie)
             }
+
+            binding.root.setOnClickListener {
+                this.itemClickListener(movie)
+            }
             binding.txtCategory.visibility = View.VISIBLE
             binding.txtCategory.text = context.getText(R.string.movie)
         }

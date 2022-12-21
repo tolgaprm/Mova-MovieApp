@@ -20,10 +20,13 @@ class SearchPersonViewHolder(
 ) : ViewHolder(binding.root) {
 
 
-    fun bindPerson(search: PersonSearch) {
+    fun bindPerson(
+        personSearch: PersonSearch,
+        onClickPersonItem: (PersonSearch) -> Unit = {}
+    ) {
         binding.ivProfile.load(
             ImageApi.getImage(
-                imageUrl = search.profilePath,
+                imageUrl = personSearch.profilePath,
                 imageSize = ImageSize.W500.path
             ),
             imageLoader = imageLoader
@@ -33,9 +36,13 @@ class SearchPersonViewHolder(
 
         binding.txtCategory.visibility = View.VISIBLE
 
-        binding.txPersonName.text = search.name
-        search.knownForDepartment?.let {
-            binding.tvKnownForDepartment.text = search.knownForDepartment
+        binding.txPersonName.text = personSearch.name
+        personSearch.knownForDepartment?.let {
+            binding.tvKnownForDepartment.text = personSearch.knownForDepartment
+        }
+
+        binding.root.setOnClickListener {
+            onClickPersonItem(personSearch)
         }
     }
 

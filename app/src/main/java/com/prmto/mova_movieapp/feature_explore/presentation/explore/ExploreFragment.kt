@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.prmto.mova_movieapp.R
 import com.prmto.mova_movieapp.core.data.models.enums.Category
+import com.prmto.mova_movieapp.core.domain.repository.ConnectivityObserver
 import com.prmto.mova_movieapp.core.presentation.util.asString
 import com.prmto.mova_movieapp.databinding.FragmentExploreBinding
 import com.prmto.mova_movieapp.feature_explore.presentation.adapter.FilterMoviesAdapter
@@ -37,17 +38,21 @@ class ExploreFragment @Inject constructor(
     lateinit var viewModel: ExploreViewModel
 
     @Inject
+    lateinit var connectivityObserver: ConnectivityObserver
+
+    @Inject
     lateinit var searchRecyclerAdapter: SearchRecyclerAdapter
 
     @Inject
-    lateinit var movieSearchAdapter: FilterMoviesAdapter
+    lateinit var movieFilterAdapter: FilterMoviesAdapter
 
     @Inject
-    lateinit var tvSearchAdapter: FilterTvSeriesAdapter
+    lateinit var tvFilterAdapter: FilterTvSeriesAdapter
 
     private var movieDiscoverJob: Job? = null
     private var tvDiscoverJob: Job? = null
     private var searchJob: Job? = null
+    private var job: Job? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -55,16 +60,66 @@ class ExploreFragment @Inject constructor(
         viewModel = ViewModelProvider(requireActivity())[ExploreViewModel::class.java]
         val binding = FragmentExploreBinding.bind(view)
         _binding = binding
-        binding.recyclerSearch.adapter = searchRecyclerAdapter
-        binding.recyclerDiscoverMovie.adapter = movieSearchAdapter
-        binding.recyclerDiscoverTv.adapter = tvSearchAdapter
 
-        collectData()
-
+        collectUiEvent()
+        setupAdapters()
+        observeConnectivityStatus()
+        addTextChangedListener()
+        searchRecyclerAdapterListeners()
         binding.filter.setOnClickListener {
             findNavController().navigate(ExploreFragmentDirections.actionExploreFragmentToFilterBottomSheetFragment())
         }
 
+    }
+
+    private fun collectUiEvent() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                launch {
+                    viewModel.eventFlow.collectLatest { event ->
+                        when (event) {
+                            is ExploreUiEvent.ShowSnackbar -> {
+                                Snackbar.make(
+                                    requireView(),
+                                    event.uiText.asString(requireContext()),
+                                    Snackbar.LENGTH_SHORT
+                                ).show()
+                            }
+                            is ExploreUiEvent.PopBackStack -> {
+                                findNavController().popBackStack()
+                            }
+                            is ExploreUiEvent.NavigateTo -> {
+                                findNavController().navigate(event.directions)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private fun setupAdapters() {
+        binding.recyclerSearch.adapter = searchRecyclerAdapter
+        binding.recyclerDiscoverMovie.adapter = movieFilterAdapter
+        binding.recyclerDiscoverTv.adapter = tvFilterAdapter
+    }
+
+    private fun observeConnectivityStatus() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                connectivityObserver.observe().collectLatest {
+                    if (it == ConnectivityObserver.Status.Avaliable) {
+                        job?.cancel()
+                        collectData()
+                    } else {
+                        job?.cancel()
+                    }
+                }
+            }
+        }
+    }
+
+    private fun addTextChangedListener() {
         binding.edtQuery.addTextChangedListener {
             searchJob?.cancel()
             searchJob = lifecycleScope.launch {
@@ -77,7 +132,7 @@ class ExploreFragment @Inject constructor(
     }
 
     private fun collectData() {
-        viewLifecycleOwner.lifecycleScope.launch {
+        job = viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
                     viewModel.query.collectLatest { query ->
@@ -95,7 +150,7 @@ class ExploreFragment @Inject constructor(
                                         hideTvAndSearchAdapters()
                                         cancelTvAndSearchJobs()
                                         binding.recyclerDiscoverMovie.visibility = View.VISIBLE
-                                        movieSearchAdapter.submitData(it)
+                                        movieFilterAdapter.submitData(it)
                                     }
                                 }
                             }
@@ -107,7 +162,7 @@ class ExploreFragment @Inject constructor(
                                         cancelMovieAndSearchJobs()
                                         hideMoviesAndSearchAdapter()
                                         binding.recyclerDiscoverTv.visibility = View.VISIBLE
-                                        tvSearchAdapter.submitData(it)
+                                        tvFilterAdapter.submitData(it)
                                     }
                                 }
                             }
@@ -128,26 +183,43 @@ class ExploreFragment @Inject constructor(
                         }
                     }
                 }
-
-                launch {
-                    viewModel.eventFlow.collectLatest { event ->
-                        when (event) {
-                            is ExploreUiEvent.ShowSnackbar -> {
-                                Snackbar.make(
-                                    requireView(),
-                                    event.uiText.asString(requireContext()),
-                                    Snackbar.LENGTH_SHORT
-                                ).show()
-                            }
-                            is ExploreUiEvent.PopBackStack -> {
-                                findNavController().popBackStack()
-                            }
-                        }
-                    }
-                }
             }
         }
     }
+
+    private fun searchRecyclerAdapterListeners() {
+        val action = ExploreFragmentDirections.actionExploreFragmentToDetailBottomSheet(null, null)
+        setupSearchRecyclerAdapterListener(action = action)
+        movieFilterAdapter.setOnItemClickListener { movie ->
+            action.movie = movie
+            action.tvSeries = null
+            viewModel.onEventExploreFragment(ExploreFragmentEvent.NavigateToDetailBottomSheet(action))
+        }
+        tvFilterAdapter.setOnItemClickListener { tvSeries ->
+            action.movie = null
+            action.tvSeries = tvSeries
+            viewModel.onEventExploreFragment(ExploreFragmentEvent.NavigateToDetailBottomSheet(action))
+        }
+    }
+
+    private fun setupSearchRecyclerAdapterListener(
+        action: ExploreFragmentDirections.ActionExploreFragmentToDetailBottomSheet
+    ) {
+        searchRecyclerAdapter.setOnTvSearchClickListener { tvSeries ->
+            action.movie = null
+            action.tvSeries = tvSeries
+            viewModel.onEventExploreFragment(ExploreFragmentEvent.NavigateToDetailBottomSheet(action))
+        }
+        searchRecyclerAdapter.setOnMovieSearchClickListener { movie ->
+            action.movie = movie
+            action.tvSeries = null
+            viewModel.onEventExploreFragment(ExploreFragmentEvent.NavigateToDetailBottomSheet(action))
+        }
+        searchRecyclerAdapter.setOnPersonSearchClickListener {
+
+        }
+    }
+
 
     private fun cancelMovieAndSearchJobs() {
         searchJob?.cancel()

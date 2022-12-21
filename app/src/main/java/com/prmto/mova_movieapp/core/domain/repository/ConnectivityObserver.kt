@@ -14,3 +14,7 @@ interface ConnectivityObserver {
         Lost
     }
 }
+
+fun ConnectivityObserver.Status.isAvaliable(): Boolean {
+    return this == ConnectivityObserver.Status.Avaliable
+}

@@ -31,6 +31,11 @@ class FilterTvSeriesAdapter @Inject constructor(
             binding.root.setOnClickListener {
                 this.itemClickListener(tvSeries)
             }
+
+
+            binding.root.setOnClickListener {
+                this.itemClickListener(tvSeries)
+            }
             binding.txtCategory.visibility = View.VISIBLE
             binding.txtCategory.text = context.getText(R.string.tv)
         }

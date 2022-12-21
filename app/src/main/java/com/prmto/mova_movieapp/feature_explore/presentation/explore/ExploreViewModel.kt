@@ -7,6 +7,8 @@ import com.prmto.mova_movieapp.R
 import com.prmto.mova_movieapp.core.data.dto.Genre
 import com.prmto.mova_movieapp.core.data.models.enums.Category
 import com.prmto.mova_movieapp.core.data.models.enums.isTv
+import com.prmto.mova_movieapp.core.domain.repository.ConnectivityObserver
+import com.prmto.mova_movieapp.core.domain.repository.isAvaliable
 import com.prmto.mova_movieapp.core.presentation.util.UiText
 import com.prmto.mova_movieapp.core.util.Constants.DEFAULT_LANGUAGE
 import com.prmto.mova_movieapp.feature_explore.data.dto.SearchDto
@@ -18,6 +20,7 @@ import com.prmto.mova_movieapp.feature_explore.presentation.filter_bottom_sheet.
 import com.prmto.mova_movieapp.feature_home.domain.models.Movie
 import com.prmto.mova_movieapp.feature_home.domain.models.TvSeries
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -26,7 +29,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ExploreViewModel @Inject constructor(
-    private val exploreUseCases: ExploreUseCases,
+    private val exploreUseCases: ExploreUseCases
 ) : ViewModel() {
 
 
@@ -45,15 +48,20 @@ class ExploreViewModel @Inject constructor(
     private val _eventFlow = MutableSharedFlow<ExploreUiEvent>()
     val eventFlow = _eventFlow.asSharedFlow()
 
+    private val _connectivityState = MutableStateFlow(ConnectivityObserver.Status.Avaliable)
+    val connectivityState: StateFlow<ConnectivityObserver.Status> = _connectivityState.asStateFlow()
+
+    var handler: CoroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
+        Timber.d(throwable.toString())
+    }
 
     init {
-        viewModelScope.launch {
+        viewModelScope.launch(handler) {
             exploreUseCases.getLanguageIsoCodeUseCase().collectLatest { language ->
                 _language.value = language
                 getGenreListByCategoriesState()
             }
         }
-
     }
 
     fun multiSearch(query: String): Flow<PagingData<SearchDto>> {
@@ -92,6 +100,19 @@ class ExploreViewModel @Inject constructor(
             is ExploreFragmentEvent.RemoveQuery -> {
                 _query.value = ""
             }
+            is ExploreFragmentEvent.NavigateToDetailBottomSheet -> {
+                viewModelScope.launch {
+                    _eventFlow.emit(ExploreUiEvent.NavigateTo(event.directions))
+                }
+            }
+            is ExploreFragmentEvent.UpdateConnectivityStatus -> {
+                _connectivityState.value = event.connectivityStatus
+                if (!event.connectivityStatus.isAvaliable()) {
+                    viewModelScope.launch {
+                        _eventFlow.emit(ExploreUiEvent.ShowSnackbar(UiText.StringResource(R.string.internet_error)))
+                    }
+                }
+            }
         }
     }
 
@@ -127,7 +148,7 @@ class ExploreViewModel @Inject constructor(
     }
 
     private fun getGenreListByCategoriesState() {
-        viewModelScope.launch {
+        viewModelScope.launch(handler) {
             try {
                 if (_filterBottomSheetState.value.categoryState.isTv()) {
                     getTvGenreList()
@@ -142,7 +163,7 @@ class ExploreViewModel @Inject constructor(
     }
 
     private fun getMovieGenreList() {
-        viewModelScope.launch {
+        viewModelScope.launch(handler) {
             exploreUseCases.movieGenreListUseCase(language.value).collectLatest { genreList ->
                 _genreList.value = genreList
             }
@@ -150,7 +171,7 @@ class ExploreViewModel @Inject constructor(
     }
 
     private fun getTvGenreList() {
-        viewModelScope.launch {
+        viewModelScope.launch(handler) {
             exploreUseCases.tvGenreListUseCase(language.value).collectLatest { genreList ->
                 _genreList.value = genreList
             }
