@@ -26,7 +26,6 @@ class DiscoverTvPagingSource @Inject constructor(
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, TvSeries> {
 
         val nextPage = params.key ?: Constants.STARTING_PAGE
-
         return try {
             val apiResponse = exploreApi.discoverTv(
                 page = nextPage,

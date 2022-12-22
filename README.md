@@ -86,7 +86,6 @@ Demoya gif veya bağlantı ekleyin
 
 - Modularization
 - CI Support
-- To able to searching movies and TvSeries
 - To able to add favorite list and watch list
 - To able to watching trailer for movie and TvSeries
 - To able to see the detail of actors and directors

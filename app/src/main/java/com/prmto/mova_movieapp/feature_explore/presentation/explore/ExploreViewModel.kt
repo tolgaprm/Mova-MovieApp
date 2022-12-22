@@ -16,6 +16,8 @@ import com.prmto.mova_movieapp.feature_explore.domain.use_case.ExploreUseCases
 import com.prmto.mova_movieapp.feature_explore.presentation.event.ExploreBottomSheetEvent
 import com.prmto.mova_movieapp.feature_explore.presentation.event.ExploreFragmentEvent
 import com.prmto.mova_movieapp.feature_explore.presentation.event.ExploreUiEvent
+import com.prmto.mova_movieapp.feature_explore.presentation.explore.event.ExploreAdapterLoadStateEvent
+import com.prmto.mova_movieapp.feature_explore.presentation.explore.state.ExplorePagingAdapterLoadState
 import com.prmto.mova_movieapp.feature_explore.presentation.filter_bottom_sheet.state.FilterBottomState
 import com.prmto.mova_movieapp.feature_home.domain.models.Movie
 import com.prmto.mova_movieapp.feature_home.domain.models.TvSeries
@@ -45,11 +47,13 @@ class ExploreViewModel @Inject constructor(
     private val _filterBottomSheetState = MutableStateFlow(FilterBottomState())
     val filterBottomSheetState = _filterBottomSheetState.asStateFlow()
 
+    private val _pagingState = MutableStateFlow(ExplorePagingAdapterLoadState())
+    val pagingState: StateFlow<ExplorePagingAdapterLoadState> = _pagingState.asStateFlow()
+
     private val _eventFlow = MutableSharedFlow<ExploreUiEvent>()
     val eventFlow = _eventFlow.asSharedFlow()
 
     private val _connectivityState = MutableStateFlow(ConnectivityObserver.Status.Avaliable)
-    val connectivityState: StateFlow<ConnectivityObserver.Status> = _connectivityState.asStateFlow()
 
     var handler: CoroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
         Timber.d(throwable.toString())
@@ -142,6 +146,55 @@ class ExploreViewModel @Inject constructor(
             }
         }
     }
+
+
+    fun onAdapterLoadStateEvent(event: ExploreAdapterLoadStateEvent) {
+        when (event) {
+            is ExploreAdapterLoadStateEvent.PagingError -> {
+                _pagingState.update { it.copy(uiText = event.uiText) }
+                viewModelScope.launch {
+                    _eventFlow.emit(ExploreUiEvent.ShowSnackbar(event.uiText))
+                }
+            }
+            is ExploreAdapterLoadStateEvent.FilterAdapterLoading -> {
+                _pagingState.update {
+                    it.copy(
+                        filterAdapterState = it.filterAdapterState.copy(
+                            isLoading = true
+                        )
+                    )
+                }
+            }
+            is ExploreAdapterLoadStateEvent.FilterAdapterNotLoading -> {
+                _pagingState.update {
+                    it.copy(
+                        filterAdapterState = it.filterAdapterState.copy(
+                            isLoading = false
+                        )
+                    )
+                }
+            }
+            is ExploreAdapterLoadStateEvent.SearchAdapterLoading -> {
+                _pagingState.update {
+                    it.copy(
+                        searchAdapterState = it.searchAdapterState.copy(
+                            isLoading = true
+                        )
+                    )
+                }
+            }
+            is ExploreAdapterLoadStateEvent.SearchAdapterNotLoading -> {
+                _pagingState.update {
+                    it.copy(
+                        searchAdapterState = it.searchAdapterState.copy(
+                            isLoading = false
+                        )
+                    )
+                }
+            }
+        }
+    }
+
 
     private fun resetSelectedGenreIdsState() {
         _filterBottomSheetState.update { it.copy(checkedGenreIdsState = emptyList()) }

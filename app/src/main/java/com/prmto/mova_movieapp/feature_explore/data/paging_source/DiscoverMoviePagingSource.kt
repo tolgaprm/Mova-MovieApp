@@ -26,7 +26,6 @@ class DiscoverMoviePagingSource @Inject constructor(
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Movie> {
 
         val nextPage = params.key ?: Constants.STARTING_PAGE
-
         return try {
             val apiResponse = exploreApi.discoverMovie(
                 page = nextPage,

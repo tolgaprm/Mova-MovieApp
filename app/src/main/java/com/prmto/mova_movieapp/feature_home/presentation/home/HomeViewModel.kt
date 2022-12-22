@@ -8,11 +8,11 @@ import com.prmto.mova_movieapp.core.presentation.util.UiText
 import com.prmto.mova_movieapp.feature_home.domain.models.Movie
 import com.prmto.mova_movieapp.feature_home.domain.models.TvSeries
 import com.prmto.mova_movieapp.feature_home.domain.use_cases.HomeUseCases
-import com.prmto.mova_movieapp.feature_home.presentation.home.event.AdapterLoadStateEvent
+import com.prmto.mova_movieapp.feature_home.presentation.home.event.HomeAdapterLoadStateEvent
 import com.prmto.mova_movieapp.feature_home.presentation.home.event.HomeEvent
 import com.prmto.mova_movieapp.feature_home.presentation.home.event.HomeUiEvent
+import com.prmto.mova_movieapp.feature_home.presentation.home.state.HomePagingAdapterLoadState
 import com.prmto.mova_movieapp.feature_home.presentation.home.state.HomeState
-import com.prmto.mova_movieapp.feature_home.presentation.home.state.PagingAdapterLoadState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -26,8 +26,8 @@ class HomeViewModel @Inject constructor(
     private val _homeState = MutableStateFlow(HomeState())
     val homeState: StateFlow<HomeState> get() = _homeState
 
-    private val _adapterLoadState = MutableStateFlow(PagingAdapterLoadState())
-    val adapterLoadState: StateFlow<PagingAdapterLoadState> get() = _adapterLoadState
+    private val _adapterLoadState = MutableStateFlow(HomePagingAdapterLoadState())
+    val adapterLoadState: StateFlow<HomePagingAdapterLoadState> get() = _adapterLoadState
 
     private val _eventFlow = MutableSharedFlow<HomeUiEvent>()
     val eventFlow = _eventFlow.asSharedFlow()
@@ -68,64 +68,64 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun onAdapterLoadStateEvent(event: AdapterLoadStateEvent) {
+    fun onAdapterLoadStateEvent(event: HomeAdapterLoadStateEvent) {
         when (event) {
-            is AdapterLoadStateEvent.PagingError -> {
-                _adapterLoadState.value = PagingAdapterLoadState(
+            is HomeAdapterLoadStateEvent.PagingError -> {
+                _adapterLoadState.value = HomePagingAdapterLoadState(
                     error = event.uiText
                 )
                 emitErrorForShowSnackBar(event.uiText)
             }
 
-            is AdapterLoadStateEvent.NowPlayingLoading -> {
+            is HomeAdapterLoadStateEvent.NowPlayingLoading -> {
                 _adapterLoadState.update {
                     it.copy(nowPlayingState = it.nowPlayingState.copy(isLoading = true))
                 }
             }
-            is AdapterLoadStateEvent.NowPlayingNotLoading -> {
+            is HomeAdapterLoadStateEvent.NowPlayingNotLoading -> {
                 _adapterLoadState.update {
                     it.copy(nowPlayingState = it.nowPlayingState.copy(isLoading = false))
                 }
             }
 
-            is AdapterLoadStateEvent.PopularMoviesLoading -> {
+            is HomeAdapterLoadStateEvent.PopularMoviesLoading -> {
                 _adapterLoadState.update {
                     it.copy(popularMoviesState = it.popularMoviesState.copy(isLoading = true))
                 }
             }
-            is AdapterLoadStateEvent.PopularMoviesNotLoading -> {
+            is HomeAdapterLoadStateEvent.PopularMoviesNotLoading -> {
                 _adapterLoadState.update {
                     it.copy(popularMoviesState = it.popularMoviesState.copy(isLoading = false))
                 }
             }
 
-            is AdapterLoadStateEvent.PopularTvSeriesLoading -> {
+            is HomeAdapterLoadStateEvent.PopularTvSeriesLoading -> {
                 _adapterLoadState.update {
                     it.copy(popularTvSeriesState = it.popularTvSeriesState.copy(isLoading = true))
                 }
             }
-            is AdapterLoadStateEvent.PopularTvSeriesNotLoading -> {
+            is HomeAdapterLoadStateEvent.PopularTvSeriesNotLoading -> {
                 _adapterLoadState.update {
                     it.copy(popularTvSeriesState = it.popularTvSeriesState.copy(isLoading = false))
                 }
             }
-            is AdapterLoadStateEvent.TopRatedMoviesLoading -> {
+            is HomeAdapterLoadStateEvent.TopRatedMoviesLoading -> {
                 _adapterLoadState.update {
                     it.copy(topRatedMoviesState = it.topRatedMoviesState.copy(isLoading = true))
                 }
             }
-            is AdapterLoadStateEvent.TopRatedMoviesNotLoading -> {
+            is HomeAdapterLoadStateEvent.TopRatedMoviesNotLoading -> {
                 _adapterLoadState.update {
                     it.copy(topRatedMoviesState = it.topRatedMoviesState.copy(isLoading = false))
                 }
             }
 
-            is AdapterLoadStateEvent.TopRatedTvSeriesLoading -> {
+            is HomeAdapterLoadStateEvent.TopRatedTvSeriesLoading -> {
                 _adapterLoadState.update {
                     it.copy(topRatedTvSeriesState = it.topRatedTvSeriesState.copy(isLoading = true))
                 }
             }
-            is AdapterLoadStateEvent.TopRatedTvSeriesNotLoading -> {
+            is HomeAdapterLoadStateEvent.TopRatedTvSeriesNotLoading -> {
                 _adapterLoadState.update {
                     it.copy(topRatedTvSeriesState = it.topRatedTvSeriesState.copy(isLoading = false))
                 }
