@@ -14,11 +14,18 @@ You can view the cast, plot summary, release date, and more. "
 
 </div>
 
-<!-- ## Demo
-
-Demoya gif veya bağlantı ekleyin
--->
-  
+ ## Demo
+ 
+ <div>
+ 
+ <img src="https://github.com/tolgaprm/Mova-MovieApp/blob/feat/explore/Demo/home_detail_demo.gif" height="600" float:left>
+ 
+ <img src="https://github.com/tolgaprm/Mova-MovieApp/blob/feat/explore/Demo/search_demo.gif" height="600" float:left>
+ 
+ </div>
+ 
+ 
+ 
 ## Screeshots
 
 ### Light Version
