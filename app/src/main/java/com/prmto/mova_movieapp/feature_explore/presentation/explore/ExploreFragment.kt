@@ -64,114 +64,16 @@ class ExploreFragment @Inject constructor(
         val binding = FragmentExploreBinding.bind(view)
         _binding = binding
 
+        observeConnectivityStatus()
         collectUiEvent()
         setupAdapters()
-        observeConnectivityStatus()
         addTextChangedListener()
         searchRecyclerAdapterListeners()
         handlePagingLoadStates()
         binding.filter.setOnClickListener {
             findNavController().navigate(ExploreFragmentDirections.actionExploreFragmentToFilterBottomSheetFragment())
         }
-
-    }
-
-    private fun handlePagingLoadStates() {
-        HandlePagingLoadStates(
-            pagingAdapter = tvFilterAdapter,
-            onLoading = { viewModel.onAdapterLoadStateEvent(ExploreAdapterLoadStateEvent.FilterAdapterLoading) },
-            onNotLoading = { viewModel.onAdapterLoadStateEvent(ExploreAdapterLoadStateEvent.FilterAdapterNotLoading) },
-            onError = {
-                viewModel.onAdapterLoadStateEvent(
-                    ExploreAdapterLoadStateEvent.PagingError(
-                        it
-                    )
-                )
-            }
-        )
-
-        HandlePagingLoadStates(
-            pagingAdapter = movieFilterAdapter,
-            onLoading = { viewModel.onAdapterLoadStateEvent(ExploreAdapterLoadStateEvent.FilterAdapterLoading) },
-            onNotLoading = { viewModel.onAdapterLoadStateEvent(ExploreAdapterLoadStateEvent.FilterAdapterNotLoading) },
-            onError = {
-                viewModel.onAdapterLoadStateEvent(
-                    ExploreAdapterLoadStateEvent.PagingError(
-                        it
-                    )
-                )
-            }
-        )
-
-        HandlePagingLoadStates<Any>(
-            searchPagingAdapter = searchRecyclerAdapter,
-            onLoading = { viewModel.onAdapterLoadStateEvent(ExploreAdapterLoadStateEvent.SearchAdapterLoading) },
-            onNotLoading = { viewModel.onAdapterLoadStateEvent(ExploreAdapterLoadStateEvent.SearchAdapterNotLoading) },
-            onError = {
-                viewModel.onAdapterLoadStateEvent(
-                    ExploreAdapterLoadStateEvent.PagingError(
-                        it
-                    )
-                )
-            }
-        )
-    }
-
-    private fun collectUiEvent() {
-        viewLifecycleOwner.lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                launch {
-                    viewModel.eventFlow.collectLatest { event ->
-                        when (event) {
-                            is ExploreUiEvent.ShowSnackbar -> {
-                                Snackbar.make(
-                                    requireView(),
-                                    event.uiText.asString(requireContext()),
-                                    Snackbar.LENGTH_SHORT
-                                ).show()
-                            }
-                            is ExploreUiEvent.PopBackStack -> {
-                                findNavController().popBackStack()
-                            }
-                            is ExploreUiEvent.NavigateTo -> {
-                                findNavController().navigate(event.directions)
-                            }
-                        }
-                    }
-                }
-
-                launch {
-                    viewModel.pagingState.collectLatest {
-
-                        when (viewModel.filterBottomSheetState.value.categoryState) {
-                            Category.MOVIE -> {
-                                binding.filterShimmerLayout.isVisible =
-                                    it.filterAdapterState.isLoading
-                                binding.recyclerDiscoverMovie.isVisible =
-                                    !it.filterAdapterState.isLoading
-                            }
-                            Category.TV -> {
-                                binding.filterShimmerLayout.isVisible =
-                                    it.filterAdapterState.isLoading
-                                binding.recyclerDiscoverTv.isVisible =
-                                    !it.filterAdapterState.isLoading
-                            }
-                            Category.SEARCH -> {
-                                binding.filterShimmerLayout.isVisible =
-                                    it.searchAdapterState.isLoading
-                                binding.recyclerSearch.isVisible = !it.searchAdapterState.isLoading
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    private fun setupAdapters() {
-        binding.recyclerSearch.adapter = searchRecyclerAdapter
-        binding.recyclerDiscoverMovie.adapter = movieFilterAdapter
-        binding.recyclerDiscoverTv.adapter = tvFilterAdapter
+        setBtnErrorClickListener()
     }
 
     private fun observeConnectivityStatus() {
@@ -182,6 +84,7 @@ class ExploreFragment @Inject constructor(
                         job?.cancel()
                         collectData()
                     } else {
+                        showErrorScreenAndHideDetailScreen()
                         job?.cancel()
                     }
                 }
@@ -257,18 +160,153 @@ class ExploreFragment @Inject constructor(
         }
     }
 
+    private fun collectUiEvent() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                launch {
+                    viewModel.eventFlow.collectLatest { event ->
+                        when (event) {
+                            is ExploreUiEvent.ShowSnackbar -> {
+                                Snackbar.make(
+                                    requireView(),
+                                    event.uiText.asString(requireContext()),
+                                    Snackbar.LENGTH_SHORT
+                                ).show()
+                            }
+                            is ExploreUiEvent.PopBackStack -> {
+                                findNavController().popBackStack()
+                            }
+                            is ExploreUiEvent.NavigateTo -> {
+                                findNavController().navigate(event.directions)
+                            }
+                        }
+                    }
+                }
+
+                launch {
+                    viewModel.pagingState.collectLatest {
+
+                        when (viewModel.filterBottomSheetState.value.categoryState) {
+                            Category.MOVIE -> {
+                                binding.filterShimmerLayout.isVisible =
+                                    it.filterAdapterState.isLoading
+                                binding.recyclerDiscoverMovie.isVisible =
+                                    !it.filterAdapterState.isLoading
+                            }
+                            Category.TV -> {
+                                binding.filterShimmerLayout.isVisible =
+                                    it.filterAdapterState.isLoading
+                                binding.recyclerDiscoverTv.isVisible =
+                                    !it.filterAdapterState.isLoading
+                            }
+                            Category.SEARCH -> {
+                                binding.filterShimmerLayout.isVisible =
+                                    it.searchAdapterState.isLoading
+                                binding.recyclerSearch.isVisible =
+                                    !it.searchAdapterState.isLoading
+                            }
+                        }
+
+                        if (it.errorUiText != null) {
+                            showErrorScreenAndHideDetailScreen()
+                        }
+
+                    }
+                }
+            }
+        }
+    }
+
+    private fun setupAdapters() {
+        binding.recyclerSearch.adapter = searchRecyclerAdapter
+        binding.recyclerDiscoverMovie.adapter = movieFilterAdapter
+        binding.recyclerDiscoverTv.adapter = tvFilterAdapter
+    }
+
+    private fun showErrorScreenAndHideDetailScreen() {
+        binding.detailScreen.isVisible = false
+        binding.errorScreen.isVisible = true
+    }
+
+    private fun hideErrorScreenAndShowDetailScreen() {
+        binding.detailScreen.isVisible = true
+        binding.errorScreen.isVisible = false
+    }
+
+    private fun setBtnErrorClickListener() {
+        binding.btnError.setOnClickListener {
+            hideErrorScreenAndShowDetailScreen()
+            when (viewModel.filterBottomSheetState.value.categoryState) {
+                Category.MOVIE -> movieFilterAdapter.retry()
+                Category.TV -> tvFilterAdapter.retry()
+                Category.SEARCH -> searchRecyclerAdapter.retry()
+            }
+
+        }
+    }
+
+    private fun handlePagingLoadStates() {
+        HandlePagingLoadStates(
+            pagingAdapter = tvFilterAdapter,
+            onLoading = { viewModel.onAdapterLoadStateEvent(ExploreAdapterLoadStateEvent.FilterAdapterLoading) },
+            onNotLoading = { viewModel.onAdapterLoadStateEvent(ExploreAdapterLoadStateEvent.FilterAdapterNotLoading) },
+            onError = {
+                viewModel.onAdapterLoadStateEvent(
+                    ExploreAdapterLoadStateEvent.PagingError(
+                        it
+                    )
+                )
+            }
+        )
+
+        HandlePagingLoadStates(
+            pagingAdapter = movieFilterAdapter,
+            onLoading = { viewModel.onAdapterLoadStateEvent(ExploreAdapterLoadStateEvent.FilterAdapterLoading) },
+            onNotLoading = { viewModel.onAdapterLoadStateEvent(ExploreAdapterLoadStateEvent.FilterAdapterNotLoading) },
+            onError = {
+                viewModel.onAdapterLoadStateEvent(
+                    ExploreAdapterLoadStateEvent.PagingError(
+                        it
+                    )
+                )
+            }
+        )
+
+        HandlePagingLoadStates<Any>(
+            searchPagingAdapter = searchRecyclerAdapter,
+            onLoading = { viewModel.onAdapterLoadStateEvent(ExploreAdapterLoadStateEvent.SearchAdapterLoading) },
+            onNotLoading = { viewModel.onAdapterLoadStateEvent(ExploreAdapterLoadStateEvent.SearchAdapterNotLoading) },
+            onError = {
+                viewModel.onAdapterLoadStateEvent(
+                    ExploreAdapterLoadStateEvent.PagingError(
+                        it
+                    )
+                )
+            }
+        )
+    }
+
     private fun searchRecyclerAdapterListeners() {
-        val action = ExploreFragmentDirections.actionExploreFragmentToDetailBottomSheet(null, null)
+        val action =
+            ExploreFragmentDirections.actionExploreFragmentToDetailBottomSheet(null, null)
         setupSearchRecyclerAdapterListener(action = action)
         movieFilterAdapter.setOnItemClickListener { movie ->
             action.movie = movie
             action.tvSeries = null
-            viewModel.onEventExploreFragment(ExploreFragmentEvent.NavigateToDetailBottomSheet(action))
+            viewModel.onEventExploreFragment(
+                ExploreFragmentEvent.NavigateToDetailBottomSheet(
+                    action
+                )
+            )
         }
         tvFilterAdapter.setOnItemClickListener { tvSeries ->
             action.movie = null
             action.tvSeries = tvSeries
-            viewModel.onEventExploreFragment(ExploreFragmentEvent.NavigateToDetailBottomSheet(action))
+            viewModel.onEventExploreFragment(
+                ExploreFragmentEvent.NavigateToDetailBottomSheet(
+                    action
+                )
+            )
         }
     }
 
@@ -278,12 +316,20 @@ class ExploreFragment @Inject constructor(
         searchRecyclerAdapter.setOnTvSearchClickListener { tvSeries ->
             action.movie = null
             action.tvSeries = tvSeries
-            viewModel.onEventExploreFragment(ExploreFragmentEvent.NavigateToDetailBottomSheet(action))
+            viewModel.onEventExploreFragment(
+                ExploreFragmentEvent.NavigateToDetailBottomSheet(
+                    action
+                )
+            )
         }
         searchRecyclerAdapter.setOnMovieSearchClickListener { movie ->
             action.movie = movie
             action.tvSeries = null
-            viewModel.onEventExploreFragment(ExploreFragmentEvent.NavigateToDetailBottomSheet(action))
+            viewModel.onEventExploreFragment(
+                ExploreFragmentEvent.NavigateToDetailBottomSheet(
+                    action
+                )
+            )
         }
         searchRecyclerAdapter.setOnPersonSearchClickListener {
 

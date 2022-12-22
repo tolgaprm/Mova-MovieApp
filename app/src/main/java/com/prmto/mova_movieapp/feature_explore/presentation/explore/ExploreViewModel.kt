@@ -151,7 +151,7 @@ class ExploreViewModel @Inject constructor(
     fun onAdapterLoadStateEvent(event: ExploreAdapterLoadStateEvent) {
         when (event) {
             is ExploreAdapterLoadStateEvent.PagingError -> {
-                _pagingState.update { it.copy(uiText = event.uiText) }
+                _pagingState.update { it.copy(errorUiText = event.uiText) }
                 viewModelScope.launch {
                     _eventFlow.emit(ExploreUiEvent.ShowSnackbar(event.uiText))
                 }

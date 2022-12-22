@@ -74,6 +74,8 @@
     <string name="buy">Buy</string>
     <string name="provides_now_watch_information_by_justwatch">Provides \'Now Watch Information\' by <font color="#FFEB3B">JustWatch</font></string>
     <string name="person">Person</string>
+    <string name="something_went_wrong">Something went wrong</string>
+    <string name="try_again">TRY AGAIN</string>
 
 
 </resources>
