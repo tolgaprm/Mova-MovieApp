@@ -5,8 +5,8 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import com.google.common.truth.Truth.assertThat
-import com.prmto.mova_movieapp.data.repository.DataOperationsImpl
-import com.prmto.mova_movieapp.domain.repository.DataStoreOperations
+import com.prmto.mova_movieapp.core.data.repository.DataOperationsImpl
+import com.prmto.mova_movieapp.core.domain.repository.DataStoreOperations
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi

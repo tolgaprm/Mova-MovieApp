@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/splashFragment"
-        android:name="com.prmto.mova_movieapp.presentation.splash.SplashFragment"
+        android:name="com.prmto.mova_movieapp.feature_splash.presentation.splash.SplashFragment"
         android:label="SplashFragmentFragment"
         tools:layout="@layout/fragment_splash">
         <action
@@ -19,7 +19,7 @@
     </fragment>
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.prmto.mova_movieapp.presentation.home.HomeFragment"
+        android:name="com.prmto.mova_movieapp.feature_home.presentation.home.HomeFragment"
         android:label="HomeFragment"
         tools:layout="@layout/fragment_home">
         <action
@@ -29,38 +29,39 @@
     </fragment>
     <fragment
         android:id="@+id/exploreFragment"
-        android:name="com.prmto.mova_movieapp.presentation.explore.ExploreFragment"
+        android:name="com.prmto.mova_movieapp.feature_explore.presentation.explore.ExploreFragment"
         android:label="ExploreFragment"
         tools:layout="@layout/fragment_explore">
         <action
             android:id="@+id/action_exploreFragment_to_filterBottomSheetFragment"
             app:destination="@id/filterBottomSheetFragment" />
+        <action
+            android:id="@+id/action_exploreFragment_to_detailBottomSheet"
+            app:destination="@id/detailBottomSheet" />
     </fragment>
     <fragment
         android:id="@+id/myListFragment"
-        android:name="com.prmto.mova_movieapp.presentation.myList.MyListFragment"
+        android:name="com.prmto.mova_movieapp.feature_mylist.presentation.myList.MyListFragment"
         android:label="MyListFragment"
         tools:layout="@layout/fragment_my_list" />
     <dialog
         android:id="@+id/filterBottomSheetFragment"
-        android:name="com.prmto.mova_movieapp.presentation.filter_bottom_sheet.FilterBottomSheetFragment"
+        android:name="com.prmto.mova_movieapp.feature_explore.presentation.filter_bottom_sheet.FilterBottomSheetFragment"
         android:label="FilterBottomSheetFragment"
         tools:layout="@layout/fragment_bottom_sheet"/>
     <dialog
         android:id="@+id/detailBottomSheet"
-        android:name="com.prmto.mova_movieapp.presentation.detail_bottom_sheet.DetailBottomSheet"
+        android:name="com.prmto.mova_movieapp.feature_home.presentation.detail_bottom_sheet.DetailBottomSheet"
         android:label="DetailBottomSheet"
         tools:layout="@layout/fragment_detail_bottom_sheet" >
         <argument
             android:name="Movie"
-            app:argType="com.prmto.mova_movieapp.domain.models.Movie"
-            app:nullable="true"
-            android:defaultValue="@null" />
+            app:argType="com.prmto.mova_movieapp.feature_home.domain.models.Movie"
+            app:nullable="true" />
         <argument
             android:name="TvSeries"
-            app:argType="com.prmto.mova_movieapp.domain.models.TvSeries"
-            app:nullable="true"
-            android:defaultValue="@null" />
+            app:argType="com.prmto.mova_movieapp.feature_home.domain.models.TvSeries"
+            app:nullable="true" />
         <action
             android:id="@+id/action_detailBottomSheet_to_detailFragment"
             app:destination="@id/detailFragment"
@@ -69,11 +70,11 @@
     </dialog>
     <fragment
         android:id="@+id/settingsFragment"
-        android:name="com.prmto.mova_movieapp.presentation.setting.SettingsFragment"
+        android:name="com.prmto.mova_movieapp.feature_settings.presentation.setting.SettingsFragment"
         android:label="SettingsFragment" />
     <fragment
         android:id="@+id/detailFragment"
-        android:name="com.prmto.mova_movieapp.presentation.detail.DetailFragment"
+        android:name="com.prmto.mova_movieapp.feature_movie_tv_detail.presentation.detail.DetailFragment"
         tools:layout="@layout/fragment_detail"
         android:label="DetailFragment">
         <argument

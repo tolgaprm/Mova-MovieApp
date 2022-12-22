@@ -17,6 +17,8 @@
     <string name="movie">Movie</string>
     <string name="tv_series">Tv Series</string>
     <string name="genre">Genre</string>
+    <string name="movies">Movies</string>
+    <string name="tv">Tv</string>
 
     <string name="voteAverage">%1$s (%2$s)</string>
     <string name="voteAverageDetail">%1$s (%2$s reviews)</string>
@@ -71,5 +73,9 @@
     <string name="rent">Rent</string>
     <string name="buy">Buy</string>
     <string name="provides_now_watch_information_by_justwatch">Provides \'Now Watch Information\' by <font color="#FFEB3B">JustWatch</font></string>
+    <string name="person">Person</string>
+    <string name="something_went_wrong">Something went wrong</string>
+    <string name="try_again">TRY AGAIN</string>
+
 
 </resources>

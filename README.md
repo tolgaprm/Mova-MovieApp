@@ -50,8 +50,7 @@ Demoya gif veya bağlantı ekleyin
 
 - Minimum SDK level 24+
 - 100% [Kotlin](https://kotlinlang.org/)
-  based [Coroutines](https://github.com/Kotlin/kotlinx.coroutines)
-  + [Flow](https://developer.android.com/kotlin/flow) for asynchronous.
+  based [Coroutines](https://github.com/Kotlin/kotlinx.coroutines) [Flow](https://developer.android.com/kotlin/flow) for asynchronous.
 
 - [Android Architecture Components](https://developer.android.com/topic/architecture) - Collection
   of libraries that help you design robust, testable, and maintainable apps.
@@ -85,11 +84,12 @@ Demoya gif veya bağlantı ekleyin
   - [Truth](https://truth.dev/) - A library for performing assertions in tests
 ## Upcoming
 
- - To able to searching movies and TvSeries
- - To able to add favorite list and watch list
- - To able to watching trailer for movie and TvSeries
- - To able to see the detail of actors and directors
- - UI and Unit Tests
+- Modularization
+- CI Support
+- To able to add favorite list and watch list
+- To able to watching trailer for movie and TvSeries
+- To able to see the detail of actors and directors
+- UI and Unit Tests
 ## Find this repository useful? 
 Don't forget give a star. ⭐
   

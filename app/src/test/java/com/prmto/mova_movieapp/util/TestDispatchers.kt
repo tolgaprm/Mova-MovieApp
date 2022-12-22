@@ -1,5 +1,6 @@
 package com.prmto.mova_movieapp.util
 
+import com.prmto.mova_movieapp.core.util.DispatchersProvider
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.StandardTestDispatcher
