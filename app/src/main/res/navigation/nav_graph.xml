@@ -85,5 +85,16 @@
             android:name="tvId"
             app:argType="integer"
             android:defaultValue="0" />
+        <action
+            android:id="@+id/action_detailFragment_to_personDetailFragment"
+            app:destination="@id/personDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/personDetailFragment"
+        android:name="com.prmto.mova_movieapp.feature_person_detail.presentation.PersonDetailFragment"
+        android:label="PersonDetailFragment">
+        <argument
+            android:name="personId"
+            app:argType="integer" />
     </fragment>
 </navigation>

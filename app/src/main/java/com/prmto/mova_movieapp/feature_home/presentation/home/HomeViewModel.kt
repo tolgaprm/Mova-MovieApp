@@ -13,9 +13,12 @@ import com.prmto.mova_movieapp.feature_home.presentation.home.event.HomeEvent
 import com.prmto.mova_movieapp.feature_home.presentation.home.event.HomeUiEvent
 import com.prmto.mova_movieapp.feature_home.presentation.home.state.HomePagingAdapterLoadState
 import com.prmto.mova_movieapp.feature_home.presentation.home.state.HomeState
+import com.prmto.mova_movieapp.feature_home.presentation.home.state.PagingAdapterLoadStateItem
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -32,9 +35,13 @@ class HomeViewModel @Inject constructor(
     private val _eventFlow = MutableSharedFlow<HomeUiEvent>()
     val eventFlow = _eventFlow.asSharedFlow()
 
+    private val handler = CoroutineExceptionHandler { _, throwable ->
+        Timber.d(throwable.toString())
+    }
+
 
     init {
-        viewModelScope.launch {
+        viewModelScope.launch(handler) {
             launch {
                 homeUseCases.getLanguageIsoCodeUseCase().collect { languageIsoCode ->
                     _homeState.value = _homeState.value.copy(
@@ -72,7 +79,12 @@ class HomeViewModel @Inject constructor(
         when (event) {
             is HomeAdapterLoadStateEvent.PagingError -> {
                 _adapterLoadState.value = HomePagingAdapterLoadState(
-                    error = event.uiText
+                    error = event.uiText,
+                    nowPlayingState = PagingAdapterLoadStateItem(isLoading = false),
+                    popularMoviesState = PagingAdapterLoadStateItem(isLoading = false),
+                    popularTvSeriesState = PagingAdapterLoadStateItem(isLoading = false),
+                    topRatedMoviesState = PagingAdapterLoadStateItem(isLoading = false),
+                    topRatedTvSeriesState = PagingAdapterLoadStateItem(isLoading = false)
                 )
                 emitErrorForShowSnackBar(event.uiText)
             }

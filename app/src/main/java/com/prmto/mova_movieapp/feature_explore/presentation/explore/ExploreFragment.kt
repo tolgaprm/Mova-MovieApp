@@ -241,7 +241,6 @@ class ExploreFragment @Inject constructor(
                 Category.TV -> tvFilterAdapter.retry()
                 Category.SEARCH -> searchRecyclerAdapter.retry()
             }
-
         }
     }
 

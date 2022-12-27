@@ -276,5 +276,4 @@ class BindAttributesDetailFrag(
             onClickTmdbImage(tmdbUrl)
         }
     }
-
 }

@@ -67,9 +67,8 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         val binding = FragmentHomeBinding.bind(view)
         _binding = binding
 
-
-        observeConnectivityStatus()
         handlePagingLoadStates()
+        observeConnectivityStatus()
         collectHomeUiEventsAndLoadState()
         updateCountryIsoCode()
         setupRecyclerAdapters()
@@ -132,13 +131,42 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         }
     }
 
+    override fun onStart() {
+        super.onStart()
+        if (viewModel.homeState.value.isShowsSeeAllPage) {
+            val context = requireContext()
+            val adapter =
+                when (viewModel.homeState.value.seeAllPageToolBarText?.asString(context)) {
+                    context.getString(R.string.now_playing) -> {
+                        nowPlayingAdapter
+                    }
+                    context.getString(R.string.popular_movies) -> {
+                        popularMoviesAdapter
+                    }
+                    context.getString(R.string.popular_tv_series) -> {
+                        popularTvSeriesAdapter
+                    }
+                    context.getString(R.string.top_rated_movies) -> {
+                        topRatedMoviesAdapter
+                    }
+                    context.getString(R.string.top_rated_tv_series) -> {
+                        topRatedTvSeriesAdapter
+                    }
+                    else -> nowPlayingAdapter
+                }
+            binding.recyclerViewSeeAll.adapter = adapter
+        }
+    }
+
     private fun handlePagingLoadStates() {
+
         HandlePagingLoadStates<Movie>(
             nowPlayingRecyclerAdapter = nowPlayingAdapter,
             onLoading = { viewModel.onAdapterLoadStateEvent(HomeAdapterLoadStateEvent.NowPlayingLoading) },
             onNotLoading = { viewModel.onAdapterLoadStateEvent(HomeAdapterLoadStateEvent.NowPlayingNotLoading) },
             onError = { eventToPagingError(it) }
         )
+
 
         HandlePagingLoadStates(
             pagingAdapter = popularMoviesAdapter,
@@ -172,30 +200,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
     private fun eventToPagingError(uiText: UiText) {
         viewModel.onAdapterLoadStateEvent(HomeAdapterLoadStateEvent.PagingError(uiText))
-    }
-
-    override fun onStart() {
-        super.onStart()
-        val context = requireContext()
-        val adapter = when (viewModel.homeState.value.seeAllPageToolBarText?.asString(context)) {
-            context.getString(R.string.now_playing) -> {
-                nowPlayingAdapter
-            }
-            context.getString(R.string.popular_movies) -> {
-                popularMoviesAdapter
-            }
-            context.getString(R.string.popular_tv_series) -> {
-                popularTvSeriesAdapter
-            }
-            context.getString(R.string.top_rated_movies) -> {
-                topRatedMoviesAdapter
-            }
-            context.getString(R.string.top_rated_tv_series) -> {
-                topRatedTvSeriesAdapter
-            }
-            else -> popularMoviesAdapter
-        }
-        binding.recyclerViewSeeAll.adapter = adapter
     }
 
     private fun updateCountryIsoCode() {

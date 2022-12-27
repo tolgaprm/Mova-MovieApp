@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageButton
+        android:id="@+id/btnNavigateUp"
+        style="@style/CircleImageSmallButton"
+        android:layout_margin="@dimen/large_margin"
+        android:layout_marginStart="@dimen/medium_margin"
+        android:contentDescription="@string/navigate_up"
+        android:elevation="@dimen/small_elevation"
+        android:src="@drawable/ic_baseline_arrow_back_24"
+        tools:ignore="TouchTargetSizeCheck" />
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <FrameLayout
+                android:id="@+id/frameLayout"
+                android:layout_width="match_parent"
+                android:layout_height="350dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/imvPerson"
+                    android:layout_width="match_parent"
+                    android:layout_height="350dp"
+                    android:importantForAccessibility="no"
+                    android:scaleType="centerCrop"
+                    tools:src="@drawable/benedict" />
+
+                <TextView
+                    android:id="@+id/txtPersonName"
+                    style="@style/Mova.Title"
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:layout_gravity="bottom"
+                    android:elevation="@dimen/large_padding"
+                    android:padding="@dimen/large_padding"
+                    android:textColor="@color/white"
+                    tools:text="Benedict Cumberbatch" />
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:layout_gravity="bottom"
+                    android:background="@drawable/credit_bottom"
+                    android:importantForAccessibility="no" />
+            </FrameLayout>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/txtBio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/large_margin"
+                android:ellipsize="end"
+                android:lines="10"
+                android:scrollbars="vertical"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/frameLayout"
+                tools:text="Benedict Timothy Carlton Cumberbatch (born 19 July 1976) is an English actor. Known for his roles on the screen and stage, he has received various accolades throughout his career, including a Primetime Emmy Award, a British Academy Television Award, and a Laurence Olivier Award. Cumberbatch won the Laurence Olivier Award for Best Actor in a Leading Role in a Play for Frankenstein and a Primetime Emmy Award for Outstanding Lead Actor in a Miniseries or Movie for Sherlock. His performances in the dramas The Imitation Game (2014) and The Power of the Dog (2021) earned him nominations for an Academy Award, a BAFTA Award, a Screen Actors Guild Award, and a Golden Globe Award, all for Best Actor in a Leading Role. For playing the title role in five-part drama miniseries Patrick Melrose, he won a BAFTA TV Award for Best Actor in a Leading Role.\n\nIn 2014 Time magazine included him in its annual list of the 100 most influential people in the world, and in 2015 he was appointed a CBE by Queen Elizabeth II in the 2015 Birthday Honours for services to the performing arts and to charity. A graduate of the Victoria University of Manchester, Cumberbatch continued his training at the London Academy of Music and Dramatic Art, obtaining a Master of Arts in Classical Acting. He first performed at the Open Air Theatre, Regent's Park in Shakespearean productions and made his West End debut in Richard Eyre's revival of Hedda Gabler in 2005. Since then, he has starred in the Royal National Theatre productions After the Dance (2010) and Frankenstein (2011). In 2015, he played the title role in Hamlet at the Barbican Theatre.\n\nCumberbatch's television work includes his performance as Stephen Hawking in the television film Hawking in 2004. He gained worldwide recognition for his performance as Sherlock Holmes in the BBC series Sherlock from 2010 to 2017. He has also headlined Tom Stoppard's adaptation of Parade's End (2012), The Hollow Crown: The Wars of the Roses (2016), Patrick Melrose (2018), and Brexit: The Uncivil War (2019). In films, Cumberbatch has starred in Amazing Grace (2006) as William Pitt the Younger, Star Trek Into Darkness (2013) as Khan, 12 Years a Slave (2013) as William Prince Ford, The Fifth Estate (2013) as Julian Assange, and The Imitation Game (2014) as Alan Turing. He also acted in the historical dramas The Current War (2017), 1917 (2019) and The Courier (2020), and received critical acclaim for his performance in Jane Campion's Western drama The Power of the Dog (2021). From 2012 to 2014, through voice and motion capture, he played the characters of Smaug and Sauron in The Hobbit film series. Cumberbatch portrays Dr. Stephen Strange in the Marvel Cinematic Universe films, beginning with Doctor Strange (2016), and also voiced the character in the animated series What If...? (2021)." />
+
+            <com.google.android.material.divider.MaterialDivider
+                android:id="@+id/divider"
+                style="?actionBarDivider"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/medium_margin"
+                app:layout_constraintBottom_toTopOf="@+id/txtDateOfBirth"
+                app:layout_constraintEnd_toEndOf="@id/txtBio"
+                app:layout_constraintStart_toStartOf="@+id/txtBio"
+                app:layout_constraintTop_toBottomOf="@id/txtBio" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/txtDateOfBirth"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/large_margin"
+                android:layout_marginTop="@dimen/medium_margin"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="@+id/txtBio"
+                app:layout_constraintStart_toStartOf="@+id/txtBio"
+                app:layout_constraintTop_toBottomOf="@+id/divider"
+                tools:text="Date of Birth: July 19, 1976" />
+
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/txtDateOfDeath"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/large_margin"
+                android:layout_marginTop="@dimen/medium_margin"
+                android:textSize="16sp"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="@+id/txtBio"
+                app:layout_constraintStart_toStartOf="@+id/txtBio"
+                app:layout_constraintTop_toBottomOf="@+id/txtDateOfBirth"
+                tools:text="Date of Death: July 19, 1976" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/txtNation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/large_margin"
+                android:layout_marginTop="@dimen/medium_margin"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="@+id/txtBio"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="@+id/txtBio"
+                app:layout_constraintTop_toBottomOf="@+id/txtDateOfDeath"
+                tools:text="Nation: London, England, UK" />
+
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/txtActorsWork"
+                style="@style/Mova.H6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/large_margin"
+                android:layout_marginTop="@dimen/medium_margin"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="@+id/txtBio"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="@+id/txtBio"
+                app:layout_constraintTop_toBottomOf="@+id/txtNation"
+                tools:text="Actor's Work" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/txtActorsWork"
+                app:layout_constraintTop_toBottomOf="@+id/txtActorsWork"
+                tools:itemCount="12"
+                tools:listitem="@layout/actor_movie_row" />
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:indeterminate="true"
+                android:indeterminateTint="?attr/colorPrimary"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.498"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.499" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

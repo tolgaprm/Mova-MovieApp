@@ -4,6 +4,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -64,10 +65,28 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
             }
         )
 
+
         binding.swipeRefreshLayout.isEnabled = false
 
+        binding.creatorDirectorLinearLayout.setOnHierarchyChangeListener(
+            object : ViewGroup.OnHierarchyChangeListener {
+                override fun onChildViewAdded(p0: View?, p1: View?) {
+                    p1?.setOnClickListener {
+                        findNavController().navigate(
+                            DetailFragmentDirections.actionDetailFragmentToPersonDetailFragment(p1.id)
+                        )
+                    }
+                }
+
+                override fun onChildViewRemoved(p0: View?, p1: View?) {
+                    return
+                }
+
+            }
+        )
+
         binding.btnNavigateUp.setOnClickListener {
-            viewModel.onEvent(DetailEvent.OnBackPressed)
+            findNavController().popBackStack()
         }
 
         addOnBackPressedCallback()
