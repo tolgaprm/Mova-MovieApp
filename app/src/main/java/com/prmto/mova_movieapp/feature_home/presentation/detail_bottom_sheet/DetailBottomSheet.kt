@@ -92,9 +92,11 @@ class DetailBottomSheet : BottomSheetDialogFragment() {
 
         movieId?.let {
             action.movieId = movieId
+            action.tvId = 0
         }
         tvId?.let {
             action.tvId = tvId
+            action.movieId = 0
         }
 
         findNavController().navigate(action)

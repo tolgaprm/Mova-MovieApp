@@ -4,7 +4,6 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
-import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -13,12 +12,10 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import coil.ImageLoader
 import com.google.android.material.snackbar.Snackbar
 import com.prmto.mova_movieapp.R
 import com.prmto.mova_movieapp.core.presentation.util.asString
-import com.prmto.mova_movieapp.core.util.Constants.DETAIL_DEFAULT_ID
 import com.prmto.mova_movieapp.databinding.FragmentDetailBinding
 import com.prmto.mova_movieapp.feature_movie_tv_detail.presentation.detail.adapter.DetailActorAdapter
 import com.prmto.mova_movieapp.feature_movie_tv_detail.presentation.detail.event.DetailEvent
@@ -28,6 +25,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -46,8 +44,6 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
     @Inject
     lateinit var detailActorAdapter: DetailActorAdapter
 
-
-    private val detailArgs by navArgs<DetailFragmentArgs>()
     private val viewModel: DetailViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -62,43 +58,34 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
             context = requireContext(),
             onClickTmdbImage = { tmdbUrl ->
                 viewModel.onEvent(DetailEvent.IntentToImdbWebSite(tmdbUrl))
+            },
+            onClickDirectorName = { directorId ->
+                viewModel.onEvent(DetailEvent.ClickToDirectorName(directorId = directorId))
+            },
+            onNavigateUp = {
+                findNavController().popBackStack()
+            },
+            onSwipeRefresh = {
+                job?.cancel()
+                collectDataLifecycleAware()
+                binding.swipeRefreshLayout.isRefreshing = false
             }
         )
-
-
         binding.swipeRefreshLayout.isEnabled = false
-
-        binding.creatorDirectorLinearLayout.setOnHierarchyChangeListener(
-            object : ViewGroup.OnHierarchyChangeListener {
-                override fun onChildViewAdded(p0: View?, p1: View?) {
-                    p1?.setOnClickListener {
-                        findNavController().navigate(
-                            DetailFragmentDirections.actionDetailFragmentToPersonDetailFragment(p1.id)
-                        )
-                    }
-                }
-
-                override fun onChildViewRemoved(p0: View?, p1: View?) {
-                    return
-                }
-
-            }
-        )
-
-        binding.btnNavigateUp.setOnClickListener {
-            findNavController().popBackStack()
-        }
 
         addOnBackPressedCallback()
 
-        setDetailIdToViewModel()
+        //setDetailIdToViewModel()
 
         collectDataLifecycleAware()
 
-        binding.swipeRefreshLayout.setOnRefreshListener {
-            job?.cancel()
-            collectDataLifecycleAware()
-            binding.swipeRefreshLayout.isRefreshing = false
+        setAdapterListener()
+    }
+
+    private fun setAdapterListener() {
+        detailActorAdapter.setActorTextListener { actorId ->
+            Timber.d(actorId.toString())
+            viewModel.onEvent(DetailEvent.ClickActorName(actorId = actorId))
         }
     }
 
@@ -113,17 +100,6 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
             }
         }
         requireActivity().onBackPressedDispatcher.addCallback(callback)
-    }
-
-    private fun setDetailIdToViewModel() {
-        val movieId = detailArgs.movieId
-        val tvId = detailArgs.tvId
-
-        if (movieId != DETAIL_DEFAULT_ID) {
-            viewModel.onEvent(DetailEvent.UpdateMovieId(movieId))
-        } else if (tvId != DETAIL_DEFAULT_ID) {
-            viewModel.onEvent(DetailEvent.UpdateTvSeriesId(tvId))
-        }
     }
 
     private fun collectDataLifecycleAware() {
@@ -149,6 +125,9 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
                             is DetailUiEvent.IntentToImdbWebSite -> {
                                 intentToTmdbWebSite(uiEvent.url)
                             }
+                            is DetailUiEvent.NavigateTo -> {
+                                findNavController().navigate(uiEvent.directions)
+                            }
                         }
                     }
                 }
@@ -158,12 +137,6 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
 
     private suspend fun collectDetailState() {
         viewModel.detailState.collectLatest { detailState ->
-            if (detailState.tvId != DETAIL_DEFAULT_ID) {
-                viewModel.getTvDetail()
-            } else if (detailState.movieId != DETAIL_DEFAULT_ID) {
-                viewModel.getMovieDetail()
-            }
-
             binding.progressBar.isVisible = detailState.loading
 
             detailState.tvDetail?.let {

@@ -1,15 +1,16 @@
 package com.prmto.mova_movieapp.feature_movie_tv_detail.presentation.detail
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.prmto.mova_movieapp.core.domain.repository.DataStoreOperations
 import com.prmto.mova_movieapp.core.presentation.util.UiText
 import com.prmto.mova_movieapp.core.util.Constants.DEFAULT_LANGUAGE
-import com.prmto.mova_movieapp.core.util.Constants.DETAIL_DEFAULT_ID
 import com.prmto.mova_movieapp.core.util.Resource
 import com.prmto.mova_movieapp.feature_movie_tv_detail.domain.use_cases.DetailUseCases
 import com.prmto.mova_movieapp.feature_movie_tv_detail.presentation.detail.event.DetailEvent
 import com.prmto.mova_movieapp.feature_movie_tv_detail.presentation.detail.event.DetailUiEvent
+import com.prmto.mova_movieapp.feature_movie_tv_detail.util.Constants.DETAIL_DEFAULT_ID
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -18,7 +19,8 @@ import javax.inject.Inject
 @HiltViewModel
 class DetailViewModel @Inject constructor(
     private val detailUseCases: DetailUseCases,
-    private val dataStoreOperations: DataStoreOperations
+    private val dataStoreOperations: DataStoreOperations,
+    private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
     private val _detailState = MutableStateFlow(DetailState())
@@ -30,34 +32,50 @@ class DetailViewModel @Inject constructor(
     val eventUiFlow: SharedFlow<DetailUiEvent> = _eventUiFlow.asSharedFlow()
 
     init {
+        getLanguageIsoCode()
+    }
+
+    fun getLanguageIsoCode() {
         viewModelScope.launch {
             languageIsoCode.value = dataStoreOperations.getLanguageIsoCode().first()
+        }
+        savedStateHandle.get<Int>("movieId")?.let { movieId ->
+            if (movieId != DETAIL_DEFAULT_ID) {
+                getMovieDetail(movieId = movieId)
+            }
+        }
+        savedStateHandle.get<Int>("tvId")?.let { tvId ->
+            if (tvId != DETAIL_DEFAULT_ID) {
+                getTvDetail(tvId = tvId)
+            }
         }
     }
 
     fun onEvent(event: DetailEvent) {
         when (event) {
-            is DetailEvent.UpdateMovieId -> {
-                _detailState.update {
-                    it.copy(
-                        movieId = event.movieId,
-                        tvId = DETAIL_DEFAULT_ID
-                    )
-                }
-            }
-            is DetailEvent.UpdateTvSeriesId -> {
-                _detailState.update {
-                    it.copy(
-                        movieId = DETAIL_DEFAULT_ID,
-                        tvId = event.tvSeriesId
-                    )
-                }
-            }
             is DetailEvent.IntentToImdbWebSite -> {
                 emitUiEventFlow(DetailUiEvent.IntentToImdbWebSite(addLanguageQueryToTmdbUrl(event.url)))
             }
             is DetailEvent.OnBackPressed -> {
                 emitUiEventFlow(DetailUiEvent.PopBackStack)
+            }
+            is DetailEvent.ClickToDirectorName -> {
+                viewModelScope.launch {
+                    emitUiEventFlow(
+                        DetailUiEvent.NavigateTo(
+                            DetailFragmentDirections.actionDetailFragmentToPersonDetailFragment(
+                                event.directorId
+                            )
+                        )
+                    )
+                }
+            }
+            is DetailEvent.ClickActorName -> {
+                emitUiEventFlow(
+                    DetailUiEvent.NavigateTo(
+                        DetailFragmentDirections.actionDetailFragmentToPersonDetailFragment(event.actorId)
+                    )
+                )
             }
         }
     }
@@ -72,22 +90,16 @@ class DetailViewModel @Inject constructor(
         return tmdbUrl.plus("?language=${languageIsoCode.value}")
     }
 
-    fun getMovieDetail() {
+    private fun getMovieDetail(movieId: Int) {
         viewModelScope.launch {
             _detailState.value = _detailState.value.copy(loading = true)
             detailUseCases.movieDetailUseCase(
                 language = languageIsoCode.value,
-                movieId = detailState.value.movieId
+                movieId = movieId
             ).collect { resource ->
                 when (resource) {
                     is Resource.Error -> {
-                        _detailState.update {
-                            it.copy(
-                                loading = false,
-                                tvId = DETAIL_DEFAULT_ID,
-                                movieId = DETAIL_DEFAULT_ID
-                            )
-                        }
+                        _detailState.update { it.copy(loading = false) }
                         _eventUiFlow.emit(
                             DetailUiEvent.ShowSnackbar(
                                 resource.uiText ?: UiText.unknownError()
@@ -102,21 +114,17 @@ class DetailViewModel @Inject constructor(
         }
     }
 
-    fun getTvDetail() {
+    private fun getTvDetail(tvId: Int) {
         viewModelScope.launch {
             _detailState.update { it.copy(loading = true) }
             detailUseCases.tvDetailUseCase(
                 language = languageIsoCode.value,
-                tvId = detailState.value.tvId
+                tvId = tvId
             ).collect { resource ->
                 when (resource) {
                     is Resource.Error -> {
                         _detailState.update {
-                            it.copy(
-                                loading = false,
-                                tvId = DETAIL_DEFAULT_ID,
-                                movieId = DETAIL_DEFAULT_ID
-                            )
+                            it.copy(loading = false)
                         }
                         _eventUiFlow.emit(
                             DetailUiEvent.ShowSnackbar(

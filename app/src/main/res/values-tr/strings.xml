@@ -80,11 +80,11 @@
     <string name="something_went_wrong">Birşeyler ters gitti.</string>
     <string name="try_again">Yeniden Deneyiniz.</string>
 
-    <string name="person_detail_title"><b>Detaylar: </b> %s</string>
-    <string name="person_date_of_birth_title"><b>Doğum Tarihi: </b> %s</string>
-    <string name="person_date_of_death_title"><b>Ölüm Tarihi: </b> %s</string>
+    <string name="person_detail_title">Detaylar:</string>
+    <string name="person_date_of_birth_title">Doğum Tarihi:</string>
+    <string name="person_date_of_death_title">Ölüm Tarihi:</string>
 
-    <string name="person_nation_title"><b>Milliyet: </b> %s</string>
+    <string name="person_nation_title">Milliyet:</string>
 
 
 </resources>

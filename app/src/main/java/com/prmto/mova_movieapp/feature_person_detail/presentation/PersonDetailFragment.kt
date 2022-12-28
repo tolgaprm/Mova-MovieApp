@@ -78,7 +78,6 @@ class PersonDetailFragment : Fragment(R.layout.fragment_person_detail) {
     }
 
     private fun bindAttributes(personDetail: PersonDetail) {
-        val context = requireContext()
         binding.imvPerson.load(
             ImageApi.getImage(imageUrl = personDetail.profilePath)
         ) {
@@ -98,22 +97,20 @@ class PersonDetailFragment : Fragment(R.layout.fragment_person_detail) {
 
         personDetail.deathday?.let { deathday ->
             binding.txtDateOfDeath.isVisible = true
-            binding.txtDateOfDeath.text =
-                context.getString(R.string.person_date_of_death_title, deathday)
+            binding.dateOfDeathTitle.isVisible = true
+            binding.txtDateOfDeath.text = deathday
         }
 
-        binding.txtDateOfBirth.text =
-            context.getString(R.string.person_date_of_birth_title, personDetail.birthday)
+        binding.txtDateOfBirth.text = personDetail.birthday
 
         if (personDetail.biography.isNotEmpty()) {
-            binding.txtBio.text =
-                context.getString(R.string.person_detail_title, personDetail.biography)
+            binding.txtBio.text = personDetail.biography
         } else {
             binding.txtBio.isVisible = false
+            binding.bioTitle.isVisible = false
         }
 
-        binding.txtNation.text =
-            context.getString(R.string.person_nation_title, personDetail.placeOfBirth)
+        binding.txtNation.text = personDetail.placeOfBirth
     }
 
 

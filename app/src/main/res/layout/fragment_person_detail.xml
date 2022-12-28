@@ -60,17 +60,33 @@
                     android:importantForAccessibility="no" />
             </FrameLayout>
 
+            <!--region DetailSection-->
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/bioTitle"
+                style="@style/Mova.body1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/large_margin"
+                android:text="@string/person_detail_title"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/txtBio" />
+
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/txtBio"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/large_margin"
+                android:layout_marginVertical="@dimen/large_margin"
+                android:layout_marginStart="@dimen/medium_margin"
+                android:layout_marginEnd="@dimen/large_margin"
                 android:ellipsize="end"
-                android:lines="10"
+                android:maxLines="8"
                 android:scrollbars="vertical"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/bioTitle"
                 app:layout_constraintTop_toBottomOf="@+id/frameLayout"
                 tools:text="Benedict Timothy Carlton Cumberbatch (born 19 July 1976) is an English actor. Known for his roles on the screen and stage, he has received various accolades throughout his career, including a Primetime Emmy Award, a British Academy Television Award, and a Laurence Olivier Award. Cumberbatch won the Laurence Olivier Award for Best Actor in a Leading Role in a Play for Frankenstein and a Primetime Emmy Award for Outstanding Lead Actor in a Miniseries or Movie for Sherlock. His performances in the dramas The Imitation Game (2014) and The Power of the Dog (2021) earned him nominations for an Academy Award, a BAFTA Award, a Screen Actors Guild Award, and a Golden Globe Award, all for Best Actor in a Leading Role. For playing the title role in five-part drama miniseries Patrick Melrose, he won a BAFTA TV Award for Best Actor in a Leading Role.\n\nIn 2014 Time magazine included him in its annual list of the 100 most influential people in the world, and in 2015 he was appointed a CBE by Queen Elizabeth II in the 2015 Birthday Honours for services to the performing arts and to charity. A graduate of the Victoria University of Manchester, Cumberbatch continued his training at the London Academy of Music and Dramatic Art, obtaining a Master of Arts in Classical Acting. He first performed at the Open Air Theatre, Regent's Park in Shakespearean productions and made his West End debut in Richard Eyre's revival of Hedda Gabler in 2005. Since then, he has starred in the Royal National Theatre productions After the Dance (2010) and Frankenstein (2011). In 2015, he played the title role in Hamlet at the Barbican Theatre.\n\nCumberbatch's television work includes his performance as Stephen Hawking in the television film Hawking in 2004. He gained worldwide recognition for his performance as Sherlock Holmes in the BBC series Sherlock from 2010 to 2017. He has also headlined Tom Stoppard's adaptation of Parade's End (2012), The Hollow Crown: The Wars of the Roses (2016), Patrick Melrose (2018), and Brexit: The Uncivil War (2019). In films, Cumberbatch has starred in Amazing Grace (2006) as William Pitt the Younger, Star Trek Into Darkness (2013) as Khan, 12 Years a Slave (2013) as William Prince Ford, The Fifth Estate (2013) as Julian Assange, and The Imitation Game (2014) as Alan Turing. He also acted in the historical dramas The Current War (2017), 1917 (2019) and The Courier (2020), and received critical acclaim for his performance in Jane Campion's Western drama The Power of the Dog (2021). From 2012 to 2014, through voice and motion capture, he played the characters of Smaug and Sauron in The Hobbit film series. Cumberbatch portrays Dr. Stephen Strange in the Marvel Cinematic Universe films, beginning with Doctor Strange (2016), and also voiced the character in the animated series What If...? (2021)." />
 
@@ -82,45 +98,81 @@
                 android:layout_marginTop="@dimen/medium_margin"
                 app:layout_constraintBottom_toTopOf="@+id/txtDateOfBirth"
                 app:layout_constraintEnd_toEndOf="@id/txtBio"
-                app:layout_constraintStart_toStartOf="@+id/txtBio"
+                app:layout_constraintStart_toStartOf="@+id/bioTitle"
                 app:layout_constraintTop_toBottomOf="@id/txtBio" />
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/txtDateOfBirth"
-                android:layout_width="match_parent"
+                android:id="@+id/dateOfBirthTitle"
+                style="@style/Mova.body1"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/large_margin"
+                android:text="@string/person_date_of_birth_title"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/bioTitle"
+                app:layout_constraintTop_toTopOf="@+id/txtDateOfBirth" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/txtDateOfBirth"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/medium_margin"
                 android:layout_marginTop="@dimen/medium_margin"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="@+id/txtBio"
-                app:layout_constraintStart_toStartOf="@+id/txtBio"
+                app:layout_constraintStart_toEndOf="@+id/dateOfBirthTitle"
                 app:layout_constraintTop_toBottomOf="@+id/divider"
-                tools:text="Date of Birth: July 19, 1976" />
+                tools:text="July 19, 1976" />
 
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/dateOfDeathTitle"
+                style="@style/Mova.body1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/person_date_of_death_title"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="@+id/dateOfBirthTitle"
+                app:layout_constraintTop_toTopOf="@+id/txtDateOfDeath"
+                tools:visibility="visible" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/txtDateOfDeath"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/large_margin"
+                android:layout_marginStart="@dimen/medium_margin"
                 android:layout_marginTop="@dimen/medium_margin"
                 android:textSize="16sp"
                 android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="@+id/txtBio"
-                app:layout_constraintStart_toStartOf="@+id/txtBio"
+                app:layout_constraintStart_toEndOf="@+id/dateOfDeathTitle"
                 app:layout_constraintTop_toBottomOf="@+id/txtDateOfBirth"
-                tools:text="Date of Death: July 19, 1976" />
+                tools:text="Date of Death: July 19, 1976"
+                tools:visibility="visible" />
+
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/nationTitle"
+                style="@style/Mova.body1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/person_nation_title"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/dateOfDeathTitle"
+                app:layout_constraintTop_toTopOf="@+id/txtNation" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/txtNation"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/large_margin"
+                android:layout_marginStart="@dimen/medium_margin"
                 android:layout_marginTop="@dimen/medium_margin"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="@+id/txtBio"
                 app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toStartOf="@+id/txtBio"
+                app:layout_constraintStart_toEndOf="@+id/nationTitle"
                 app:layout_constraintTop_toBottomOf="@+id/txtDateOfDeath"
                 tools:text="Nation: London, England, UK" />
 
@@ -138,6 +190,8 @@
                 app:layout_constraintStart_toStartOf="@+id/txtBio"
                 app:layout_constraintTop_toBottomOf="@+id/txtNation"
                 tools:text="Actor's Work" />
+
+            <!--endregion DetialSection -->
 
             <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"

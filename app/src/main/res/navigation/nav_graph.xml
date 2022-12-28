@@ -87,7 +87,10 @@
             android:defaultValue="0" />
         <action
             android:id="@+id/action_detailFragment_to_personDetailFragment"
-            app:destination="@id/personDetailFragment" />
+            app:destination="@id/personDetailFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_rigth" />
     </fragment>
     <fragment
         android:id="@+id/personDetailFragment"

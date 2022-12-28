@@ -3,6 +3,7 @@ package com.prmto.mova_movieapp.feature_movie_tv_detail.presentation.detail.help
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.ImageView
 import coil.ImageLoader
 import coil.load
@@ -27,6 +28,9 @@ class BindAttributesDetailFrag(
     val imageLoader: ImageLoader,
     val context: Context,
     val onClickTmdbImage: (tmdbUrl: String) -> Unit,
+    val onClickDirectorName: (directorId: Int) -> Unit,
+    val onNavigateUp: () -> Unit,
+    val onSwipeRefresh: () -> Unit
 ) {
     private var isTvDetail = false
     private var currentTvId = 0
@@ -36,6 +40,9 @@ class BindAttributesDetailFrag(
 
     init {
         setTmdbImageOnClickListener()
+        setDirectorTextListener()
+        setBtnNavigateUpListener()
+        setSwipeRefreshListener()
     }
 
     fun bindMovieDetail(movieDetail: MovieDetail) {
@@ -276,4 +283,34 @@ class BindAttributesDetailFrag(
             onClickTmdbImage(tmdbUrl)
         }
     }
+
+    private fun setDirectorTextListener() {
+        binding.creatorDirectorLinearLayout.setOnHierarchyChangeListener(
+            object : ViewGroup.OnHierarchyChangeListener {
+                override fun onChildViewAdded(p0: View?, p1: View?) {
+                    p1?.setOnClickListener {
+                        onClickDirectorName(p1.id)
+                    }
+                }
+
+                override fun onChildViewRemoved(p0: View?, p1: View?) {
+                    return
+                }
+
+            }
+        )
+    }
+
+    private fun setBtnNavigateUpListener() {
+        binding.btnNavigateUp.setOnClickListener {
+            onNavigateUp()
+        }
+    }
+
+    private fun setSwipeRefreshListener() {
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            onSwipeRefresh()
+        }
+    }
+
 }

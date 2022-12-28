@@ -21,8 +21,6 @@ object Constants {
 
     const val DISCOVER_DATE_QUERY_FOR_TV = "first_air_date"
 
-
-    const val DETAIL_DEFAULT_ID = 0
     const val TV_SERIES_STATUS_ENDED = "Ended"
 
     const val TMDB_MOVIE_URL = "https://www.themoviedb.org/movie/"
