@@ -99,5 +99,9 @@
         <argument
             android:name="personId"
             app:argType="integer" />
+        <argument
+            android:name="isActor"
+            app:argType="boolean"
+            android:defaultValue="false" />
     </fragment>
 </navigation>

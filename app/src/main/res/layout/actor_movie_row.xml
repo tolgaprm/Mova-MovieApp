@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="150dp"
-    android:layout_margin="@dimen/medium_margin"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/medium_margin">
 
 
     <com.google.android.material.card.MaterialCardView
@@ -50,12 +50,23 @@
 
 
     <TextView
+        android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:layout_marginTop="@dimen/small_margin"
-        app:layout_constraintEnd_toEndOf="@+id/materialCardView3"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/materialCardView3"
         app:layout_constraintTop_toBottomOf="@id/materialCardView3"
-        tools:text="Character: Stephen Strange / Doctor Strange" />
+        tools:text="Charater: " />
+
+    <TextView
+        android:id="@+id/txtDetail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/small_margin"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/title"
+        app:layout_constraintTop_toBottomOf="@+id/title"
+        tools:text="Stephen Strange / Doctor Strange" />
 </androidx.constraintlayout.widget.ConstraintLayout>

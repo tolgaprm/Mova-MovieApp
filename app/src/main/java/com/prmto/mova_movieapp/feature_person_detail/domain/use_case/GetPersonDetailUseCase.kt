@@ -26,7 +26,12 @@ class GetPersonDetailUseCase @Inject constructor(
                     birthday = DateFormatUtils.convertDateFormat(inputDate = result.birthday),
                     deathday = if (result.deathday != null) DateFormatUtils.convertDateFormat(
                         inputDate = result.deathday
-                    ) else null
+                    ) else null,
+                    combinedCredits = result.combinedCredits.copy(
+                        cast = result.combinedCredits.cast.sortedByDescending { it.popularity },
+                        crew = result.combinedCredits.crew.filter { it.department == "Directing" }
+                            .sortedByDescending { it.popularity }
+                    )
                 )
             )
         } catch (e: IOException) {

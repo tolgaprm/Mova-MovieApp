@@ -43,6 +43,7 @@ fun CrewDtoForPerson.toCrewForPerson(): CrewForPerson {
         posterPath = posterPath,
         releaseDate = releaseDate,
         voteAverage = voteAverage,
-        voteCount = voteCount
+        voteCount = voteCount,
+        popularity = popularity
     )
 }

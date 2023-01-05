@@ -22,7 +22,6 @@
     <string name="movies">Filmler</string>
 
 
-
     <string name="voteAverage">%1$s (%2$s)</string>
     <string name="voteAverageDetail">%1$s (%2$s reviews)</string>
     <string name="release_date_genre">%1$s  %2$s</string>
@@ -61,7 +60,7 @@
 
     <string name="overview">Overview</string>
     <string name="actor">Oyuncu Kadrosu</string>
-    <string name="director">Ekip</string>
+    <string name="director">Yönetmen</string>
 
     <string name="add_favorite_list">Favori Listeme Ekle</string>
     <string name="add_watch_list">İzleme Listeme Ekle</string>
@@ -85,6 +84,11 @@
     <string name="person_date_of_death_title">Ölüm Tarihi:</string>
 
     <string name="person_nation_title">Milliyet:</string>
+
+    <string name="character">Karakter</string>
+    <string name="department">Departman</string>
+    <string name="as_director_work">Yönetmen Olarak Çalıştığı İşler</string>
+    <string name="as_actor_works">Oyuncu Olarak Çalıştığı İşler</string>
 
 
 </resources>

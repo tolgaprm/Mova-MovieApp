@@ -96,8 +96,9 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/medium_margin"
+                android:layout_marginEnd="@dimen/large_margin"
                 app:layout_constraintBottom_toTopOf="@+id/txtDateOfBirth"
-                app:layout_constraintEnd_toEndOf="@id/txtBio"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/bioTitle"
                 app:layout_constraintTop_toBottomOf="@id/txtBio" />
 
@@ -106,10 +107,11 @@
                 style="@style/Mova.body1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/large_margin"
                 android:text="@string/person_date_of_birth_title"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="@+id/bioTitle"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/txtDateOfBirth" />
 
             <com.google.android.material.textview.MaterialTextView
@@ -118,8 +120,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/medium_margin"
                 android:layout_marginTop="@dimen/medium_margin"
+                android:layout_marginEnd="@dimen/large_margin"
                 android:textSize="16sp"
-                app:layout_constraintEnd_toEndOf="@+id/txtBio"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/dateOfBirthTitle"
                 app:layout_constraintTop_toBottomOf="@+id/divider"
                 tools:text="July 19, 1976" />
@@ -129,11 +132,12 @@
                 style="@style/Mova.body1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/large_margin"
                 android:text="@string/person_date_of_death_title"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 android:visibility="gone"
-                app:layout_constraintStart_toStartOf="@+id/dateOfBirthTitle"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/txtDateOfDeath"
                 tools:visibility="visible" />
 
@@ -143,9 +147,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/medium_margin"
                 android:layout_marginTop="@dimen/medium_margin"
+                android:layout_marginEnd="@dimen/large_margin"
                 android:textSize="16sp"
+
                 android:visibility="gone"
-                app:layout_constraintEnd_toEndOf="@+id/txtBio"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/dateOfDeathTitle"
                 app:layout_constraintTop_toBottomOf="@+id/txtDateOfBirth"
                 tools:text="Date of Death: July 19, 1976"
@@ -157,10 +163,11 @@
                 style="@style/Mova.body1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/large_margin"
                 android:text="@string/person_nation_title"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="@+id/dateOfDeathTitle"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/txtNation" />
 
             <com.google.android.material.textview.MaterialTextView
@@ -169,9 +176,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/medium_margin"
                 android:layout_marginTop="@dimen/medium_margin"
+                android:layout_marginEnd="@dimen/large_margin"
                 android:textSize="16sp"
-                app:layout_constraintEnd_toEndOf="@+id/txtBio"
-                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/nationTitle"
                 app:layout_constraintTop_toBottomOf="@+id/txtDateOfDeath"
                 tools:text="Nation: London, England, UK" />
@@ -183,17 +190,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/large_margin"
-                android:layout_marginTop="@dimen/medium_margin"
+                android:layout_marginTop="@dimen/extra_large_margin"
                 android:textSize="20sp"
-                app:layout_constraintEnd_toEndOf="@+id/txtBio"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toStartOf="@+id/txtBio"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txtNation"
-                tools:text="Actor's Work" />
+                android:text="@string/as_actor_works" />
 
             <!--endregion DetialSection -->
 
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/actorRecylerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -202,6 +209,35 @@
                 app:layout_constraintStart_toStartOf="@+id/txtActorsWork"
                 app:layout_constraintTop_toBottomOf="@+id/txtActorsWork"
                 tools:itemCount="12"
+                tools:listitem="@layout/actor_movie_row" />
+
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/txtAsDirectorWorks"
+                style="@style/Mova.H6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/large_margin"
+                android:layout_marginTop="@dimen/large_margin"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/actorRecylerView"
+                android:text="@string/as_director_work" />
+
+            <!--endregion DetialSection -->
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/directorRecylerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/txtAsDirectorWorks"
+                app:layout_constraintTop_toBottomOf="@id/txtAsDirectorWorks"
+                tools:itemCount="12"
+                android:layout_marginBottom="@dimen/large_margin"
                 tools:listitem="@layout/actor_movie_row" />
 
             <ProgressBar

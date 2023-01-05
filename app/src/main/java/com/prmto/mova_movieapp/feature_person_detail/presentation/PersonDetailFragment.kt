@@ -18,7 +18,11 @@ import com.prmto.mova_movieapp.core.data.data_source.remote.ImageApi
 import com.prmto.mova_movieapp.core.presentation.util.UiEvent
 import com.prmto.mova_movieapp.core.presentation.util.asString
 import com.prmto.mova_movieapp.databinding.FragmentPersonDetailBinding
+import com.prmto.mova_movieapp.feature_person_detail.domain.model.CastForPerson
+import com.prmto.mova_movieapp.feature_person_detail.domain.model.CrewForPerson
 import com.prmto.mova_movieapp.feature_person_detail.domain.model.PersonDetail
+import com.prmto.mova_movieapp.feature_person_detail.presentation.adapter.PersonCastMovieAdapter
+import com.prmto.mova_movieapp.feature_person_detail.presentation.adapter.PersonCrewMovieAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -28,6 +32,9 @@ class PersonDetailFragment : Fragment(R.layout.fragment_person_detail) {
 
     private var _binding: FragmentPersonDetailBinding? = null
     private val binding get() = _binding!!
+
+    private lateinit var personCrewAdapter: PersonCrewMovieAdapter
+    private lateinit var personCastAdapter: PersonCastMovieAdapter
 
     private val viewModel: PersonDetailViewModel by viewModels()
 
@@ -39,11 +46,18 @@ class PersonDetailFragment : Fragment(R.layout.fragment_person_detail) {
 
         collectData()
 
+        setupAdapters()
+
         binding.btnNavigateUp.setOnClickListener {
             findNavController().popBackStack()
         }
 
         _binding = binding
+    }
+
+    private fun setupAdapters() {
+        personCastAdapter = PersonCastMovieAdapter()
+        personCrewAdapter = PersonCrewMovieAdapter()
     }
 
     private fun collectData() {
@@ -54,6 +68,10 @@ class PersonDetailFragment : Fragment(R.layout.fragment_person_detail) {
                         binding.progressBar.isVisible = personDetailState.isLoading
                         personDetailState.personDetail?.let { personDetail ->
                             bindAttributes(personDetail = personDetail)
+
+                            bindCrewForPerson(personDetail.combinedCredits.crew)
+
+                            bindCastForPerson(personDetail.combinedCredits.cast)
                         }
                     }
                 }
@@ -74,6 +92,26 @@ class PersonDetailFragment : Fragment(R.layout.fragment_person_detail) {
                     }
                 }
             }
+        }
+    }
+
+    private fun bindCastForPerson(castList: List<CastForPerson>) {
+        if (castList.isEmpty()) {
+            binding.txtActorsWork.isVisible = false
+            binding.actorRecylerView.isVisible = false
+        } else {
+            binding.actorRecylerView.adapter = personCastAdapter
+            personCastAdapter.submitList(castList)
+        }
+    }
+
+    private fun bindCrewForPerson(crewList: List<CrewForPerson>) {
+        if (crewList.isEmpty()) {
+            binding.txtAsDirectorWorks.isVisible = false
+            binding.directorRecylerView.isVisible = false
+        } else {
+            binding.directorRecylerView.adapter = personCrewAdapter
+            personCrewAdapter.submitList(crewList)
         }
     }
 

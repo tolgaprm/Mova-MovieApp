@@ -82,4 +82,9 @@
     <string name="person_date_of_death_title">Date of death:</string>
     <string name="person_nation_title">Nation:</string>
 
+    <string name="character">Character</string>
+    <string name="department">Department</string>
+    <string name="as_director_work">As Director\'s Works</string>
+    <string name="as_actor_works">As Actor\'s Works</string>
+
 </resources>
