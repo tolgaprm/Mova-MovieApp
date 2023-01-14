@@ -4,7 +4,6 @@ import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import coil.ImageLoader
 import com.prmto.mova_movieapp.feature_explore.data.dto.SearchDto
 import com.prmto.mova_movieapp.feature_explore.data.dto.toMovieSearch
 import com.prmto.mova_movieapp.feature_explore.data.dto.toPersonSearch
@@ -18,11 +17,9 @@ import com.prmto.mova_movieapp.feature_explore.presentation.adapter.viewHolder.S
 import com.prmto.mova_movieapp.feature_explore.presentation.adapter.viewHolder.SearchTvViewHolder
 import com.prmto.mova_movieapp.feature_home.domain.models.Movie
 import com.prmto.mova_movieapp.feature_home.domain.models.TvSeries
-import javax.inject.Inject
 
-class SearchRecyclerAdapter @Inject constructor(
-    private val imageLoader: ImageLoader
-) : PagingDataAdapter<SearchDto, ViewHolder>(diffCallback = diffCallback) {
+class SearchRecyclerAdapter :
+    PagingDataAdapter<SearchDto, ViewHolder>(diffCallback = diffCallback) {
 
     private var onMovieSearchClickListener: (Movie) -> Unit = {}
     private var onTvSearchClickListener: (TvSeries) -> Unit = {}
@@ -48,32 +45,23 @@ class SearchRecyclerAdapter @Inject constructor(
                 MediaType.MOVIE.value -> {
                     val movieSearch = searchDto.toMovieSearch()!!
                     val movieViewHolder = holder as SearchMovieViewHolder
-                    movieViewHolder.bindMovie(
-                        movieSearch = movieSearch,
-                        onMovieSearchItemClick = {
-                            onMovieSearchClickListener(it.toMovie())
-                        }
-                    )
+                    movieViewHolder.bindMovie(movieSearch = movieSearch, onMovieSearchItemClick = {
+                        onMovieSearchClickListener(it.toMovie())
+                    })
                 }
                 MediaType.TV_SERIES.value -> {
                     val tvSearch = searchDto.toTvSearch()!!
                     val tvViewHolder = holder as SearchTvViewHolder
-                    tvViewHolder.bindSearchTv(
-                        searchTv = tvSearch,
-                        onSearchTvItemClick = {
-                            onTvSearchClickListener(it.toTvSeries())
-                        }
-                    )
+                    tvViewHolder.bindSearchTv(searchTv = tvSearch, onSearchTvItemClick = {
+                        onTvSearchClickListener(it.toTvSeries())
+                    })
                 }
                 MediaType.PERSON.value -> {
                     val personSearch = searchDto.toPersonSearch()!!
                     val searchMovieHolder = holder as SearchPersonViewHolder
-                    searchMovieHolder.bindPerson(
-                        personSearch = personSearch,
-                        onClickPersonItem = {
-                            onPersonSearchClickListener(it)
-                        }
-                    )
+                    searchMovieHolder.bindPerson(personSearch = personSearch, onClickPersonItem = {
+                        onPersonSearchClickListener(it)
+                    })
                 }
             }
         }
@@ -82,16 +70,16 @@ class SearchRecyclerAdapter @Inject constructor(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return when (viewType) {
             SearchViewType.MOVIE.ordinal -> {
-                SearchMovieViewHolder.from(parent, imageLoader)
+                SearchMovieViewHolder.from(parent)
             }
             SearchViewType.TV.ordinal -> {
-                SearchTvViewHolder.from(parent, imageLoader)
+                SearchTvViewHolder.from(parent)
             }
             SearchViewType.PERSON.ordinal -> {
-                SearchPersonViewHolder.from(parent, imageLoader)
+                SearchPersonViewHolder.from(parent)
             }
             else -> {
-                SearchTvViewHolder.from(parent, imageLoader)
+                SearchTvViewHolder.from(parent)
             }
         }
     }
@@ -121,7 +109,5 @@ val diffCallback = object : DiffUtil.ItemCallback<SearchDto>() {
 }
 
 enum class SearchViewType {
-    MOVIE,
-    TV,
-    PERSON
+    MOVIE, TV, PERSON
 }

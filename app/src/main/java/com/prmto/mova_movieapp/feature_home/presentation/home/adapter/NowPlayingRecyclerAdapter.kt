@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import coil.ImageLoader
 import coil.load
 import com.prmto.mova_movieapp.R
 import com.prmto.mova_movieapp.core.data.data_source.remote.ImageApi
@@ -15,18 +14,14 @@ import com.prmto.mova_movieapp.core.presentation.util.HandleUtils
 import com.prmto.mova_movieapp.databinding.NowPlayingRowBinding
 import com.prmto.mova_movieapp.feature_home.domain.models.Movie
 import com.prmto.mova_movieapp.feature_home.domain.models.TvSeries
-import javax.inject.Inject
 
-class NowPlayingRecyclerAdapter @Inject constructor(
-    private val imageLoader: ImageLoader
-) :
+class NowPlayingRecyclerAdapter :
     PagingDataAdapter<Movie, NowPlayingRecyclerAdapter.MovieViewHolder>(DiffUtilCallBack<Movie>()) {
 
     private var onItemClickListener: (Movie) -> Unit = {}
 
     class MovieViewHolder(
-        private val binding: NowPlayingRowBinding,
-        val imageLoader: ImageLoader
+        private val binding: NowPlayingRowBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(movie: Movie, context: Context, onItemClickListener: (Movie) -> Unit = {}) {
@@ -35,17 +30,13 @@ class NowPlayingRecyclerAdapter @Inject constructor(
             val voteCount = HandleUtils.convertingVoteCountToString(movie.voteCount)
 
             binding.voteAverage.text = context.getString(
-                R.string.voteAverage,
-                movie.voteAverage.toString(),
-                voteCount
+                R.string.voteAverage, movie.voteAverage.toString(), voteCount
             )
 
             binding.backdropImage.load(
                 ImageApi.getImage(
-                    imageUrl = movie.posterPath,
-                    imageSize = ImageSize.W500.path
-                ),
-                imageLoader = imageLoader
+                    imageUrl = movie.posterPath, imageSize = ImageSize.W500.path
+                )
             )
 
             binding.genresText.text = movie.genresBySeparatedByComma
@@ -72,8 +63,7 @@ class NowPlayingRecyclerAdapter @Inject constructor(
         val layoutInflater = LayoutInflater.from(parent.context)
         val binding = NowPlayingRowBinding.inflate(layoutInflater, parent, false)
         return MovieViewHolder(
-            binding = binding,
-            imageLoader = imageLoader
+            binding = binding
         )
     }
 

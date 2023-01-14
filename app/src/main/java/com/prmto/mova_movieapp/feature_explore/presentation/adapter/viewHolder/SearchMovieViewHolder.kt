@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import coil.ImageLoader
 import coil.load
 import com.prmto.mova_movieapp.R
 import com.prmto.mova_movieapp.core.data.data_source.remote.ImageApi
@@ -15,7 +14,6 @@ import com.prmto.mova_movieapp.feature_explore.domain.model.MovieSearch
 
 class SearchMovieViewHolder(
     private val binding: NowPlayingRowBinding,
-    val imageLoader: ImageLoader,
     val context: Context
 ) : RecyclerView.ViewHolder(binding.root) {
 
@@ -27,8 +25,7 @@ class SearchMovieViewHolder(
             ImageApi.getImage(
                 imageUrl = movieSearch.posterPath,
                 imageSize = ImageSize.W500.path
-            ),
-            imageLoader = imageLoader
+            )
         )
 
 
@@ -53,14 +50,12 @@ class SearchMovieViewHolder(
     companion object {
 
         fun from(
-            parent: ViewGroup,
-            imageLoader: ImageLoader,
+            parent: ViewGroup
         ): SearchMovieViewHolder {
             val layoutInflater = LayoutInflater.from(parent.context)
             val binding = NowPlayingRowBinding.inflate(layoutInflater, parent, false)
             return SearchMovieViewHolder(
                 binding = binding,
-                imageLoader = imageLoader,
                 context = parent.context
             )
         }

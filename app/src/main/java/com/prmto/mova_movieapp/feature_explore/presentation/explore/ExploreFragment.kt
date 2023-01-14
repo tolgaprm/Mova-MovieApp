@@ -43,14 +43,11 @@ class ExploreFragment @Inject constructor(
     @Inject
     lateinit var connectivityObserver: ConnectivityObserver
 
-    @Inject
-    lateinit var searchRecyclerAdapter: SearchRecyclerAdapter
+    private val searchRecyclerAdapter: SearchRecyclerAdapter by lazy { SearchRecyclerAdapter() }
 
-    @Inject
-    lateinit var movieFilterAdapter: FilterMoviesAdapter
+    private val movieFilterAdapter: FilterMoviesAdapter by lazy { FilterMoviesAdapter() }
 
-    @Inject
-    lateinit var tvFilterAdapter: FilterTvSeriesAdapter
+    private val tvFilterAdapter: FilterTvSeriesAdapter by lazy { FilterTvSeriesAdapter() }
 
     private var movieDiscoverJob: Job? = null
     private var tvDiscoverJob: Job? = null

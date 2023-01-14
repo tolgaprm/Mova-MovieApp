@@ -43,20 +43,15 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     @Inject
     lateinit var connectivityObserver: ConnectivityObserver
 
-    @Inject
-    lateinit var nowPlayingAdapter: NowPlayingRecyclerAdapter
+    private val nowPlayingAdapter: NowPlayingRecyclerAdapter by lazy { NowPlayingRecyclerAdapter() }
 
-    @Inject
-    lateinit var popularMoviesAdapter: PopularMoviesAdapter
+    private val popularMoviesAdapter: PopularMoviesAdapter by lazy { PopularMoviesAdapter() }
 
-    @Inject
-    lateinit var popularTvSeriesAdapter: PopularTvSeriesAdapter
+    private val popularTvSeriesAdapter: PopularTvSeriesAdapter by lazy { PopularTvSeriesAdapter() }
 
-    @Inject
-    lateinit var topRatedMoviesAdapter: TopRatedMoviesAdapter
+    private val topRatedMoviesAdapter: TopRatedMoviesAdapter by lazy { TopRatedMoviesAdapter() }
 
-    @Inject
-    lateinit var topRatedTvSeriesAdapter: TopRatedTvSeriesAdapter
+    private val topRatedTvSeriesAdapter: TopRatedTvSeriesAdapter by lazy { TopRatedTvSeriesAdapter() }
 
     private val viewModel: HomeViewModel by viewModels()
 

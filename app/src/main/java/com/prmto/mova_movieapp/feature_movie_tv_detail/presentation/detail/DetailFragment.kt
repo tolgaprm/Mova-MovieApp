@@ -41,8 +41,7 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
     @Inject
     lateinit var imageLoader: ImageLoader
 
-    @Inject
-    lateinit var detailActorAdapter: DetailActorAdapter
+    private val detailActorAdapter: DetailActorAdapter by lazy { DetailActorAdapter() }
 
     private val viewModel: DetailViewModel by viewModels()
 

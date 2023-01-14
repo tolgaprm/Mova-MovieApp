@@ -5,24 +5,19 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil.ItemCallback
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import coil.ImageLoader
 import coil.load
 import com.prmto.mova_movieapp.R
 import com.prmto.mova_movieapp.core.data.data_source.remote.ImageApi
 import com.prmto.mova_movieapp.databinding.ActorRowBinding
 import com.prmto.mova_movieapp.feature_movie_tv_detail.domain.models.credit.Cast
-import javax.inject.Inject
 
-class DetailActorAdapter @Inject constructor(
-    private val imageLoader: ImageLoader
-) :
+class DetailActorAdapter :
     ListAdapter<Cast, DetailActorAdapter.DetailActorAdapterViewHolder>(castItemCallback) {
 
     private var itemClickListener: (actorId: Int) -> Unit = {}
 
     class DetailActorAdapterViewHolder(
         private val binding: ActorRowBinding,
-        private val imageLoader: ImageLoader,
         private val onItemClickListener: (actorId: Int) -> Unit
     ) : ViewHolder(binding.root) {
 
@@ -30,8 +25,7 @@ class DetailActorAdapter @Inject constructor(
             binding.imvProfilePhoto.load(
                 ImageApi.getImage(
                     imageUrl = cast.profilePath
-                ),
-                imageLoader = imageLoader,
+                )
             ) {
                 error(R.drawable.ic_baseline_person_24)
             }
@@ -46,16 +40,12 @@ class DetailActorAdapter @Inject constructor(
 
         companion object {
             fun from(
-                parent: ViewGroup,
-                imageLoader: ImageLoader,
-                onItemClickListener: (actorId: Int) -> Unit
+                parent: ViewGroup, onItemClickListener: (actorId: Int) -> Unit
             ): DetailActorAdapterViewHolder {
                 val inflater = LayoutInflater.from(parent.context)
                 val binding = ActorRowBinding.inflate(inflater, parent, false)
                 return DetailActorAdapterViewHolder(
-                    binding = binding,
-                    imageLoader = imageLoader,
-                    onItemClickListener = onItemClickListener
+                    binding = binding, onItemClickListener = onItemClickListener
                 )
             }
         }
@@ -67,13 +57,10 @@ class DetailActorAdapter @Inject constructor(
     }
 
     override fun onCreateViewHolder(
-        parent: ViewGroup,
-        viewType: Int
+        parent: ViewGroup, viewType: Int
     ): DetailActorAdapterViewHolder {
         return DetailActorAdapterViewHolder.from(
-            parent = parent,
-            imageLoader = imageLoader,
-            onItemClickListener = itemClickListener
+            parent = parent, onItemClickListener = itemClickListener
         )
     }
 
