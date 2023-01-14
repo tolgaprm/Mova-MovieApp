@@ -51,7 +51,7 @@
         tools:layout="@layout/fragment_bottom_sheet"/>
     <dialog
         android:id="@+id/detailBottomSheet"
-        android:name="com.prmto.mova_movieapp.feature_home.presentation.detail_bottom_sheet.DetailBottomSheet"
+        android:name="com.prmto.mova_movieapp.core.presentation.detail_bottom_sheet.DetailBottomSheet"
         android:label="DetailBottomSheet"
         tools:layout="@layout/fragment_detail_bottom_sheet" >
         <argument
@@ -85,5 +85,26 @@
             android:name="tvId"
             app:argType="integer"
             android:defaultValue="0" />
+        <action
+            android:id="@+id/action_detailFragment_to_personDetailFragment"
+            app:destination="@id/personDetailFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_rigth" />
+    </fragment>
+    <fragment
+        android:id="@+id/personDetailFragment"
+        android:name="com.prmto.mova_movieapp.feature_person_detail.presentation.PersonDetailFragment"
+        android:label="PersonDetailFragment">
+        <argument
+            android:name="personId"
+            app:argType="integer" />
+        <argument
+            android:name="isActor"
+            app:argType="boolean"
+            android:defaultValue="false" />
+        <action
+            android:id="@+id/action_personDetailFragment_to_detailBottomSheet"
+            app:destination="@id/detailBottomSheet" />
     </fragment>
 </navigation>

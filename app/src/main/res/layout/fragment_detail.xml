@@ -419,7 +419,7 @@
                 <!--endregion Watch Provider -->
 
 
-                <!--region actor and director info section-->
+                <!--region actor  info section-->
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/txtActor"
                     style="@style/Mova.H6"
@@ -449,7 +449,7 @@
                     tools:listitem="@layout/actor_row" />
 
 
-                <!--endregion actor and director info section-->
+                <!--endregion actor info section-->
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

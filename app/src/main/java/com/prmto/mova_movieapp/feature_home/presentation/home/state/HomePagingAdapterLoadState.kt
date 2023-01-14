@@ -12,5 +12,5 @@ data class HomePagingAdapterLoadState(
 )
 
 data class PagingAdapterLoadStateItem(
-    val isLoading: Boolean = false,
+    val isLoading: Boolean = true,
 )

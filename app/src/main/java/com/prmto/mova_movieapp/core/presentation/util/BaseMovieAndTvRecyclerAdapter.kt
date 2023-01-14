@@ -67,7 +67,6 @@ abstract class BaseMovieAndTvRecyclerAdapter<T : Any>(
         val item = getItem(position)
 
         if (item is Movie) {
-
             holder.bindMovie(movie = item, context = context)
         }
 

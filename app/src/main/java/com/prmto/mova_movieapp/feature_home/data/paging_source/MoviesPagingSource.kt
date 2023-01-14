@@ -8,8 +8,6 @@ import com.prmto.mova_movieapp.core.util.Constants.STARTING_PAGE
 import com.prmto.mova_movieapp.feature_home.data.dto.toMovieList
 import com.prmto.mova_movieapp.feature_home.data.remote.HomeApi
 import com.prmto.mova_movieapp.feature_home.domain.models.Movie
-import okio.IOException
-import retrofit2.HttpException
 import javax.inject.Inject
 
 class MoviesPagingSource @Inject constructor(
@@ -22,7 +20,6 @@ class MoviesPagingSource @Inject constructor(
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Movie> {
 
         val nextPage = params.key ?: STARTING_PAGE
-
         return try {
             val response = when (apiFunc) {
                 MoviesApiFunction.NOW_PLAYING_MOVIES -> {
@@ -47,9 +44,7 @@ class MoviesPagingSource @Inject constructor(
                 nextKey = if (nextPage < response.totalPages) response.page.plus(1) else null
             )
 
-        } catch (e: IOException) {
-            LoadResult.Error(throwable = e)
-        } catch (e: HttpException) {
+        } catch (e: Exception) {
             LoadResult.Error(throwable = e)
         }
     }

@@ -95,7 +95,6 @@ You can view the cast, plot summary, release date, and more. "
 - CI Support
 - To able to add favorite list and watch list
 - To able to watching trailer for movie and TvSeries
-- To able to see the detail of actors and directors
 - UI and Unit Tests
 ## Find this repository useful? 
 Don't forget give a star. ⭐

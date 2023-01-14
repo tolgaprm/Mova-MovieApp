@@ -1,4 +1,4 @@
-package com.prmto.mova_movieapp.feature_home.presentation.detail_bottom_sheet
+package com.prmto.mova_movieapp.core.presentation.detail_bottom_sheet
 
 import android.os.Bundle
 import android.text.method.ScrollingMovementMethod
@@ -16,7 +16,6 @@ import com.prmto.mova_movieapp.core.data.data_source.remote.ImageSize
 import com.prmto.mova_movieapp.databinding.FragmentDetailBottomSheetBinding
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
-
 
 @AndroidEntryPoint
 class DetailBottomSheet : BottomSheetDialogFragment() {
@@ -49,7 +48,6 @@ class DetailBottomSheet : BottomSheetDialogFragment() {
 
         binding.apply {
             if (movie != null) {
-
                 tvName.text = movie.title
                 tvReleaseDate.text = movie.releaseDate
                 tvOverview.text = movie.overview
@@ -92,9 +90,11 @@ class DetailBottomSheet : BottomSheetDialogFragment() {
 
         movieId?.let {
             action.movieId = movieId
+            action.tvId = 0
         }
         tvId?.let {
             action.tvId = tvId
+            action.movieId = 0
         }
 
         findNavController().navigate(action)

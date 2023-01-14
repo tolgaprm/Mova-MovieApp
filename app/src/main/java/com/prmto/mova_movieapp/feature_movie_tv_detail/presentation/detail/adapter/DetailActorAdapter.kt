@@ -18,9 +18,12 @@ class DetailActorAdapter @Inject constructor(
 ) :
     ListAdapter<Cast, DetailActorAdapter.DetailActorAdapterViewHolder>(castItemCallback) {
 
+    private var itemClickListener: (actorId: Int) -> Unit = {}
+
     class DetailActorAdapterViewHolder(
         private val binding: ActorRowBinding,
-        private val imageLoader: ImageLoader
+        private val imageLoader: ImageLoader,
+        private val onItemClickListener: (actorId: Int) -> Unit
     ) : ViewHolder(binding.root) {
 
         fun bind(cast: Cast) {
@@ -34,26 +37,44 @@ class DetailActorAdapter @Inject constructor(
             }
             binding.txtActorName.text = cast.name
             binding.txtCharacterName.text = cast.character
+
+            binding.root.setOnClickListener {
+                onItemClickListener(cast.id)
+            }
+
         }
 
         companion object {
             fun from(
                 parent: ViewGroup,
-                imageLoader: ImageLoader
+                imageLoader: ImageLoader,
+                onItemClickListener: (actorId: Int) -> Unit
             ): DetailActorAdapterViewHolder {
                 val inflater = LayoutInflater.from(parent.context)
                 val binding = ActorRowBinding.inflate(inflater, parent, false)
-                return DetailActorAdapterViewHolder(binding, imageLoader)
+                return DetailActorAdapterViewHolder(
+                    binding = binding,
+                    imageLoader = imageLoader,
+                    onItemClickListener = onItemClickListener
+                )
             }
         }
 
+    }
+
+    fun setActorTextListener(listener: (actorId: Int) -> Unit) {
+        itemClickListener = listener
     }
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
     ): DetailActorAdapterViewHolder {
-        return DetailActorAdapterViewHolder.from(parent, imageLoader)
+        return DetailActorAdapterViewHolder.from(
+            parent = parent,
+            imageLoader = imageLoader,
+            onItemClickListener = itemClickListener
+        )
     }
 
     override fun onBindViewHolder(holder: DetailActorAdapterViewHolder, position: Int) {
