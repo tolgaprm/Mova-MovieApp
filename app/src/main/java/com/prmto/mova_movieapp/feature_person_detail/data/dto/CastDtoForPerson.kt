@@ -31,18 +31,19 @@ data class CastDtoForPerson(
 
 fun CastDtoForPerson.toCastForPerson(): CastForPerson {
     return CastForPerson(
-        id = id,
-        name = name,
-        originalName = originalName,
-        originalTitle = originalTitle,
-        character = character,
-        firstAirDate = firstAirDate,
-        mediaType = mediaType,
-        overview = overview,
-        posterPath = posterPath,
-        popularity = popularity,
-        releaseDate = releaseDate,
-        voteAverage = voteAverage,
-        voteCount = voteCount
+            id = id,
+            name = name,
+            originalName = originalName,
+            originalTitle = originalTitle,
+            character = character,
+            firstAirDate = firstAirDate,
+            mediaType = mediaType,
+            overview = overview,
+            posterPath = posterPath,
+            popularity = popularity,
+            title = title,
+            releaseDate = releaseDate,
+            voteAverage = voteAverage,
+            voteCount = voteCount
     )
 }

@@ -18,12 +18,12 @@ import com.prmto.mova_movieapp.feature_person_detail.domain.model.CrewForPerson
 abstract class PersonMovieBaseAdapter<T : Any> :
     ListAdapter<T, PersonMovieBaseAdapter.PersonMovieViewHolder>(PersonMovieDiffUtil()) {
 
+    var clickListener: (type: T) -> Unit = {}
 
     class PersonMovieViewHolder(
         private val binding: ActorMovieRowBinding,
         private val context: Context
     ) : RecyclerView.ViewHolder(binding.root) {
-
         fun bindCrew(crew: CrewForPerson) {
             binding.title.text = context.getString(R.string.department)
             binding.txtDetail.text = context.getString(R.string.director)
@@ -66,7 +66,7 @@ abstract class PersonMovieBaseAdapter<T : Any> :
                 val binding = ActorMovieRowBinding.inflate(inflate, parent, false)
                 return PersonMovieViewHolder(
                     binding = binding,
-                    context = parent.context
+                        context = parent.context
                 )
             }
         }
@@ -76,17 +76,11 @@ abstract class PersonMovieBaseAdapter<T : Any> :
         return PersonMovieViewHolder.from(parent = parent)
     }
 
-    override fun onBindViewHolder(holder: PersonMovieViewHolder, position: Int) {
-        val item = getItem(position)
-
-        if (item is CastForPerson) {
-            holder.bindCast(cast = item)
-        }
-
-        if (item is CrewForPerson) {
-            holder.bindCrew(item)
-        }
+    fun setOnClickListener(listener: (type: T) -> Unit) {
+        clickListener = listener
     }
+
+    override fun onBindViewHolder(holder: PersonMovieViewHolder, position: Int) {}
 }
 
 class PersonMovieDiffUtil<T : Any> : DiffUtil.ItemCallback<T>() {

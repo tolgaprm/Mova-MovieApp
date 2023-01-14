@@ -34,16 +34,17 @@ fun CrewDtoForPerson.toCrewForPerson(): CrewForPerson {
         id = id,
         department = department,
         firstAirDate = firstAirDate,
-        job = job,
-        mediaType = mediaType,
-        name = name,
-        originalName = originalName,
-        originalTitle = originalTitle,
-        overview = overview,
-        posterPath = posterPath,
-        releaseDate = releaseDate,
-        voteAverage = voteAverage,
-        voteCount = voteCount,
-        popularity = popularity
+            job = job,
+            mediaType = mediaType,
+            name = name,
+            originalName = originalName,
+            originalTitle = originalTitle,
+            overview = overview,
+            posterPath = posterPath,
+            releaseDate = releaseDate,
+            voteAverage = voteAverage,
+            voteCount = voteCount,
+            popularity = popularity,
+            title = title
     )
 }
