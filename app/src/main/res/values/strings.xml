@@ -87,4 +87,7 @@
     <string name="as_director_work">As Director\'s Works</string>
     <string name="as_actor_works">As Actor\'s Works</string>
 
+    <string name="trailers">Trailers</string>
+    <string name="recommendation">Recommendations</string>
+    <string name="similar">Similar</string>
 </resources>

@@ -91,4 +91,8 @@
     <string name="as_actor_works">Oyuncu Olarak Çalıştığı İşler</string>
 
 
+    <string name="trailers">Fragmanlar</string>
+    <string name="recommendation">Öneriler</string>
+    <string name="similar">Benzerler</string>
+
 </resources>

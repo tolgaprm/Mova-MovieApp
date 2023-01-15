@@ -14,24 +14,30 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import coil.ImageLoader
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.tabs.TabLayout
 import com.prmto.mova_movieapp.R
 import com.prmto.mova_movieapp.core.presentation.util.asString
 import com.prmto.mova_movieapp.databinding.FragmentDetailBinding
+import com.prmto.mova_movieapp.feature_home.presentation.home.adapter.NowPlayingRecyclerAdapter
+import com.prmto.mova_movieapp.feature_home.presentation.home.adapter.PopularTvSeriesAdapter
 import com.prmto.mova_movieapp.feature_movie_tv_detail.presentation.detail.adapter.DetailActorAdapter
 import com.prmto.mova_movieapp.feature_movie_tv_detail.presentation.detail.event.DetailEvent
 import com.prmto.mova_movieapp.feature_movie_tv_detail.presentation.detail.event.DetailUiEvent
 import com.prmto.mova_movieapp.feature_movie_tv_detail.presentation.detail.helper.BindAttributesDetailFrag
+import com.prmto.mova_movieapp.feature_movie_tv_detail.util.Constants
+import com.prmto.mova_movieapp.feature_movie_tv_detail.util.isSelectedRecommendationTab
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class DetailFragment : Fragment(R.layout.fragment_detail) {
 
     private var job: Job? = null
+    private var jobMovieId: Job? = null
+    private var jobTvId: Job? = null
 
     private lateinit var bindAttributesDetailFrag: BindAttributesDetailFrag
 
@@ -42,6 +48,8 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
     lateinit var imageLoader: ImageLoader
 
     private val detailActorAdapter: DetailActorAdapter by lazy { DetailActorAdapter() }
+    private val movieAdapter: NowPlayingRecyclerAdapter by lazy { NowPlayingRecyclerAdapter() }
+    private val tvAdapter: PopularTvSeriesAdapter by lazy { PopularTvSeriesAdapter() }
 
     private val viewModel: DetailViewModel by viewModels()
 
@@ -49,8 +57,23 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
         super.onViewCreated(view, savedInstanceState)
 
         _binding = FragmentDetailBinding.bind(view)
+        binding.recommendationRecyclerView.adapter = movieAdapter
         setupDetailActorAdapter()
 
+        addTabLayoutListener()
+
+        setBindAttributesDetailFrag()
+
+        binding.swipeRefreshLayout.isEnabled = false
+
+        addOnBackPressedCallback()
+
+        collectDataLifecycleAware()
+
+        setAdapterListener()
+    }
+
+    private fun setBindAttributesDetailFrag() {
         bindAttributesDetailFrag = BindAttributesDetailFrag(
             binding = binding,
             imageLoader = imageLoader,
@@ -72,18 +95,28 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
                 binding.swipeRefreshLayout.isRefreshing = false
             }
         )
-        binding.swipeRefreshLayout.isEnabled = false
+    }
 
-        addOnBackPressedCallback()
+    private fun addTabLayoutListener() {
+        binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                if (tab != null) {
+                    binding.recommendationRecyclerView.removeAllViews()
+                    viewModel.onEvent(DetailEvent.SelectedTab(tab.position))
+                }
+            }
 
-        collectDataLifecycleAware()
+            override fun onTabUnselected(tab: TabLayout.Tab?) {
+            }
 
-        setAdapterListener()
+            override fun onTabReselected(tab: TabLayout.Tab?) {
+            }
+        })
+
     }
 
     private fun setAdapterListener() {
         detailActorAdapter.setActorTextListener { actorId ->
-            Timber.d(actorId.toString())
             viewModel.onEvent(DetailEvent.ClickActorName(actorId = actorId))
         }
     }
@@ -108,6 +141,17 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
                     collectDetailState()
                 }
                 launch {
+                    viewModel.selectedTabPosition.collectLatest { selectedTabPosition ->
+                        jobMovieId = launch {
+                            collectMovieIdState(selectedTabPosition = selectedTabPosition)
+                        }
+                        jobTvId = launch {
+                            collectTvIdState(selectedTabPosition = selectedTabPosition)
+                        }
+                    }
+                }
+
+                launch {
                     viewModel.eventUiFlow.collectLatest { uiEvent ->
                         when (uiEvent) {
                             is DetailUiEvent.PopBackStack -> {
@@ -130,6 +174,42 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
                         }
                     }
                 }
+            }
+        }
+    }
+
+    private suspend fun collectMovieRecommendationsAndSwapAdapter(movieId: Int) {
+        binding.recommendationRecyclerView.swapAdapter(movieAdapter, true)
+        viewModel.getMovieRecommendations(movieId = movieId)
+            .collectLatest { pagingData ->
+                movieAdapter.submitData(pagingData)
+            }
+    }
+
+    private suspend fun collectMovieIdState(selectedTabPosition: Int) {
+        viewModel.movieIdState.collectLatest { movieId ->
+            if (movieId != Constants.DETAIL_DEFAULT_ID && selectedTabPosition.isSelectedRecommendationTab()) {
+                collectMovieRecommendationsAndSwapAdapter(movieId = movieId)
+            } else {
+                jobMovieId?.cancel()
+            }
+        }
+    }
+
+    private suspend fun collectTvRecommendationsAndSwapAdapter(tvId: Int) {
+        binding.recommendationRecyclerView.swapAdapter(tvAdapter, true)
+        viewModel.getTvRecommendations(tvId = tvId)
+            .collectLatest { pagingData ->
+                tvAdapter.submitData(pagingData)
+            }
+    }
+
+    private suspend fun collectTvIdState(selectedTabPosition: Int) {
+        viewModel.tvIdState.collectLatest { tvId ->
+            if (tvId != Constants.DETAIL_DEFAULT_ID && selectedTabPosition.isSelectedRecommendationTab()) {
+                collectTvRecommendationsAndSwapAdapter(tvId = tvId)
+            } else {
+                jobTvId?.cancel()
             }
         }
     }
