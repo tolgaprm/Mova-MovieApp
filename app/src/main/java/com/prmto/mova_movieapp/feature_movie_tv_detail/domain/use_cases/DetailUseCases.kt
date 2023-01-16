@@ -4,5 +4,6 @@ data class DetailUseCases(
     val movieDetailUseCase: GetMovieDetailUseCase,
     val tvDetailUseCase: GetTvDetailUseCase,
     val getMovieRecommendationUseCase: GetMovieRecommendationUseCase,
-    val getTvRecommendationUseCase: GetTvRecommendationUseCase
+    val getTvRecommendationUseCase: GetTvRecommendationUseCase,
+    val getMovieVideosUseCase: GetMovieVideosUseCase
 )

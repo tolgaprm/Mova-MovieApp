@@ -48,4 +48,6 @@
 
     <dimen name="watchProvidersImageSize">30dp</dimen>
 
+    <dimen name="youtube_player_height">200dp</dimen>
+
 </resources>

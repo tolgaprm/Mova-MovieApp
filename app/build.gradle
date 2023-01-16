@@ -99,6 +99,9 @@ dependencies {
     // Shimmer
     implementation 'com.facebook.shimmer:shimmer:0.5.0'
 
+    // Youtube Player
+    implementation 'com.pierfrancescosoffritti.androidyoutubeplayer:core:11.1.0'
+
     //Paging Library
     implementation("androidx.paging:paging-runtime:$paging_version")
 

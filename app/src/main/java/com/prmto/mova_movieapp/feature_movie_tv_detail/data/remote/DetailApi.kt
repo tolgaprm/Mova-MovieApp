@@ -6,6 +6,7 @@ import com.prmto.mova_movieapp.feature_home.data.dto.MovieDto
 import com.prmto.mova_movieapp.feature_home.data.dto.TvSeriesDto
 import com.prmto.mova_movieapp.feature_movie_tv_detail.data.dto.detail.movie.MovieDetailDto
 import com.prmto.mova_movieapp.feature_movie_tv_detail.data.dto.detail.tv.TvDetailDto
+import com.prmto.mova_movieapp.feature_movie_tv_detail.data.dto.detail.video.VideosDto
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -40,4 +41,9 @@ interface DetailApi {
         @Query("page") page: Int
     ): ApiResponse<TvSeriesDto>
 
+    @GET("movie/{movie_id}/videos")
+    suspend fun getMovieVideos(
+        @Path("movie_id") movieId: Int,
+        @Query("language") language: String
+    ): VideosDto
 }

@@ -5,6 +5,7 @@ import com.prmto.mova_movieapp.feature_home.domain.models.Movie
 import com.prmto.mova_movieapp.feature_home.domain.models.TvSeries
 import com.prmto.mova_movieapp.feature_movie_tv_detail.data.dto.detail.movie.MovieDetailDto
 import com.prmto.mova_movieapp.feature_movie_tv_detail.data.dto.detail.tv.TvDetailDto
+import com.prmto.mova_movieapp.feature_movie_tv_detail.data.dto.detail.video.VideosDto
 import kotlinx.coroutines.flow.Flow
 
 interface DetailRepository {
@@ -27,4 +28,9 @@ interface DetailRepository {
         tvId: Int,
         language: String
     ): Flow<PagingData<TvSeries>>
+
+    suspend fun getMovieVideos(
+        movieId: Int,
+        language: String
+    ): VideosDto
 }

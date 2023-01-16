@@ -56,6 +56,7 @@ class DetailViewModel @Inject constructor(
             if (movieId != DETAIL_DEFAULT_ID) {
                 _movieIdState.value = movieId
                 getMovieDetail(movieId = movieId)
+                getMovieVideos(movieId = movieId)
             }
         }
         savedStateHandle.get<Int>("tvId")?.let { tvId ->
@@ -170,6 +171,38 @@ class DetailViewModel @Inject constructor(
             tvId = tvId,
             language = languageIsoCode.value
         ).cachedIn(viewModelScope)
+    }
+
+    private fun getMovieVideos(movieId: Int) {
+        viewModelScope.launch {
+            updateVideosLoading(isLoading = true)
+            val resource = detailUseCases.getMovieVideosUseCase(
+                movieId = movieId,
+                language = languageIsoCode.value
+            )
+            when (resource) {
+                is Resource.Success -> {
+                    updateVideosLoading(isLoading = false)
+                    _detailState.update {
+                        it.copy(
+                            videos = resource.data
+                        )
+                    }
+                }
+                is Resource.Error -> {
+                    updateVideosLoading(isLoading = false)
+                    _eventUiFlow.emit(
+                        DetailUiEvent.ShowSnackbar(
+                            resource.uiText ?: UiText.unknownError()
+                        )
+                    )
+                }
+            }
+        }
+    }
+
+    private fun updateVideosLoading(isLoading: Boolean) {
+        _detailState.update { it.copy(videosLoading = isLoading) }
     }
 
 }

@@ -1,5 +1,6 @@
 package com.prmto.mova_movieapp.feature_movie_tv_detail.presentation.detail
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -21,11 +22,13 @@ import com.prmto.mova_movieapp.databinding.FragmentDetailBinding
 import com.prmto.mova_movieapp.feature_home.presentation.home.adapter.NowPlayingRecyclerAdapter
 import com.prmto.mova_movieapp.feature_home.presentation.home.adapter.PopularTvSeriesAdapter
 import com.prmto.mova_movieapp.feature_movie_tv_detail.presentation.detail.adapter.DetailActorAdapter
+import com.prmto.mova_movieapp.feature_movie_tv_detail.presentation.detail.adapter.VideosAdapter
 import com.prmto.mova_movieapp.feature_movie_tv_detail.presentation.detail.event.DetailEvent
 import com.prmto.mova_movieapp.feature_movie_tv_detail.presentation.detail.event.DetailUiEvent
 import com.prmto.mova_movieapp.feature_movie_tv_detail.presentation.detail.helper.BindAttributesDetailFrag
 import com.prmto.mova_movieapp.feature_movie_tv_detail.util.Constants
 import com.prmto.mova_movieapp.feature_movie_tv_detail.util.isSelectedRecommendationTab
+import com.prmto.mova_movieapp.feature_movie_tv_detail.util.isSelectedTrailerTab
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
@@ -50,14 +53,17 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
     private val detailActorAdapter: DetailActorAdapter by lazy { DetailActorAdapter() }
     private val movieAdapter: NowPlayingRecyclerAdapter by lazy { NowPlayingRecyclerAdapter() }
     private val tvAdapter: PopularTvSeriesAdapter by lazy { PopularTvSeriesAdapter() }
+    private val videosAdapter: VideosAdapter by lazy { VideosAdapter(viewLifecycleOwner.lifecycle) }
 
     private val viewModel: DetailViewModel by viewModels()
 
+    @SuppressLint("ResourceType")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         _binding = FragmentDetailBinding.bind(view)
         binding.recommendationRecyclerView.adapter = movieAdapter
+        binding.videosRecyclerView.adapter = videosAdapter
         setupDetailActorAdapter()
 
         addTabLayoutListener()
@@ -148,6 +154,13 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
                         jobTvId = launch {
                             collectTvIdState(selectedTabPosition = selectedTabPosition)
                         }
+                        if (selectedTabPosition.isSelectedTrailerTab()) {
+                            binding.recommendationRecyclerView.isVisible = false
+                            binding.videosRecyclerView.isVisible = true
+                        } else {
+                            binding.videosRecyclerView.isVisible = false
+                            binding.recommendationRecyclerView.isVisible = true
+                        }
                     }
                 }
 
@@ -230,6 +243,10 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
                     movieDetail = movieDetail
                 )
                 detailActorAdapter.submitList(movieDetail.credit.cast)
+            }
+
+            detailState.videos?.let { videos ->
+                videosAdapter.submitList(videos.result)
             }
         }
     }
