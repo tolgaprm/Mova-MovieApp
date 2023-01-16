@@ -10,6 +10,7 @@
 
     <color name="surface">#282C36</color>
     <color name="light_gray">#CEEDF1FB</color>
+    <color name="light_gray_no_alpha">#EDF1FB</color>
 
     <color name="red">#FFE21221</color>
     <color name="red_variant">#D2F6D1D3</color>

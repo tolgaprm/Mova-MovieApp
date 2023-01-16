@@ -48,6 +48,7 @@ class BindAttributesDetailFrag(
     fun bindMovieDetail(movieDetail: MovieDetail) {
         isTvDetail = false
         currentMovieId = movieDetail.id
+        binding.txtToolBarTitle.text = movieDetail.title
         bindImage(posterPath = movieDetail.posterPath)
         bindMovieName(movieName = movieDetail.title)
         bindDetailInfoSection(
@@ -72,6 +73,7 @@ class BindAttributesDetailFrag(
     fun bindTvDetail(tvDetail: TvDetail) {
         isTvDetail = true
         currentTvId = tvDetail.id
+        binding.txtToolBarTitle.text = tvDetail.name
         bindImage(posterPath = tvDetail.posterPath)
         bindMovieName(movieName = tvDetail.name)
         bindDetailInfoSection(

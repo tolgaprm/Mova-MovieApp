@@ -2,10 +2,12 @@ package com.prmto.mova_movieapp.feature_movie_tv_detail.presentation.detail
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -77,6 +79,26 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
         collectDataLifecycleAware()
 
         setAdapterListener()
+
+        setOnScrollListenerForNestedScroll()
+    }
+
+    private fun setOnScrollListenerForNestedScroll() {
+        binding.nestedScrollView.setOnScrollChangeListener { _, _, scrollY, _, _ ->
+            if (scrollY >= 1500) {
+                val isNightMode =
+                    AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES
+                if (isNightMode) {
+                    binding.toolbar.setBackgroundResource(R.color.surface)
+                } else {
+                    binding.toolbar.setBackgroundResource(R.color.light_gray_no_alpha)
+                }
+                binding.txtToolBarTitle.isVisible = true
+            } else {
+                binding.toolbar.setBackgroundColor(Color.argb(0, 255, 255, 255))
+                binding.txtToolBarTitle.isVisible = false
+            }
+        }
     }
 
     private fun setBindAttributesDetailFrag() {
