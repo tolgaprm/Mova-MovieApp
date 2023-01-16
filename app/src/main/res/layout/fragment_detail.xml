@@ -498,7 +498,8 @@
                     app:layout_constraintEnd_toEndOf="@id/recyclerViewActor"
                     app:layout_constraintStart_toStartOf="@id/recyclerViewActor"
                     app:layout_constraintTop_toBottomOf="@+id/tabLayout"
-                    tools:listitem="@layout/youtube_player_view" />
+                    tools:listitem="@layout/youtube_player_view"
+                    tools:itemCount="3" />
 
                 <!-- endregion trailer,recommendations section-->
 

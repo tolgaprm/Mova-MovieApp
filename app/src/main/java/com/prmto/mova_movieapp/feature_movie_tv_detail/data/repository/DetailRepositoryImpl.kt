@@ -69,4 +69,11 @@ class DetailRepositoryImpl @Inject constructor(
             language = language
         )
     }
+
+    override suspend fun getTvVideos(tvId: Int, language: String): VideosDto {
+        return detailApi.getTvVideos(
+            tvId = tvId,
+            language = language
+        )
+    }
 }

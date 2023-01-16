@@ -27,8 +27,6 @@ class VideosAdapter(
             videoResult: VideoResult,
             lifecycle: Lifecycle
         ) {
-
-
             binding.txtVideoName.text = videoResult.name
             binding.txtVideoType.text = videoResult.type
             if (Build.VERSION.SDK_INT >= 26) {
@@ -44,7 +42,6 @@ class VideosAdapter(
                     )
                 }
             })
-
         }
 
         companion object {

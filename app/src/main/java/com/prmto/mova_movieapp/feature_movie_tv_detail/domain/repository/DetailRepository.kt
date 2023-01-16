@@ -33,4 +33,9 @@ interface DetailRepository {
         movieId: Int,
         language: String
     ): VideosDto
+
+    suspend fun getTvVideos(
+        tvId: Int,
+        language: String
+    ): VideosDto
 }

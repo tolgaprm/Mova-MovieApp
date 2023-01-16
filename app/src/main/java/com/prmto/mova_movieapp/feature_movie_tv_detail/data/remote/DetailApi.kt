@@ -46,4 +46,10 @@ interface DetailApi {
         @Path("movie_id") movieId: Int,
         @Query("language") language: String
     ): VideosDto
+
+    @GET("tv/{tv_id}/videos")
+    suspend fun getTvVideos(
+        @Path("tv_id") tvId: Int,
+        @Query("language") language: String
+    ): VideosDto
 }

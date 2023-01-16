@@ -63,6 +63,7 @@ class DetailViewModel @Inject constructor(
             if (tvId != DETAIL_DEFAULT_ID) {
                 _tvIdState.value = tvId
                 getTvDetail(tvId = tvId)
+                getTvVideos(tvId = tvId)
             }
         }
     }
@@ -113,8 +114,7 @@ class DetailViewModel @Inject constructor(
         viewModelScope.launch {
             _detailState.value = _detailState.value.copy(loading = true)
             detailUseCases.movieDetailUseCase(
-                language = languageIsoCode.value,
-                movieId = movieId
+                language = languageIsoCode.value, movieId = movieId
             ).collect { resource ->
                 when (resource) {
                     is Resource.Error -> {
@@ -137,8 +137,7 @@ class DetailViewModel @Inject constructor(
         viewModelScope.launch {
             _detailState.update { it.copy(loading = true) }
             detailUseCases.tvDetailUseCase(
-                language = languageIsoCode.value,
-                tvId = tvId
+                language = languageIsoCode.value, tvId = tvId
             ).collect { resource ->
                 when (resource) {
                     is Resource.Error -> {
@@ -161,15 +160,13 @@ class DetailViewModel @Inject constructor(
 
     fun getMovieRecommendations(movieId: Int): Flow<PagingData<Movie>> {
         return detailUseCases.getMovieRecommendationUseCase(
-            movieId = movieId,
-            language = languageIsoCode.value
+            movieId = movieId, language = languageIsoCode.value
         ).cachedIn(viewModelScope)
     }
 
     fun getTvRecommendations(tvId: Int): Flow<PagingData<TvSeries>> {
         return detailUseCases.getTvRecommendationUseCase(
-            tvId = tvId,
-            language = languageIsoCode.value
+            tvId = tvId, language = languageIsoCode.value
         ).cachedIn(viewModelScope)
     }
 
@@ -177,8 +174,7 @@ class DetailViewModel @Inject constructor(
         viewModelScope.launch {
             updateVideosLoading(isLoading = true)
             val resource = detailUseCases.getMovieVideosUseCase(
-                movieId = movieId,
-                language = languageIsoCode.value
+                movieId = movieId, language = languageIsoCode.value
             )
             when (resource) {
                 is Resource.Success -> {
@@ -188,6 +184,29 @@ class DetailViewModel @Inject constructor(
                             videos = resource.data
                         )
                     }
+                }
+                is Resource.Error -> {
+                    updateVideosLoading(isLoading = false)
+                    _eventUiFlow.emit(
+                        DetailUiEvent.ShowSnackbar(
+                            resource.uiText ?: UiText.unknownError()
+                        )
+                    )
+                }
+            }
+        }
+    }
+
+    private fun getTvVideos(tvId: Int) {
+        viewModelScope.launch {
+            updateVideosLoading(isLoading = true)
+            val resource = detailUseCases.getTvVideosUseCase(
+                tvId = tvId, language = languageIsoCode.value
+            )
+            when (resource) {
+                is Resource.Success -> {
+                    updateVideosLoading(isLoading = false)
+                    _detailState.update { it.copy(videos = resource.data) }
                 }
                 is Resource.Error -> {
                     updateVideosLoading(isLoading = false)

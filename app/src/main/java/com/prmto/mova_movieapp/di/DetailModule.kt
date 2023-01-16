@@ -49,7 +49,8 @@ object DetailModule {
                 detailRepository,
                 getTvGenreListUseCase
             ),
-            getMovieVideosUseCase = GetMovieVideosUseCase(detailRepository)
+            getMovieVideosUseCase = GetMovieVideosUseCase(detailRepository),
+            getTvVideosUseCase = GetTvVideosUseCase(detailRepository)
         )
     }
 }
