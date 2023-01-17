@@ -13,6 +13,7 @@ import com.prmto.mova_movieapp.feature_home.domain.models.Movie
 import com.prmto.mova_movieapp.feature_home.domain.models.TvSeries
 import com.prmto.mova_movieapp.feature_movie_tv_detail.domain.use_cases.DetailUseCases
 import com.prmto.mova_movieapp.feature_movie_tv_detail.presentation.detail.event.DetailEvent
+import com.prmto.mova_movieapp.feature_movie_tv_detail.presentation.detail.event.DetailLoadStateEvent
 import com.prmto.mova_movieapp.feature_movie_tv_detail.presentation.detail.event.DetailUiEvent
 import com.prmto.mova_movieapp.feature_movie_tv_detail.util.Constants.DETAIL_DEFAULT_ID
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -96,6 +97,21 @@ class DetailViewModel @Inject constructor(
             }
             is DetailEvent.SelectedTab -> {
                 _selectedTabPosition.value = event.selectedTabPosition
+            }
+        }
+    }
+
+    fun onAdapterLoadStateEvent(event: DetailLoadStateEvent) {
+        when (event) {
+            is DetailLoadStateEvent.RecommendationLoading -> {
+                _detailState.update { it.copy(recommendationLoading = true) }
+            }
+            is DetailLoadStateEvent.RecommendationNotLoading -> {
+                _detailState.update { it.copy(recommendationLoading = false) }
+            }
+            is DetailLoadStateEvent.PagingError -> {
+                _detailState.update { it.copy(recommendationLoading = false) }
+                emitUiEventFlow(DetailUiEvent.ShowSnackbar(event.uiText))
             }
         }
     }
@@ -223,5 +239,4 @@ class DetailViewModel @Inject constructor(
     private fun updateVideosLoading(isLoading: Boolean) {
         _detailState.update { it.copy(videosLoading = isLoading) }
     }
-
 }

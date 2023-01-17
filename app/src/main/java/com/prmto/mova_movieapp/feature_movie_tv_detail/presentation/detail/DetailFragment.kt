@@ -20,12 +20,15 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
 import com.prmto.mova_movieapp.R
 import com.prmto.mova_movieapp.core.presentation.util.asString
+import com.prmto.mova_movieapp.core.util.HandlePagingLoadStates
 import com.prmto.mova_movieapp.databinding.FragmentDetailBinding
+import com.prmto.mova_movieapp.feature_home.domain.models.Movie
 import com.prmto.mova_movieapp.feature_home.presentation.home.adapter.NowPlayingRecyclerAdapter
-import com.prmto.mova_movieapp.feature_home.presentation.home.adapter.PopularTvSeriesAdapter
 import com.prmto.mova_movieapp.feature_movie_tv_detail.presentation.detail.adapter.DetailActorAdapter
+import com.prmto.mova_movieapp.feature_movie_tv_detail.presentation.detail.adapter.TvRecommendationAdapter
 import com.prmto.mova_movieapp.feature_movie_tv_detail.presentation.detail.adapter.VideosAdapter
 import com.prmto.mova_movieapp.feature_movie_tv_detail.presentation.detail.event.DetailEvent
+import com.prmto.mova_movieapp.feature_movie_tv_detail.presentation.detail.event.DetailLoadStateEvent
 import com.prmto.mova_movieapp.feature_movie_tv_detail.presentation.detail.event.DetailUiEvent
 import com.prmto.mova_movieapp.feature_movie_tv_detail.presentation.detail.helper.BindAttributesDetailFrag
 import com.prmto.mova_movieapp.feature_movie_tv_detail.util.Constants
@@ -53,8 +56,8 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
     lateinit var imageLoader: ImageLoader
 
     private val detailActorAdapter: DetailActorAdapter by lazy { DetailActorAdapter() }
-    private val movieAdapter: NowPlayingRecyclerAdapter by lazy { NowPlayingRecyclerAdapter() }
-    private val tvAdapter: PopularTvSeriesAdapter by lazy { PopularTvSeriesAdapter() }
+    private val movieRecommendationAdapter: NowPlayingRecyclerAdapter by lazy { NowPlayingRecyclerAdapter() }
+    private val tvRecommendationAdapter: TvRecommendationAdapter by lazy { TvRecommendationAdapter() }
     private val videosAdapter: VideosAdapter by lazy { VideosAdapter(viewLifecycleOwner.lifecycle) }
 
     private val viewModel: DetailViewModel by viewModels()
@@ -64,7 +67,7 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
         super.onViewCreated(view, savedInstanceState)
 
         _binding = FragmentDetailBinding.bind(view)
-        binding.recommendationRecyclerView.adapter = movieAdapter
+        binding.recommendationRecyclerView.adapter = movieRecommendationAdapter
         binding.videosRecyclerView.adapter = videosAdapter
         setupDetailActorAdapter()
 
@@ -81,6 +84,9 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
         setAdapterListener()
 
         setOnScrollListenerForNestedScroll()
+
+        handleTvRecommendationsPagingLoadStates()
+        handleMovieRecommendationsPagingLoadStates()
     }
 
     private fun setOnScrollListenerForNestedScroll() {
@@ -213,11 +219,29 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
         }
     }
 
+    private fun handleTvRecommendationsPagingLoadStates() {
+        HandlePagingLoadStates(
+            pagingAdapter = tvRecommendationAdapter,
+            onLoading = { viewModel.onAdapterLoadStateEvent(DetailLoadStateEvent.RecommendationLoading) },
+            onNotLoading = { viewModel.onAdapterLoadStateEvent(DetailLoadStateEvent.RecommendationNotLoading) },
+            onError = { viewModel.onAdapterLoadStateEvent(DetailLoadStateEvent.PagingError(it)) }
+        )
+    }
+
+    private fun handleMovieRecommendationsPagingLoadStates() {
+        HandlePagingLoadStates<Movie>(
+            nowPlayingRecyclerAdapter = movieRecommendationAdapter,
+            onLoading = { viewModel.onAdapterLoadStateEvent(DetailLoadStateEvent.RecommendationLoading) },
+            onNotLoading = { viewModel.onAdapterLoadStateEvent(DetailLoadStateEvent.RecommendationNotLoading) },
+            onError = { viewModel.onAdapterLoadStateEvent(DetailLoadStateEvent.PagingError(it)) }
+        )
+    }
+
     private suspend fun collectMovieRecommendationsAndSwapAdapter(movieId: Int) {
-        binding.recommendationRecyclerView.swapAdapter(movieAdapter, true)
+        binding.recommendationRecyclerView.swapAdapter(movieRecommendationAdapter, true)
         viewModel.getMovieRecommendations(movieId = movieId)
             .collectLatest { pagingData ->
-                movieAdapter.submitData(pagingData)
+                movieRecommendationAdapter.submitData(pagingData)
             }
     }
 
@@ -232,10 +256,10 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
     }
 
     private suspend fun collectTvRecommendationsAndSwapAdapter(tvId: Int) {
-        binding.recommendationRecyclerView.swapAdapter(tvAdapter, true)
+        binding.recommendationRecyclerView.swapAdapter(tvRecommendationAdapter, true)
         viewModel.getTvRecommendations(tvId = tvId)
             .collectLatest { pagingData ->
-                tvAdapter.submitData(pagingData)
+                tvRecommendationAdapter.submitData(pagingData)
             }
     }
 
@@ -248,6 +272,7 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
             }
         }
     }
+
 
     private suspend fun collectDetailState() {
         viewModel.detailState.collectLatest { detailState ->
@@ -266,6 +291,10 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
                 )
                 detailActorAdapter.submitList(movieDetail.credit.cast)
             }
+
+            binding.recommendationShimmerLayout.isVisible = detailState.recommendationLoading
+
+            binding.videosShimmerLayout.isVisible = detailState.videosLoading
 
             detailState.videos?.let { videos ->
                 videosAdapter.submitList(videos.result)
