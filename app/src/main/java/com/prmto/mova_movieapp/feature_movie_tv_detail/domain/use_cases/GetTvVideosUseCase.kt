@@ -20,7 +20,14 @@ class GetTvVideosUseCase @Inject constructor(
                 tvId = tvId,
                 language = language.lowercase()
             )
-            Resource.Success(data = response.toVideo())
+
+            val tvVideos = response.toVideo()
+
+            val result = tvVideos.copy(
+                result = tvVideos.result.reversed()
+            )
+
+            Resource.Success(data = result)
         } catch (e: IOException) {
             Resource.Error(uiText = UiText.StringResource(R.string.internet_error))
         } catch (e: HttpException) {

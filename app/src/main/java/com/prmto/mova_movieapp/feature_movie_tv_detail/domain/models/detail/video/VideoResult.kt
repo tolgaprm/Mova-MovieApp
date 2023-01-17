@@ -5,5 +5,6 @@ data class VideoResult(
     val key: String,
     val site: String,
     val name: String,
-    val type: String
+    val type: String,
+    val publishedAt: String
 )

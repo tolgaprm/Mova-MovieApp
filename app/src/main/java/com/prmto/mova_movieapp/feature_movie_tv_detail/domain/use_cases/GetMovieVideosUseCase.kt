@@ -21,7 +21,14 @@ class GetMovieVideosUseCase @Inject constructor(
                 movieId = movieId,
                 language = language.lowercase()
             )
-            Resource.Success(data = response.toVideo())
+
+            val videos = response.toVideo()
+
+            val result = videos.copy(
+                result = videos.result.reversed()
+            )
+
+            Resource.Success(data = result)
         } catch (e: IOException) {
             Resource.Error(uiText = UiText.StringResource(R.string.internet_error))
         } catch (e: HttpException) {

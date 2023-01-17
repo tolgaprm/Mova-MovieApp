@@ -21,7 +21,8 @@ data class VideoResultDto(
             key = key,
             site = site,
             name = name,
-            type = type
+            type = type,
+            publishedAt = publishedAt
         )
     }
 }
