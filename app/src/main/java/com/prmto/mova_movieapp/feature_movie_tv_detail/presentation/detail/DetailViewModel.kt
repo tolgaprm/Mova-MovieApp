@@ -11,6 +11,7 @@ import com.prmto.mova_movieapp.core.util.Constants.DEFAULT_LANGUAGE
 import com.prmto.mova_movieapp.core.util.Resource
 import com.prmto.mova_movieapp.feature_home.domain.models.Movie
 import com.prmto.mova_movieapp.feature_home.domain.models.TvSeries
+import com.prmto.mova_movieapp.feature_movie_tv_detail.domain.models.detail.video.Videos
 import com.prmto.mova_movieapp.feature_movie_tv_detail.domain.use_cases.DetailUseCases
 import com.prmto.mova_movieapp.feature_movie_tv_detail.presentation.detail.event.DetailEvent
 import com.prmto.mova_movieapp.feature_movie_tv_detail.presentation.detail.event.DetailLoadStateEvent
@@ -30,6 +31,9 @@ class DetailViewModel @Inject constructor(
 
     private val _detailState = MutableStateFlow(DetailState())
     val detailState: StateFlow<DetailState> = _detailState.asStateFlow()
+
+    private val _videos = MutableStateFlow<Videos?>(null)
+    val videos: StateFlow<Videos?> = _videos.asStateFlow()
 
     private val languageIsoCode = MutableStateFlow(DEFAULT_LANGUAGE)
 
@@ -195,11 +199,7 @@ class DetailViewModel @Inject constructor(
             when (resource) {
                 is Resource.Success -> {
                     updateVideosLoading(isLoading = false)
-                    _detailState.update {
-                        it.copy(
-                            videos = resource.data
-                        )
-                    }
+                    _videos.value = resource.data
                 }
                 is Resource.Error -> {
                     updateVideosLoading(isLoading = false)
@@ -222,7 +222,7 @@ class DetailViewModel @Inject constructor(
             when (resource) {
                 is Resource.Success -> {
                     updateVideosLoading(isLoading = false)
-                    _detailState.update { it.copy(videos = resource.data) }
+                    _videos.value = resource.data
                 }
                 is Resource.Error -> {
                     updateVideosLoading(isLoading = false)

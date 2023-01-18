@@ -18,6 +18,7 @@ import com.prmto.mova_movieapp.R
 import com.prmto.mova_movieapp.core.data.data_source.remote.ImageApi
 import com.prmto.mova_movieapp.core.presentation.util.UiEvent
 import com.prmto.mova_movieapp.core.presentation.util.asString
+import com.prmto.mova_movieapp.core.util.toolBarTextVisibilityByScrollPositionOfNestedScrollView
 import com.prmto.mova_movieapp.databinding.FragmentPersonDetailBinding
 import com.prmto.mova_movieapp.feature_explore.domain.util.MediaType
 import com.prmto.mova_movieapp.feature_person_detail.domain.model.*
@@ -51,6 +52,14 @@ class PersonDetailFragment : Fragment(R.layout.fragment_person_detail) {
         binding.btnNavigateUp.setOnClickListener {
             findNavController().popBackStack()
         }
+
+        toolBarTextVisibilityByScrollPositionOfNestedScrollView(
+            nestedScrollView = binding.nestedScrollView,
+            position = 1000,
+            toolBarTitle = binding.txtToolBarTitle,
+            toolbar = binding.toolbar,
+            context = requireContext()
+        )
 
         addOnBackPressedCallback()
 
@@ -184,6 +193,8 @@ class PersonDetailFragment : Fragment(R.layout.fragment_person_detail) {
         }
 
         binding.txtPersonName.text = personDetail.name
+
+        binding.txtToolBarTitle.text = personDetail.name
 
         personDetail.deathday?.let { deathday ->
             binding.txtDateOfDeath.isVisible = true

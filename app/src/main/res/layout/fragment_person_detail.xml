@@ -5,18 +5,51 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageButton
-        android:id="@+id/btnNavigateUp"
-        style="@style/CircleImageSmallButton"
-        android:layout_margin="@dimen/large_margin"
-        android:layout_marginStart="@dimen/medium_margin"
-        android:contentDescription="@string/navigate_up"
-        android:elevation="@dimen/small_elevation"
-        android:src="@drawable/ic_baseline_arrow_back_24"
-        tools:ignore="TouchTargetSizeCheck" />
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:elevation="@dimen/medium_margin"
+        app:contentInsetStart="0dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageButton
+                android:id="@+id/btnNavigateUp"
+                style="@style/CircleImageSmallButton"
+                android:layout_marginStart="@dimen/medium_margin"
+                android:contentDescription="@string/navigate_up"
+                android:elevation="@dimen/small_elevation"
+                android:src="@drawable/ic_baseline_arrow_back_24"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintHorizontal_chainStyle="spread"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="TouchTargetSizeCheck" />
 
 
-    <ScrollView
+            <TextView
+                android:id="@+id/txtToolBarTitle"
+                style="@style/Mova.body1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/large_margin"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/btnNavigateUp"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Spider-Man: No Way Home" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -191,11 +224,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/large_margin"
                 android:layout_marginTop="@dimen/extra_large_margin"
+                android:text="@string/as_actor_works"
                 android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtNation"
-                android:text="@string/as_actor_works" />
+                app:layout_constraintTop_toBottomOf="@+id/txtNation" />
 
             <!--endregion DetialSection -->
 
@@ -219,11 +252,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/large_margin"
                 android:layout_marginTop="@dimen/large_margin"
+                android:text="@string/as_director_work"
                 android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/actorRecylerView"
-                android:text="@string/as_director_work" />
+                app:layout_constraintTop_toBottomOf="@+id/actorRecylerView" />
 
             <!--endregion DetialSection -->
 
@@ -231,13 +264,13 @@
                 android:id="@+id/directorRecylerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/large_margin"
                 android:orientation="horizontal"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/txtAsDirectorWorks"
                 app:layout_constraintTop_toBottomOf="@id/txtAsDirectorWorks"
                 tools:itemCount="12"
-                android:layout_marginBottom="@dimen/large_margin"
                 tools:listitem="@layout/actor_movie_row" />
 
             <ProgressBar
@@ -258,5 +291,5 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
