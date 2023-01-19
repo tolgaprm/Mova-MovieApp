@@ -79,10 +79,10 @@
                     android:padding="@dimen/small_padding"
                     android:src="@drawable/tmdb_logo"
                     app:layout_constraintBottom_toBottomOf="@+id/txtReleaseDate"
-                    app:layout_constraintEnd_toEndOf="@+id/txtMovieName"
+                    app:layout_constraintEnd_toEndOf="@+id/txt_film_name"
                     app:layout_constraintHorizontal_bias="0.521"
                     app:layout_constraintStart_toStartOf="@+id/guideline3"
-                    app:layout_constraintTop_toBottomOf="@+id/txtMovieName"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_film_name"
                     app:layout_constraintVertical_bias="0.0"
                     tools:visibility="visible" />
 
@@ -112,7 +112,7 @@
                     tools:src="@drawable/spiderman" />
 
                 <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/txtMovieName"
+                    android:id="@+id/txt_film_name"
                     style="@style/Mova.Title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -131,8 +131,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/medium_margin"
                     android:layout_marginTop="@dimen/small_margin"
-                    app:layout_constraintStart_toStartOf="@+id/txtMovieName"
-                    app:layout_constraintTop_toBottomOf="@+id/txtMovieName"
+                    app:layout_constraintStart_toStartOf="@+id/txt_film_name"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_film_name"
                     tools:rating="4.35" />
 
                 <com.google.android.material.textview.MaterialTextView
@@ -221,7 +221,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/medium_margin"
                     android:orientation="horizontal"
-                    app:layout_constraintEnd_toEndOf="@+id/txtMovieName"
+                    app:layout_constraintEnd_toEndOf="@+id/txt_film_name"
                     app:layout_constraintStart_toStartOf="@+id/imvClockIcon"
                     app:layout_constraintTop_toBottomOf="@id/txtRuntime">
 

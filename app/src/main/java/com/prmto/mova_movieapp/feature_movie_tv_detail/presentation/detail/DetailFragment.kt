@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -29,7 +30,8 @@ import com.prmto.mova_movieapp.feature_movie_tv_detail.presentation.detail.adapt
 import com.prmto.mova_movieapp.feature_movie_tv_detail.presentation.detail.event.DetailEvent
 import com.prmto.mova_movieapp.feature_movie_tv_detail.presentation.detail.event.DetailLoadStateEvent
 import com.prmto.mova_movieapp.feature_movie_tv_detail.presentation.detail.event.DetailUiEvent
-import com.prmto.mova_movieapp.feature_movie_tv_detail.presentation.detail.helper.BindAttributesDetailFrag
+import com.prmto.mova_movieapp.feature_movie_tv_detail.presentation.detail.helper.BindMovieDetail
+import com.prmto.mova_movieapp.feature_movie_tv_detail.presentation.detail.helper.BindTvDetail
 import com.prmto.mova_movieapp.feature_movie_tv_detail.util.Constants
 import com.prmto.mova_movieapp.feature_movie_tv_detail.util.isSelectedRecommendationTab
 import com.prmto.mova_movieapp.feature_movie_tv_detail.util.isSelectedTrailerTab
@@ -46,8 +48,6 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
     private var jobMovieId: Job? = null
     private var jobTvId: Job? = null
     private var jobVideos: Job? = null
-
-    private lateinit var bindAttributesDetailFrag: BindAttributesDetailFrag
 
     private var _binding: FragmentDetailBinding? = null
     private val binding get() = _binding!!
@@ -69,19 +69,26 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
         _binding = FragmentDetailBinding.bind(view)
         binding.recommendationRecyclerView.adapter = movieRecommendationAdapter
         binding.videosRecyclerView.adapter = videosAdapter
+
         setupDetailActorAdapter()
 
         addTabLayoutListener()
 
-        setBindAttributesDetailFrag()
+        setBtnNavigateUpListener()
+
+        setAdapterListener()
+
+        setTmdbImageOnClickListener()
+
+        setSwipeRefreshListener()
+
+        setDirectorTextListener()
 
         binding.swipeRefreshLayout.isEnabled = false
 
         addOnBackPressedCallback()
 
         collectDataLifecycleAware()
-
-        setAdapterListener()
 
         toolBarTextVisibilityByScrollPositionOfNestedScrollView(
             nestedScrollView = binding.nestedScrollView,
@@ -95,28 +102,47 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
         handleMovieRecommendationsPagingLoadStates()
     }
 
-    private fun setBindAttributesDetailFrag() {
-        bindAttributesDetailFrag = BindAttributesDetailFrag(
-            binding = binding,
-            imageLoader = imageLoader,
-            context = requireContext(),
-            onClickTmdbImage = { tmdbUrl ->
-                viewModel.onEvent(DetailEvent.IntentToImdbWebSite(tmdbUrl))
-            },
-            onClickDirectorName = { directorId ->
-                viewModel.onEvent(
-                    DetailEvent.ClickToDirectorName(directorId = directorId)
-                )
-            },
-            onNavigateUp = {
-                findNavController().popBackStack()
-            },
-            onSwipeRefresh = {
-                job?.cancel()
-                collectDataLifecycleAware()
-                binding.swipeRefreshLayout.isRefreshing = false
+    private fun setBtnNavigateUpListener() {
+        binding.btnNavigateUp.setOnClickListener {
+            findNavController().popBackStack()
+        }
+    }
+
+    private fun setSwipeRefreshListener() {
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            job?.cancel()
+            collectDataLifecycleAware()
+            binding.swipeRefreshLayout.isRefreshing = false
+        }
+    }
+
+    private fun setDirectorTextListener() {
+        binding.creatorDirectorLinearLayout.setOnHierarchyChangeListener(
+            object : ViewGroup.OnHierarchyChangeListener {
+                override fun onChildViewAdded(p0: View?, director: View?) {
+                    director?.setOnClickListener {
+                        viewModel.onEvent(
+                            DetailEvent.ClickToDirectorName(directorId = director.id)
+                        )
+                    }
+                }
+
+                override fun onChildViewRemoved(p0: View?, p1: View?) {
+                    return
+                }
             }
         )
+    }
+
+    private fun setTmdbImageOnClickListener() {
+        binding.imvTmdb.setOnClickListener {
+            val tmdbUrl = if (!viewModel.isTvIdEmpty()) {
+                "${Constants.TMDB_TV_URL}${viewModel.tvIdState.value}"
+            } else {
+                "${Constants.TMDB_MOVIE_URL}${viewModel.movieIdState.value}"
+            }
+            viewModel.onEvent(DetailEvent.IntentToImdbWebSite(tmdbUrl))
+        }
     }
 
     private fun addTabLayoutListener() {
@@ -134,7 +160,6 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
             override fun onTabReselected(tab: TabLayout.Tab?) {
             }
         })
-
     }
 
     private fun setAdapterListener() {
@@ -162,23 +187,21 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
                 launch {
                     collectDetailState()
                 }
+                
                 launch {
                     viewModel.selectedTabPosition.collectLatest { selectedTabPosition ->
                         jobMovieId = launch {
+                            jobVideos?.cancel()
                             collectMovieIdState(selectedTabPosition = selectedTabPosition)
                         }
+
                         jobTvId = launch {
+                            jobVideos?.cancel()
                             collectTvIdState(selectedTabPosition = selectedTabPosition)
                         }
+
                         jobVideos = launch {
-                            viewModel.videos.collectLatest {
-                                it?.let { videos ->
-                                    binding.videosRecyclerView.isVisible =
-                                        videos.result.isNotEmpty()
-                                    binding.txtVideoInfo.isVisible = videos.result.isEmpty()
-                                    videosAdapter.submitList(videos.result)
-                                }
-                            }
+                            collectVideos()
                         }
 
                         if (selectedTabPosition.isSelectedTrailerTab()) {
@@ -221,6 +244,79 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
         }
     }
 
+    private suspend fun collectMovieIdState(selectedTabPosition: Int) {
+        viewModel.movieIdState.collectLatest { movieId ->
+            if (movieId != Constants.DETAIL_DEFAULT_ID && selectedTabPosition.isSelectedRecommendationTab()) {
+                collectMovieRecommendationsAndSwapAdapter(movieId = movieId)
+            } else {
+                jobMovieId?.cancel()
+            }
+        }
+    }
+
+    private suspend fun collectMovieRecommendationsAndSwapAdapter(movieId: Int) {
+        binding.recommendationRecyclerView.swapAdapter(movieRecommendationAdapter, true)
+        viewModel.getMovieRecommendations(movieId = movieId)
+            .collectLatest { pagingData ->
+                movieRecommendationAdapter.submitData(pagingData)
+            }
+    }
+
+    private suspend fun collectTvIdState(selectedTabPosition: Int) {
+        viewModel.tvIdState.collectLatest { tvId ->
+            if (tvId != Constants.DETAIL_DEFAULT_ID && selectedTabPosition.isSelectedRecommendationTab()) {
+                collectTvRecommendationsAndSwapAdapter(tvId = tvId)
+            } else {
+                jobTvId?.cancel()
+            }
+        }
+    }
+
+    private suspend fun collectTvRecommendationsAndSwapAdapter(tvId: Int) {
+        binding.recommendationRecyclerView.swapAdapter(tvRecommendationAdapter, true)
+        viewModel.getTvRecommendations(tvId = tvId)
+            .collectLatest { pagingData ->
+                tvRecommendationAdapter.submitData(pagingData)
+            }
+    }
+
+    private suspend fun collectVideos() {
+        viewModel.videos.collectLatest {
+            it?.let { videos ->
+                binding.videosRecyclerView.isVisible = videos.result.isNotEmpty()
+                binding.txtVideoInfo.isVisible = videos.result.isEmpty()
+                videosAdapter.submitList(videos.result)
+            }
+        }
+    }
+
+    private suspend fun collectDetailState() {
+        viewModel.detailState.collectLatest { detailState ->
+            binding.progressBar.isVisible = detailState.loading
+            detailState.tvDetail?.let { tvDetail ->
+                BindTvDetail(
+                    tvDetail = tvDetail,
+                    binding = binding,
+                    context = requireContext()
+                )
+                detailActorAdapter.submitList(tvDetail.credit.cast)
+            }
+
+            detailState.movieDetail?.let { movieDetail ->
+                BindMovieDetail(
+                    movieDetail = movieDetail,
+                    binding = binding,
+                    context = requireContext()
+                )
+                detailActorAdapter.submitList(movieDetail.credit.cast)
+            }
+
+            binding.recommendationShimmerLayout.isVisible = detailState.recommendationLoading
+
+            binding.videosShimmerLayout.isVisible = detailState.videosLoading
+        }
+    }
+
     private fun handleTvRecommendationsPagingLoadStates() {
         HandlePagingLoadStates(
             pagingAdapter = tvRecommendationAdapter,
@@ -237,68 +333,6 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
             onNotLoading = { viewModel.onAdapterLoadStateEvent(DetailLoadStateEvent.RecommendationNotLoading) },
             onError = { viewModel.onAdapterLoadStateEvent(DetailLoadStateEvent.PagingError(it)) }
         )
-    }
-
-    private suspend fun collectMovieRecommendationsAndSwapAdapter(movieId: Int) {
-        binding.recommendationRecyclerView.swapAdapter(movieRecommendationAdapter, true)
-        viewModel.getMovieRecommendations(movieId = movieId)
-            .collectLatest { pagingData ->
-                movieRecommendationAdapter.submitData(pagingData)
-            }
-    }
-
-    private suspend fun collectMovieIdState(selectedTabPosition: Int) {
-        viewModel.movieIdState.collectLatest { movieId ->
-            if (movieId != Constants.DETAIL_DEFAULT_ID && selectedTabPosition.isSelectedRecommendationTab()) {
-                jobVideos?.cancel()
-                collectMovieRecommendationsAndSwapAdapter(movieId = movieId)
-            } else {
-                jobMovieId?.cancel()
-            }
-        }
-    }
-
-    private suspend fun collectTvRecommendationsAndSwapAdapter(tvId: Int) {
-        binding.recommendationRecyclerView.swapAdapter(tvRecommendationAdapter, true)
-        viewModel.getTvRecommendations(tvId = tvId)
-            .collectLatest { pagingData ->
-                tvRecommendationAdapter.submitData(pagingData)
-            }
-    }
-
-    private suspend fun collectTvIdState(selectedTabPosition: Int) {
-        viewModel.tvIdState.collectLatest { tvId ->
-            if (tvId != Constants.DETAIL_DEFAULT_ID && selectedTabPosition.isSelectedRecommendationTab()) {
-                collectTvRecommendationsAndSwapAdapter(tvId = tvId)
-                jobVideos?.cancel()
-            } else {
-                jobTvId?.cancel()
-            }
-        }
-    }
-
-
-    private suspend fun collectDetailState() {
-        viewModel.detailState.collectLatest { detailState ->
-            binding.progressBar.isVisible = detailState.loading
-            detailState.tvDetail?.let {
-                bindAttributesDetailFrag.bindTvDetail(
-                    tvDetail = it
-                )
-                detailActorAdapter.submitList(it.credit.cast)
-            }
-
-            detailState.movieDetail?.let { movieDetail ->
-                bindAttributesDetailFrag.bindMovieDetail(
-                    movieDetail = movieDetail
-                )
-                detailActorAdapter.submitList(movieDetail.credit.cast)
-            }
-
-            binding.recommendationShimmerLayout.isVisible = detailState.recommendationLoading
-
-            binding.videosShimmerLayout.isVisible = detailState.videosLoading
-        }
     }
 
     private fun intentToTmdbWebSite(tmdbUrl: String) {
