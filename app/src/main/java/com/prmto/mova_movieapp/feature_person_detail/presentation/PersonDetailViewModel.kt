@@ -10,7 +10,6 @@ import com.prmto.mova_movieapp.feature_person_detail.domain.use_case.PersonDetai
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -32,10 +31,6 @@ class PersonDetailViewModel @Inject constructor(
         getLanguage()
         savedStateHandle.get<Int>("personId")?.let { personId ->
             getPersonDetail(personId = personId)
-        }
-        savedStateHandle.get<Boolean>("isActor")?.let { isActor ->
-            Timber.d(isActor.toString())
-            _state.update { it.copy(isActor = isActor) }
         }
     }
 

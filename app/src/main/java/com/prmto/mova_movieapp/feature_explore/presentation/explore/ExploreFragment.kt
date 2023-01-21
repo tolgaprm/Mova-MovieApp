@@ -327,8 +327,15 @@ class ExploreFragment @Inject constructor(
                 )
             )
         }
-        searchRecyclerAdapter.setOnPersonSearchClickListener {
+        searchRecyclerAdapter.setOnPersonSearchClickListener { person ->
+            val action =
+                ExploreFragmentDirections.actionExploreFragmentToPersonDetailFragment(person.id)
 
+            viewModel.onEventExploreFragment(
+                ExploreFragmentEvent.NavigateToPersonDetail(
+                    action
+                )
+            )
         }
     }
 

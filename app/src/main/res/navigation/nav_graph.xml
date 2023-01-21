@@ -38,6 +38,9 @@
         <action
             android:id="@+id/action_exploreFragment_to_detailBottomSheet"
             app:destination="@id/detailBottomSheet" />
+        <action
+            android:id="@+id/action_exploreFragment_to_personDetailFragment"
+            app:destination="@id/personDetailFragment" />
     </fragment>
     <fragment
         android:id="@+id/myListFragment"
@@ -102,10 +105,6 @@
         <argument
             android:name="personId"
             app:argType="integer" />
-        <argument
-            android:name="isActor"
-            app:argType="boolean"
-            android:defaultValue="false" />
         <action
             android:id="@+id/action_personDetailFragment_to_detailBottomSheet"
             app:destination="@id/detailBottomSheet" />

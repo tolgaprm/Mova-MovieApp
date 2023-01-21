@@ -119,6 +119,11 @@ class ExploreViewModel @Inject constructor(
                     }
                 }
             }
+            is ExploreFragmentEvent.NavigateToPersonDetail -> {
+                viewModelScope.launch {
+                    _eventFlow.emit(ExploreUiEvent.NavigateTo(event.directions))
+                }
+            }
         }
     }
 

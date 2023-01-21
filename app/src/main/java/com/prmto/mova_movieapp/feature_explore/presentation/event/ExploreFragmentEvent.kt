@@ -11,4 +11,7 @@ sealed class ExploreFragmentEvent {
 
     data class UpdateConnectivityStatus(val connectivityStatus: ConnectivityObserver.Status) :
         ExploreFragmentEvent()
+
+    data class NavigateToPersonDetail(val directions: ExploreFragmentDirections.ActionExploreFragmentToPersonDetailFragment) :
+        ExploreFragmentEvent()
 }
