@@ -90,14 +90,14 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 viewModel.networkState.collectLatest { networkState ->
                     if (networkState.isAvaliable()) {
                         job?.cancel()
-                        binding.scrollView.isVisible = true
-                        binding.errorScreen.isVisible = false
+                        showScrollView()
+                        hideErrorScreen()
                         collectDataLifecycleAware()
                     } else {
                         job?.cancel()
                         if (isEmptyAdapters()) {
-                            binding.scrollView.isVisible = false
-                            binding.errorScreen.isVisible = true
+                            hideScrollView()
+                            showErrorScreen()
                         }
                     }
                 }
@@ -107,6 +107,22 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
     private fun isEmptyAdapters(): Boolean {
         return nowPlayingAdapter.itemCount <= 0 || popularMoviesAdapter.isEmpty() || popularTvSeriesAdapter.isEmpty() || topRatedMoviesAdapter.isEmpty() || topRatedTvSeriesAdapter.isEmpty()
+    }
+
+    private fun showScrollView() {
+        binding.scrollView.isVisible = true
+    }
+
+    private fun hideScrollView() {
+        binding.scrollView.isVisible = false
+    }
+
+    private fun showErrorScreen() {
+        binding.errorScreen.isVisible = true
+    }
+
+    private fun hideErrorScreen() {
+        binding.errorScreen.isVisible = false
     }
 
     private fun collectHomeUiEventsAndLoadState() {

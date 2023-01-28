@@ -75,6 +75,7 @@ class ExploreFragment : Fragment(R.layout.fragment_explore) {
                 viewModel.networkState.collectLatest { networkState ->
                     if (networkState.isAvaliable()) {
                         job?.cancel()
+                        hideErrorScreenAndShowDetailScreen()
                         collectData()
                     } else {
                         if (isAdaptersEmpty()) {

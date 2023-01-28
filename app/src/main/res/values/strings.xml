@@ -19,6 +19,7 @@
     <string name="genre">Genre</string>
     <string name="movies">Movies</string>
     <string name="tv">Tv</string>
+    <string name="tv_name_with_original_name" translatable="false">%1$s ( %2$s )</string>
 
     <string name="voteAverage">%1$s (%2$s)</string>
     <string name="voteAverageDetail">%1$s (%2$s reviews)</string>
