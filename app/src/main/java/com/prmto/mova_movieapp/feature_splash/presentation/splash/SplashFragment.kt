@@ -12,9 +12,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.snackbar.Snackbar
 import com.prmto.mova_movieapp.R
-import com.prmto.mova_movieapp.core.presentation.util.asString
 import com.prmto.mova_movieapp.feature_splash.presentation.splash.event.SplashEvent
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -32,7 +30,7 @@ class SplashFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_splash, container, false)
     }
 
-    val viewModel: SplashViewModel by viewModels()
+    private val viewModel: SplashViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -42,13 +40,6 @@ class SplashFragment : Fragment() {
                 launch {
                     viewModel.eventFlow.collectLatest { event ->
                         when (event) {
-                            is SplashEvent.NetworkError -> {
-                                Snackbar.make(
-                                    requireView(),
-                                    event.uiText.asString(requireContext()),
-                                    Snackbar.LENGTH_LONG
-                                ).show()
-                            }
                             is SplashEvent.NavigateTo -> {
                                 findNavController().navigate(event.directions)
                             }

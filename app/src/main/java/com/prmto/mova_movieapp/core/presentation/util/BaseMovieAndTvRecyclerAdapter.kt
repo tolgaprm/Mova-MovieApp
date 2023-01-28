@@ -47,7 +47,7 @@ abstract class BaseMovieAndTvRecyclerAdapter<T : Any>(
             tv: TvSeries,
             context: Context
         ) {
-            binding.tvMovieTvName.text = tv.name
+            binding.tvMovieTvName.text = tv.originalName
 
             tv.firstAirDate?.let {
                 binding.tvReleaseDateGenre.text =
@@ -91,5 +91,9 @@ abstract class BaseMovieAndTvRecyclerAdapter<T : Any>(
     fun setOnItemClickListener(listener: (T) -> Unit) {
         itemClickListener = listener
     }
+}
+
+fun <T : Any> BaseMovieAndTvRecyclerAdapter<T>.isEmpty(): Boolean {
+    return this.itemCount <= 0
 }
 

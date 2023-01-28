@@ -2,6 +2,7 @@ package com.prmto.mova_movieapp.feature_explore.presentation.explore
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
@@ -13,8 +14,9 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.prmto.mova_movieapp.R
 import com.prmto.mova_movieapp.core.data.models.enums.Category
-import com.prmto.mova_movieapp.core.domain.repository.ConnectivityObserver
+import com.prmto.mova_movieapp.core.domain.repository.isAvaliable
 import com.prmto.mova_movieapp.core.presentation.util.asString
+import com.prmto.mova_movieapp.core.presentation.util.isEmpty
 import com.prmto.mova_movieapp.core.util.HandlePagingLoadStates
 import com.prmto.mova_movieapp.databinding.FragmentExploreBinding
 import com.prmto.mova_movieapp.feature_explore.presentation.adapter.FilterMoviesAdapter
@@ -28,20 +30,14 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @AndroidEntryPoint
-class ExploreFragment @Inject constructor(
-
-) : Fragment(R.layout.fragment_explore) {
+class ExploreFragment : Fragment(R.layout.fragment_explore) {
 
     private var _binding: FragmentExploreBinding? = null
     private val binding get() = _binding!!
 
-    lateinit var viewModel: ExploreViewModel
-
-    @Inject
-    lateinit var connectivityObserver: ConnectivityObserver
+    private lateinit var viewModel: ExploreViewModel
 
     private val searchRecyclerAdapter: SearchRecyclerAdapter by lazy { SearchRecyclerAdapter() }
 
@@ -76,17 +72,23 @@ class ExploreFragment @Inject constructor(
     private fun observeConnectivityStatus() {
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                connectivityObserver.observe().collectLatest {
-                    if (it == ConnectivityObserver.Status.Avaliable) {
+                viewModel.networkState.collectLatest { networkState ->
+                    if (networkState.isAvaliable()) {
                         job?.cancel()
                         collectData()
                     } else {
-                        showErrorScreenAndHideDetailScreen()
+                        if (isAdaptersEmpty()) {
+                            showErrorScreenAndHideDetailScreen()
+                        }
                         job?.cancel()
                     }
                 }
             }
         }
+    }
+
+    private fun isAdaptersEmpty(): Boolean {
+        return movieFilterAdapter.isEmpty() || tvFilterAdapter.isEmpty() || searchRecyclerAdapter.itemCount <= 0
     }
 
     private fun addTextChangedListener() {
@@ -207,7 +209,6 @@ class ExploreFragment @Inject constructor(
                         if (it.errorUiText != null) {
                             showErrorScreenAndHideDetailScreen()
                         }
-
                     }
                 }
             }
@@ -232,11 +233,15 @@ class ExploreFragment @Inject constructor(
 
     private fun setBtnErrorClickListener() {
         binding.btnError.setOnClickListener {
-            hideErrorScreenAndShowDetailScreen()
-            when (viewModel.filterBottomSheetState.value.categoryState) {
-                Category.MOVIE -> movieFilterAdapter.retry()
-                Category.TV -> tvFilterAdapter.retry()
-                Category.SEARCH -> searchRecyclerAdapter.retry()
+            if (viewModel.isNetworkAvaliable()) {
+                collectData()
+                hideErrorScreenAndShowDetailScreen()
+            } else {
+                Toast.makeText(
+                    requireContext(),
+                    getString(R.string.internet_error),
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }

@@ -19,7 +19,7 @@ class GetTopRatedTvSeriesUseCase @Inject constructor(
         val languageLower = language.lowercase()
 
         return combine(
-            homeRepository.getPopularTvs(language = languageLower),
+            homeRepository.getTopRatedTvs(language = languageLower),
             getTvGenreListUseCase(language = languageLower)
         ) { pagingData, genres ->
             pagingData.map { tv ->

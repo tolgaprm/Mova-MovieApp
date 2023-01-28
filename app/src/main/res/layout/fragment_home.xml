@@ -5,6 +5,46 @@
     android:layout_height="match_parent"
     android:paddingTop="@dimen/large_padding">
 
+    <FrameLayout
+        android:id="@+id/errorScreen"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/Mova.H5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="@dimen/large_margin"
+                android:text="@string/something_went_wrong"
+                android:textAlignment="center" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnError"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/try_again"
+                android:textColor="?attr/colorSurface"
+                app:backgroundTint="?attr/colorOnSurface"
+                app:cornerRadius="@dimen/shape_medium" />
+
+        </LinearLayout>
+
+
+    </FrameLayout>
+
     <!--region seeAllSection that when click see all, the linear layout visible-->
     <LinearLayout
         android:id="@+id/seeAllPage"
