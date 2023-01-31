@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "120860039536",
+    "project_id": "mova-84fcb",
+    "storage_bucket": "mova-84fcb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:120860039536:android:d6045579f2348ec35d57b5",
+        "android_client_info": {
+          "package_name": "com.prmto.mova_movieapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "120860039536-re355cviancivntq392eiu8metuajt86.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBa57JT_sbm7m45GaEMEttxMWDgNH0_1ZE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "120860039536-re355cviancivntq392eiu8metuajt86.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

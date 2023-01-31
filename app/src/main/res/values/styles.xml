@@ -43,13 +43,6 @@
         <item name="android:textStyle">normal</item>
     </style>
 
-    <style name="Mova.button" parent="TextAppearance.MaterialComponents.Button">
-        <item name="android:fontFamily">@font/urbanist_regular</item>
-        <item name="android:textSize">16sp</item>
-        <item name="android:textStyle">bold</item>
-
-    </style>
-
     <style name="Mova.Title" parent="TextAppearance.MaterialComponents.Headline5">
         <item name="android:fontFamily">@font/urbanist_bold</item>
         <item name="android:textStyle">bold</item>
@@ -87,10 +80,16 @@
         <item name="tint">?attr/colorPrimary</item>
     </style>
 
-    <style name="RatingBar"
-        parent="android:style/Widget.Material.RatingBar.Small">
+    <style name="RatingBar" parent="android:style/Widget.Material.RatingBar.Small">
         <item name="android:stepSize">0.5</item>
         <item name="android:progressTint">@color/progressTint</item>
+    </style>
+
+    <style name="Mova.Button" parent="Widget.MaterialComponents.Button">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">@dimen/mova_button_height</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
 </resources>

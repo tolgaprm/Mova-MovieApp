@@ -116,7 +116,7 @@
 
             <!--region nowPlaying -->
             <TextView
-                android:id="@+id/now_playing_text"
+                android:id="@+id/login_text"
                 style="@style/Mova.Title"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -134,10 +134,10 @@
                 android:layout_height="wrap_content"
                 android:paddingHorizontal="@dimen/large_padding"
                 android:paddingVertical="@dimen/medium_padding"
-                app:layout_constraintBaseline_toBaselineOf="@+id/now_playing_text"
+                app:layout_constraintBaseline_toBaselineOf="@+id/login_text"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/now_playing_text"
+                app:layout_constraintStart_toEndOf="@+id/login_text"
                 tools:ignore="TouchTargetSizeCheck" />
 
 
@@ -149,7 +149,7 @@
                 app:layout_constraintBottom_toTopOf="@id/popularMoviesSeeAll"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/now_playing_text">
+                app:layout_constraintTop_toBottomOf="@+id/login_text">
 
                 <include layout="@layout/now_playing_row_shimmer_item" />
 
@@ -164,7 +164,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/now_playing_text"
+                app:layout_constraintTop_toBottomOf="@+id/login_text"
                 tools:itemCount="2"
                 tools:listitem="@layout/now_playing_row">
 
