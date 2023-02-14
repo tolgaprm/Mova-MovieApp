@@ -104,7 +104,8 @@
     <string name="sign_in_with_google">Sign In With Google</string>
     <string name="sign_in_with_facebook">sign In With Facebook</string>
 
-
+    <string name="cancel">Cancel</string>
+    <string name="must_login_able_to_add_in_list"> You must to login to able to add in list</string>
     <string name="error_field_empty">This field can\'t be empty</string>
 
     // FirebaseAuth Error Message
@@ -124,4 +125,5 @@
     <string name="error_invalid_user_token">Invalid user token provided.</string>
     <string name="error_operation_not_allowed">This operation is not allowed.</string>
     <string name="error_weak_password">Password is too weak.</string>
+
 </resources>

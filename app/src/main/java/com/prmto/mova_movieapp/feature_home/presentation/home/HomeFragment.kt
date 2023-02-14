@@ -6,7 +6,6 @@ import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.Toast
-import androidx.activity.OnBackPressedCallback
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -18,9 +17,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.prmto.mova_movieapp.R
 import com.prmto.mova_movieapp.core.domain.repository.isAvaliable
-import com.prmto.mova_movieapp.core.presentation.util.UiText
-import com.prmto.mova_movieapp.core.presentation.util.asString
-import com.prmto.mova_movieapp.core.presentation.util.isEmpty
+import com.prmto.mova_movieapp.core.presentation.util.*
 import com.prmto.mova_movieapp.core.util.HandlePagingLoadStates
 import com.prmto.mova_movieapp.core.util.getCountryIsoCode
 import com.prmto.mova_movieapp.databinding.FragmentHomeBinding
@@ -28,11 +25,11 @@ import com.prmto.mova_movieapp.feature_home.domain.models.Movie
 import com.prmto.mova_movieapp.feature_home.presentation.home.adapter.*
 import com.prmto.mova_movieapp.feature_home.presentation.home.event.HomeAdapterLoadStateEvent
 import com.prmto.mova_movieapp.feature_home.presentation.home.event.HomeEvent
-import com.prmto.mova_movieapp.feature_home.presentation.home.event.HomeUiEvent
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 
 @AndroidEntryPoint
@@ -67,7 +64,14 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         setupRecyclerAdapters()
         setAdaptersClickListener()
         setupListenerSeeAllClickEvents()
-        addOnBackPressedCallback()
+
+        addOnBackPressedCallback(
+            activity = requireActivity(),
+            onBackPressed = {
+                viewModel.onEvent(HomeEvent.OnBackPressed)
+            }
+        )
+
         binding.btnNavigateUp.setOnClickListener {
             viewModel.onEvent(HomeEvent.NavigateUpFromSeeAllSection)
         }
@@ -131,16 +135,20 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 launch {
                     viewModel.eventFlow.collectLatest { uiEvent ->
                         when (uiEvent) {
-                            is HomeUiEvent.NavigateTo -> findNavController().navigate(
-                                uiEvent.directions
-                            )
-                            is HomeUiEvent.ShowSnackbar -> {
+                            is BaseUiEvent.NavigateTo -> {
+                                Timber.d("asdasd")
+                                findNavController().navigate(
+                                    uiEvent.directions
+                                )
+                            }
+                            is BaseUiEvent.ShowSnackbar -> {
                                 Snackbar.make(
                                     requireView(),
                                     uiEvent.uiText.asString(requireContext()),
                                     Snackbar.LENGTH_LONG
                                 ).show()
                             }
+                            else -> return@collectLatest
                         }
                     }
                 }
@@ -303,15 +311,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             scrollView.animation = slideInLeftAnim()
             recyclerViewSeeAll.removeAllViews()
         }
-    }
-
-    private fun addOnBackPressedCallback() {
-        val callback = object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                viewModel.onEvent(HomeEvent.OnBackPressed)
-            }
-        }
-        requireActivity().onBackPressedDispatcher.addCallback(callback)
     }
 
     private fun setupListenerSeeAllClickEvents() {

@@ -6,7 +6,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.OnBackPressedCallback
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -17,6 +16,7 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
 import com.prmto.mova_movieapp.R
+import com.prmto.mova_movieapp.core.presentation.util.addOnBackPressedCallback
 import com.prmto.mova_movieapp.core.presentation.util.asString
 import com.prmto.mova_movieapp.core.util.HandlePagingLoadStates
 import com.prmto.mova_movieapp.core.util.toolBarTextVisibilityByScrollPositionOfNestedScrollView
@@ -83,7 +83,12 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
 
         binding.swipeRefreshLayout.isEnabled = false
 
-        addOnBackPressedCallback()
+        addOnBackPressedCallback(
+            activity = requireActivity(),
+            onBackPressed = {
+                viewModel.onEvent(DetailEvent.OnBackPressed)
+            }
+        )
 
         collectDataLifecycleAware()
 
@@ -177,15 +182,6 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
 
     private fun setupDetailActorAdapter() {
         binding.recyclerViewActor.adapter = detailActorAdapter
-    }
-
-    private fun addOnBackPressedCallback() {
-        val callback = object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                viewModel.onEvent(DetailEvent.OnBackPressed)
-            }
-        }
-        requireActivity().onBackPressedDispatcher.addCallback(callback)
     }
 
     private fun collectDataLifecycleAware() {

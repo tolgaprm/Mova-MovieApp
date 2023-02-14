@@ -111,7 +111,7 @@
         android:contentDescription="@string/share"
         android:src="@drawable/ic_share"
         app:layout_constraintBottom_toBottomOf="@+id/btnFavoriteList"
-        app:layout_constraintEnd_toStartOf="@+id/ibWatchingList"
+        app:layout_constraintEnd_toStartOf="@+id/btnWatchingList"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/btnFavoriteList"
         app:layout_constraintTop_toTopOf="@+id/btnFavoriteList"
@@ -128,7 +128,7 @@
         app:layout_constraintTop_toBottomOf="@+id/ibShare" />
 
     <ImageButton
-        android:id="@+id/ibWatchingList"
+        android:id="@+id/btnWatchingList"
         style="@style/CircleImageLargeButton"
         android:contentDescription="@string/add_watch_list"
         android:padding="@dimen/small_padding"
@@ -144,10 +144,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/small_margin"
         android:text="@string/watchList"
-        app:layout_constraintEnd_toEndOf="@+id/ibWatchingList"
+        app:layout_constraintEnd_toEndOf="@+id/btnWatchingList"
         app:layout_constraintHorizontal_bias="0.461"
-        app:layout_constraintStart_toStartOf="@+id/ibWatchingList"
-        app:layout_constraintTop_toBottomOf="@+id/ibWatchingList" />
+        app:layout_constraintStart_toStartOf="@+id/btnWatchingList"
+        app:layout_constraintTop_toBottomOf="@+id/btnWatchingList" />
 
     <!--endregion share,favorite,watch btn section-->
 

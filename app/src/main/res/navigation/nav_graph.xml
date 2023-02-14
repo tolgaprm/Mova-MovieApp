@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/loginFragment">
+    app:startDestination="@id/splashFragment">
 
     <fragment
         android:id="@+id/splashFragment"
@@ -75,6 +75,9 @@
             app:destination="@id/detailFragment"
             app:enterAnim="@anim/slide_in_left"
             app:exitAnim="@anim/slide_out_rigth" />
+        <action
+            android:id="@+id/action_detailBottomSheet_to_loginFragment"
+            app:destination="@id/loginFragment" />
     </dialog>
     <fragment
         android:id="@+id/settingsFragment"

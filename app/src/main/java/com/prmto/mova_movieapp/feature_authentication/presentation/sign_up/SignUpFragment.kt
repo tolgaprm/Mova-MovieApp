@@ -12,6 +12,8 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.prmto.mova_movieapp.R
+import com.prmto.mova_movieapp.core.presentation.util.UiEvent
+import com.prmto.mova_movieapp.core.presentation.util.addOnBackPressedCallback
 import com.prmto.mova_movieapp.core.presentation.util.asString
 import com.prmto.mova_movieapp.databinding.FragmentSignUpBinding
 import com.prmto.mova_movieapp.feature_authentication.presentation.util.AuthUtil
@@ -33,6 +35,14 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
         _binding = binding
 
         collectData()
+
+        addOnBackPressedCallback(
+            activity = requireActivity(),
+            onBackPressed = {
+                viewModel.onEvent(SignUpEvent.OnBackPressed)
+            }
+        )
+
 
         binding.edtEmail.addTextChangedListener {
             it?.let {
@@ -98,13 +108,13 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
     private suspend fun collectSignUpUiState() {
         viewModel.uiEvent.collectLatest { uiEvent ->
             when (uiEvent) {
-                is SignUpUiEvent.NavigateTo -> {
+                is UiEvent.NavigateTo -> {
                     findNavController().navigate(uiEvent.directions)
                 }
-                is SignUpUiEvent.PopBackStack -> {
+                is UiEvent.PopBackStack -> {
                     findNavController().popBackStack()
                 }
-                is SignUpUiEvent.ShowSnackbar -> {
+                is UiEvent.ShowSnackbar -> {
                     Snackbar.make(
                         requireView(),
                         uiEvent.uiText.asString(requireContext()),

@@ -107,7 +107,8 @@
     <string name="sign_in_with_google">Google\'la giriş yap</string>
     <string name="sign_in_with_facebook">Facebook\'la giriş yap</string>
 
-
+    <string name="cancel">İptal</string>
+    <string name="must_login_able_to_add_in_list">Listeye ekleme işlemi yapabilmek için giriş yapmalısınız.</string>
     <string name="error_field_empty">Bu alan boş bırakılamaz.</string>
 
     // FirebaseAuth Error Message

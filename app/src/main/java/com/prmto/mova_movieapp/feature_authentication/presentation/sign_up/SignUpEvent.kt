@@ -7,4 +7,5 @@ sealed class SignUpEvent {
     object SignUpWithFacebook : SignUpEvent()
     object SignUp : SignUpEvent()
     object ClickedSignIn : SignUpEvent()
+    object OnBackPressed : SignUpEvent()
 }
