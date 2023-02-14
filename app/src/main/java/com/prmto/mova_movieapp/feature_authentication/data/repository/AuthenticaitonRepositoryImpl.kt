@@ -22,13 +22,7 @@ class AuthenticationRepositoryImpl @Inject constructor(
                 onSuccess()
             }
             .addOnFailureListener { exception ->
-                if (exception is FirebaseAuthException) {
-                    val errorCode = exception.errorCode
-                    val errorStringId = FirebaseAuthMessage.getMessage(errorCode = errorCode)
-                    onFailure(UiText.StringResource(errorStringId))
-                } else {
-                    onFailure(UiText.unknownError())
-                }
+                setException(exception = exception, onFailure = onFailure)
             }
     }
 
@@ -43,13 +37,34 @@ class AuthenticationRepositoryImpl @Inject constructor(
         ).addOnSuccessListener {
             onSuccess()
         }.addOnFailureListener { exception ->
-            if (exception is FirebaseAuthException) {
-                val errorCode = exception.errorCode
-                val errorStringId = FirebaseAuthMessage.getMessage(errorCode = errorCode)
-                onFailure(UiText.StringResource(errorStringId))
-            } else {
-                onFailure(UiText.unknownError())
+            setException(exception = exception, onFailure = onFailure)
+        }
+    }
+
+    override fun sendPasswordResetEmail(
+        email: String,
+        onSuccess: () -> Unit,
+        onFailure: (uiText: UiText) -> Unit
+    ) {
+        firebaseAuth.sendPasswordResetEmail(email)
+            .addOnSuccessListener {
+                onSuccess()
             }
+            .addOnFailureListener { exception ->
+                setException(exception = exception, onFailure = onFailure)
+            }
+    }
+
+    private fun setException(
+        exception: java.lang.Exception,
+        onFailure: (uiText: UiText) -> Unit
+    ) {
+        if (exception is FirebaseAuthException) {
+            val errorCode = exception.errorCode
+            val errorStringId = FirebaseAuthMessage.getMessage(errorCode = errorCode)
+            onFailure(UiText.StringResource(errorStringId))
+        } else {
+            onFailure(UiText.unknownError())
         }
     }
 }

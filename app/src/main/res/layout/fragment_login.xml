@@ -105,7 +105,7 @@
         android:layout_marginTop="@dimen/large_margin"
         android:background="@drawable/text_ripple"
         android:padding="@dimen/small_padding"
-        android:text="@string/forgot_the_password"
+        android:text="@string/forget_the_password"
         android:textColor="?attr/colorPrimary"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/btnSignIn"

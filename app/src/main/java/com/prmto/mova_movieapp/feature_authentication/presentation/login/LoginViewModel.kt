@@ -37,7 +37,12 @@ class LoginViewModel @Inject constructor(
                 _passwordState.update { it.copy(text = event.password, error = null) }
             }
             is LoginEvent.ClickedForgetPassword -> {
-
+                val directions =
+                    LoginFragmentDirections.actionLoginFragmentToForgetPasswordFragment(null)
+                if (emailState.value.text.isNotBlank()) {
+                    directions.email = emailState.value.text
+                }
+                emitUiEvent(UiEvent.NavigateTo(directions))
             }
             is LoginEvent.SignIn -> {
                 signIn(email = emailState.value.text, password = passwordState.value.text)

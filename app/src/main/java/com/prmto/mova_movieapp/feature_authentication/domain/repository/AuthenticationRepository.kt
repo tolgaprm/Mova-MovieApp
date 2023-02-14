@@ -17,4 +17,10 @@ interface AuthenticationRepository {
         onSuccess: () -> Unit,
         onFailure: (uiText: UiText) -> Unit
     )
+
+    fun sendPasswordResetEmail(
+        email: String,
+        onSuccess: () -> Unit,
+        onFailure: (uiText: UiText) -> Unit
+    )
 }
