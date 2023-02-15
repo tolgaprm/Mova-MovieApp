@@ -2,9 +2,9 @@ package com.prmto.mova_movieapp.feature_movie_tv_detail.data.paging_source
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
+import com.prmto.mova_movieapp.core.domain.models.TvSeries
 import com.prmto.mova_movieapp.core.util.Constants
 import com.prmto.mova_movieapp.feature_home.data.dto.toTvSeries
-import com.prmto.mova_movieapp.feature_home.domain.models.TvSeries
 import com.prmto.mova_movieapp.feature_movie_tv_detail.data.remote.DetailApi
 import okio.IOException
 import retrofit2.HttpException

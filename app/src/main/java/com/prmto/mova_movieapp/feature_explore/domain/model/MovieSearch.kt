@@ -1,6 +1,6 @@
 package com.prmto.mova_movieapp.feature_explore.domain.model
 
-import com.prmto.mova_movieapp.feature_home.domain.models.Movie
+import com.prmto.mova_movieapp.core.domain.models.Movie
 
 
 data class MovieSearch(

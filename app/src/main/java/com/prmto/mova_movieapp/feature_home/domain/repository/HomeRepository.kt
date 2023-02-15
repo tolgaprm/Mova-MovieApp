@@ -1,9 +1,9 @@
 package com.prmto.mova_movieapp.feature_home.domain.repository
 
 import androidx.paging.PagingData
+import com.prmto.mova_movieapp.core.domain.models.Movie
+import com.prmto.mova_movieapp.core.domain.models.TvSeries
 import com.prmto.mova_movieapp.core.util.Constants
-import com.prmto.mova_movieapp.feature_home.domain.models.Movie
-import com.prmto.mova_movieapp.feature_home.domain.models.TvSeries
 import kotlinx.coroutines.flow.Flow
 
 interface HomeRepository {

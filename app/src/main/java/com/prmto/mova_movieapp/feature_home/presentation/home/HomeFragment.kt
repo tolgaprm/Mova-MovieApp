@@ -16,12 +16,12 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.prmto.mova_movieapp.R
+import com.prmto.mova_movieapp.core.domain.models.Movie
 import com.prmto.mova_movieapp.core.domain.repository.isAvaliable
 import com.prmto.mova_movieapp.core.presentation.util.*
 import com.prmto.mova_movieapp.core.util.HandlePagingLoadStates
 import com.prmto.mova_movieapp.core.util.getCountryIsoCode
 import com.prmto.mova_movieapp.databinding.FragmentHomeBinding
-import com.prmto.mova_movieapp.feature_home.domain.models.Movie
 import com.prmto.mova_movieapp.feature_home.presentation.home.adapter.*
 import com.prmto.mova_movieapp.feature_home.presentation.home.event.HomeAdapterLoadStateEvent
 import com.prmto.mova_movieapp.feature_home.presentation.home.event.HomeEvent

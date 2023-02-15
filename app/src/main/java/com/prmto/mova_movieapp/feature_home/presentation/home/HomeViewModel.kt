@@ -4,12 +4,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
+import com.prmto.mova_movieapp.core.domain.models.Movie
+import com.prmto.mova_movieapp.core.domain.models.TvSeries
 import com.prmto.mova_movieapp.core.domain.repository.ConnectivityObserver
 import com.prmto.mova_movieapp.core.domain.repository.isAvaliable
 import com.prmto.mova_movieapp.core.presentation.util.BaseUiEvent
 import com.prmto.mova_movieapp.core.presentation.util.UiText
-import com.prmto.mova_movieapp.feature_home.domain.models.Movie
-import com.prmto.mova_movieapp.feature_home.domain.models.TvSeries
 import com.prmto.mova_movieapp.feature_home.domain.use_cases.HomeUseCases
 import com.prmto.mova_movieapp.feature_home.presentation.home.event.HomeAdapterLoadStateEvent
 import com.prmto.mova_movieapp.feature_home.presentation.home.event.HomeEvent

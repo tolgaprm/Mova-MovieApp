@@ -16,12 +16,12 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
 import com.prmto.mova_movieapp.R
+import com.prmto.mova_movieapp.core.domain.models.Movie
 import com.prmto.mova_movieapp.core.presentation.util.addOnBackPressedCallback
 import com.prmto.mova_movieapp.core.presentation.util.asString
 import com.prmto.mova_movieapp.core.util.HandlePagingLoadStates
 import com.prmto.mova_movieapp.core.util.toolBarTextVisibilityByScrollPositionOfNestedScrollView
 import com.prmto.mova_movieapp.databinding.FragmentDetailBinding
-import com.prmto.mova_movieapp.feature_home.domain.models.Movie
 import com.prmto.mova_movieapp.feature_home.presentation.home.adapter.NowPlayingRecyclerAdapter
 import com.prmto.mova_movieapp.feature_movie_tv_detail.presentation.detail.adapter.DetailActorAdapter
 import com.prmto.mova_movieapp.feature_movie_tv_detail.presentation.detail.adapter.TvRecommendationAdapter

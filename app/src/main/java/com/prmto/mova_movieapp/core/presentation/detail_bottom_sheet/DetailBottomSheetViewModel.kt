@@ -3,9 +3,10 @@ package com.prmto.mova_movieapp.core.presentation.detail_bottom_sheet
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.prmto.mova_movieapp.core.domain.models.Movie
+import com.prmto.mova_movieapp.core.domain.models.TvSeries
 import com.prmto.mova_movieapp.core.domain.use_case.FirebaseCoreUseCases
-import com.prmto.mova_movieapp.feature_home.domain.models.Movie
-import com.prmto.mova_movieapp.feature_home.domain.models.TvSeries
+import com.prmto.mova_movieapp.core.domain.use_case.LocalDatabaseUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -14,7 +15,8 @@ import javax.inject.Inject
 @HiltViewModel
 class DetailBottomSheetViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    private val firebaseCoreUseCases: FirebaseCoreUseCases
+    private val firebaseCoreUseCases: FirebaseCoreUseCases,
+    private val localDatabaseUseCases: LocalDatabaseUseCases
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(DetailBottomSheetState())
@@ -28,9 +30,48 @@ class DetailBottomSheetViewModel @Inject constructor(
     init {
         savedStateHandle.get<Movie>("Movie")?.let { movie ->
             _state.value = DetailBottomSheetState(movie = movie)
+            updateDoesAddFavoriteState(
+                idThatCheck = movie.id,
+                addedFavoriteIds = localDatabaseUseCases.getFavoriteMovieIdsUseCase()
+            )
+            updateDoesAddWatchListState(
+                idThatCheck = movie.id,
+                addedMovieWatchListIds = localDatabaseUseCases.getMovieWatchListItemIdsUseCase()
+            )
         }
         savedStateHandle.get<TvSeries>("TvSeries")?.let { tvSeries ->
             _state.value = DetailBottomSheetState(tvSeries = tvSeries)
+            updateDoesAddFavoriteState(
+                idThatCheck = tvSeries.id,
+                addedFavoriteIds = localDatabaseUseCases.getFavoriteTvSeriesIdsUseCase()
+            )
+            updateDoesAddWatchListState(
+                idThatCheck = tvSeries.id,
+                addedMovieWatchListIds = localDatabaseUseCases.getTvSeriesWatchListItemIdsUseCase()
+            )
+        }
+
+    }
+
+    private fun updateDoesAddFavoriteState(
+        idThatCheck: Int,
+        addedFavoriteIds: Flow<List<Int>>
+    ) {
+        viewModelScope.launch {
+            addedFavoriteIds.collectLatest { favoriteMovieIds ->
+                _state.update { it.copy(doesAddFavorite = favoriteMovieIds.any { id -> id == idThatCheck }) }
+            }
+        }
+    }
+
+    private fun updateDoesAddWatchListState(
+        idThatCheck: Int,
+        addedMovieWatchListIds: Flow<List<Int>>
+    ) {
+        viewModelScope.launch {
+            addedMovieWatchListIds.collectLatest { movieWatchListItemIds ->
+                _state.update { it.copy(doesAddWatchList = movieWatchListItemIds.any { id -> id == idThatCheck }) }
+            }
         }
     }
 
@@ -40,18 +81,18 @@ class DetailBottomSheetViewModel @Inject constructor(
                 emitUiEvent(DetailBottomUiEvent.PopBackStack)
             }
             is DetailBottomSheetEvent.NavigateToDetailFragment -> {
-                navigateToDetailFragment(movieId = getMovieId(), tvId = getTvSeriesId())
+                navigateToDetailFragment(movieId = getMovie()?.id, tvId = getTvSeries()?.id)
             }
             is DetailBottomSheetEvent.Share -> {
 
             }
             is DetailBottomSheetEvent.ClickedAddFavoriteList -> {
                 if (isUserSignIn()) {
-                    getMovieId()?.let { movieId ->
-                        addMovieToFavoriteList(movieId = movieId)
+                    getMovie()?.let { movie ->
+                        toggleMovieForFavoriteList(movie = movie)
                     }
-                    getTvSeriesId()?.let { tvId ->
-                        addTvSeriesToFavoriteList(tvId = tvId)
+                    getTvSeries()?.let { tvSeries ->
+                        toggleTvSeriesForFavoriteList(tvSeries = tvSeries)
                     }
                 } else {
                     emitUiEvent(DetailBottomUiEvent.ShowAlertDialog)
@@ -59,11 +100,11 @@ class DetailBottomSheetViewModel @Inject constructor(
             }
             is DetailBottomSheetEvent.ClickedAddWatchList -> {
                 if (isUserSignIn()) {
-                    getMovieId()?.let { movieId ->
-                        addMovieToWatchList(movieId = movieId)
+                    getMovie()?.let { movie ->
+                        toggleMovieForWatchList(movie = movie)
                     }
-                    getTvSeriesId()?.let { tvId ->
-                        addTvSeriesToWatchList(tvId = tvId)
+                    getTvSeries()?.let { tvSeries ->
+                        toggleTvSeriesForWatchList(tvSeries = tvSeries)
                     }
                 } else {
                     emitUiEvent(DetailBottomUiEvent.ShowAlertDialog)
@@ -75,32 +116,50 @@ class DetailBottomSheetViewModel @Inject constructor(
         }
     }
 
-    private fun getMovieId(): Int? {
-        return state.value.movie?.id
+    private fun getMovie(): Movie? {
+        return state.value.movie
     }
 
-    private fun getTvSeriesId(): Int? {
-        return state.value.tvSeries?.id
+    private fun getTvSeries(): TvSeries? {
+        return state.value.tvSeries
     }
 
     private fun isUserSignIn(): Boolean {
         return firebaseCoreUseCases.isUserSignInUseCase()
     }
 
-    private fun addMovieToFavoriteList(movieId: Int) {
-        // TODO
+    private fun toggleMovieForFavoriteList(movie: Movie) {
+        viewModelScope.launch {
+            localDatabaseUseCases.toggleMovieForFavoriteListUseCase(
+                movie = movie, doesAddFavoriteList = state.value.doesAddFavorite
+            )
+        }
     }
 
-    private fun addTvSeriesToFavoriteList(tvId: Int) {
-        // TODO
+    private fun toggleMovieForWatchList(movie: Movie) {
+        viewModelScope.launch {
+            localDatabaseUseCases.toggleMovieForWatchListUseCase(
+                movie = movie, doesAddWatchList = state.value.doesAddWatchList
+            )
+        }
     }
 
-    private fun addMovieToWatchList(movieId: Int) {
-        // TODO
+    private fun toggleTvSeriesForFavoriteList(tvSeries: TvSeries) {
+        viewModelScope.launch {
+            localDatabaseUseCases.toggleTvSeriesForFavoriteListUseCase(
+                tvSeries = tvSeries,
+                doesAddFavorite = state.value.doesAddFavorite
+            )
+        }
     }
 
-    private fun addTvSeriesToWatchList(tvId: Int) {
-        // TODO
+    private fun toggleTvSeriesForWatchList(tvSeries: TvSeries) {
+        viewModelScope.launch {
+            localDatabaseUseCases.toggleTvSeriesForWatchListItemUseCase(
+                tvSeries = tvSeries,
+                doesAddWatchList = state.value.doesAddWatchList
+            )
+        }
     }
 
     private fun navigateToDetailFragment(movieId: Int? = null, tvId: Int? = null) {

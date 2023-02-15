@@ -15,10 +15,10 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.prmto.mova_movieapp.R
 import com.prmto.mova_movieapp.core.data.data_source.remote.ImageApi
 import com.prmto.mova_movieapp.core.data.data_source.remote.ImageSize
+import com.prmto.mova_movieapp.core.domain.models.Movie
+import com.prmto.mova_movieapp.core.domain.models.TvSeries
 import com.prmto.mova_movieapp.core.presentation.util.AlertDialogUtil
 import com.prmto.mova_movieapp.databinding.FragmentDetailBottomSheetBinding
-import com.prmto.mova_movieapp.feature_home.domain.models.Movie
-import com.prmto.mova_movieapp.feature_home.domain.models.TvSeries
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -54,33 +54,7 @@ class DetailBottomSheet : BottomSheetDialogFragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
-                    viewModel.uiEvent.collectLatest { uiEvent ->
-                        when (uiEvent) {
-                            is DetailBottomUiEvent.NavigateTo -> {
-                                findNavController().navigate(uiEvent.directions)
-                            }
-                            is DetailBottomUiEvent.PopBackStack -> {
-                                findNavController().popBackStack()
-                            }
-                            is DetailBottomUiEvent.ShowSnackbar -> {
-                                return@collectLatest
-                            }
-                            is DetailBottomUiEvent.ShowAlertDialog -> {
-                                AlertDialogUtil.showAlertDialog(
-                                    context = requireContext(),
-                                    title = R.string.sign_in,
-                                    message = R.string.must_login_able_to_add_in_list,
-                                    positiveBtnMessage = R.string.sign_in,
-                                    negativeBtnMessage = R.string.cancel,
-                                    onClickPositiveButton = {
-                                        viewModel.onEvent(
-                                            DetailBottomSheetEvent.NavigateToLoginFragment
-                                        )
-                                    }
-                                )
-                            }
-                        }
-                    }
+                    collectUiEvent()
                 }
 
                 launch {
@@ -91,7 +65,55 @@ class DetailBottomSheet : BottomSheetDialogFragment() {
                         if (state.tvSeries != null) {
                             bindTvSeries(tvSeries = state.tvSeries)
                         }
+                        setAddFavoriteIcon(state.doesAddFavorite)
+                        setAddWatchListIcon(state.doesAddWatchList)
                     }
+                }
+            }
+        }
+    }
+
+    private fun setAddWatchListIcon(doesAddWatchList: Boolean) {
+        if (doesAddWatchList) {
+            binding.btnWatchingList.setImageResource(R.drawable.ic_baseline_video_library_24)
+        } else {
+            binding.btnWatchingList.setImageResource(R.drawable.outline_video_library_24)
+        }
+    }
+
+    private fun setAddFavoriteIcon(doesAddFavorite: Boolean) {
+        if (doesAddFavorite) {
+            binding.btnFavoriteList.setImageResource(R.drawable.ic_baseline_favorite_24)
+        } else {
+            binding.btnFavoriteList.setImageResource(R.drawable.ic_baseline_favorite_border_24)
+        }
+    }
+
+    private suspend fun collectUiEvent() {
+        viewModel.uiEvent.collectLatest { uiEvent ->
+            when (uiEvent) {
+                is DetailBottomUiEvent.NavigateTo -> {
+                    findNavController().navigate(uiEvent.directions)
+                }
+                is DetailBottomUiEvent.PopBackStack -> {
+                    findNavController().popBackStack()
+                }
+                is DetailBottomUiEvent.ShowSnackbar -> {
+                    return@collectLatest
+                }
+                is DetailBottomUiEvent.ShowAlertDialog -> {
+                    AlertDialogUtil.showAlertDialog(
+                        context = requireContext(),
+                        title = R.string.sign_in,
+                        message = R.string.must_login_able_to_add_in_list,
+                        positiveBtnMessage = R.string.sign_in,
+                        negativeBtnMessage = R.string.cancel,
+                        onClickPositiveButton = {
+                            viewModel.onEvent(
+                                DetailBottomSheetEvent.NavigateToLoginFragment
+                            )
+                        }
+                    )
                 }
             }
         }

@@ -7,6 +7,7 @@ buildscript {
         paging_version = '3.1.1'
         data_store_version = "1.0.0"
         kotlin_version = '1.8.10'
+        room_version = "2.5.0"
     }
 
 

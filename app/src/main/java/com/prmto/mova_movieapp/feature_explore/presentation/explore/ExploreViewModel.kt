@@ -8,6 +8,8 @@ import com.prmto.mova_movieapp.R
 import com.prmto.mova_movieapp.core.data.dto.Genre
 import com.prmto.mova_movieapp.core.data.models.enums.Category
 import com.prmto.mova_movieapp.core.data.models.enums.isTv
+import com.prmto.mova_movieapp.core.domain.models.Movie
+import com.prmto.mova_movieapp.core.domain.models.TvSeries
 import com.prmto.mova_movieapp.core.domain.repository.ConnectivityObserver
 import com.prmto.mova_movieapp.core.domain.repository.isAvaliable
 import com.prmto.mova_movieapp.core.presentation.util.UiEvent
@@ -20,8 +22,6 @@ import com.prmto.mova_movieapp.feature_explore.presentation.event.ExploreFragmen
 import com.prmto.mova_movieapp.feature_explore.presentation.explore.event.ExploreAdapterLoadStateEvent
 import com.prmto.mova_movieapp.feature_explore.presentation.explore.state.ExplorePagingAdapterLoadState
 import com.prmto.mova_movieapp.feature_explore.presentation.filter_bottom_sheet.state.FilterBottomState
-import com.prmto.mova_movieapp.feature_home.domain.models.Movie
-import com.prmto.mova_movieapp.feature_home.domain.models.TvSeries
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.*

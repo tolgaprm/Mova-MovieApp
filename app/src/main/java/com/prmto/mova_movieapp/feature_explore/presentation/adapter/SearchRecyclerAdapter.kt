@@ -4,6 +4,8 @@ import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import com.prmto.mova_movieapp.core.domain.models.Movie
+import com.prmto.mova_movieapp.core.domain.models.TvSeries
 import com.prmto.mova_movieapp.feature_explore.data.dto.SearchDto
 import com.prmto.mova_movieapp.feature_explore.data.dto.toMovieSearch
 import com.prmto.mova_movieapp.feature_explore.data.dto.toPersonSearch
@@ -15,8 +17,6 @@ import com.prmto.mova_movieapp.feature_explore.domain.util.MediaType
 import com.prmto.mova_movieapp.feature_explore.presentation.adapter.viewHolder.SearchMovieViewHolder
 import com.prmto.mova_movieapp.feature_explore.presentation.adapter.viewHolder.SearchPersonViewHolder
 import com.prmto.mova_movieapp.feature_explore.presentation.adapter.viewHolder.SearchTvViewHolder
-import com.prmto.mova_movieapp.feature_home.domain.models.Movie
-import com.prmto.mova_movieapp.feature_home.domain.models.TvSeries
 
 class SearchRecyclerAdapter :
     PagingDataAdapter<SearchDto, ViewHolder>(diffCallback = diffCallback) {

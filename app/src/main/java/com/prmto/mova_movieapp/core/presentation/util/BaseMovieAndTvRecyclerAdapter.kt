@@ -6,9 +6,9 @@ import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.prmto.mova_movieapp.R
+import com.prmto.mova_movieapp.core.domain.models.Movie
+import com.prmto.mova_movieapp.core.domain.models.TvSeries
 import com.prmto.mova_movieapp.databinding.MovieRowBinding
-import com.prmto.mova_movieapp.feature_home.domain.models.Movie
-import com.prmto.mova_movieapp.feature_home.domain.models.TvSeries
 import com.prmto.mova_movieapp.feature_home.presentation.home.adapter.DiffUtilCallBack
 
 abstract class BaseMovieAndTvRecyclerAdapter<T : Any>(

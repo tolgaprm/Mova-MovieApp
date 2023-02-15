@@ -2,11 +2,11 @@ package com.prmto.mova_movieapp.feature_explore.domain.use_case
 
 import androidx.paging.PagingData
 import androidx.paging.map
+import com.prmto.mova_movieapp.core.domain.models.Movie
 import com.prmto.mova_movieapp.core.domain.use_case.GetMovieGenreListUseCase
 import com.prmto.mova_movieapp.core.presentation.util.HandleUtils
 import com.prmto.mova_movieapp.feature_explore.domain.repository.ExploreRepository
 import com.prmto.mova_movieapp.feature_explore.presentation.filter_bottom_sheet.state.FilterBottomState
-import com.prmto.mova_movieapp.feature_home.domain.models.Movie
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import javax.inject.Inject

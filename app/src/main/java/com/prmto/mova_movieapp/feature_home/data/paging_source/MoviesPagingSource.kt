@@ -3,11 +3,11 @@ package com.prmto.mova_movieapp.feature_home.data.paging_source
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.prmto.mova_movieapp.core.data.models.enums.MoviesApiFunction
+import com.prmto.mova_movieapp.core.domain.models.Movie
 import com.prmto.mova_movieapp.core.util.Constants.DEFAULT_REGION
 import com.prmto.mova_movieapp.core.util.Constants.STARTING_PAGE
 import com.prmto.mova_movieapp.feature_home.data.dto.toMovieList
 import com.prmto.mova_movieapp.feature_home.data.remote.HomeApi
-import com.prmto.mova_movieapp.feature_home.domain.models.Movie
 import javax.inject.Inject
 
 class MoviesPagingSource @Inject constructor(
