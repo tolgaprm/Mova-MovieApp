@@ -91,4 +91,46 @@
     <string name="trailers">Trailers</string>
     <string name="recommendation">Recommendations</string>
     <string name="similar">Similar</string>
+
+    <string name="login_to_your_account">Login to Your Account</string>
+    <string name="create_your_account">Create Your Account</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="sign_in">Sign In</string>
+    <string name="sign_up">Sign up</string>
+    <string name="don_t_have_an_account">Don\'t have an account?</string>
+    <string name="forget_the_password">Forget the password?</string>
+    <string name="forget_password">Forget password</string>
+    <string name="back_to_login">Back to login</string>
+    <string name="check_your_email">Check your email</string>
+    <string name="or_continue_with">or continue with</string>
+    <string name="sign_in_with_google">Sign In With Google</string>
+    <string name="log_out">Log out</string>
+    <string name="are_you_sure_log_out">Are you sure you want to log out?</string>
+    <string name="log_out_message">After log out, you can\'t add movie to favorite or watch lists</string>
+    <string name="successfully_log_out">Successfully log out</string>
+
+    <string name="cancel">Cancel</string>
+    <string name="must_login_able_to_add_in_list"> You must to login to able to add in list</string>
+    <string name="error_field_empty">This field can\'t be empty</string>
+
+    // FirebaseAuth Error Message
+    <string name="error_invalid_custom_token">Invalid custom token provided.</string>
+    <string name="error_custom_token_mismatch">The custom token provided does not match the stored API key.</string>
+    <string name="error_invalid_credential">Invalid credential provided.</string>
+    <string name="error_invalid_email">Invalid email address provided.</string>
+    <string name="error_wrong_password">Incorrect password provided.</string>
+    <string name="error_user_mismatch">The credential provided does not match the stored account.</string>
+    <string name="error_requires_recent_login">The user needs to have recently signed in.</string>
+    <string name="error_account_exists_with_different_credential">User already exists with different credential.</string>
+    <string name="error_email_already_in_use">Email address is already in use.</string>
+    <string name="error_credential_already_in_use">Credential is already in use.</string>
+    <string name="error_user_disabled">User account has been disabled.</string>
+    <string name="error_user_token_expired">User token has expired.</string>
+    <string name="error_user_not_found">User account not found.</string>
+    <string name="error_invalid_user_token">Invalid user token provided.</string>
+    <string name="error_operation_not_allowed">This operation is not allowed.</string>
+    <string name="error_weak_password">Password is too weak.</string>
+
+
 </resources>

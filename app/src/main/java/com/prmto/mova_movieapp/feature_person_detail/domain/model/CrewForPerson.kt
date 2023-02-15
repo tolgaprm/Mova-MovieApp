@@ -1,7 +1,7 @@
 package com.prmto.mova_movieapp.feature_person_detail.domain.model
 
-import com.prmto.mova_movieapp.feature_home.domain.models.Movie
-import com.prmto.mova_movieapp.feature_home.domain.models.TvSeries
+import com.prmto.mova_movieapp.core.domain.models.Movie
+import com.prmto.mova_movieapp.core.domain.models.TvSeries
 
 data class CrewForPerson(
         val id: Int,

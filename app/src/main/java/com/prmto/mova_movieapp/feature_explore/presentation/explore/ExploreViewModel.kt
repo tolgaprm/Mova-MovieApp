@@ -8,20 +8,20 @@ import com.prmto.mova_movieapp.R
 import com.prmto.mova_movieapp.core.data.dto.Genre
 import com.prmto.mova_movieapp.core.data.models.enums.Category
 import com.prmto.mova_movieapp.core.data.models.enums.isTv
+import com.prmto.mova_movieapp.core.domain.models.Movie
+import com.prmto.mova_movieapp.core.domain.models.TvSeries
 import com.prmto.mova_movieapp.core.domain.repository.ConnectivityObserver
 import com.prmto.mova_movieapp.core.domain.repository.isAvaliable
+import com.prmto.mova_movieapp.core.presentation.util.UiEvent
 import com.prmto.mova_movieapp.core.presentation.util.UiText
 import com.prmto.mova_movieapp.core.util.Constants.DEFAULT_LANGUAGE
 import com.prmto.mova_movieapp.feature_explore.data.dto.SearchDto
 import com.prmto.mova_movieapp.feature_explore.domain.use_case.ExploreUseCases
 import com.prmto.mova_movieapp.feature_explore.presentation.event.ExploreBottomSheetEvent
 import com.prmto.mova_movieapp.feature_explore.presentation.event.ExploreFragmentEvent
-import com.prmto.mova_movieapp.feature_explore.presentation.event.ExploreUiEvent
 import com.prmto.mova_movieapp.feature_explore.presentation.explore.event.ExploreAdapterLoadStateEvent
 import com.prmto.mova_movieapp.feature_explore.presentation.explore.state.ExplorePagingAdapterLoadState
 import com.prmto.mova_movieapp.feature_explore.presentation.filter_bottom_sheet.state.FilterBottomState
-import com.prmto.mova_movieapp.feature_home.domain.models.Movie
-import com.prmto.mova_movieapp.feature_home.domain.models.TvSeries
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.*
@@ -55,10 +55,8 @@ class ExploreViewModel @Inject constructor(
     private val _pagingState = MutableStateFlow(ExplorePagingAdapterLoadState())
     val pagingState: StateFlow<ExplorePagingAdapterLoadState> = _pagingState.asStateFlow()
 
-    private val _eventFlow = MutableSharedFlow<ExploreUiEvent>()
+    private val _eventFlow = MutableSharedFlow<UiEvent>()
     val eventFlow = _eventFlow.asSharedFlow()
-
-    private val _connectivityState = MutableStateFlow(ConnectivityObserver.Status.Avaliable)
 
 
     private var handler: CoroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
@@ -131,20 +129,12 @@ class ExploreViewModel @Inject constructor(
             }
             is ExploreFragmentEvent.NavigateToDetailBottomSheet -> {
                 viewModelScope.launch {
-                    _eventFlow.emit(ExploreUiEvent.NavigateTo(event.directions))
-                }
-            }
-            is ExploreFragmentEvent.UpdateConnectivityStatus -> {
-                _connectivityState.value = event.connectivityStatus
-                if (!event.connectivityStatus.isAvaliable()) {
-                    viewModelScope.launch {
-                        _eventFlow.emit(ExploreUiEvent.ShowSnackbar(UiText.StringResource(R.string.internet_error)))
-                    }
+                    _eventFlow.emit(UiEvent.NavigateTo(event.directions))
                 }
             }
             is ExploreFragmentEvent.NavigateToPersonDetail -> {
                 viewModelScope.launch {
-                    _eventFlow.emit(ExploreUiEvent.NavigateTo(event.directions))
+                    _eventFlow.emit(UiEvent.NavigateTo(event.directions))
                 }
             }
         }
@@ -172,7 +162,7 @@ class ExploreViewModel @Inject constructor(
             }
 
             is ExploreBottomSheetEvent.Apply -> {
-                viewModelScope.launch { _eventFlow.emit(ExploreUiEvent.PopBackStack) }
+                viewModelScope.launch { _eventFlow.emit(UiEvent.PopBackStack) }
             }
         }
     }
@@ -183,7 +173,7 @@ class ExploreViewModel @Inject constructor(
             is ExploreAdapterLoadStateEvent.PagingError -> {
                 _pagingState.update { it.copy(errorUiText = event.uiText) }
                 viewModelScope.launch {
-                    _eventFlow.emit(ExploreUiEvent.ShowSnackbar(event.uiText))
+                    _eventFlow.emit(UiEvent.ShowSnackbar(event.uiText))
                 }
             }
             is ExploreAdapterLoadStateEvent.FilterAdapterLoading -> {
@@ -239,7 +229,7 @@ class ExploreViewModel @Inject constructor(
                     getMovieGenreList()
                 }
             } catch (e: Exception) {
-                _eventFlow.emit(ExploreUiEvent.ShowSnackbar(UiText.StringResource(R.string.internet_error)))
+                _eventFlow.emit(UiEvent.ShowSnackbar(UiText.StringResource(R.string.internet_error)))
                 Timber.e("Didn't download genreList $e")
             }
         }

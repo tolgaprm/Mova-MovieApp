@@ -4,15 +4,15 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
+import com.prmto.mova_movieapp.core.domain.models.Movie
+import com.prmto.mova_movieapp.core.domain.models.TvSeries
 import com.prmto.mova_movieapp.core.domain.repository.ConnectivityObserver
 import com.prmto.mova_movieapp.core.domain.repository.isAvaliable
+import com.prmto.mova_movieapp.core.presentation.util.BaseUiEvent
 import com.prmto.mova_movieapp.core.presentation.util.UiText
-import com.prmto.mova_movieapp.feature_home.domain.models.Movie
-import com.prmto.mova_movieapp.feature_home.domain.models.TvSeries
 import com.prmto.mova_movieapp.feature_home.domain.use_cases.HomeUseCases
 import com.prmto.mova_movieapp.feature_home.presentation.home.event.HomeAdapterLoadStateEvent
 import com.prmto.mova_movieapp.feature_home.presentation.home.event.HomeEvent
-import com.prmto.mova_movieapp.feature_home.presentation.home.event.HomeUiEvent
 import com.prmto.mova_movieapp.feature_home.presentation.home.state.HomePagingAdapterLoadState
 import com.prmto.mova_movieapp.feature_home.presentation.home.state.HomeState
 import com.prmto.mova_movieapp.feature_home.presentation.home.state.PagingAdapterLoadStateItem
@@ -38,7 +38,7 @@ class HomeViewModel @Inject constructor(
     private val _networkState = MutableStateFlow(ConnectivityObserver.Status.Unavaliable)
     val networkState: StateFlow<ConnectivityObserver.Status> = _networkState.asStateFlow()
 
-    private val _eventFlow = MutableSharedFlow<HomeUiEvent>()
+    private val _eventFlow = MutableSharedFlow<BaseUiEvent>()
     val eventFlow = _eventFlow.asSharedFlow()
 
     private val handler = CoroutineExceptionHandler { _, throwable ->
@@ -88,7 +88,7 @@ class HomeViewModel @Inject constructor(
             is HomeEvent.OnBackPressed -> hideSeeAllPage()
             is HomeEvent.NavigateToDetailBottomSheet -> {
                 viewModelScope.launch {
-                    _eventFlow.emit(HomeUiEvent.NavigateTo(event.directions))
+                    _eventFlow.emit(BaseUiEvent.NavigateTo(event.directions))
                 }
             }
             is HomeEvent.UpdateCountryIsoCode -> {
@@ -171,7 +171,7 @@ class HomeViewModel @Inject constructor(
 
     private fun emitErrorForShowSnackBar(uiText: UiText) {
         viewModelScope.launch {
-            _eventFlow.emit(HomeUiEvent.ShowSnackbar(uiText))
+            _eventFlow.emit(BaseUiEvent.ShowSnackbar(uiText))
         }
     }
 

@@ -1,6 +1,6 @@
 package com.prmto.mova_movieapp.feature_home.data.dto
 
-import com.prmto.mova_movieapp.feature_home.domain.models.Movie
+import com.prmto.mova_movieapp.core.domain.models.Movie
 import com.squareup.moshi.Json
 
 data class MovieDto(

@@ -19,6 +19,12 @@ object Constants {
 
     const val QUERY_APPEND_TO_RESPONSE = "credits,watch/providers"
 
-    const val LATEST_SHOWS_SEE_ALL_PAGE_TOOLBAR_TEXT_ID = "latestRecyclerViewSeeAllSectionText"
+    const val FAVORITE_MOVIE_TABLE_NAME = "favoriteMovieTable"
+
+    const val MOVIE_WATCH_LIST_ITEM_TABLE_NAME = "movieWatchListTable"
+
+    const val FAVORITE_TV_SERIES_TABLE_NAME = "favoriteTvSeriesTable"
+
+    const val TV_SERIES_WATCH_LIST_ITEM_TABLE_NAME = "tvSeriesWatchListTable"
 
 }

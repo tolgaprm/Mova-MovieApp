@@ -2,7 +2,7 @@ package com.prmto.mova_movieapp.core.presentation.util
 
 import com.google.common.truth.Truth.assertThat
 import com.prmto.mova_movieapp.core.data.dto.Genre
-import com.prmto.mova_movieapp.feature_home.domain.models.Movie
+import com.prmto.mova_movieapp.core.domain.models.Movie
 import org.junit.Test
 
 class HandleUtilsTest {
@@ -35,7 +35,6 @@ class HandleUtilsTest {
             title = "",
             originalTitle = "",
             posterPath = "",
-            backdropPath = "",
             releaseDate = "",
             genreIds = listOf(
                 2, 3, 6
@@ -72,7 +71,6 @@ class HandleUtilsTest {
             title = "",
             originalTitle = "",
             posterPath = "",
-            backdropPath = "",
             releaseDate = "",
             genreIds = listOf(),
             voteAverage = 0.0,
@@ -95,7 +93,6 @@ class HandleUtilsTest {
             title = "",
             originalTitle = "",
             posterPath = "",
-            backdropPath = "",
             releaseDate = "",
             genreIds = listOf(
                 11

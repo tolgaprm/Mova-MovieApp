@@ -15,6 +15,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.prmto.mova_movieapp.R
 import com.prmto.mova_movieapp.core.data.models.enums.Category
 import com.prmto.mova_movieapp.core.domain.repository.isAvaliable
+import com.prmto.mova_movieapp.core.presentation.util.UiEvent
 import com.prmto.mova_movieapp.core.presentation.util.asString
 import com.prmto.mova_movieapp.core.presentation.util.isEmpty
 import com.prmto.mova_movieapp.core.util.HandlePagingLoadStates
@@ -23,7 +24,6 @@ import com.prmto.mova_movieapp.feature_explore.presentation.adapter.FilterMovies
 import com.prmto.mova_movieapp.feature_explore.presentation.adapter.FilterTvSeriesAdapter
 import com.prmto.mova_movieapp.feature_explore.presentation.adapter.SearchRecyclerAdapter
 import com.prmto.mova_movieapp.feature_explore.presentation.event.ExploreFragmentEvent
-import com.prmto.mova_movieapp.feature_explore.presentation.event.ExploreUiEvent
 import com.prmto.mova_movieapp.feature_explore.presentation.explore.event.ExploreAdapterLoadStateEvent
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
@@ -166,17 +166,17 @@ class ExploreFragment : Fragment(R.layout.fragment_explore) {
                 launch {
                     viewModel.eventFlow.collectLatest { event ->
                         when (event) {
-                            is ExploreUiEvent.ShowSnackbar -> {
+                            is UiEvent.ShowSnackbar -> {
                                 Snackbar.make(
                                     requireView(),
                                     event.uiText.asString(requireContext()),
                                     Snackbar.LENGTH_SHORT
                                 ).show()
                             }
-                            is ExploreUiEvent.PopBackStack -> {
+                            is UiEvent.PopBackStack -> {
                                 findNavController().popBackStack()
                             }
-                            is ExploreUiEvent.NavigateTo -> {
+                            is UiEvent.NavigateTo -> {
                                 findNavController().navigate(event.directions)
                             }
                         }

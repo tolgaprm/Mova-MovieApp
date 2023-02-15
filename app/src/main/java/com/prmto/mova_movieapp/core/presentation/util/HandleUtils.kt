@@ -1,7 +1,7 @@
 package com.prmto.mova_movieapp.core.presentation.util
 
 import com.prmto.mova_movieapp.core.data.dto.Genre
-import com.prmto.mova_movieapp.feature_home.domain.models.Movie
+import com.prmto.mova_movieapp.core.domain.models.Movie
 
 object HandleUtils {
 

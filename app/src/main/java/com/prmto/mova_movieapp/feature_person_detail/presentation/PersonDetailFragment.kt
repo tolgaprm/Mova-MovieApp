@@ -16,7 +16,7 @@ import coil.load
 import com.google.android.material.snackbar.Snackbar
 import com.prmto.mova_movieapp.R
 import com.prmto.mova_movieapp.core.data.data_source.remote.ImageApi
-import com.prmto.mova_movieapp.core.presentation.util.UiEvent
+import com.prmto.mova_movieapp.core.presentation.util.BaseUiEvent
 import com.prmto.mova_movieapp.core.presentation.util.asString
 import com.prmto.mova_movieapp.core.util.toolBarTextVisibilityByScrollPositionOfNestedScrollView
 import com.prmto.mova_movieapp.databinding.FragmentPersonDetailBinding
@@ -139,16 +139,17 @@ class PersonDetailFragment : Fragment(R.layout.fragment_person_detail) {
                 launch {
                     viewModel.eventFlow.collectLatest { event ->
                         when (event) {
-                            is UiEvent.ShowSnackbar -> {
+                            is BaseUiEvent.ShowSnackbar -> {
                                 Snackbar.make(
                                     requireView(),
                                     event.uiText.asString(requireContext()),
                                     Snackbar.LENGTH_SHORT
                                 ).show()
                             }
-                            is UiEvent.NavigateTo -> {
+                            is BaseUiEvent.NavigateTo -> {
                                 return@collectLatest
                             }
+                            else -> return@collectLatest
                         }
                     }
                 }
