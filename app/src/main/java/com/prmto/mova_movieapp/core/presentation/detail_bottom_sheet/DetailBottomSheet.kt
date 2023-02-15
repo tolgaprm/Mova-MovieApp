@@ -68,6 +68,10 @@ class DetailBottomSheet : BottomSheetDialogFragment() {
                             is DetailBottomUiEvent.ShowAlertDialog -> {
                                 AlertDialogUtil.showAlertDialog(
                                     context = requireContext(),
+                                    title = R.string.sign_in,
+                                    message = R.string.must_login_able_to_add_in_list,
+                                    positiveBtnMessage = R.string.sign_in,
+                                    negativeBtnMessage = R.string.cancel,
                                     onClickPositiveButton = {
                                         viewModel.onEvent(
                                             DetailBottomSheetEvent.NavigateToLoginFragment
