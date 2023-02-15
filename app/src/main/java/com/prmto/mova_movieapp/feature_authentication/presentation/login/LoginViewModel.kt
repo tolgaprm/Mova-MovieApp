@@ -2,8 +2,13 @@ package com.prmto.mova_movieapp.feature_authentication.presentation.login
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.tasks.Task
+import com.prmto.mova_movieapp.R
 import com.prmto.mova_movieapp.core.presentation.util.StandardTextFieldState
 import com.prmto.mova_movieapp.core.presentation.util.UiEvent
+import com.prmto.mova_movieapp.core.presentation.util.UiText
+import com.prmto.mova_movieapp.feature_authentication.domain.use_case.SignInWithCredentialUseCase
 import com.prmto.mova_movieapp.feature_authentication.domain.use_case.SignInWithEmailAndPasswordUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
@@ -12,7 +17,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val signInWithEmailAndUserName: SignInWithEmailAndPasswordUseCase
+    private val signInWithEmailAndUserName: SignInWithEmailAndPasswordUseCase,
+    private val signInWithCredentialUseCase: SignInWithCredentialUseCase
 ) : ViewModel() {
 
     private val _emailState = MutableStateFlow(StandardTextFieldState())
@@ -48,10 +54,7 @@ class LoginViewModel @Inject constructor(
                 signIn(email = emailState.value.text, password = passwordState.value.text)
             }
             is LoginEvent.SignInWithGoogle -> {
-
-            }
-            is LoginEvent.SignInWithFacebook -> {
-
+                handleResultsForSignInWithGoogle(task = event.task)
             }
             is LoginEvent.ClickedSignUp -> {
                 emitUiEvent(UiEvent.NavigateTo(LoginFragmentDirections.actionLoginFragmentToSignUpFragment()))
@@ -91,6 +94,30 @@ class LoginViewModel @Inject constructor(
     private fun emitUiEvent(uiEvent: UiEvent) {
         viewModelScope.launch {
             _uiEvent.emit(uiEvent)
+        }
+    }
+
+    private fun handleResultsForSignInWithGoogle(task: Task<GoogleSignInAccount>) {
+        if (task.isSuccessful) {
+            _isLoading.value = true
+            val result = signInWithCredentialUseCase(
+                task = task,
+                onSuccess = {
+                    emitUiEvent(UiEvent.ShowSnackbar(UiText.DynamicText("Successfully login.")))
+                    emitUiEvent(UiEvent.NavigateTo(LoginFragmentDirections.actionLoginFragmentToHomeFragment()))
+                    _isLoading.value = false
+                },
+                onFailure = { uiText ->
+                    emitUiEvent(UiEvent.ShowSnackbar(uiText))
+                    _isLoading.value = false
+                }
+            )
+            if (result.errorMessage != null) {
+                emitUiEvent(UiEvent.ShowSnackbar(result.errorMessage))
+                _isLoading.value = false
+            }
+        } else {
+            emitUiEvent(UiEvent.ShowSnackbar(UiText.StringResource(R.string.something_went_wrong)))
         }
     }
 }

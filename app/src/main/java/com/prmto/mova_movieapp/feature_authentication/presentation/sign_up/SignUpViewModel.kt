@@ -37,12 +37,6 @@ class SignUpViewModel @Inject constructor(
             is SignUpEvent.SignUp -> {
                 createUser(email = emailState.value.text, password = passwordState.value.text)
             }
-            is SignUpEvent.SignUpWithGoogle -> {
-
-            }
-            is SignUpEvent.SignUpWithFacebook -> {
-
-            }
             is SignUpEvent.ClickedSignIn -> {
                 emitUiEvent(UiEvent.PopBackStack)
             }

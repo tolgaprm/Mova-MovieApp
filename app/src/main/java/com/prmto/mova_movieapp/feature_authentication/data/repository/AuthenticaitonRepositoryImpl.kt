@@ -1,5 +1,6 @@
 package com.prmto.mova_movieapp.feature_authentication.data.repository
 
+import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthException
 import com.prmto.mova_movieapp.core.presentation.util.UiText
@@ -53,6 +54,18 @@ class AuthenticationRepositoryImpl @Inject constructor(
             .addOnFailureListener { exception ->
                 setException(exception = exception, onFailure = onFailure)
             }
+    }
+
+    override fun signInWithCredential(
+        credential: AuthCredential,
+        onSuccess: () -> Unit,
+        onFailure: (uiText: UiText) -> Unit
+    ) {
+        firebaseAuth.signInWithCredential(credential).addOnSuccessListener {
+            onSuccess()
+        }.addOnFailureListener { exception ->
+            setException(exception = exception, onFailure = onFailure)
+        }
     }
 
     private fun setException(

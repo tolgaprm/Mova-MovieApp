@@ -1,7 +1,9 @@
 package com.prmto.mova_movieapp.feature_authentication.presentation.login
 
+import android.app.Activity
 import android.os.Bundle
 import android.view.View
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
@@ -10,6 +12,9 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.material.snackbar.Snackbar
 import com.prmto.mova_movieapp.R
 import com.prmto.mova_movieapp.core.presentation.util.UiEvent
@@ -28,13 +33,20 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
 
-
+    private lateinit var googleSignInClient: GoogleSignInClient
     private val viewModel: LoginViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val binding = FragmentLoginBinding.bind(view)
         _binding = binding
+
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(getString(R.string.default_web_client_id))
+            .requestEmail()
+            .build()
+
+        googleSignInClient = GoogleSignIn.getClient(requireContext(), gso)
 
         collectData()
 
@@ -68,7 +80,25 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         binding.txtSignUp.setOnClickListener {
             viewModel.onEvent(LoginEvent.ClickedSignUp)
         }
+
+        binding.btnSignInGoogle.setOnClickListener {
+            signInWithGoogle()
+        }
     }
+
+    private fun signInWithGoogle() {
+        val signInIntent = googleSignInClient.signInIntent
+        launcher.launch(signInIntent)
+    }
+
+    private val launcher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
+                viewModel.onEvent(LoginEvent.SignInWithGoogle(task))
+            }
+        }
+
 
     private fun collectData() {
         viewLifecycleOwner.lifecycleScope.launch {
@@ -129,7 +159,6 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
             binding.edtEmail.isEnabled = !isLoading
             binding.edtPassword.isEnabled = !isLoading
             binding.btnSignIn.isEnabled = !isLoading
-            binding.btnSignInFacebook.isEnabled = !isLoading
             binding.btnSignInGoogle.isEnabled = !isLoading
             binding.progressBar.isVisible = isLoading
         }
