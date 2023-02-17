@@ -1,12 +1,10 @@
 package com.prmto.mova_movieapp.di
 
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.prmto.mova_movieapp.core.data.repository.FirebaseCoreRepositoryImpl
 import com.prmto.mova_movieapp.core.domain.repository.FirebaseCoreRepository
-import com.prmto.mova_movieapp.core.domain.use_case.FirebaseCoreUseCases
-import com.prmto.mova_movieapp.core.domain.use_case.GetCurrentUserUseCase
-import com.prmto.mova_movieapp.core.domain.use_case.IsUserSignInUseCase
-import com.prmto.mova_movieapp.core.domain.use_case.SignOutUseCase
+import com.prmto.mova_movieapp.core.domain.use_case.*
 import com.prmto.mova_movieapp.feature_authentication.data.repository.AuthenticationRepositoryImpl
 import com.prmto.mova_movieapp.feature_authentication.domain.repository.AuthenticationRepository
 import com.prmto.mova_movieapp.feature_authentication.domain.use_case.CreateUserWithEmailAndPasswordUseCase
@@ -29,11 +27,19 @@ object FirebaseModule {
 
     @Provides
     @Singleton
+    fun provideFirebaseFirestore(): FirebaseFirestore {
+        return FirebaseFirestore.getInstance()
+    }
+
+
+    @Provides
+    @Singleton
     fun provideAuthenticationRepository(
         firebaseAuth: FirebaseAuth
     ): AuthenticationRepository {
         return AuthenticationRepositoryImpl(firebaseAuth)
     }
+
 
     @Provides
     @Singleton
@@ -54,9 +60,10 @@ object FirebaseModule {
     @Provides
     @Singleton
     fun provideFirebaseCoreRepository(
-        auth: FirebaseAuth
+        auth: FirebaseAuth,
+        firestore: FirebaseFirestore
     ): FirebaseCoreRepository {
-        return FirebaseCoreRepositoryImpl(auth)
+        return FirebaseCoreRepositoryImpl(auth, firestore)
     }
 
     @Provides
@@ -67,7 +74,19 @@ object FirebaseModule {
         return FirebaseCoreUseCases(
             getCurrentUserUseCase = GetCurrentUserUseCase(repository),
             signOutUseCase = SignOutUseCase(repository),
-            isUserSignInUseCase = IsUserSignInUseCase(repository)
+            isUserSignInUseCase = IsUserSignInUseCase(repository),
+            addMovieToFavoriteListInFirebaseUseCase = AddMovieToFavoriteListInFirebaseUseCase(
+                repository
+            ),
+            addMovieToWatchListInFirebaseUseCase = AddMovieToWatchListInFirebaseUseCase(repository),
+            addTvSeriesToFavoriteListInFirebaseUseCase = AddTvSeriesToFavoriteListInFirebaseUseCase(
+                repository
+            ),
+            addTvSeriesToWatchListInFirebaseUseCase = AddTvSeriesToWatchListInFirebaseUseCase(
+                repository
+            )
         )
     }
+
+
 }

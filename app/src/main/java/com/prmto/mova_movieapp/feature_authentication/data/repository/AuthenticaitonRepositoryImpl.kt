@@ -69,7 +69,7 @@ class AuthenticationRepositoryImpl @Inject constructor(
     }
 
     private fun setException(
-        exception: java.lang.Exception,
+        exception: Exception,
         onFailure: (uiText: UiText) -> Unit
     ) {
         if (exception is FirebaseAuthException) {

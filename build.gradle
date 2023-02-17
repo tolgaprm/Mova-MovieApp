@@ -8,6 +8,7 @@ buildscript {
         data_store_version = "1.0.0"
         kotlin_version = '1.8.10'
         room_version = "2.5.0"
+        work_version = "2.8.0"
     }
 
 

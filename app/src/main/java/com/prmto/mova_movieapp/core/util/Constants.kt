@@ -27,4 +27,10 @@ object Constants {
 
     const val TV_SERIES_WATCH_LIST_ITEM_TABLE_NAME = "tvSeriesWatchListTable"
 
+    const val FIREBASE_FAVORITE_DOCUMENT_NAME = "FavoriteList"
+    const val FIREBASE_WATCH_DOCUMENT_NAME = "WatchList"
+
+    const val FIREBASE_MOVIE_IDS_FIELD_NAME = "movieIds"
+    const val FIREBASE_TV_SERIES_IDS_FIELD_NAME = "tvSeriesIds"
+
 }

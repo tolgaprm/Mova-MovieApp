@@ -134,4 +134,12 @@
     <string name="error_invalid_user_token">Geçersiz bir kullanıcı belirteci sağlandı.</string>
     <string name="error_operation_not_allowed">Bu işlem yapılmasına izin verilmiyor.</string>
     <string name="error_weak_password">Şifre yetersiz güvenliğe sahip.</string>
+
+    // FirebaseFirestore Error Message
+    <string name="permission_denied_error">Bu işlemi gerçekleştirmek için gerekli izinlere sahip değilsiniz. Lütfen yönetici ile iletişime geçin.</string>
+    <string name="not_found_error">Aranan kayıt/doküman bulunamadı. Lütfen farklı bir sorgu deneyin.</string>
+    <string name="already_exists_error">Kayıt eklenemedi çünkü zaten var. Lütfen farklı bir kayıt ekleyin.</string>
+    <string name="aborted_error">İşlem tamamlanamadı çünkü gereken kaynak artık mevcut değil. Lütfen daha sonra tekrar deneyin.</string>
+    <string name="unavailable_error">Firebase sunucularına erişilemiyor. Lütfen internet bağlantınızı kontrol edin ve daha sonra tekrar deneyin.</string>
+
 </resources>
