@@ -8,5 +8,9 @@ data class LocalDatabaseUseCases(
     val toggleTvSeriesForFavoriteListUseCase: ToggleTvSeriesForFavoriteListUseCase,
     val toggleTvSeriesForWatchListItemUseCase: ToggleTvSeriesForWatchListItemUseCase,
     val getFavoriteTvSeriesIdsUseCase: GetFavoriteTvSeriesIdsUseCase,
-    val getTvSeriesWatchListItemIdsUseCase: GetTvSeriesWatchListItemIdsUseCase
+    val getTvSeriesWatchListItemIdsUseCase: GetTvSeriesWatchListItemIdsUseCase,
+    val getFavoriteMoviesUseCase: GetFavoriteMoviesUseCase,
+    val getFavoriteTvSeriesUseCase: GetFavoriteTvSeriesUseCase,
+    val getMoviesInWatchListUseCase: GetMoviesInWatchListUseCase,
+    val getTvSeriesInWatchListUseCase: GetTvSeriesInWatchListUseCase
 )

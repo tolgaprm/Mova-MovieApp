@@ -45,6 +45,14 @@ class LocalDatabaseRepositoryImpl @Inject constructor(
         return movieDao.getMovieWatchListItemIds()
     }
 
+    override fun getFavoriteMovies(): Flow<List<FavoriteMovie>> {
+        return movieDao.getFavoriteMovies()
+    }
+
+    override fun getMoviesInWatchList(): Flow<List<MovieWatchListItem>> {
+        return movieDao.getMovieWatchList()
+    }
+
     // TVSERIES
 
     override suspend fun insertTvSeriesToFavoriteList(favoriteTvSeries: FavoriteTvSeries) {
@@ -75,7 +83,7 @@ class LocalDatabaseRepositoryImpl @Inject constructor(
         return tvSeriesDao.getFavoriteTvSeries()
     }
 
-    override fun getTvSeriesWatchList(): Flow<List<TvSeriesWatchListItem>> {
+    override fun getTvSeriesInWatchList(): Flow<List<TvSeriesWatchListItem>> {
         return tvSeriesDao.getTvSeriesWatchList()
     }
 }

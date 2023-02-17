@@ -50,7 +50,11 @@ object DatabaseModule {
             toggleTvSeriesForFavoriteListUseCase = ToggleTvSeriesForFavoriteListUseCase(repository),
             toggleTvSeriesForWatchListItemUseCase = ToggleTvSeriesForWatchListItemUseCase(repository),
             getFavoriteTvSeriesIdsUseCase = GetFavoriteTvSeriesIdsUseCase(repository),
-            getTvSeriesWatchListItemIdsUseCase = GetTvSeriesWatchListItemIdsUseCase(repository)
+            getTvSeriesWatchListItemIdsUseCase = GetTvSeriesWatchListItemIdsUseCase(repository),
+            getFavoriteMoviesUseCase = GetFavoriteMoviesUseCase(repository),
+            getFavoriteTvSeriesUseCase = GetFavoriteTvSeriesUseCase(repository),
+            getMoviesInWatchListUseCase = GetMoviesInWatchListUseCase(repository),
+            getTvSeriesInWatchListUseCase = GetTvSeriesInWatchListUseCase(repository)
         )
     }
 }

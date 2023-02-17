@@ -49,9 +49,13 @@
     </fragment>
     <fragment
         android:id="@+id/myListFragment"
-        android:name="com.prmto.mova_movieapp.feature_mylist.presentation.myList.MyListFragment"
+        android:name="com.prmto.mova_movieapp.feature_mylist.presentation.ListFragment"
         android:label="MyListFragment"
-        tools:layout="@layout/fragment_my_list" />
+        tools:layout="@layout/fragment_my_list">
+        <action
+            android:id="@+id/action_myListFragment_to_detailBottomSheet"
+            app:destination="@id/detailBottomSheet" />
+    </fragment>
     <dialog
         android:id="@+id/filterBottomSheetFragment"
         android:name="com.prmto.mova_movieapp.feature_explore.presentation.filter_bottom_sheet.FilterBottomSheetFragment"

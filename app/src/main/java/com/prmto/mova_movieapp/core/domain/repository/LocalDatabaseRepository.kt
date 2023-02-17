@@ -21,6 +21,10 @@ interface LocalDatabaseRepository {
 
     fun getMovieWatchListItemIds(): Flow<List<Int>>
 
+    fun getFavoriteMovies(): Flow<List<FavoriteMovie>>
+
+    fun getMoviesInWatchList(): Flow<List<MovieWatchListItem>>
+
     // TVSERIES
     suspend fun insertTvSeriesToFavoriteList(favoriteTvSeries: FavoriteTvSeries)
 
@@ -36,6 +40,6 @@ interface LocalDatabaseRepository {
 
     fun getFavoriteTvSeries(): Flow<List<FavoriteTvSeries>>
 
-    fun getTvSeriesWatchList(): Flow<List<TvSeriesWatchListItem>>
+    fun getTvSeriesInWatchList(): Flow<List<TvSeriesWatchListItem>>
 
 }
