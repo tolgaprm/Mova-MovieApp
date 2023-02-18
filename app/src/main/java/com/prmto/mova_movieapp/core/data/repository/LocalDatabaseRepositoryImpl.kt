@@ -10,11 +10,27 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class LocalDatabaseRepositoryImpl @Inject constructor(
-    database: MovaDatabase
+    private val database: MovaDatabase
 ) : LocalDatabaseRepository {
 
     private val movieDao = database.movieDao
     private val tvSeriesDao = database.tvSeriesDao
+
+    override suspend fun deleteMovieFavoriteTable() {
+        movieDao.deleteMovieFavoriteTable()
+    }
+
+    override suspend fun deleteMovieWatchTable() {
+        movieDao.deleteMovieWatchTable()
+    }
+
+    override suspend fun deleteTvSeriesFavoriteTable() {
+        tvSeriesDao.deleteTvSeriesFavoriteTable()
+    }
+
+    override suspend fun deleteTvSeriesWatchTable() {
+        tvSeriesDao.deleteTvSeriesWatchTable()
+    }
 
     // MOVIES
     override suspend fun insertMovieToFavoriteList(favoriteMovie: FavoriteMovie) {

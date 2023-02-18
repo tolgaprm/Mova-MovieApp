@@ -25,6 +25,12 @@ interface MovieDao {
     @Delete
     suspend fun deleteMovieFromWatchListItem(movieWatchListItem: MovieWatchListItem)
 
+    @Query("DELETE FROM $FAVORITE_MOVIE_TABLE_NAME")
+    suspend fun deleteMovieFavoriteTable()
+
+    @Query("DELETE FROM $MOVIE_WATCH_LIST_ITEM_TABLE_NAME")
+    suspend fun deleteMovieWatchTable()
+
     @Query("SELECT movieId FROM $FAVORITE_MOVIE_TABLE_NAME")
     fun getFavoriteMovieIds(): Flow<List<Int>>
 

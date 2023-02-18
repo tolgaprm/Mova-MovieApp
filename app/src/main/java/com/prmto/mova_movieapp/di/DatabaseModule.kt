@@ -43,6 +43,7 @@ object DatabaseModule {
         repository: LocalDatabaseRepository
     ): LocalDatabaseUseCases {
         return LocalDatabaseUseCases(
+            clearAllDatabaseUseCase = ClearAllDatabaseUseCase(repository),
             toggleMovieForFavoriteListUseCase = ToggleMovieForFavoriteListUseCase(repository),
             toggleMovieForWatchListUseCase = ToggleMovieForWatchListUseCase(repository),
             getFavoriteMovieIdsUseCase = GetFavoriteMovieIdsUseCase(repository),

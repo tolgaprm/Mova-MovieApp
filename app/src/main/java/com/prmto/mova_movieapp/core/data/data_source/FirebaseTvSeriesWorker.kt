@@ -10,7 +10,6 @@ import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @HiltWorker
@@ -29,7 +28,7 @@ class FirebaseTvSeriesWorker @AssistedInject constructor(
 
         coroutineScope.launch {
             localDatabaseUseCases.getFavoriteTvSeriesIdsUseCase()
-                .collectLatest { favoriteTvSeriesIds ->
+                .collect { favoriteTvSeriesIds ->
                     firebaseCoreUseCases.addTvSeriesToFavoriteListInFirebaseUseCase(
                         tvSeriesIdsInFavoriteList = favoriteTvSeriesIds,
                         onSuccess = { error = false },
@@ -40,7 +39,7 @@ class FirebaseTvSeriesWorker @AssistedInject constructor(
 
         coroutineScope.launch {
             localDatabaseUseCases.getTvSeriesWatchListItemIdsUseCase()
-                .collectLatest { tvSeriesIdsInWatchList ->
+                .collect { tvSeriesIdsInWatchList ->
                     firebaseCoreUseCases.addTvSeriesToWatchListInFirebaseUseCase(
                         tvSeriesIdsInWatchList = tvSeriesIdsInWatchList,
                         onSuccess = { error = false },
