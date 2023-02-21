@@ -4,8 +4,8 @@ import android.content.Context
 import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
-import com.prmto.mova_movieapp.core.domain.use_case.FirebaseCoreUseCases
-import com.prmto.mova_movieapp.core.domain.use_case.LocalDatabaseUseCases
+import com.prmto.mova_movieapp.core.domain.use_case.firebase.tv.GetFavoriteTvSeriesFromLocalDatabaseThenUpdateToFirebase
+import com.prmto.mova_movieapp.core.domain.use_case.firebase.tv.GetTvSeriesWatchFromLocalDatabaseThenUpdateToFirebase
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.CoroutineScope
@@ -16,8 +16,8 @@ import kotlinx.coroutines.launch
 class FirebaseTvSeriesWorker @AssistedInject constructor(
     @Assisted appContext: Context,
     @Assisted workerParams: WorkerParameters,
-    private val firebaseCoreUseCases: FirebaseCoreUseCases,
-    private val localDatabaseUseCases: LocalDatabaseUseCases
+    private val getFavoriteTvSeriesFromLocalDatabaseThenUpdateToFirebase: GetFavoriteTvSeriesFromLocalDatabaseThenUpdateToFirebase,
+    private val getTvSeriesWatchFromLocalDatabaseThenUpdateToFirebase: GetTvSeriesWatchFromLocalDatabaseThenUpdateToFirebase
 ) : CoroutineWorker(appContext, workerParams) {
 
     private val coroutineScope = CoroutineScope(Dispatchers.IO)
@@ -27,26 +27,17 @@ class FirebaseTvSeriesWorker @AssistedInject constructor(
         var error: Boolean = false
 
         coroutineScope.launch {
-            localDatabaseUseCases.getFavoriteTvSeriesIdsUseCase()
-                .collect { favoriteTvSeriesIds ->
-                    firebaseCoreUseCases.addTvSeriesToFavoriteListInFirebaseUseCase(
-                        tvSeriesIdsInFavoriteList = favoriteTvSeriesIds,
-                        onSuccess = { error = false },
-                        onFailure = { error = true }
-                    )
-                }
+            getFavoriteTvSeriesFromLocalDatabaseThenUpdateToFirebase(
+                onSuccess = { error = false },
+                onFailure = { error = true }
+            )
         }
 
         coroutineScope.launch {
-            localDatabaseUseCases.getTvSeriesWatchListItemIdsUseCase()
-                .collect { tvSeriesIdsInWatchList ->
-                    firebaseCoreUseCases.addTvSeriesToWatchListInFirebaseUseCase(
-                        tvSeriesIdsInWatchList = tvSeriesIdsInWatchList,
-                        onSuccess = { error = false },
-                        onFailure = { error = true }
-
-                    )
-                }
+            getTvSeriesWatchFromLocalDatabaseThenUpdateToFirebase(
+                onSuccess = { error = false },
+                onFailure = { error = true }
+            )
         }
 
         return if (error) Result.failure() else Result.success()

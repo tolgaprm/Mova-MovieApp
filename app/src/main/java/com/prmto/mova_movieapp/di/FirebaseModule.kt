@@ -5,6 +5,11 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.prmto.mova_movieapp.core.data.repository.FirebaseCoreRepositoryImpl
 import com.prmto.mova_movieapp.core.domain.repository.FirebaseCoreRepository
 import com.prmto.mova_movieapp.core.domain.use_case.*
+import com.prmto.mova_movieapp.core.domain.use_case.firebase.*
+import com.prmto.mova_movieapp.core.domain.use_case.firebase.movie.AddMovieToFavoriteListInFirebaseUseCase
+import com.prmto.mova_movieapp.core.domain.use_case.firebase.movie.AddMovieToWatchListInFirebaseUseCase
+import com.prmto.mova_movieapp.core.domain.use_case.firebase.tv.AddTvSeriesToFavoriteListInFirebaseUseCase
+import com.prmto.mova_movieapp.core.domain.use_case.firebase.tv.AddTvSeriesToWatchListInFirebaseUseCase
 import com.prmto.mova_movieapp.feature_authentication.data.repository.AuthenticationRepositoryImpl
 import com.prmto.mova_movieapp.feature_authentication.domain.repository.AuthenticationRepository
 import com.prmto.mova_movieapp.feature_authentication.domain.use_case.CreateUserWithEmailAndPasswordUseCase

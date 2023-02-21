@@ -1,17 +1,17 @@
-package com.prmto.mova_movieapp.core.domain.use_case
+package com.prmto.mova_movieapp.core.domain.use_case.firebase.movie
 
 import com.prmto.mova_movieapp.R
 import com.prmto.mova_movieapp.core.domain.repository.FirebaseCoreRepository
 import com.prmto.mova_movieapp.core.presentation.util.UiText
-import com.prmto.mova_movieapp.core.util.Constants.FIREBASE_TV_SERIES_IDS_FIELD_NAME
+import com.prmto.mova_movieapp.core.util.Constants.FIREBASE_MOVIE_IDS_FIELD_NAME
 import javax.inject.Inject
 
-class AddTvSeriesToFavoriteListInFirebaseUseCase @Inject constructor(
+class AddMovieToWatchListInFirebaseUseCase @Inject constructor(
     private val repository: FirebaseCoreRepository
 ) {
 
     operator fun invoke(
-        tvSeriesIdsInFavoriteList: List<Int>,
+        movieIdsInWatchList: List<Int>,
         onSuccess: () -> Unit,
         onFailure: (uiText: UiText) -> Unit
     ) {
@@ -20,10 +20,10 @@ class AddTvSeriesToFavoriteListInFirebaseUseCase @Inject constructor(
             ?: return onFailure(UiText.StringResource(R.string.must_login_able_to_add_in_list))
 
         val data = mapOf(
-            FIREBASE_TV_SERIES_IDS_FIELD_NAME to tvSeriesIdsInFavoriteList
+            FIREBASE_MOVIE_IDS_FIELD_NAME to movieIdsInWatchList
         )
 
-        repository.addTvSeriesToFavoriteList(
+        repository.addMovieToWatchList(
             userUid = userUid,
             data = data,
             onSuccess = onSuccess,

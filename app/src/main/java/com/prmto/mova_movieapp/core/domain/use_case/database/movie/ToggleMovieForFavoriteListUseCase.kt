@@ -1,4 +1,4 @@
-package com.prmto.mova_movieapp.core.domain.use_case
+package com.prmto.mova_movieapp.core.domain.use_case.database.movie
 
 import com.prmto.mova_movieapp.core.domain.models.Movie
 import com.prmto.mova_movieapp.core.domain.repository.LocalDatabaseRepository

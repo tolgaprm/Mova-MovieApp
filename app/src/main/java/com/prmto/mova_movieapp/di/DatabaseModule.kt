@@ -6,6 +6,12 @@ import com.prmto.mova_movieapp.core.data.data_source.local.MovaDatabase
 import com.prmto.mova_movieapp.core.data.repository.LocalDatabaseRepositoryImpl
 import com.prmto.mova_movieapp.core.domain.repository.LocalDatabaseRepository
 import com.prmto.mova_movieapp.core.domain.use_case.*
+import com.prmto.mova_movieapp.core.domain.use_case.database.*
+import com.prmto.mova_movieapp.core.domain.use_case.database.movie.GetFavoriteMovieIdsUseCase
+import com.prmto.mova_movieapp.core.domain.use_case.database.movie.GetFavoriteMoviesUseCase
+import com.prmto.mova_movieapp.core.domain.use_case.database.movie.ToggleMovieForFavoriteListUseCase
+import com.prmto.mova_movieapp.core.domain.use_case.database.movie.ToggleMovieForWatchListUseCase
+import com.prmto.mova_movieapp.core.domain.use_case.database.tv.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

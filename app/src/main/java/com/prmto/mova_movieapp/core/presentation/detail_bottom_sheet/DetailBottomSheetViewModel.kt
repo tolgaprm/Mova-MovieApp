@@ -5,8 +5,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.prmto.mova_movieapp.core.domain.models.Movie
 import com.prmto.mova_movieapp.core.domain.models.TvSeries
-import com.prmto.mova_movieapp.core.domain.use_case.FirebaseCoreUseCases
-import com.prmto.mova_movieapp.core.domain.use_case.LocalDatabaseUseCases
+import com.prmto.mova_movieapp.core.domain.use_case.database.LocalDatabaseUseCases
+import com.prmto.mova_movieapp.core.domain.use_case.firebase.FirebaseCoreUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch

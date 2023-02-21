@@ -4,22 +4,20 @@ import android.content.Context
 import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
-import com.prmto.mova_movieapp.core.domain.use_case.FirebaseCoreUseCases
-import com.prmto.mova_movieapp.core.domain.use_case.LocalDatabaseUseCases
-import com.prmto.mova_movieapp.core.presentation.util.asString
+import com.prmto.mova_movieapp.core.domain.use_case.firebase.movie.GetFavoriteMovieIdsFromLocalDatabaseThenUpdateToFirebaseUseCase
+import com.prmto.mova_movieapp.core.domain.use_case.firebase.movie.GetMovieWatchListFromLocalDatabaseThenUpdateToFirebase
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import timber.log.Timber
 
 @HiltWorker
 class FirebaseMovieWorker @AssistedInject constructor(
     @Assisted appContext: Context,
     @Assisted workerParams: WorkerParameters,
-    private val firebaseCoreUseCases: FirebaseCoreUseCases,
-    private val localDatabaseUseCases: LocalDatabaseUseCases
+    private val getFavoriteMovieIdsFromLocalDatabaseThenUpdateToFirebaseUseCase: GetFavoriteMovieIdsFromLocalDatabaseThenUpdateToFirebaseUseCase,
+    private val getMovieWatchListFromLocalDatabaseThenUpdateToFirebase: GetMovieWatchListFromLocalDatabaseThenUpdateToFirebase
 ) : CoroutineWorker(appContext, workerParams) {
 
     private val coroutineScope = CoroutineScope(Dispatchers.IO)
@@ -29,24 +27,18 @@ class FirebaseMovieWorker @AssistedInject constructor(
         var error: Boolean = false
 
         coroutineScope.launch {
-            localDatabaseUseCases.getFavoriteMovieIdsUseCase().collect { favoriteMovieIds ->
-                firebaseCoreUseCases.addMovieToFavoriteListInFirebaseUseCase(
-                    movieIdsInFavoriteList = favoriteMovieIds,
-                    onSuccess = { error = false },
-                    onFailure = { error = true;Timber.d(it.asString(applicationContext)) }
-                )
-            }
+            getFavoriteMovieIdsFromLocalDatabaseThenUpdateToFirebaseUseCase(
+                onSuccess = { error = false },
+                onFailure = { error = true }
+            )
+
         }
 
         coroutineScope.launch {
-            localDatabaseUseCases.getMovieWatchListItemIdsUseCase()
-                .collect { movieIdsInWatchList ->
-                    firebaseCoreUseCases.addMovieToWatchListInFirebaseUseCase(
-                        movieIdsInWatchList = movieIdsInWatchList,
-                        onSuccess = { error = false },
-                        onFailure = { error = true }
-                    )
-                }
+            getMovieWatchListFromLocalDatabaseThenUpdateToFirebase(
+                onSuccess = { error = false },
+                onFailure = { error = true }
+            )
         }
 
         return if (error) Result.failure() else Result.success()

@@ -1,4 +1,4 @@
-package com.prmto.mova_movieapp.core.domain.use_case
+package com.prmto.mova_movieapp.core.domain.use_case.firebase.tv
 
 import com.prmto.mova_movieapp.R
 import com.prmto.mova_movieapp.core.domain.repository.FirebaseCoreRepository

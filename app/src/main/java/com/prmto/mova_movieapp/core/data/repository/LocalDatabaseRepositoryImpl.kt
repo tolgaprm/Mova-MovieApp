@@ -16,20 +16,8 @@ class LocalDatabaseRepositoryImpl @Inject constructor(
     private val movieDao = database.movieDao
     private val tvSeriesDao = database.tvSeriesDao
 
-    override suspend fun deleteMovieFavoriteTable() {
-        movieDao.deleteMovieFavoriteTable()
-    }
-
-    override suspend fun deleteMovieWatchTable() {
-        movieDao.deleteMovieWatchTable()
-    }
-
-    override suspend fun deleteTvSeriesFavoriteTable() {
-        tvSeriesDao.deleteTvSeriesFavoriteTable()
-    }
-
-    override suspend fun deleteTvSeriesWatchTable() {
-        tvSeriesDao.deleteTvSeriesWatchTable()
+    override suspend fun clearDatabase() {
+        database.clearAllTables()
     }
 
     // MOVIES

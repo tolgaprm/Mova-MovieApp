@@ -8,6 +8,8 @@ import kotlinx.coroutines.flow.Flow
 
 interface LocalDatabaseRepository {
 
+    suspend fun clearDatabase()
+
     // MOVIES
     suspend fun insertMovieToFavoriteList(favoriteMovie: FavoriteMovie)
 
@@ -25,9 +27,6 @@ interface LocalDatabaseRepository {
 
     fun getMoviesInWatchList(): Flow<List<MovieWatchListItem>>
 
-    suspend fun deleteMovieFavoriteTable()
-    suspend fun deleteMovieWatchTable()
-
     // TVSERIES
     suspend fun insertTvSeriesToFavoriteList(favoriteTvSeries: FavoriteTvSeries)
 
@@ -44,9 +43,4 @@ interface LocalDatabaseRepository {
     fun getFavoriteTvSeries(): Flow<List<FavoriteTvSeries>>
 
     fun getTvSeriesInWatchList(): Flow<List<TvSeriesWatchListItem>>
-
-    suspend fun deleteTvSeriesFavoriteTable()
-
-    suspend fun deleteTvSeriesWatchTable()
-
 }

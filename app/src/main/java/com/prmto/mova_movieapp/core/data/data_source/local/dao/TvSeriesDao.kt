@@ -25,12 +25,6 @@ interface TvSeriesDao {
     @Delete
     suspend fun deleteTvSeriesFromWatchListItem(tvSeriesWatchListItem: TvSeriesWatchListItem)
 
-    @Query("DELETE FROM $FAVORITE_TV_SERIES_TABLE_NAME")
-    suspend fun deleteTvSeriesFavoriteTable()
-
-    @Query("DELETE FROM $TV_SERIES_WATCH_LIST_ITEM_TABLE_NAME")
-    suspend fun deleteTvSeriesWatchTable()
-
     @Query("SELECT tvSeriesId FROM $FAVORITE_TV_SERIES_TABLE_NAME")
     fun getFavoriteTvSeriesIds(): Flow<List<Int>>
 

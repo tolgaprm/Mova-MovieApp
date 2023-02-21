@@ -3,26 +3,40 @@ package com.prmto.mova_movieapp.feature_settings.presentation.setting
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.prmto.mova_movieapp.R
-import com.prmto.mova_movieapp.core.domain.use_case.FirebaseCoreUseCases
-import com.prmto.mova_movieapp.core.domain.use_case.LocalDatabaseUseCases
+import com.prmto.mova_movieapp.core.domain.use_case.database.LocalDatabaseUseCases
+import com.prmto.mova_movieapp.core.domain.use_case.firebase.FirebaseCoreUseCases
+import com.prmto.mova_movieapp.core.domain.use_case.firebase.movie.GetFavoriteMovieIdsFromLocalDatabaseThenUpdateToFirebaseUseCase
+import com.prmto.mova_movieapp.core.domain.use_case.firebase.movie.GetMovieWatchListFromLocalDatabaseThenUpdateToFirebase
+import com.prmto.mova_movieapp.core.domain.use_case.firebase.tv.GetFavoriteTvSeriesFromLocalDatabaseThenUpdateToFirebase
+import com.prmto.mova_movieapp.core.domain.use_case.firebase.tv.GetTvSeriesWatchFromLocalDatabaseThenUpdateToFirebase
 import com.prmto.mova_movieapp.core.presentation.util.BaseUiEvent
 import com.prmto.mova_movieapp.core.presentation.util.UiText
 import com.prmto.mova_movieapp.feature_settings.domain.use_case.SettingUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
 class SettingsViewModel @Inject constructor(
     private val settingUseCase: SettingUseCase,
     private val firebaseCoreUseCases: FirebaseCoreUseCases,
-    private val localDatabaseUseCases: LocalDatabaseUseCases
+    private val localDatabaseUseCases: LocalDatabaseUseCases,
+    private val getFavoriteMovieIdsFromLocalDatabaseThenUpdateToFirebaseUseCase: GetFavoriteMovieIdsFromLocalDatabaseThenUpdateToFirebaseUseCase,
+    private val getMovieWatchListFromLocalDatabaseThenUpdateToFirebase: GetMovieWatchListFromLocalDatabaseThenUpdateToFirebase,
+    private val getFavoriteTvSeriesFromLocalDatabaseThenUpdateToFirebase: GetFavoriteTvSeriesFromLocalDatabaseThenUpdateToFirebase,
+    private val getTvSeriesWatchFromLocalDatabaseThenUpdateToFirebase: GetTvSeriesWatchFromLocalDatabaseThenUpdateToFirebase
 ) : ViewModel() {
 
     private val _isSignedIn = MutableStateFlow(false)
     val isSignedIn: StateFlow<Boolean> = _isSignedIn.asStateFlow()
+
+
+    private val _isLoading = MutableStateFlow(false)
+    val isLoading: StateFlow<Boolean> = _isLoading.asStateFlow()
 
     private val _eventFlow = MutableSharedFlow<BaseUiEvent>()
     val eventFlow: SharedFlow<BaseUiEvent> = _eventFlow.asSharedFlow()
@@ -50,13 +64,17 @@ class SettingsViewModel @Inject constructor(
 
     fun logOut() {
         viewModelScope.launch {
+            _isLoading.value = true
             getMovieFavoriteFromLocalDatabaseThenUpdateFirebase()
             getMovieWatchListItemFromLocalDatabaseThenUpdateFirebase()
             getTvSeriesFavoriteFromLocalDatabaseThenUpdateFirebase()
             getTvSeriesWatchListItemFromLocalDatabaseThenUpdateFirebase()
             delay(2000)
             signOut()
-            localDatabaseUseCases.clearAllDatabaseUseCase()
+            withContext(Dispatchers.IO) {
+                localDatabaseUseCases.clearAllDatabaseUseCase()
+            }
+            _isLoading.value = false
         }
     }
 
@@ -68,44 +86,36 @@ class SettingsViewModel @Inject constructor(
 
     private fun getMovieFavoriteFromLocalDatabaseThenUpdateFirebase() {
         viewModelScope.launch {
-            localDatabaseUseCases.getFavoriteMovieIdsUseCase().collect { favoriteMovieIds ->
-                firebaseCoreUseCases.addMovieToFavoriteListInFirebaseUseCase(movieIdsInFavoriteList = favoriteMovieIds,
-                    onSuccess = { },
-                    onFailure = { emitUiEvent(BaseUiEvent.ShowSnackbar(it)) })
-            }
+            getFavoriteMovieIdsFromLocalDatabaseThenUpdateToFirebaseUseCase(
+                onSuccess = { return@getFavoriteMovieIdsFromLocalDatabaseThenUpdateToFirebaseUseCase },
+                onFailure = { emitUiEvent(BaseUiEvent.ShowSnackbar(it)) }
+            )
         }
     }
 
     private fun getMovieWatchListItemFromLocalDatabaseThenUpdateFirebase() {
         viewModelScope.launch {
-            localDatabaseUseCases.getMovieWatchListItemIdsUseCase().collect { movieIdsInWatchList ->
-                firebaseCoreUseCases.addMovieToWatchListInFirebaseUseCase(movieIdsInWatchList = movieIdsInWatchList,
-                    onSuccess = { },
-                    onFailure = { emitUiEvent(BaseUiEvent.ShowSnackbar(it)) })
-            }
+            getMovieWatchListFromLocalDatabaseThenUpdateToFirebase(
+                onSuccess = { return@getMovieWatchListFromLocalDatabaseThenUpdateToFirebase },
+                onFailure = { emitUiEvent(BaseUiEvent.ShowSnackbar(it)) }
+            )
         }
     }
 
     private fun getTvSeriesFavoriteFromLocalDatabaseThenUpdateFirebase() {
         viewModelScope.launch {
-            localDatabaseUseCases.getFavoriteTvSeriesIdsUseCase().collect { favoriteTvSeriesIds ->
-                firebaseCoreUseCases.addTvSeriesToFavoriteListInFirebaseUseCase(
-                    tvSeriesIdsInFavoriteList = favoriteTvSeriesIds,
-                    onSuccess = { },
-                    onFailure = { emitUiEvent(BaseUiEvent.ShowSnackbar(it)) })
-            }
+            getFavoriteTvSeriesFromLocalDatabaseThenUpdateToFirebase(
+                onSuccess = { return@getFavoriteTvSeriesFromLocalDatabaseThenUpdateToFirebase },
+                onFailure = { emitUiEvent(BaseUiEvent.ShowSnackbar(it)) }
+            )
         }
     }
 
     private fun getTvSeriesWatchListItemFromLocalDatabaseThenUpdateFirebase() {
         viewModelScope.launch {
-            localDatabaseUseCases.getTvSeriesWatchListItemIdsUseCase()
-                .collect { tvSeriesIdsInWatchList ->
-                    firebaseCoreUseCases.addTvSeriesToWatchListInFirebaseUseCase(
-                        tvSeriesIdsInWatchList = tvSeriesIdsInWatchList,
-                        onSuccess = { },
-                        onFailure = { emitUiEvent(BaseUiEvent.ShowSnackbar(it)) })
-                }
+            getTvSeriesWatchFromLocalDatabaseThenUpdateToFirebase(
+                onSuccess = { return@getTvSeriesWatchFromLocalDatabaseThenUpdateToFirebase },
+                onFailure = { emitUiEvent(BaseUiEvent.ShowSnackbar(it)) })
         }
     }
 

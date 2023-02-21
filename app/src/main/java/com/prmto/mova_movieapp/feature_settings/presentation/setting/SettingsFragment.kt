@@ -99,12 +99,13 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
-                    collectUiEvent()
+                    viewModel.isLoading.collectLatest { isLoaading ->
+                        binding.progressBar.isVisible = isLoaading
+                    }
                 }
+                launch { collectUiEvent() }
                 launch { collectUIMode() }
-
                 launch { collectLanguageIsoCode() }
-
                 launch {
                     viewModel.isSignedIn.collectLatest { isUserSignIn ->
                         binding.txtLogOut.isVisible = isUserSignIn

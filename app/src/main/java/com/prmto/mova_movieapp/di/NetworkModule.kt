@@ -27,20 +27,15 @@ object NetworkModule {
     @Provides
     @Singleton
     fun provideImageLoader(@ApplicationContext context: Context): ImageLoader {
-        return ImageLoader.Builder(context)
-            .crossfade(500)
-            .placeholder(R.drawable.loading_animate)
+        return ImageLoader.Builder(context).crossfade(500).placeholder(R.drawable.loading_animate)
             .build()
     }
-
 
     @Provides
     @Singleton
     fun provideOkHttp(): OkHttpClient {
-        return OkHttpClient.Builder()
-            .readTimeout(15, TimeUnit.SECONDS)
-            .connectTimeout(15, TimeUnit.SECONDS)
-            .addNetworkInterceptor(RequestInterceptor())
+        return OkHttpClient.Builder().readTimeout(15, TimeUnit.SECONDS)
+            .connectTimeout(15, TimeUnit.SECONDS).addNetworkInterceptor(RequestInterceptor())
             .build()
     }
 
@@ -53,14 +48,10 @@ object NetworkModule {
     @Provides
     @Singleton
     fun provideRetrofit(
-        moshi: Moshi,
-        okHttpClient: OkHttpClient
+        moshi: Moshi, okHttpClient: OkHttpClient
     ): Retrofit {
-        return Retrofit.Builder()
-            .baseUrl(Constants.BASE_URL)
-            .client(okHttpClient)
-            .addConverterFactory(MoshiConverterFactory.create(moshi))
-            .build()
+        return Retrofit.Builder().baseUrl(Constants.BASE_URL).client(okHttpClient)
+            .addConverterFactory(MoshiConverterFactory.create(moshi)).build()
     }
 
     @Provides

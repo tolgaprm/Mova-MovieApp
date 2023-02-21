@@ -1,4 +1,12 @@
-package com.prmto.mova_movieapp.core.domain.use_case
+package com.prmto.mova_movieapp.core.domain.use_case.database
+
+import com.prmto.mova_movieapp.core.domain.use_case.GetMovieWatchListItemIdsUseCase
+import com.prmto.mova_movieapp.core.domain.use_case.GetMoviesInWatchListUseCase
+import com.prmto.mova_movieapp.core.domain.use_case.database.movie.GetFavoriteMovieIdsUseCase
+import com.prmto.mova_movieapp.core.domain.use_case.database.movie.GetFavoriteMoviesUseCase
+import com.prmto.mova_movieapp.core.domain.use_case.database.movie.ToggleMovieForFavoriteListUseCase
+import com.prmto.mova_movieapp.core.domain.use_case.database.movie.ToggleMovieForWatchListUseCase
+import com.prmto.mova_movieapp.core.domain.use_case.database.tv.*
 
 data class LocalDatabaseUseCases(
     val clearAllDatabaseUseCase: ClearAllDatabaseUseCase,
