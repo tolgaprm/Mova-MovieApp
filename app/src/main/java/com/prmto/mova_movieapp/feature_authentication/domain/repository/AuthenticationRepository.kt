@@ -30,4 +30,5 @@ interface AuthenticationRepository {
         onSuccess: () -> Unit,
         onFailure: (uiText: UiText) -> Unit
     )
+
 }

@@ -1,4 +1,4 @@
-package com.prmto.mova_movieapp.core.data.data_source
+package com.prmto.mova_movieapp.core.data.data_source.worker
 
 import android.content.Context
 import androidx.hilt.work.HiltWorker
@@ -13,7 +13,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 @HiltWorker
-class FirebaseTvSeriesWorker @AssistedInject constructor(
+class UpdateFirebaseTvSeriesWorker @AssistedInject constructor(
     @Assisted appContext: Context,
     @Assisted workerParams: WorkerParameters,
     private val getFavoriteTvSeriesFromLocalDatabaseThenUpdateToFirebase: GetFavoriteTvSeriesFromLocalDatabaseThenUpdateToFirebase,
@@ -24,7 +24,7 @@ class FirebaseTvSeriesWorker @AssistedInject constructor(
 
     override suspend fun doWork(): Result {
 
-        var error: Boolean = false
+        var error = false
 
         coroutineScope.launch {
             getFavoriteTvSeriesFromLocalDatabaseThenUpdateToFirebase(

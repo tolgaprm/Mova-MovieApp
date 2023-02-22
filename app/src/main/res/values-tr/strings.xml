@@ -116,6 +116,8 @@
     <string name="cancel">İptal</string>
     <string name="must_login_able_to_add_in_list">Listeye ekleme işlemi yapabilmek için giriş yapmalısınız.</string>
     <string name="error_field_empty">Bu alan boş bırakılamaz.</string>
+    <string name="error_user">Bu işlemi yapabilmek için giriş yapmanız gerekiyor.</string>
+
 
     // FirebaseAuth Error Message
     <string name="error_invalid_custom_token">Geçersiz bir özel token sağlandı.</string>

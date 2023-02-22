@@ -124,7 +124,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                     Snackbar.make(
                         requireView(), uiEvent.uiText.asString(
                             requireContext(),
-                        ), Snackbar.LENGTH_LONG
+                        ), Snackbar.LENGTH_SHORT
                     ).show()
                 }
                 is UiEvent.PopBackStack -> {

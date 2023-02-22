@@ -8,9 +8,12 @@ import com.prmto.mova_movieapp.R
 import com.prmto.mova_movieapp.core.presentation.util.StandardTextFieldState
 import com.prmto.mova_movieapp.core.presentation.util.UiEvent
 import com.prmto.mova_movieapp.core.presentation.util.UiText
+import com.prmto.mova_movieapp.feature_authentication.domain.use_case.FirebaseUseCases
 import com.prmto.mova_movieapp.feature_authentication.domain.use_case.SignInWithCredentialUseCase
 import com.prmto.mova_movieapp.feature_authentication.domain.use_case.SignInWithEmailAndPasswordUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -18,7 +21,8 @@ import javax.inject.Inject
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     private val signInWithEmailAndUserName: SignInWithEmailAndPasswordUseCase,
-    private val signInWithCredentialUseCase: SignInWithCredentialUseCase
+    private val signInWithCredentialUseCase: SignInWithCredentialUseCase,
+    private val firebaseUseCases: FirebaseUseCases
 ) : ViewModel() {
 
     private val _emailState = MutableStateFlow(StandardTextFieldState())
@@ -51,7 +55,10 @@ class LoginViewModel @Inject constructor(
                 emitUiEvent(UiEvent.NavigateTo(directions))
             }
             is LoginEvent.SignIn -> {
-                signIn(email = emailState.value.text, password = passwordState.value.text)
+                signIn(
+                    email = emailState.value.text,
+                    password = passwordState.value.text
+                )
             }
             is LoginEvent.SignInWithGoogle -> {
                 handleResultsForSignInWithGoogle(task = event.task)
@@ -70,8 +77,11 @@ class LoginViewModel @Inject constructor(
             email = email,
             password = password,
             onSuccess = {
+                getMoviesFromFirebaseThenUpdateLocalDatabase()
+                getTvSeriesFromFirebaseThenUpdateLocalDatabase()
                 emitUiEvent(UiEvent.NavigateTo(LoginFragmentDirections.actionLoginFragmentToHomeFragment()))
                 _isLoading.value = false
+
             },
             onFailure = { uiText ->
                 emitUiEvent(UiEvent.ShowSnackbar(uiText = uiText))
@@ -118,6 +128,31 @@ class LoginViewModel @Inject constructor(
             }
         } else {
             emitUiEvent(UiEvent.ShowSnackbar(UiText.StringResource(R.string.something_went_wrong)))
+        }
+    }
+
+
+    private fun getMoviesFromFirebaseThenUpdateLocalDatabase() {
+        viewModelScope.launch(Dispatchers.IO) {
+            firebaseUseCases.getFavoriteMovieFromFirebaseThenUpdateLocalDatabaseUseCase(
+                onFailure = {}
+            )
+            firebaseUseCases.getMovieWatchListFromFirebaseThenUpdateLocalDatabaseUseCase(
+                onFailure = {}
+            )
+            delay(2000)
+        }
+    }
+
+    private fun getTvSeriesFromFirebaseThenUpdateLocalDatabase() {
+        viewModelScope.launch(Dispatchers.IO) {
+            firebaseUseCases.getFavoriteTvSeriesFromFirebaseThenUpdateLocalDatabaseUseCase(
+                onFailure = {}
+            )
+            firebaseUseCases.getTvSeriesWatchListFromFirebaseThenUpdateLocalDatabaseUseCase(
+                onFailure = {}
+            )
+            delay(2000)
         }
     }
 }

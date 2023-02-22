@@ -80,4 +80,5 @@ class AuthenticationRepositoryImpl @Inject constructor(
             onFailure(UiText.unknownError())
         }
     }
+
 }

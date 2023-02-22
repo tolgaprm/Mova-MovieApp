@@ -6,7 +6,7 @@ import com.prmto.mova_movieapp.core.presentation.util.UiText
 import kotlinx.coroutines.flow.first
 import javax.inject.Inject
 
-class GetFavoriteMovieIdsFromLocalDatabaseThenUpdateToFirebaseUseCase @Inject constructor(
+class GetFavoriteMoviesFromLocalDatabaseThenUpdateToFirebaseUseCase @Inject constructor(
     private val localDatabaseUseCases: LocalDatabaseUseCases,
     private val firebaseCoreUseCases: FirebaseCoreUseCases
 ) {
@@ -14,9 +14,9 @@ class GetFavoriteMovieIdsFromLocalDatabaseThenUpdateToFirebaseUseCase @Inject co
         onSuccess: () -> Unit,
         onFailure: (uiText: UiText) -> Unit
     ) {
-        val movieIdsInFavoriteList = localDatabaseUseCases.getFavoriteMovieIdsUseCase().first()
+        val moviesInFavoriteList = localDatabaseUseCases.getFavoriteMoviesUseCase().first()
         firebaseCoreUseCases.addMovieToFavoriteListInFirebaseUseCase(
-            movieIdsInFavoriteList = movieIdsInFavoriteList,
+            moviesInFavoriteList = moviesInFavoriteList,
             onSuccess = onSuccess,
             onFailure = onFailure
         )

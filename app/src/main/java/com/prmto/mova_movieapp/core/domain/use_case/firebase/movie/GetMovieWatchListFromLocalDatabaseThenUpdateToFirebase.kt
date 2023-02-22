@@ -15,10 +15,10 @@ class GetMovieWatchListFromLocalDatabaseThenUpdateToFirebase @Inject constructor
         onSuccess: () -> Unit,
         onFailure: (uiText: UiText) -> Unit
     ) {
-        val movieIdsInWatchList = localDatabaseUseCases.getMovieWatchListItemIdsUseCase().first()
+        val moviesInWatchList = localDatabaseUseCases.getMoviesInWatchListUseCase().first()
 
         firebaseCoreUseCases.addMovieToWatchListInFirebaseUseCase(
-            movieIdsInWatchList = movieIdsInWatchList,
+            moviesInWatchList = moviesInWatchList,
             onSuccess = onSuccess,
             onFailure = onFailure
         )

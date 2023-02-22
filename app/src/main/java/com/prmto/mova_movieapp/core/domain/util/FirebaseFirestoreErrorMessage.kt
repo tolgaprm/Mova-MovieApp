@@ -1,6 +1,9 @@
 package com.prmto.mova_movieapp.core.domain.util
 
+import com.google.firebase.firestore.FirebaseFirestoreException
 import com.prmto.mova_movieapp.R
+import com.prmto.mova_movieapp.core.presentation.util.UiText
+import timber.log.Timber
 
 class FirebaseFirestoreErrorMessage {
 
@@ -25,5 +28,21 @@ class FirebaseFirestoreErrorMessage {
             "ABORTED" to R.string.aborted_error,
             "UNAVAILABLE" to R.string.unavailable_error
         )
+
+        fun setExceptionToFirebaseMessage(
+            exception: Exception,
+            onFailure: (uiText: UiText) -> Unit
+        ) {
+            Timber.e(exception.localizedMessage?.toString())
+            if (exception is FirebaseFirestoreException) {
+                val errorCode = exception.code.toString()
+                val errorStringId = getMessage(errorCode = errorCode)
+                onFailure(UiText.StringResource(errorStringId))
+            } else {
+                onFailure(UiText.unknownError())
+            }
+        }
+
+
     }
 }

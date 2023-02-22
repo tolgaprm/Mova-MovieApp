@@ -15,10 +15,10 @@ class GetFavoriteTvSeriesFromLocalDatabaseThenUpdateToFirebase @Inject construct
         onSuccess: () -> Unit,
         onFailure: (UiText) -> Unit
     ) {
-        val favoriteTvSeriesIds = localDatabaseUseCases.getFavoriteTvSeriesIdsUseCase().first()
+        val favoriteTvSeries = localDatabaseUseCases.getFavoriteTvSeriesUseCase().first()
 
         firebaseCoreUseCases.addTvSeriesToFavoriteListInFirebaseUseCase(
-            tvSeriesIdsInFavoriteList = favoriteTvSeriesIds,
+            tvSeriesInFavoriteList = favoriteTvSeries,
             onSuccess = onSuccess,
             onFailure = onFailure
         )

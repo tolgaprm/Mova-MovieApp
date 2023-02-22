@@ -3,8 +3,8 @@ package com.prmto.mova_movieapp
 import android.app.Application
 import androidx.hilt.work.HiltWorkerFactory
 import androidx.work.*
-import com.prmto.mova_movieapp.core.data.data_source.FirebaseMovieWorker
-import com.prmto.mova_movieapp.core.data.data_source.FirebaseTvSeriesWorker
+import com.prmto.mova_movieapp.core.data.data_source.worker.UpdateFirebaseMovieWorker
+import com.prmto.mova_movieapp.core.data.data_source.worker.UpdateFirebaseTvSeriesWorker
 import dagger.hilt.android.HiltAndroidApp
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
@@ -31,11 +31,11 @@ class MovaApplication @Inject constructor(
             .setRequiredNetworkType(NetworkType.CONNECTED)
             .build()
 
-        val firebaseMovieWorker = PeriodicWorkRequestBuilder<FirebaseMovieWorker>(
+        val updateFirebaseMovieWorker = PeriodicWorkRequestBuilder<UpdateFirebaseMovieWorker>(
             repeatInterval = 5, repeatIntervalTimeUnit = TimeUnit.HOURS
         ).setConstraints(constraints).build()
 
-        val firebaseTvSeriesWorker = PeriodicWorkRequestBuilder<FirebaseTvSeriesWorker>(
+        val updateFirebaseTvSeriesWorker = PeriodicWorkRequestBuilder<UpdateFirebaseTvSeriesWorker>(
             repeatInterval = 5, repeatIntervalTimeUnit = TimeUnit.HOURS
         ).setConstraints(constraints).build()
 
@@ -44,12 +44,12 @@ class MovaApplication @Inject constructor(
         workManager.enqueueUniquePeriodicWork(
             "FirebaseMovieWork",
             ExistingPeriodicWorkPolicy.KEEP,
-            firebaseMovieWorker
+            updateFirebaseMovieWorker
         )
         workManager.enqueueUniquePeriodicWork(
             "FirebaseTvSeriesWork",
             ExistingPeriodicWorkPolicy.KEEP,
-            firebaseTvSeriesWorker
+            updateFirebaseTvSeriesWorker
         )
     }
 }

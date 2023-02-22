@@ -15,11 +15,11 @@ class GetTvSeriesWatchFromLocalDatabaseThenUpdateToFirebase @Inject constructor(
         onSuccess: () -> Unit,
         onFailure: (UiText) -> Unit
     ) {
-        val tvSeriesIdsInWatchList =
-            localDatabaseUseCases.getTvSeriesWatchListItemIdsUseCase().first()
+        val tvSeriesInWatchList =
+            localDatabaseUseCases.getTvSeriesInWatchListUseCase().first()
 
         firebaseCoreUseCases.addTvSeriesToWatchListInFirebaseUseCase(
-            tvSeriesIdsInWatchList = tvSeriesIdsInWatchList,
+            tvSeriesInWatchList = tvSeriesInWatchList,
             onSuccess = onSuccess,
             onFailure = onFailure
         )
