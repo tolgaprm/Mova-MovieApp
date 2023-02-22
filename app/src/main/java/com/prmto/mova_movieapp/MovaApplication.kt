@@ -32,11 +32,11 @@ class MovaApplication @Inject constructor(
             .build()
 
         val updateFirebaseMovieWorker = PeriodicWorkRequestBuilder<UpdateFirebaseMovieWorker>(
-            repeatInterval = 5, repeatIntervalTimeUnit = TimeUnit.HOURS
+            repeatInterval = 1, repeatIntervalTimeUnit = TimeUnit.DAYS
         ).setConstraints(constraints).build()
 
         val updateFirebaseTvSeriesWorker = PeriodicWorkRequestBuilder<UpdateFirebaseTvSeriesWorker>(
-            repeatInterval = 5, repeatIntervalTimeUnit = TimeUnit.HOURS
+            repeatInterval = 1, repeatIntervalTimeUnit = TimeUnit.DAYS
         ).setConstraints(constraints).build()
 
         val workManager = WorkManager.getInstance(this)
