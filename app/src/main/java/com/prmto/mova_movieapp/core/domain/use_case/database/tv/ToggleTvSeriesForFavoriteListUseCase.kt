@@ -9,9 +9,9 @@ class ToggleTvSeriesForFavoriteListUseCase @Inject constructor(
 ) {
     suspend operator fun invoke(
         tvSeries: TvSeries,
-        doesAddFavorite: Boolean
+        doesAddFavoriteList: Boolean
     ) {
-        if (doesAddFavorite) {
+        if (doesAddFavoriteList) {
             repository.deleteTvSeriesFromFavoriteList(favoriteTvSeries = tvSeries.toFavoriteTvSeries())
         } else {
             repository.insertTvSeriesToFavoriteList(favoriteTvSeries = tvSeries.toFavoriteTvSeries())

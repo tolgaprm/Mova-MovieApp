@@ -13,6 +13,7 @@ import com.prmto.mova_movieapp.feature_authentication.domain.use_case.SignInWith
 import com.prmto.mova_movieapp.feature_authentication.domain.use_case.SignInWithEmailAndPasswordUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -77,11 +78,14 @@ class LoginViewModel @Inject constructor(
             email = email,
             password = password,
             onSuccess = {
-                getMoviesFromFirebaseThenUpdateLocalDatabase()
-                getTvSeriesFromFirebaseThenUpdateLocalDatabase()
-                emitUiEvent(UiEvent.NavigateTo(LoginFragmentDirections.actionLoginFragmentToHomeFragment()))
-                _isLoading.value = false
-
+                val movieJob = getMoviesFromFirebaseThenUpdateLocalDatabase()
+                val tvSeriesJob = getTvSeriesFromFirebaseThenUpdateLocalDatabase()
+                viewModelScope.launch {
+                    movieJob.join()
+                    tvSeriesJob.join()
+                    _uiEvent.emit(UiEvent.NavigateTo(LoginFragmentDirections.actionLoginFragmentToHomeFragment()))
+                    _isLoading.value = false
+                }
             },
             onFailure = { uiText ->
                 emitUiEvent(UiEvent.ShowSnackbar(uiText = uiText))
@@ -132,25 +136,29 @@ class LoginViewModel @Inject constructor(
     }
 
 
-    private fun getMoviesFromFirebaseThenUpdateLocalDatabase() {
-        viewModelScope.launch(Dispatchers.IO) {
+    private fun getMoviesFromFirebaseThenUpdateLocalDatabase(): Job {
+        return viewModelScope.launch(Dispatchers.IO) {
             firebaseUseCases.getFavoriteMovieFromFirebaseThenUpdateLocalDatabaseUseCase(
-                onFailure = {}
+                onFailure = {},
+                coroutineScope = this
             )
             firebaseUseCases.getMovieWatchListFromFirebaseThenUpdateLocalDatabaseUseCase(
-                onFailure = {}
+                onFailure = {},
+                coroutineScope = this
             )
             delay(2000)
         }
     }
 
-    private fun getTvSeriesFromFirebaseThenUpdateLocalDatabase() {
-        viewModelScope.launch(Dispatchers.IO) {
+    private fun getTvSeriesFromFirebaseThenUpdateLocalDatabase(): Job {
+        return viewModelScope.launch(Dispatchers.IO) {
             firebaseUseCases.getFavoriteTvSeriesFromFirebaseThenUpdateLocalDatabaseUseCase(
-                onFailure = {}
+                onFailure = {},
+                coroutineScope = this
             )
             firebaseUseCases.getTvSeriesWatchListFromFirebaseThenUpdateLocalDatabaseUseCase(
-                onFailure = {}
+                onFailure = {},
+                coroutineScope = this
             )
             delay(2000)
         }

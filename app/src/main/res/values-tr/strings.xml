@@ -112,6 +112,8 @@
     <string name="are_you_sure_log_out">Çıkış yapmak istediğinize emin misiniz?</string>
     <string name="log_out_message">Çıkış yaptıktan sonra favori ve izleme listelerinize ekleme yapamazsınız.</string>
     <string name="successfully_log_out">Başarıyla çıkış yapıldı.</string>
+    <string name="couldn_t_find_any_videos_of_this_film">Bu filmin herhangi bir tanıtım videosu bulunamadı.</string>
+
 
     <string name="cancel">İptal</string>
     <string name="must_login_able_to_add_in_list">Listeye ekleme işlemi yapabilmek için giriş yapmalısınız.</string>

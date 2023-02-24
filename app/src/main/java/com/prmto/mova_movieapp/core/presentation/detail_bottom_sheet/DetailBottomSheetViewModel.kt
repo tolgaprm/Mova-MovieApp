@@ -110,9 +110,6 @@ class DetailBottomSheetViewModel @Inject constructor(
                     emitUiEvent(DetailBottomUiEvent.ShowAlertDialog)
                 }
             }
-            is DetailBottomSheetEvent.NavigateToLoginFragment -> {
-                emitUiEvent(DetailBottomUiEvent.NavigateTo(DetailBottomSheetDirections.actionDetailBottomSheetToLoginFragment()))
-            }
         }
     }
 
@@ -148,7 +145,7 @@ class DetailBottomSheetViewModel @Inject constructor(
         viewModelScope.launch {
             localDatabaseUseCases.toggleTvSeriesForFavoriteListUseCase(
                 tvSeries = tvSeries,
-                doesAddFavorite = state.value.doesAddFavorite
+                doesAddFavoriteList = state.value.doesAddFavorite
             )
         }
     }

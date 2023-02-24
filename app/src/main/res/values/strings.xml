@@ -109,6 +109,8 @@
     <string name="are_you_sure_log_out">Are you sure you want to log out?</string>
     <string name="log_out_message">After log out, you can\'t add movie to favorite or watch lists</string>
     <string name="successfully_log_out">Successfully log out</string>
+    <string name="couldn_t_find_any_videos_of_this_film">Couldn\'t find any videos of this film</string>
+
 
     <string name="cancel">Cancel</string>
     <string name="must_login_able_to_add_in_list"> You must to login to able to add in list</string>

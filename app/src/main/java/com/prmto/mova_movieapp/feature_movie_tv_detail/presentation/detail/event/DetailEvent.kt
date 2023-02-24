@@ -9,6 +9,8 @@ sealed class DetailEvent {
     data class ClickActorName(val actorId: Int) : DetailEvent()
     object OnBackPressed : DetailEvent()
     data class SelectedTab(val selectedTabPosition: Int) : DetailEvent()
+    object ClickedAddWatchList : DetailEvent()
+    object ClickedAddFavoriteList : DetailEvent()
     data class ClickRecommendationItemClick(
         val tvSeries: TvSeries? = null,
         val movie: Movie? = null

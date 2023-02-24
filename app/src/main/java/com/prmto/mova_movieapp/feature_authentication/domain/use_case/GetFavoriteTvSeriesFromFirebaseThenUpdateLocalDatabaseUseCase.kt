@@ -5,21 +5,19 @@ import com.prmto.mova_movieapp.core.domain.repository.FirebaseCoreRepository
 import com.prmto.mova_movieapp.core.domain.repository.LocalDatabaseRepository
 import com.prmto.mova_movieapp.core.presentation.util.UiText
 import com.prmto.mova_movieapp.feature_authentication.domain.repository.FirebaseTvSeriesRepository
-import dagger.assisted.Assisted
-import dagger.assisted.AssistedInject
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class GetFavoriteTvSeriesFromFirebaseThenUpdateLocalDatabaseUseCase @AssistedInject constructor(
+class GetFavoriteTvSeriesFromFirebaseThenUpdateLocalDatabaseUseCase @Inject constructor(
     private val firebaseCoreRepository: FirebaseCoreRepository,
     private val firebaseTvSeriesRepository: FirebaseTvSeriesRepository,
-    private val localDatabaseRepository: LocalDatabaseRepository,
-    @Assisted private val coroutineScope: CoroutineScope = CoroutineScope(Dispatchers.IO)
+    private val localDatabaseRepository: LocalDatabaseRepository
 ) {
 
     operator fun invoke(
-        onFailure: (uiText: UiText) -> Unit
+        onFailure: (uiText: UiText) -> Unit,
+        coroutineScope: CoroutineScope
     ) {
         val currentUser = firebaseCoreRepository.getCurrentUser()
         val userUid = currentUser?.uid

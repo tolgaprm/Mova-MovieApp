@@ -265,7 +265,7 @@
                 <!--endregion overview-->
 
                 <!--region Btn share,favorite,watch Section -->
-                <ImageView
+                <ImageButton
                     android:id="@+id/btnFavoriteList"
                     style="@style/CircleImageLargeButton"
                     android:contentDescription="@string/add_favorite_list"
@@ -285,7 +285,7 @@
                     app:layout_constraintStart_toStartOf="@id/btnFavoriteList"
                     app:layout_constraintTop_toBottomOf="@id/btnFavoriteList" />
 
-                <ImageView
+                <ImageButton
                     android:id="@+id/btnShare"
                     style="@style/CircleImageLargeButton"
                     android:layout_marginTop="@dimen/large_margin"
@@ -306,7 +306,7 @@
                     app:layout_constraintStart_toStartOf="@id/btnShare"
                     app:layout_constraintTop_toBottomOf="@id/btnShare" />
 
-                <ImageView
+                <ImageButton
                     android:id="@+id/btnWatchList"
                     style="@style/CircleImageLargeButton"
                     android:contentDescription="@string/add_watch_list"
@@ -551,7 +551,7 @@
                     android:id="@+id/txtVideoInfo"
                     android:layout_width="0dp"
                     android:layout_height="400dp"
-                    android:text="Couldn't find any videos of this film"
+                    android:text="@string/couldn_t_find_any_videos_of_this_film"
                     android:gravity="center"
                     android:visibility="gone"
                     style="@style/Mova.Title"

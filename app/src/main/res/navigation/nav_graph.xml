@@ -110,6 +110,9 @@
         <action
             android:id="@+id/action_detailFragment_to_detailBottomSheet"
             app:destination="@id/detailBottomSheet" />
+        <action
+            android:id="@+id/action_detailFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
     </fragment>
     <fragment
         android:id="@+id/personDetailFragment"

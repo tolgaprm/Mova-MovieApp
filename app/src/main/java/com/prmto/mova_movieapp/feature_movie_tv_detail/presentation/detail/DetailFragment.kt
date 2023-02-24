@@ -17,6 +17,8 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
 import com.prmto.mova_movieapp.R
 import com.prmto.mova_movieapp.core.domain.models.Movie
+import com.prmto.mova_movieapp.core.presentation.util.AlertDialogUtil
+import com.prmto.mova_movieapp.core.presentation.util.UtilFunctions
 import com.prmto.mova_movieapp.core.presentation.util.addOnBackPressedCallback
 import com.prmto.mova_movieapp.core.presentation.util.asString
 import com.prmto.mova_movieapp.core.util.HandlePagingLoadStates
@@ -50,6 +52,9 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
     private var _binding: FragmentDetailBinding? = null
     private val binding get() = _binding!!
 
+    private lateinit var utilFunctions: UtilFunctions
+
+
     private val detailActorAdapter: DetailActorAdapter by lazy { DetailActorAdapter() }
     private val movieRecommendationAdapter: NowPlayingRecyclerAdapter by lazy { NowPlayingRecyclerAdapter() }
     private val tvRecommendationAdapter: TvRecommendationAdapter by lazy { TvRecommendationAdapter() }
@@ -62,6 +67,8 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
         super.onViewCreated(view, savedInstanceState)
 
         _binding = FragmentDetailBinding.bind(view)
+
+        utilFunctions = UtilFunctions()
         binding.recommendationRecyclerView.adapter = movieRecommendationAdapter
         binding.videosRecyclerView.adapter = videosAdapter
 
@@ -78,6 +85,14 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
         setSwipeRefreshListener()
 
         setDirectorTextListener()
+
+        binding.btnFavoriteList.setOnClickListener {
+            viewModel.onEvent(DetailEvent.ClickedAddFavoriteList)
+        }
+
+        binding.btnWatchList.setOnClickListener {
+            viewModel.onEvent(DetailEvent.ClickedAddWatchList)
+        }
 
         setRecommendationsAdapterListener()
 
@@ -190,7 +205,6 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
                 launch {
                     collectDetailState()
                 }
-
                 launch {
                     viewModel.selectedTabPosition.collectLatest { selectedTabPosition ->
                         jobMovieId = launch {
@@ -239,6 +253,18 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
                             }
                             is DetailUiEvent.NavigateTo -> {
                                 findNavController().navigate(uiEvent.directions)
+                            }
+                            is DetailUiEvent.ShowAlertDialog -> {
+                                AlertDialogUtil.showAlertDialog(
+                                    context = requireContext(),
+                                    title = R.string.sign_in,
+                                    message = R.string.must_login_able_to_add_in_list,
+                                    positiveBtnMessage = R.string.sign_in,
+                                    negativeBtnMessage = R.string.cancel,
+                                    onClickPositiveButton = {
+                                        findNavController().navigate(DetailFragmentDirections.actionDetailFragmentToLoginFragment())
+                                    }
+                                )
                             }
                         }
                     }
@@ -295,7 +321,7 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
 
     private suspend fun collectDetailState() {
         viewModel.detailState.collectLatest { detailState ->
-            binding.progressBar.isVisible = detailState.loading
+            binding.progressBar.isVisible = detailState.isLoading
             detailState.tvDetail?.let { tvDetail ->
                 BindTvDetail(
                     tvDetail = tvDetail,
@@ -313,6 +339,16 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
                 )
                 detailActorAdapter.submitList(movieDetail.credit.cast)
             }
+
+            utilFunctions.setAddFavoriteIcon(
+                doesAddFavorite = detailState.doesAddFavorite,
+                imageButton = binding.btnFavoriteList
+            )
+
+            utilFunctions.setAddWatchListIcon(
+                doesAddWatchList = detailState.doesAddWatchList,
+                imageButton = binding.btnWatchList
+            )
 
             binding.recommendationShimmerLayout.isVisible = detailState.recommendationLoading
 

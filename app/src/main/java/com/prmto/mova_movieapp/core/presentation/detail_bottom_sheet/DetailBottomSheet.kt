@@ -18,6 +18,7 @@ import com.prmto.mova_movieapp.core.data.data_source.remote.ImageSize
 import com.prmto.mova_movieapp.core.domain.models.Movie
 import com.prmto.mova_movieapp.core.domain.models.TvSeries
 import com.prmto.mova_movieapp.core.presentation.util.AlertDialogUtil
+import com.prmto.mova_movieapp.core.presentation.util.UtilFunctions
 import com.prmto.mova_movieapp.databinding.FragmentDetailBottomSheetBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -31,6 +32,8 @@ class DetailBottomSheet : BottomSheetDialogFragment() {
 
     private val viewModel: DetailBottomSheetViewModel by viewModels()
 
+    private lateinit var utilFunctions: UtilFunctions
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -38,6 +41,7 @@ class DetailBottomSheet : BottomSheetDialogFragment() {
     ): View {
         val binding = FragmentDetailBottomSheetBinding.inflate(inflater, container, false)
         _binding = binding
+        utilFunctions = UtilFunctions()
 
         return binding.root
     }
@@ -65,27 +69,17 @@ class DetailBottomSheet : BottomSheetDialogFragment() {
                         if (state.tvSeries != null) {
                             bindTvSeries(tvSeries = state.tvSeries)
                         }
-                        setAddFavoriteIcon(state.doesAddFavorite)
-                        setAddWatchListIcon(state.doesAddWatchList)
+                        utilFunctions.setAddFavoriteIcon(
+                            doesAddFavorite = state.doesAddFavorite,
+                            imageButton = binding.btnFavoriteList
+                        )
+                        utilFunctions.setAddWatchListIcon(
+                            doesAddWatchList = state.doesAddWatchList,
+                            imageButton = binding.btnWatchingList
+                        )
                     }
                 }
             }
-        }
-    }
-
-    private fun setAddWatchListIcon(doesAddWatchList: Boolean) {
-        if (doesAddWatchList) {
-            binding.btnWatchingList.setImageResource(R.drawable.ic_baseline_video_library_24)
-        } else {
-            binding.btnWatchingList.setImageResource(R.drawable.outline_video_library_24)
-        }
-    }
-
-    private fun setAddFavoriteIcon(doesAddFavorite: Boolean) {
-        if (doesAddFavorite) {
-            binding.btnFavoriteList.setImageResource(R.drawable.ic_baseline_favorite_24)
-        } else {
-            binding.btnFavoriteList.setImageResource(R.drawable.ic_baseline_favorite_border_24)
         }
     }
 
@@ -109,9 +103,7 @@ class DetailBottomSheet : BottomSheetDialogFragment() {
                         positiveBtnMessage = R.string.sign_in,
                         negativeBtnMessage = R.string.cancel,
                         onClickPositiveButton = {
-                            viewModel.onEvent(
-                                DetailBottomSheetEvent.NavigateToLoginFragment
-                            )
+                            findNavController().navigate(DetailBottomSheetDirections.actionDetailBottomSheetToLoginFragment())
                         }
                     )
                 }

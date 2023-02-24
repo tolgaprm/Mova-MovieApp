@@ -8,9 +8,13 @@ import androidx.paging.cachedIn
 import com.prmto.mova_movieapp.core.domain.models.Movie
 import com.prmto.mova_movieapp.core.domain.models.TvSeries
 import com.prmto.mova_movieapp.core.domain.repository.DataStoreOperations
+import com.prmto.mova_movieapp.core.domain.use_case.database.LocalDatabaseUseCases
+import com.prmto.mova_movieapp.core.domain.use_case.firebase.FirebaseCoreUseCases
 import com.prmto.mova_movieapp.core.presentation.util.UiText
 import com.prmto.mova_movieapp.core.util.Constants.DEFAULT_LANGUAGE
 import com.prmto.mova_movieapp.core.util.Resource
+import com.prmto.mova_movieapp.feature_movie_tv_detail.domain.models.detail.toMovie
+import com.prmto.mova_movieapp.feature_movie_tv_detail.domain.models.detail.toTvSeries
 import com.prmto.mova_movieapp.feature_movie_tv_detail.domain.models.detail.video.Videos
 import com.prmto.mova_movieapp.feature_movie_tv_detail.domain.use_cases.DetailUseCases
 import com.prmto.mova_movieapp.feature_movie_tv_detail.presentation.detail.event.DetailEvent
@@ -18,6 +22,7 @@ import com.prmto.mova_movieapp.feature_movie_tv_detail.presentation.detail.event
 import com.prmto.mova_movieapp.feature_movie_tv_detail.presentation.detail.event.DetailUiEvent
 import com.prmto.mova_movieapp.feature_movie_tv_detail.util.Constants.DETAIL_DEFAULT_ID
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -26,6 +31,8 @@ import javax.inject.Inject
 class DetailViewModel @Inject constructor(
     private val detailUseCases: DetailUseCases,
     private val dataStoreOperations: DataStoreOperations,
+    private val firebaseCoreUseCases: FirebaseCoreUseCases,
+    private val localDatabaseUseCases: LocalDatabaseUseCases,
     private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
@@ -60,6 +67,14 @@ class DetailViewModel @Inject constructor(
         savedStateHandle.get<Int>("movieId")?.let { movieId ->
             if (movieId != DETAIL_DEFAULT_ID) {
                 _movieIdState.value = movieId
+                updateDoesAddFavoriteState(
+                    idThatCheck = movieId,
+                    addedFavoriteIds = localDatabaseUseCases.getFavoriteMovieIdsUseCase()
+                )
+                updateDoesAddWatchListState(
+                    idThatCheck = movieId,
+                    addedWatchListIds = localDatabaseUseCases.getMovieWatchListItemIdsUseCase()
+                )
                 getMovieDetail(movieId = movieId)
                 getMovieVideos(movieId = movieId)
             }
@@ -67,6 +82,14 @@ class DetailViewModel @Inject constructor(
         savedStateHandle.get<Int>("tvId")?.let { tvId ->
             if (tvId != DETAIL_DEFAULT_ID) {
                 _tvIdState.value = tvId
+                updateDoesAddFavoriteState(
+                    idThatCheck = tvId,
+                    addedFavoriteIds = localDatabaseUseCases.getFavoriteTvSeriesIdsUseCase()
+                )
+                updateDoesAddWatchListState(
+                    idThatCheck = tvId,
+                    addedWatchListIds = localDatabaseUseCases.getTvSeriesWatchListItemIdsUseCase()
+                )
                 getTvDetail(tvId = tvId)
                 getTvVideos(tvId = tvId)
             }
@@ -98,6 +121,44 @@ class DetailViewModel @Inject constructor(
                     )
                 )
             }
+            is DetailEvent.ClickedAddWatchList -> {
+                val doesAddWatchList = detailState.value.doesAddWatchList
+                addWatchListIfUserSignIn(
+                    onAddTvSeries = {
+                        localDatabaseUseCases.toggleTvSeriesForWatchListItemUseCase(
+                            tvSeries = detailState.value.tvDetail?.toTvSeries()
+                                ?: return@addWatchListIfUserSignIn,
+                            doesAddWatchList = doesAddWatchList
+                        )
+                    },
+                    onAddMovie = {
+                        localDatabaseUseCases.toggleMovieForWatchListUseCase(
+                            movie = detailState.value.movieDetail?.toMovie()
+                                ?: return@addWatchListIfUserSignIn,
+                            doesAddWatchList = doesAddWatchList
+                        )
+                    }
+                )
+            }
+            is DetailEvent.ClickedAddFavoriteList -> {
+                val doesAddFavoriteList = detailState.value.doesAddFavorite
+                addFavoriteListIfUserSignIn(
+                    onAddTvSeries = {
+                        localDatabaseUseCases.toggleTvSeriesForFavoriteListUseCase(
+                            tvSeries = detailState.value.tvDetail?.toTvSeries()
+                                ?: return@addFavoriteListIfUserSignIn,
+                            doesAddFavoriteList = doesAddFavoriteList
+                        )
+                    },
+                    onAddMovie = {
+                        localDatabaseUseCases.toggleMovieForFavoriteListUseCase(
+                            movie = detailState.value.movieDetail?.toMovie()
+                                ?: return@addFavoriteListIfUserSignIn,
+                            doesAddFavoriteList = doesAddFavoriteList
+                        )
+                    }
+                )
+            }
             is DetailEvent.SelectedTab -> {
                 _selectedTabPosition.value = event.selectedTabPosition
             }
@@ -114,6 +175,41 @@ class DetailViewModel @Inject constructor(
             }
         }
     }
+
+    private fun addFavoriteListIfUserSignIn(
+        onAddTvSeries: suspend () -> Unit,
+        onAddMovie: suspend () -> Unit
+    ) {
+        viewModelScope.launch {
+            if (firebaseCoreUseCases.isUserSignInUseCase()) {
+                if (isNotTvIdEmpty()) {
+                    onAddTvSeries()
+                } else {
+                    onAddMovie()
+                }
+            } else {
+                _eventUiFlow.emit(DetailUiEvent.ShowAlertDialog)
+            }
+        }
+    }
+
+    private fun addWatchListIfUserSignIn(
+        onAddTvSeries: suspend () -> Unit,
+        onAddMovie: suspend () -> Unit
+    ) {
+        viewModelScope.launch {
+            if (firebaseCoreUseCases.isUserSignInUseCase()) {
+                if (isNotTvIdEmpty()) {
+                    onAddTvSeries()
+                } else {
+                    onAddMovie()
+                }
+            } else {
+                _eventUiFlow.emit(DetailUiEvent.ShowAlertDialog)
+            }
+        }
+    }
+
 
     fun onAdapterLoadStateEvent(event: DetailLoadStateEvent) {
         when (event) {
@@ -142,13 +238,13 @@ class DetailViewModel @Inject constructor(
 
     private fun getMovieDetail(movieId: Int) {
         viewModelScope.launch {
-            _detailState.value = _detailState.value.copy(loading = true)
+            _detailState.value = _detailState.value.copy(isLoading = true)
             detailUseCases.movieDetailUseCase(
                 language = languageIsoCode.value, movieId = movieId
             ).collect { resource ->
                 when (resource) {
                     is Resource.Error -> {
-                        _detailState.update { it.copy(loading = false) }
+                        _detailState.update { it.copy(isLoading = false) }
                         _eventUiFlow.emit(
                             DetailUiEvent.ShowSnackbar(
                                 resource.uiText ?: UiText.unknownError()
@@ -156,7 +252,11 @@ class DetailViewModel @Inject constructor(
                         )
                     }
                     is Resource.Success -> {
-                        _detailState.value = DetailState(movieDetail = resource.data)
+                        _detailState.value = _detailState.value.copy(
+                            movieDetail = resource.data,
+                            tvDetail = null,
+                            isLoading = false
+                        )
                     }
                 }
             }
@@ -165,14 +265,14 @@ class DetailViewModel @Inject constructor(
 
     private fun getTvDetail(tvId: Int) {
         viewModelScope.launch {
-            _detailState.update { it.copy(loading = true) }
+            _detailState.update { it.copy(isLoading = true) }
             detailUseCases.tvDetailUseCase(
                 language = languageIsoCode.value, tvId = tvId
             ).collect { resource ->
                 when (resource) {
                     is Resource.Error -> {
                         _detailState.update {
-                            it.copy(loading = false)
+                            it.copy(isLoading = false)
                         }
                         _eventUiFlow.emit(
                             DetailUiEvent.ShowSnackbar(
@@ -181,7 +281,11 @@ class DetailViewModel @Inject constructor(
                         )
                     }
                     is Resource.Success -> {
-                        _detailState.value = DetailState(tvDetail = resource.data)
+                        _detailState.value = detailState.value.copy(
+                            tvDetail = resource.data,
+                            movieDetail = null,
+                            isLoading = false
+                        )
                     }
                 }
             }
@@ -201,7 +305,7 @@ class DetailViewModel @Inject constructor(
     }
 
     private fun getMovieVideos(movieId: Int) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             updateVideosLoading(isLoading = true)
             val resource = detailUseCases.getMovieVideosUseCase(
                 movieId = movieId, language = languageIsoCode.value
@@ -224,7 +328,7 @@ class DetailViewModel @Inject constructor(
     }
 
     private fun getTvVideos(tvId: Int) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             updateVideosLoading(isLoading = true)
             val resource = detailUseCases.getTvVideosUseCase(
                 tvId = tvId, language = languageIsoCode.value
@@ -250,8 +354,34 @@ class DetailViewModel @Inject constructor(
         _detailState.update { it.copy(videosLoading = isLoading) }
     }
 
+    private fun updateDoesAddFavoriteState(
+        idThatCheck: Int,
+        addedFavoriteIds: Flow<List<Int>>
+    ) {
+        viewModelScope.launch {
+            addedFavoriteIds.collectLatest { favoriteIds ->
+                _detailState.update { it.copy(doesAddFavorite = favoriteIds.any { id -> id == idThatCheck }) }
+            }
+        }
+    }
+
+    private fun updateDoesAddWatchListState(
+        idThatCheck: Int,
+        addedWatchListIds: Flow<List<Int>>
+    ) {
+        viewModelScope.launch {
+            addedWatchListIds.collectLatest { watchListItemIds ->
+                _detailState.update { it.copy(doesAddWatchList = watchListItemIds.any { id -> id == idThatCheck }) }
+            }
+        }
+    }
+
     fun isTvIdEmpty(): Boolean {
         return _tvIdState.value == DETAIL_DEFAULT_ID
+    }
+
+    private fun isNotTvIdEmpty(): Boolean {
+        return _tvIdState.value != DETAIL_DEFAULT_ID
     }
 
 }
