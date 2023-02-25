@@ -6,6 +6,7 @@ import com.prmto.mova_movieapp.core.domain.models.Movie
 import com.prmto.mova_movieapp.core.util.Constants.STARTING_PAGE
 import com.prmto.mova_movieapp.feature_home.data.dto.toMovieList
 import com.prmto.mova_movieapp.feature_movie_tv_detail.data.remote.DetailApi
+import kotlinx.coroutines.withTimeout
 import okio.IOException
 import retrofit2.HttpException
 import javax.inject.Inject
@@ -21,13 +22,18 @@ class MovieRecPagingSource @Inject constructor(
     }
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Movie> {
+
+        val timeOutTimeMilli = 15000L
+
         val nextPage = params.key ?: STARTING_PAGE
         return try {
-            val response = detailApi.getRecommendationsForMovie(
-                movieId = movieId,
-                language = language,
-                page = nextPage
-            )
+            val response = withTimeout(timeOutTimeMilli) {
+                detailApi.getRecommendationsForMovie(
+                    movieId = movieId,
+                    language = language,
+                    page = nextPage
+                )
+            }
 
             LoadResult.Page(
                 data = response.results.toMovieList(),

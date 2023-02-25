@@ -30,7 +30,6 @@ class ListFragment : Fragment(R.layout.fragment_my_list) {
 
     private val movieAdapter: MovieAdapter by lazy { MovieAdapter() }
     private val tvSeriesAdapter: TvSeriesAdapter by lazy { TvSeriesAdapter() }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -38,9 +37,9 @@ class ListFragment : Fragment(R.layout.fragment_my_list) {
         _binding = binding
 
         binding.listTypeChipGroup.setOnCheckedStateChangeListener { group, _ ->
-            val listType =
-                if (group.checkedChipId == binding.movieChip.id) ListType.MOVIE else ListType.TVSERIES
-            viewModel.onEvent(ListEvent.UpdateListType(listType = listType))
+            val chipType =
+                if (group.checkedChipId == binding.movieChip.id) ChipType.MOVIE else ChipType.TVSERIES
+            viewModel.onEvent(ListEvent.UpdateListType(chipType = chipType))
         }
 
         binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
@@ -58,7 +57,6 @@ class ListFragment : Fragment(R.layout.fragment_my_list) {
             }
         })
 
-
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
@@ -71,7 +69,6 @@ class ListFragment : Fragment(R.layout.fragment_my_list) {
             }
 
         }
-
     }
 
     private suspend fun collectUiState() {
@@ -89,9 +86,8 @@ class ListFragment : Fragment(R.layout.fragment_my_list) {
         viewModel.state.collectLatest { state ->
 
             binding.progressBar.isVisible = state.isLoading
-
-            when (state.whichTypeOfList) {
-                ListType.MOVIE -> {
+            when (state.chipType) {
+                ChipType.MOVIE -> {
                     movieAdapter.submitList(state.movieList)
                     binding.recyclerView.swapAdapter(movieAdapter, true)
 
@@ -99,7 +95,7 @@ class ListFragment : Fragment(R.layout.fragment_my_list) {
                         viewModel.onEvent(ListEvent.ClickedMovieItem(movie))
                     }
                 }
-                ListType.TVSERIES -> {
+                ChipType.TVSERIES -> {
                     tvSeriesAdapter.submitList(state.tvSeriesList)
                     binding.recyclerView.swapAdapter(tvSeriesAdapter, true)
                     tvSeriesAdapter.setOnclickListener { tvSeries ->

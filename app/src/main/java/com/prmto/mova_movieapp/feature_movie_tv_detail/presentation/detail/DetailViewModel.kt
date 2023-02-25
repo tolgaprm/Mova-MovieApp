@@ -21,6 +21,7 @@ import com.prmto.mova_movieapp.feature_movie_tv_detail.presentation.detail.event
 import com.prmto.mova_movieapp.feature_movie_tv_detail.presentation.detail.event.DetailLoadStateEvent
 import com.prmto.mova_movieapp.feature_movie_tv_detail.presentation.detail.event.DetailUiEvent
 import com.prmto.mova_movieapp.feature_movie_tv_detail.util.Constants.DETAIL_DEFAULT_ID
+import com.prmto.mova_movieapp.feature_movie_tv_detail.util.isSelectedTrailerTab
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
@@ -76,7 +77,6 @@ class DetailViewModel @Inject constructor(
                     addedWatchListIds = localDatabaseUseCases.getMovieWatchListItemIdsUseCase()
                 )
                 getMovieDetail(movieId = movieId)
-                getMovieVideos(movieId = movieId)
             }
         }
         savedStateHandle.get<Int>("tvId")?.let { tvId ->
@@ -91,7 +91,6 @@ class DetailViewModel @Inject constructor(
                     addedWatchListIds = localDatabaseUseCases.getTvSeriesWatchListItemIdsUseCase()
                 )
                 getTvDetail(tvId = tvId)
-                getTvVideos(tvId = tvId)
             }
         }
     }
@@ -161,6 +160,13 @@ class DetailViewModel @Inject constructor(
             }
             is DetailEvent.SelectedTab -> {
                 _selectedTabPosition.value = event.selectedTabPosition
+                if (selectedTabPosition.value.isSelectedTrailerTab()) {
+                    if (isNotTvIdEmpty()) {
+                        getTvVideos(tvId = tvIdState.value)
+                    } else {
+                        getMovieVideos(movieId = movieIdState.value)
+                    }
+                }
             }
             is DetailEvent.ClickRecommendationItemClick -> {
                 val action =
@@ -209,7 +215,6 @@ class DetailViewModel @Inject constructor(
             }
         }
     }
-
 
     fun onAdapterLoadStateEvent(event: DetailLoadStateEvent) {
         when (event) {

@@ -34,7 +34,7 @@ class ListViewModel @Inject constructor(
                 getMoviesAndTvSeries()
             }
             is ListEvent.UpdateListType -> {
-                _state.update { it.copy(whichTypeOfList = event.listType) }
+                _state.update { it.copy(chipType = event.chipType) }
                 getMoviesAndTvSeries()
             }
             is ListEvent.ClickedMovieItem -> {
@@ -65,8 +65,8 @@ class ListViewModel @Inject constructor(
         viewModelScope.launch {
             _state.update { it.copy(isLoading = true) }
             val currentState = state.value
-            when (currentState.whichTypeOfList) {
-                ListType.MOVIE -> {
+            when (currentState.chipType) {
+                ChipType.MOVIE -> {
                     if (currentState.selectedTab.isFavoriteList()) {
                         localDatabaseUseCases.getFavoriteMoviesUseCase()
                             .collectLatest { favoriteMovies ->
@@ -79,7 +79,7 @@ class ListViewModel @Inject constructor(
                             }
                     }
                 }
-                ListType.TVSERIES -> {
+                ChipType.TVSERIES -> {
                     if (currentState.selectedTab.isFavoriteList()) {
                         localDatabaseUseCases.getFavoriteTvSeriesUseCase()
                             .collectLatest { favoriteTvSeries ->

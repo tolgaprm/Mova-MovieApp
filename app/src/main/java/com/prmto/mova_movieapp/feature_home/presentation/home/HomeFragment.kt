@@ -27,6 +27,7 @@ import com.prmto.mova_movieapp.feature_home.presentation.home.event.HomeAdapterL
 import com.prmto.mova_movieapp.feature_home.presentation.home.event.HomeEvent
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -92,6 +93,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.networkState.collectLatest { networkState ->
+                    delay(20)
                     if (networkState.isAvaliable()) {
                         job?.cancel()
                         showScrollView()

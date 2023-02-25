@@ -7,6 +7,7 @@ import com.prmto.mova_movieapp.core.domain.models.TvSeries
 import com.prmto.mova_movieapp.core.util.Constants.STARTING_PAGE
 import com.prmto.mova_movieapp.feature_home.data.dto.toTvSeries
 import com.prmto.mova_movieapp.feature_home.data.remote.HomeApi
+import kotlinx.coroutines.withTimeout
 import javax.inject.Inject
 
 class TvPagingSource @Inject constructor(
@@ -20,22 +21,28 @@ class TvPagingSource @Inject constructor(
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, TvSeries> {
 
+        val timeOutTimeMilli = 15000L
+
         val nextPage = params.key ?: STARTING_PAGE
 
         return try {
 
             val response = when (apiFunction) {
                 TvSeriesApiFunction.POPULAR_TV -> {
-                    homeApi.getPopularTvs(
-                        page = nextPage,
-                        language = language
-                    )
+                    withTimeout(timeOutTimeMilli) {
+                        homeApi.getPopularTvs(
+                            page = nextPage,
+                            language = language
+                        )
+                    }
                 }
                 TvSeriesApiFunction.TOP_RATED_TV -> {
-                    homeApi.getTopRatedTvs(
-                        page = nextPage,
-                        language = language
-                    )
+                    withTimeout(timeOutTimeMilli) {
+                        homeApi.getTopRatedTvs(
+                            page = nextPage,
+                            language = language
+                        )
+                    }
                 }
             }
 

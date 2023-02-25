@@ -22,7 +22,6 @@ class VideosAdapter(
     class VideoResultViewHolder(
         private val binding: YoutubePlayerViewBinding
     ) : ViewHolder(binding.root) {
-
         fun bind(
             videoResult: VideoResult,
             lifecycle: Lifecycle

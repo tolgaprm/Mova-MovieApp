@@ -5,6 +5,7 @@ import androidx.paging.PagingState
 import com.prmto.mova_movieapp.core.util.Constants.STARTING_PAGE
 import com.prmto.mova_movieapp.feature_explore.data.dto.SearchDto
 import com.prmto.mova_movieapp.feature_explore.data.remote.ExploreApi
+import kotlinx.coroutines.withTimeout
 import okio.IOException
 import retrofit2.HttpException
 import timber.log.Timber
@@ -21,15 +22,19 @@ class MultiSearchPagingSource @Inject constructor(
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, SearchDto> {
 
+        val timeOutTimeMilli = 15000L
+
         val nextPage = params.key ?: STARTING_PAGE
 
         return try {
 
-            val response = exploreApi.multiSearch(
-                query = query,
-                language = language,
-                page = nextPage
-            )
+            val response = withTimeout(timeOutTimeMilli) {
+                exploreApi.multiSearch(
+                    query = query,
+                    language = language,
+                    page = nextPage
+                )
+            }
 
             LoadResult.Page(
                 data = response.results,

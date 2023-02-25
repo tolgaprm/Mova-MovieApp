@@ -9,6 +9,7 @@ import com.prmto.mova_movieapp.core.util.Constants
 import com.prmto.mova_movieapp.feature_explore.data.remote.ExploreApi
 import com.prmto.mova_movieapp.feature_explore.presentation.filter_bottom_sheet.state.FilterBottomState
 import com.prmto.mova_movieapp.feature_home.data.dto.toMovieList
+import kotlinx.coroutines.withTimeout
 import okio.IOException
 import retrofit2.HttpException
 import javax.inject.Inject
@@ -25,14 +26,20 @@ class DiscoverMoviePagingSource @Inject constructor(
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Movie> {
 
+        val timeOutTimeMilli = 15000L
+
         val nextPage = params.key ?: Constants.STARTING_PAGE
         return try {
-            val apiResponse = exploreApi.discoverMovie(
-                page = nextPage,
-                language = language,
-                genres = filterBottomState.checkedGenreIdsState.toSeparateWithComma(),
-                sort = filterBottomState.checkedSortState.toDiscoveryQueryString(filterBottomState.categoryState),
-            )
+            val apiResponse = withTimeout(timeOutTimeMilli) {
+                exploreApi.discoverMovie(
+                    page = nextPage,
+                    language = language,
+                    genres = filterBottomState.checkedGenreIdsState.toSeparateWithComma(),
+                    sort = filterBottomState.checkedSortState.toDiscoveryQueryString(
+                        filterBottomState.categoryState
+                    ),
+                )
+            }
 
             LoadResult.Page(
                 data = apiResponse.results.toMovieList(),
