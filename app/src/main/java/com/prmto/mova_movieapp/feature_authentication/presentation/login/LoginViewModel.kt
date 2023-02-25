@@ -77,16 +77,7 @@ class LoginViewModel @Inject constructor(
         val loginResult = signInWithEmailAndUserName(
             email = email,
             password = password,
-            onSuccess = {
-                val movieJob = getMoviesFromFirebaseThenUpdateLocalDatabase()
-                val tvSeriesJob = getTvSeriesFromFirebaseThenUpdateLocalDatabase()
-                viewModelScope.launch {
-                    movieJob.join()
-                    tvSeriesJob.join()
-                    _uiEvent.emit(UiEvent.NavigateTo(LoginFragmentDirections.actionLoginFragmentToHomeFragment()))
-                    _isLoading.value = false
-                }
-            },
+            onSuccess = { onLoginSuccess() },
             onFailure = { uiText ->
                 emitUiEvent(UiEvent.ShowSnackbar(uiText = uiText))
                 _isLoading.value = false
@@ -116,11 +107,7 @@ class LoginViewModel @Inject constructor(
             _isLoading.value = true
             val result = signInWithCredentialUseCase(
                 task = task,
-                onSuccess = {
-                    emitUiEvent(UiEvent.ShowSnackbar(UiText.DynamicText("Successfully login.")))
-                    emitUiEvent(UiEvent.NavigateTo(LoginFragmentDirections.actionLoginFragmentToHomeFragment()))
-                    _isLoading.value = false
-                },
+                onSuccess = { onLoginSuccess() },
                 onFailure = { uiText ->
                     emitUiEvent(UiEvent.ShowSnackbar(uiText))
                     _isLoading.value = false
@@ -135,6 +122,16 @@ class LoginViewModel @Inject constructor(
         }
     }
 
+    private fun onLoginSuccess() {
+        val movieJob = getMoviesFromFirebaseThenUpdateLocalDatabase()
+        val tvSeriesJob = getTvSeriesFromFirebaseThenUpdateLocalDatabase()
+        viewModelScope.launch {
+            movieJob.join()
+            tvSeriesJob.join()
+            _uiEvent.emit(UiEvent.NavigateTo(LoginFragmentDirections.actionLoginFragmentToHomeFragment()))
+            _isLoading.value = false
+        }
+    }
 
     private fun getMoviesFromFirebaseThenUpdateLocalDatabase(): Job {
         return viewModelScope.launch(Dispatchers.IO) {
@@ -142,6 +139,7 @@ class LoginViewModel @Inject constructor(
                 onFailure = {},
                 coroutineScope = this
             )
+
             firebaseUseCases.getMovieWatchListFromFirebaseThenUpdateLocalDatabaseUseCase(
                 onFailure = {},
                 coroutineScope = this

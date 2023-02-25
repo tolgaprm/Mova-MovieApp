@@ -37,7 +37,7 @@ class FirebaseTvSeriesRepositoryImpl @Inject constructor(
         onSuccess: (List<TvSeriesWatchListItem>) -> Unit,
         onFailure: (uiText: UiText) -> Unit
     ) {
-        firestore.collection(userUid).document(Constants.FIREBASE_FAVORITE_TV_DOCUMENT_NAME).get()
+        firestore.collection(userUid).document(Constants.FIREBASE_TV_WATCH_DOCUMENT_NAME).get()
             .addOnSuccessListener { document ->
                 documentToListTvSeries(
                     document = document,
