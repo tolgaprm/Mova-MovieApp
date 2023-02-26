@@ -6,7 +6,7 @@ plugins {
     id("androidx.navigation.safeargs")
     id "kotlin-parcelize"
     id 'com.google.gms.google-services'
-
+    id 'com.google.firebase.crashlytics'
 }
 
 android {
@@ -128,6 +128,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth-ktx'
     implementation 'com.google.android.gms:play-services-auth:20.4.1'
     implementation 'com.google.firebase:firebase-firestore-ktx'
+    implementation 'com.google.firebase:firebase-crashlytics-ktx'
 
 
     // Local Unit Tests

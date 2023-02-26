@@ -5,7 +5,7 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.prmto.mova_movieapp.core.domain.models.Movie
 import com.prmto.mova_movieapp.core.domain.models.TvSeries
-import com.prmto.mova_movieapp.core.util.Constants.ITEMS_PER_PAGE
+import com.prmto.mova_movieapp.core.util.Constants.ITEMS_PER_PAGE_FOR_RECOMMENDATION
 import com.prmto.mova_movieapp.feature_movie_tv_detail.data.dto.detail.movie.MovieDetailDto
 import com.prmto.mova_movieapp.feature_movie_tv_detail.data.dto.detail.tv.TvDetailDto
 import com.prmto.mova_movieapp.feature_movie_tv_detail.data.dto.detail.video.VideosDto
@@ -39,7 +39,7 @@ class DetailRepositoryImpl @Inject constructor(
         language: String
     ): Flow<PagingData<Movie>> {
         return Pager(
-            config = PagingConfig(pageSize = ITEMS_PER_PAGE),
+            config = PagingConfig(pageSize = ITEMS_PER_PAGE_FOR_RECOMMENDATION),
             pagingSourceFactory = {
                 MovieRecPagingSource(
                     detailApi = detailApi,
@@ -52,7 +52,7 @@ class DetailRepositoryImpl @Inject constructor(
 
     override fun getRecommendationsForTv(tvId: Int, language: String): Flow<PagingData<TvSeries>> {
         return Pager(
-            config = PagingConfig(pageSize = ITEMS_PER_PAGE),
+            config = PagingConfig(pageSize = ITEMS_PER_PAGE_FOR_RECOMMENDATION),
             pagingSourceFactory = {
                 TvRecPagingSource(
                     detailApi = detailApi,

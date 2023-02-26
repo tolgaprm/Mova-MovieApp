@@ -274,9 +274,10 @@
                     app:layout_constraintHorizontal_chainStyle="spread"
                     app:layout_constraintStart_toStartOf="parent"
 
-                    app:layout_constraintTop_toTopOf="@id/btnShare" />
+                    app:layout_constraintTop_toTopOf="@+id/btnWatchList" />
 
                 <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/materialTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/small_margin"
@@ -289,6 +290,7 @@
                     android:id="@+id/btnShare"
                     style="@style/CircleImageLargeButton"
                     android:layout_marginTop="@dimen/large_margin"
+                    android:visibility="gone"
                     android:contentDescription="@string/share"
                     android:src="@drawable/ic_share"
                     app:layout_constraintEnd_toStartOf="@+id/btnWatchList"
@@ -302,6 +304,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/small_margin"
                     android:text="@string/share"
+                    android:visibility="gone"
                     app:layout_constraintEnd_toEndOf="@id/btnShare"
                     app:layout_constraintStart_toStartOf="@id/btnShare"
                     app:layout_constraintTop_toBottomOf="@id/btnShare" />
@@ -310,10 +313,11 @@
                     android:id="@+id/btnWatchList"
                     style="@style/CircleImageLargeButton"
                     android:contentDescription="@string/add_watch_list"
+                    android:layout_marginTop="@dimen/large_margin"
                     android:src="@drawable/ic_baseline_video_library_24"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/btnShare"
-                    app:layout_constraintTop_toTopOf="@id/btnShare" />
+                    app:layout_constraintTop_toBottomOf="@+id/txtOverview" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="wrap_content"
@@ -332,12 +336,12 @@
                     style="@style/Mova.Title"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/medium_margin"
+                    android:layout_marginTop="@dimen/large_margin"
                     android:text="@string/watch_now"
                     app:layout_constraintBottom_toTopOf="@id/txtStream"
                     app:layout_constraintEnd_toEndOf="@+id/txtOverview"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/txtShare" />
+                    app:layout_constraintTop_toBottomOf="@+id/materialTextView" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/txtStream"

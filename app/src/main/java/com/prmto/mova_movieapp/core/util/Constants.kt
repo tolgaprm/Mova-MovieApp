@@ -9,6 +9,7 @@ object Constants {
     const val STARTING_PAGE = 1
 
     const val ITEMS_PER_PAGE = 20
+    const val ITEMS_PER_PAGE_FOR_RECOMMENDATION = 8
 
     const val PREFERENCES_NAME = "mova_preferences_name"
 
