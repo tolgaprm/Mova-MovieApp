@@ -9,6 +9,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import com.google.android.gms.ads.AdRequest
 import com.google.android.material.tabs.TabLayout
 import com.prmto.mova_movieapp.R
 import com.prmto.mova_movieapp.core.presentation.util.BaseUiEvent
@@ -35,6 +36,9 @@ class ListFragment : Fragment(R.layout.fragment_my_list) {
 
         val binding = FragmentMyListBinding.bind(view)
         _binding = binding
+
+        val adRequest = AdRequest.Builder().build()
+        binding.adView.loadAd(adRequest)
 
         binding.listTypeChipGroup.setOnCheckedStateChangeListener { group, _ ->
             val chipType =

@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import com.google.android.gms.ads.AdRequest
 import com.google.android.material.snackbar.Snackbar
 import com.prmto.mova_movieapp.R
 import com.prmto.mova_movieapp.core.data.models.enums.Category
@@ -56,6 +57,9 @@ class ExploreFragment : Fragment(R.layout.fragment_explore) {
         viewModel = ViewModelProvider(requireActivity())[ExploreViewModel::class.java]
         val binding = FragmentExploreBinding.bind(view)
         _binding = binding
+
+        val adRequest = AdRequest.Builder().build()
+        binding.adView.loadAd(adRequest)
 
         observeConnectivityStatus()
         collectUiEvent()
@@ -202,8 +206,7 @@ class ExploreFragment : Fragment(R.layout.fragment_explore) {
                             Category.SEARCH -> {
                                 binding.filterShimmerLayout.isVisible =
                                     it.searchAdapterState.isLoading
-                                binding.recyclerSearch.isVisible =
-                                    !it.searchAdapterState.isLoading
+                                binding.recyclerSearch.isVisible = !it.searchAdapterState.isLoading
                             }
                         }
 
@@ -239,17 +242,14 @@ class ExploreFragment : Fragment(R.layout.fragment_explore) {
                 hideErrorScreenAndShowDetailScreen()
             } else {
                 Toast.makeText(
-                    requireContext(),
-                    getString(R.string.internet_error),
-                    Toast.LENGTH_SHORT
+                    requireContext(), getString(R.string.internet_error), Toast.LENGTH_SHORT
                 ).show()
             }
         }
     }
 
     private fun handlePagingLoadStates() {
-        HandlePagingLoadStates(
-            pagingAdapter = tvFilterAdapter,
+        HandlePagingLoadStates(pagingAdapter = tvFilterAdapter,
             onLoading = { viewModel.onAdapterLoadStateEvent(ExploreAdapterLoadStateEvent.FilterAdapterLoading) },
             onNotLoading = { viewModel.onAdapterLoadStateEvent(ExploreAdapterLoadStateEvent.FilterAdapterNotLoading) },
             onError = {
@@ -258,11 +258,9 @@ class ExploreFragment : Fragment(R.layout.fragment_explore) {
                         it
                     )
                 )
-            }
-        )
+            })
 
-        HandlePagingLoadStates(
-            pagingAdapter = movieFilterAdapter,
+        HandlePagingLoadStates(pagingAdapter = movieFilterAdapter,
             onLoading = { viewModel.onAdapterLoadStateEvent(ExploreAdapterLoadStateEvent.FilterAdapterLoading) },
             onNotLoading = { viewModel.onAdapterLoadStateEvent(ExploreAdapterLoadStateEvent.FilterAdapterNotLoading) },
             onError = {
@@ -271,11 +269,9 @@ class ExploreFragment : Fragment(R.layout.fragment_explore) {
                         it
                     )
                 )
-            }
-        )
+            })
 
-        HandlePagingLoadStates<Any>(
-            searchPagingAdapter = searchRecyclerAdapter,
+        HandlePagingLoadStates<Any>(searchPagingAdapter = searchRecyclerAdapter,
             onLoading = { viewModel.onAdapterLoadStateEvent(ExploreAdapterLoadStateEvent.SearchAdapterLoading) },
             onNotLoading = { viewModel.onAdapterLoadStateEvent(ExploreAdapterLoadStateEvent.SearchAdapterNotLoading) },
             onError = {
@@ -284,13 +280,11 @@ class ExploreFragment : Fragment(R.layout.fragment_explore) {
                         it
                     )
                 )
-            }
-        )
+            })
     }
 
     private fun searchRecyclerAdapterListeners() {
-        val action =
-            ExploreFragmentDirections.actionExploreFragmentToDetailBottomSheet(null, null)
+        val action = ExploreFragmentDirections.actionExploreFragmentToDetailBottomSheet(null, null)
         setupSearchRecyclerAdapterListener(action = action)
         movieFilterAdapter.setOnItemClickListener { movie ->
             action.movie = movie
