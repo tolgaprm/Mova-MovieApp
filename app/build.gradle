@@ -130,6 +130,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-firestore-ktx'
     implementation 'com.google.firebase:firebase-crashlytics-ktx'
     implementation 'com.google.android.gms:play-services-ads:21.5.0'
+    implementation 'com.google.firebase:firebase-appcheck-playintegrity'
 
 
     // Local Unit Tests
