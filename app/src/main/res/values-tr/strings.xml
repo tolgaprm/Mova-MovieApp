@@ -113,6 +113,11 @@
     <string name="successfully_log_out">Başarıyla çıkış yapıldı.</string>
     <string name="couldn_t_find_any_videos_of_this_film">Bu filmin herhangi bir tanıtım videosu bulunamadı.</string>
 
+    <string name="have_good_weekend"> İyi hafta sonları</string>
+    <string name="movie_notification">Hafta sonu ne izleyeceğine karar veremedin mi? İzleyeceğin güzel bir film bul ve izle</string>
+    <string name="allow">İzin Ver</string>
+    <string name="it_is_necc_for_notification">Bildirim alabilmeniz için gerekli</string>
+
 
     <string name="cancel">İptal</string>
     <string name="must_login_able_to_add_in_list">Listeye ekleme işlemi yapabilmek için giriş yapmalısınız.</string>

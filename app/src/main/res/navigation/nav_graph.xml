@@ -55,6 +55,9 @@
         <action
             android:id="@+id/action_myListFragment_to_detailBottomSheet"
             app:destination="@id/detailBottomSheet" />
+        <deepLink
+            android:id="@+id/deepLink"
+            app:uri="myapp://movaapp.com/list" />
     </fragment>
     <dialog
         android:id="@+id/filterBottomSheetFragment"

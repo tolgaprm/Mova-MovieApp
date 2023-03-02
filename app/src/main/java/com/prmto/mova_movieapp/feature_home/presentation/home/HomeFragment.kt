@@ -1,11 +1,17 @@
 package com.prmto.mova_movieapp.feature_home.presentation.home
 
 
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -38,6 +44,8 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
+
+    private lateinit var permissionLauncher: ActivityResultLauncher<String>
 
     private val nowPlayingAdapter: NowPlayingRecyclerAdapter by lazy { NowPlayingRecyclerAdapter() }
 
@@ -72,7 +80,12 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 viewModel.onEvent(HomeEvent.OnBackPressed)
             }
         )
+        setupClickListener()
+        registerPermissionLaunch()
+        checkPermission(binding.root)
+    }
 
+    private fun setupClickListener() {
         binding.btnNavigateUp.setOnClickListener {
             viewModel.onEvent(HomeEvent.NavigateUpFromSeeAllSection)
         }
@@ -85,6 +98,16 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                     getString(R.string.internet_error),
                     Toast.LENGTH_SHORT
                 ).show()
+            }
+        }
+    }
+
+    private fun registerPermissionLaunch() {
+        permissionLauncher =registerForActivityResult(
+            ActivityResultContracts.RequestPermission()
+        ){
+            if (it){
+                return@registerForActivityResult
             }
         }
     }
@@ -402,6 +425,29 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             viewModel.onEvent(HomeEvent.NavigateToDetailBottomSheet(action))
         }
 
+    }
+    private fun checkPermission(view:View){
+        if (Build.VERSION.SDK_INT>=33){
+
+            if (ContextCompat.checkSelfPermission(
+                    requireContext(),
+                    android.Manifest.permission.POST_NOTIFICATIONS
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                if (ActivityCompat.shouldShowRequestPermissionRationale(
+                        requireActivity(),
+                        android.Manifest.permission.POST_NOTIFICATIONS
+                    )
+                ) {
+                    Snackbar.make(view,getString(R.string.it_is_necc_for_notification),Snackbar.LENGTH_INDEFINITE).setAction(R.string.allow){
+                        permissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
+                    }.show()
+                }
+                permissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
+            } else {
+                return
+            }
+        }
     }
 
     override fun onDestroyView() {

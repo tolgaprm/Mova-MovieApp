@@ -111,6 +111,12 @@
     <string name="successfully_log_out">Successfully log out</string>
     <string name="couldn_t_find_any_videos_of_this_film">Couldn\'t find any videos of this film</string>
 
+    <string name="have_good_weekend">Have a good weekend</string>
+    <string name="movie_notification">Can\'t decide what to watch this weekend? Find a good movie to watch and enjoy!</string>
+    <string name="allow">Allow</string>
+    <string name="it_is_necc_for_notification">it is necessary to show notification</string>
+
+
 
     <string name="cancel">Cancel</string>
     <string name="must_login_able_to_add_in_list"> You must to login to able to add in list</string>
