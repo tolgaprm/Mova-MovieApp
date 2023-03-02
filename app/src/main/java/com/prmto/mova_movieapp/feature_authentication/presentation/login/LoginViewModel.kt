@@ -134,7 +134,7 @@ class LoginViewModel @Inject constructor(
     }
 
     private fun getMoviesFromFirebaseThenUpdateLocalDatabase(): Job {
-        return viewModelScope.launch(Dispatchers.IO) {
+        return viewModelScope.launch {
             firebaseUseCases.getFavoriteMovieFromFirebaseThenUpdateLocalDatabaseUseCase(
                 onFailure = {},
                 coroutineScope = this
@@ -144,12 +144,12 @@ class LoginViewModel @Inject constructor(
                 onFailure = {},
                 coroutineScope = this
             )
-            delay(2000)
+            delay(5000)
         }
     }
 
     private fun getTvSeriesFromFirebaseThenUpdateLocalDatabase(): Job {
-        return viewModelScope.launch(Dispatchers.IO) {
+        return viewModelScope.launch {
             firebaseUseCases.getFavoriteTvSeriesFromFirebaseThenUpdateLocalDatabaseUseCase(
                 onFailure = {},
                 coroutineScope = this
@@ -158,7 +158,7 @@ class LoginViewModel @Inject constructor(
                 onFailure = {},
                 coroutineScope = this
             )
-            delay(2000)
+            delay(5000)
         }
     }
 }

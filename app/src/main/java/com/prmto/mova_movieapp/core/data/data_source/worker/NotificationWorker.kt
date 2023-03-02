@@ -10,7 +10,6 @@ import android.content.pm.PackageManager
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.work.Worker
 import androidx.work.WorkerParameters
 import com.prmto.mova_movieapp.MainActivity
@@ -41,7 +40,6 @@ class NotificationWorker(
 
 private fun showNotification(appContext: Context){
     val notificationManager = appContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-
 
     if (Build.VERSION.SDK_INT > Build.VERSION_CODES.O){
         val channel = NotificationChannel(
