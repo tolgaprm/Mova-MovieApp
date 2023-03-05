@@ -2,7 +2,7 @@
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="@dimen/search_person_row_width"
+    android:layout_width="match_parent"
     android:layout_height="@dimen/movie_row_height"
     android:layout_margin="@dimen/medium_margin"
     app:cardCornerRadius="@dimen/shape_large">

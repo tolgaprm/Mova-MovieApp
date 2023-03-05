@@ -7,6 +7,7 @@ object Constants {
     const val RECOMMENDATION_TAB_INDEX = 0
 
     const val TYPE_TRAILER = "Trailer"
+    const val TYPE_TEASER = "Teaser"
 
     const val TMDB_MOVIE_URL = "https://www.themoviedb.org/movie/"
     const val TMDB_TV_URL = "https://www.themoviedb.org/tv/"

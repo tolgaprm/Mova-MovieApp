@@ -113,6 +113,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="@dimen/large_margin"
                 android:layout_marginStart="@dimen/medium_margin"
+                android:layout_marginTop="16dp"
                 android:layout_marginEnd="@dimen/large_margin"
                 android:ellipsize="end"
                 android:maxLines="8"

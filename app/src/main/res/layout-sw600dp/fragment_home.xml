@@ -100,7 +100,7 @@
             android:paddingStart="@dimen/medium_padding"
             android:paddingEnd="@dimen/medium_padding"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            app:spanCount="2" />
+            app:spanCount="4" />
     </LinearLayout>
     <!--endregion -->
 
@@ -108,8 +108,7 @@
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:paddingBottom="@dimen/extra_large_padding">
+        android:orientation="vertical">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -216,6 +215,12 @@
 
                     <include layout="@layout/movie_row_shimmer_item" />
 
+                    <include layout="@layout/movie_row_shimmer_item" />
+
+                    <include layout="@layout/movie_row_shimmer_item" />
+
+                    <include layout="@layout/movie_row_shimmer_item" />
+
                 </LinearLayout>
 
             </com.facebook.shimmer.ShimmerFrameLayout>
@@ -230,7 +235,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/popular_movies_text"
-                tools:itemCount="3"
+                tools:itemCount="6"
                 tools:listitem="@layout/movie_row" />
 
             <!--endregion PopularMovies -->
@@ -279,6 +284,12 @@
 
                     <include layout="@layout/movie_row_shimmer_item" />
 
+                    <include layout="@layout/movie_row_shimmer_item" />
+
+                    <include layout="@layout/movie_row_shimmer_item" />
+
+                    <include layout="@layout/movie_row_shimmer_item" />
+
                 </LinearLayout>
 
             </com.facebook.shimmer.ShimmerFrameLayout>
@@ -293,7 +304,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/popular_tv_text"
-                tools:itemCount="3"
+                tools:itemCount="6"
                 tools:listitem="@layout/movie_row" />
             <!--endregion PopularTvSeries -->
 
@@ -341,6 +352,12 @@
 
                     <include layout="@layout/movie_row_shimmer_item" />
 
+                    <include layout="@layout/movie_row_shimmer_item" />
+
+                    <include layout="@layout/movie_row_shimmer_item" />
+
+                    <include layout="@layout/movie_row_shimmer_item" />
+
                 </LinearLayout>
 
             </com.facebook.shimmer.ShimmerFrameLayout>
@@ -355,7 +372,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/topRatedMovies"
-                tools:itemCount="3"
+                tools:itemCount="6"
                 tools:listitem="@layout/movie_row" />
             <!--endregion TopRatedMovies -->
 
@@ -403,6 +420,12 @@
 
                     <include layout="@layout/movie_row_shimmer_item" />
 
+                    <include layout="@layout/movie_row_shimmer_item" />
+
+                    <include layout="@layout/movie_row_shimmer_item" />
+
+                    <include layout="@layout/movie_row_shimmer_item" />
+
                 </LinearLayout>
 
             </com.facebook.shimmer.ShimmerFrameLayout>
@@ -417,7 +440,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/topRatedTvSeries"
-                tools:itemCount="3"
+                tools:itemCount="6"
                 tools:listitem="@layout/movie_row" />
 
             <!--endregion TopRatedTvSeries-->

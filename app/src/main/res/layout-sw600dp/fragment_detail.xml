@@ -38,10 +38,10 @@
                     android:id="@+id/txtToolBarTitle"
                     style="@style/Mova.body1"
                     android:layout_width="0dp"
-                    android:textStyle="bold"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/large_margin"
                     android:textSize="20sp"
+                    android:textStyle="bold"
                     android:visibility="gone"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/btnNavigateUp"
@@ -290,9 +290,9 @@
                     android:id="@+id/btnShare"
                     style="@style/CircleImageLargeButton"
                     android:layout_marginTop="@dimen/large_margin"
-                    android:visibility="gone"
                     android:contentDescription="@string/share"
                     android:src="@drawable/ic_share"
+                    android:visibility="gone"
                     app:layout_constraintEnd_toStartOf="@+id/btnWatchList"
                     app:layout_constraintStart_toEndOf="@+id/btnFavoriteList"
                     app:layout_constraintTop_toBottomOf="@+id/txtOverview" />
@@ -312,8 +312,8 @@
                 <ImageButton
                     android:id="@+id/btnWatchList"
                     style="@style/CircleImageLargeButton"
-                    android:contentDescription="@string/add_watch_list"
                     android:layout_marginTop="@dimen/large_margin"
+                    android:contentDescription="@string/add_watch_list"
                     android:src="@drawable/ic_baseline_video_library_24"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/btnShare"
@@ -488,7 +488,7 @@
                     app:layout_constraintEnd_toEndOf="@id/recyclerViewActor"
                     app:layout_constraintStart_toStartOf="@id/recyclerViewActor"
                     app:layout_constraintTop_toBottomOf="@+id/tabLayout"
-                    app:spanCount="2"
+                    app:spanCount="4"
                     tools:listitem="@layout/movie_row"
                     tools:visibility="gone" />
 
@@ -516,12 +516,29 @@
 
                             <include layout="@layout/movie_row_shimmer_item" />
 
+                            <include layout="@layout/movie_row_shimmer_item" />
+
                         </LinearLayout>
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:orientation="horizontal">
+
+                            <include layout="@layout/movie_row_shimmer_item" />
+
+                            <include layout="@layout/movie_row_shimmer_item" />
+
+                            <include layout="@layout/movie_row_shimmer_item" />
+                        </LinearLayout>
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal">
+
+                            <include layout="@layout/movie_row_shimmer_item" />
 
                             <include layout="@layout/movie_row_shimmer_item" />
 
@@ -541,32 +558,31 @@
                     android:id="@+id/videosRecyclerView"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/medium_margin"
                     android:minHeight="400dp"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="@id/recyclerViewActor"
                     app:layout_constraintStart_toStartOf="@id/recyclerViewActor"
                     app:layout_constraintTop_toBottomOf="@+id/tabLayout"
-                    android:layout_marginBottom="@dimen/medium_margin"
                     tools:itemCount="3"
                     tools:listitem="@layout/youtube_player_view"
                     tools:visibility="gone" />
 
                 <TextView
                     android:id="@+id/txtVideoInfo"
+                    style="@style/Mova.Title"
                     android:layout_width="0dp"
                     android:layout_height="400dp"
-                    android:text="@string/couldn_t_find_any_videos_of_this_film"
                     android:gravity="center"
+                    android:text="@string/couldn_t_find_any_videos_of_this_film"
                     android:visibility="gone"
-                    style="@style/Mova.Title"
                     app:layout_constraintEnd_toEndOf="@id/recyclerViewActor"
                     app:layout_constraintStart_toStartOf="@id/recyclerViewActor"
                     app:layout_constraintTop_toBottomOf="@+id/tabLayout" />
 
                 <com.facebook.shimmer.ShimmerFrameLayout
                     android:id="@+id/videosShimmerLayout"
-
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:minHeight="400dp"
@@ -579,10 +595,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="vertical">
-
-                        <include layout="@layout/youtube_player_view_shimmer" />
-
-                        <include layout="@layout/youtube_player_view_shimmer" />
 
                         <include layout="@layout/youtube_player_view_shimmer" />
                     </LinearLayout>

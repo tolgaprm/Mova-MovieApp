@@ -6,7 +6,6 @@ import com.prmto.mova_movieapp.core.util.Resource
 import com.prmto.mova_movieapp.feature_movie_tv_detail.data.dto.detail.video.toVideo
 import com.prmto.mova_movieapp.feature_movie_tv_detail.domain.models.detail.video.Videos
 import com.prmto.mova_movieapp.feature_movie_tv_detail.domain.repository.DetailRepository
-import com.prmto.mova_movieapp.feature_movie_tv_detail.util.Constants.TYPE_TRAILER
 import okio.IOException
 import retrofit2.HttpException
 import timber.log.Timber
@@ -26,7 +25,8 @@ class GetMovieVideosUseCase @Inject constructor(
             val videos = response.toVideo()
 
             val result = videos.copy(
-                result = videos.result.reversed().sortedByDescending { it.type == TYPE_TRAILER }
+                result = videos.result.filter { it.isTypeTrailer() || it.isTypeTeaser() }
+                    .sortedByDescending { it.isTypeTrailer() }
             )
 
             Resource.Success(data = result)

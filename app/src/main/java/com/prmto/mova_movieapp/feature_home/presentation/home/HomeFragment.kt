@@ -324,7 +324,8 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     private fun showSeeAllPage(uiText: UiText?) {
         binding.apply {
             seeAllPage.animation = slideInLeftAnim()
-            recyclerViewSeeAll.layoutManager = GridLayoutManager(requireContext(), 2)
+
+            recyclerViewSeeAll.layoutManager = GridLayoutManager(requireContext(), 4)
             uiText?.let {
                 toolbarText.text = it.asString(requireContext())
             }

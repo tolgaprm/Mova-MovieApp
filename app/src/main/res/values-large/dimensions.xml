@@ -21,7 +21,7 @@
     <dimen name="small_elevation">4dp</dimen>
     <dimen name="medium_elevation">8dp</dimen>
 
-    <dimen name="now_playing_row_backdrop_size">320dp</dimen>
+    <dimen name="now_playing_row_backdrop_size">420dp</dimen>
     <dimen name="now_playing_row_poster_size">150dp</dimen>
 
     <dimen name="movie_row_width">165dp</dimen>
@@ -30,14 +30,12 @@
     <dimen name="movie_row_height">300dp</dimen>
     <dimen name="movie_row_image_height">200dp</dimen>
 
-    <dimen name="search_person_row_width">165dp</dimen>
-
 
     <dimen name="mova_button_height">60dp</dimen>
 
     <dimen name="home_fragment_recycler_height">320dp</dimen>
 
-    <dimen name="movie_detail_poster_image_size">550dp</dimen>
+    <dimen name="movie_detail_poster_image_size">850dp</dimen>
 
     <dimen name="action_row_image_size">50dp</dimen>
     <dimen name="cast_image_size">80dp</dimen>
@@ -53,8 +51,8 @@
 
     <dimen name="watchProvidersImageSize">30dp</dimen>
 
-    <dimen name="youtube_player_height">200dp</dimen>
+    <dimen name="youtube_player_height">400dp</dimen>
 
+    <dimen name="person_detail_person_image_height">550dp</dimen>
 
-    <dimen name="person_detail_person_image_height">350dp</dimen>
 </resources>

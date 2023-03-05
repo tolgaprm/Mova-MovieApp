@@ -7,7 +7,9 @@ import androidx.paging.LoadState
 
 fun Context.getCountryIsoCode(): String {
     val telephonyManager = getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
-    return telephonyManager.simCountryIso
+    return telephonyManager.simCountryIso.ifEmpty {
+        "us"
+    }
 }
 
 

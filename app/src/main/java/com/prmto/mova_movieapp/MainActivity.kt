@@ -1,20 +1,13 @@
 package com.prmto.mova_movieapp
 
-import android.content.pm.PackageManager
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
+import androidx.navigation.NavDestination
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.gms.ads.MobileAds
-import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.FirebaseApp
 import com.google.firebase.appcheck.FirebaseAppCheck
 import com.google.firebase.appcheck.playintegrity.PlayIntegrityAppCheckProviderFactory
@@ -42,20 +35,39 @@ class MainActivity : AppCompatActivity() {
 
         val navController = navHost.navController
 
-        binding.bottomBar.setupWithNavController(navController)
+        binding.bottomBar?.setupWithNavController(navController)
+
+        binding.navigationRail?.setupWithNavController(navController)
+
         navController.addOnDestinationChangedListener { _, destination, _ ->
 
-            val isVisibleBottomBar = when (destination.id) {
-                R.id.homeFragment -> true
-                R.id.exploreFragment -> true
-                R.id.myListFragment -> true
-                R.id.settingsFragment -> true
-                else -> false
-            }
+            val isPreviousBackStackBottomBarDestinations =
+                isVisibleBottomBarOrNavRail(navController.previousBackStackEntry?.destination)
+            val isCurrentBackStackDetailBottomSheet = destination.id == R.id.detailBottomSheet
 
-            binding.bottomBar.isVisible = isVisibleBottomBar
+            val isVisibleBottomBarOrNavRailWhenOpenBottomDetail =
+                isPreviousBackStackBottomBarDestinations && isCurrentBackStackDetailBottomSheet
+
+            val isVisibleBottomBarOrNavigationRail = isVisibleBottomBarOrNavRail(destination)
+
+            binding.navigationRail?.isVisible =
+                isVisibleBottomBarOrNavigationRail || isVisibleBottomBarOrNavRailWhenOpenBottomDetail
+            binding.bottomBar?.isVisible =
+                isVisibleBottomBarOrNavigationRail || isVisibleBottomBarOrNavRailWhenOpenBottomDetail
         }
     }
+
+    private fun isVisibleBottomBarOrNavRail(destination: NavDestination?): Boolean {
+        if (destination == null) return false
+        return when (destination.id) {
+            R.id.homeFragment -> true
+            R.id.exploreFragment -> true
+            R.id.myListFragment -> true
+            R.id.settingsFragment -> true
+            else -> false
+        }
+    }
+
 }
 
 

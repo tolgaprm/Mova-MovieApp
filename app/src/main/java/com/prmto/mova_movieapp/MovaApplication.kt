@@ -60,10 +60,14 @@ class MovaApplication @Inject constructor(
         )
 
         val calendar = Calendar.getInstance()
+
+
         if (calendar.isWeekend){
-            workManager.beginUniqueWork("notification_worker",
-            ExistingWorkPolicy.REPLACE,
-            notificationWorker).enqueue()
+            workManager.beginUniqueWork(
+                "notification_worker",
+                ExistingWorkPolicy.KEEP,
+                notificationWorker
+            ).enqueue()
         }
     }
 }
