@@ -1,0 +1,1 @@
+<img src="https://github.com/tolgaprm/Mova-MovieApp/blob/feat/explore/Demo/search_demo.gif" height="600">

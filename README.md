@@ -17,11 +17,8 @@ You can view the cast, plot summary, release date, and more. "
 ## Demo
 
  <div>
-
- <img src="https://github.com/tolgaprm/Mova-MovieApp/blob/feat/explore/Demo/home_detail_demo.gif" height="600" float:left>
-
- <img src="https://github.com/tolgaprm/Mova-MovieApp/blob/feat/explore/Demo/search_demo.gif" height="600" float:left>
-
+ <img src="https://github.com/tolgaprm/Mova-MovieApp/blob/feat/explore/Demo/home_detail_demo.gif" height="600">
+ **[Other Demo](DEMOS.md)**
  </div>
 
 ## Screenshots
@@ -40,7 +37,7 @@ You can view the cast, plot summary, release date, and more. "
 
 <img src="Screenshoots/explore_light_turkish.png" width="180" height="360" float:left>
 
-[Other Screenshots](LIGHTSCREENS.md)
+**[Other Screenshots](LIGHTSCREENS.md)**
 
 </div>
 
@@ -60,7 +57,7 @@ You can view the cast, plot summary, release date, and more. "
 
 <img src="Screenshoots/dark/person_detail_dark.png" width="180" height="360" float:left>
 
-[Other Screenshots](DARKSCREENS.md)
+**[Other Screenshots](DARKSCREENS.md)**
 
 </div>
 
@@ -110,7 +107,8 @@ You can view the cast, plot summary, release date, and more. "
 
 ## Package Structure
 The application will then be migrated to the Modularization architecture.
-<img src="Screenshoots/package_structure.png" float:left> 
+
+<img src="Screenshoots/package_structure.png" height="700" float:left > 
 
 ## Upcoming
 
