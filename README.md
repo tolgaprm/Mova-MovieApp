@@ -24,14 +24,13 @@ You can view the cast, plot summary, release date, and more. "
 
  </div>
 
-## Screeshots
+## Screenshots
 
 ### Light Version
 
 ***
 <div>
 <img src="Screenshoots/home_light_turkish.png" width="180" height="360" float:left>
-<img src="Screenshoots/home_see_all_light_turkish.png" width="180" height="360" float:left>
 <img src="Screenshoots/home_detail_light_turkish.png" width="180" height="360" float:left>
 
 <img src="Screenshoots/detail_light_turkish.png" width="180" height="360" float:left>
@@ -40,16 +39,9 @@ You can view the cast, plot summary, release date, and more. "
 <img src="Screenshoots/detail_4_light_turkish.png" width="180" height="360" float:left>
 
 <img src="Screenshoots/explore_light_turkish.png" width="180" height="360" float:left>
-<img src="Screenshoots/explore_2_light_turkish.png" width="180" height="360" float:left>
 
-<img src="Screenshoots/person_detail_light_turkish.png" width="180" height="360" float:left>
-<img src="Screenshoots/person_detail_2_light_turkish.png" width="180" height="360" float:left>
+[Other Screenshots](LIGHTSCREENS.md)
 
-<img src="Screenshoots/list_light_turkish.png" width="180" height="360" float:left>
-<img src="Screenshoots/list_2_light_turkish.png" width="180" height="360" float:left>
-
-
-<img src="Screenshoots/settings_light_turkish.png" width="180" height="360" float:left>
 </div>
 
 ### Dark Version
@@ -57,9 +49,7 @@ You can view the cast, plot summary, release date, and more. "
 ***
 <div>
 <img src="Screenshoots/dark/home_dark_english.png" width="180" height="360" float:left>
-<img src="Screenshoots/dark/home_see_all_dark_english.png" width="180" height="360" float:left>
-<img src="Screenshoots/dark/home_see_all_2_dark_english.png" width="180" height="360" float:left>
-<img src="Screenshoots/dark/home_detail_dark_english.png" width="180" height="360" float:left>
+<img src="Screenshoots/dark/home_detail_dark_english.png" width="180" height="360" float:left>  
 
 <img src="Screenshoots/dark/detail_dark_english.png" width="180" height="360" float:left>
 <img src="Screenshoots/dark/detail_2_dark_english.png" width="180" height="360" float:left>
@@ -67,15 +57,11 @@ You can view the cast, plot summary, release date, and more. "
 <img src="Screenshoots/dark/detail_4_dark.png" width="180" height="360" float:left>
 
 <img src="Screenshoots/dark/explore_dark.png" width="180" height="360" float:left>
-<img src="Screenshoots/dark/explore_2_dark.png" width="180" height="360" float:left>
 
 <img src="Screenshoots/dark/person_detail_dark.png" width="180" height="360" float:left>
 
-<img src="Screenshoots/dark/list_dark.png" width="180" height="360" float:left>
-<img src="Screenshoots/dark/list_2_dark.png" width="180" height="360" float:left>
+[Other Screenshots](DARKSCREENS.md)
 
-
-<img src="Screenshoots/dark/setting_dark_english.png" width="180" height="360" float:left>
 </div>
 
 ## Tech stack & Open-source libraries
@@ -121,6 +107,10 @@ You can view the cast, plot summary, release date, and more. "
     - [ Flow Turbine](https://github.com/cashapp/turbine) - Turbine is a small testing library for
       kotlinx.coroutines Flow.
     - [Truth](https://truth.dev/) - A library for performing assertions in tests
+
+## Package Structure
+The application will then be migrated to the Modularization architecture.
+<img src="Screenshoots/package_structure.png" float:left> 
 
 ## Upcoming
 
