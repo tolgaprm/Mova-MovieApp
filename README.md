@@ -14,13 +14,6 @@ You can view the cast, plot summary, release date, and more. "
 
 </div>
 
-## Demo
-
- <div>
- <img src="https://github.com/tolgaprm/Mova-MovieApp/blob/feat/explore/Demo/home_detail_demo.gif" height="600">
- **[Other Demo](DEMOS.md)**
- </div>
-
 ## Screenshots
 
 ### Light Version
