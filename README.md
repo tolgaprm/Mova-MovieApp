@@ -103,6 +103,15 @@ The application will then be migrated to the Modularization architecture.
 
 <img src="Screenshoots/package_structure.png" height="700" float:left > 
 
+## API Key 🔑
+ - You will need to provide developer key to fetch the data from TMDB API.
+ - Generate a new key (v3 auth) from [here](https://www.themoviedb.org/settings/api). Copy the key and go back to Android project.
+ - Open the page is gradle/local.properties
+ - Define a constant API_KEY, it looks like 
+ 
+  ``` API_KEY = PASTE_YOUR_API_KEY ```
+
+
 ## Upcoming
 
 - Modularization
