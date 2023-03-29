@@ -12,6 +12,8 @@ class DatabaseConverter {
 
         val stringBuilder = StringBuilder()
 
+        if (list.isEmpty()) return "0"
+
         for (item in list) {
             stringBuilder.append(item).append(separator)
         }

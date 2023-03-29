@@ -9,9 +9,8 @@ import com.prmto.mova_movieapp.core.util.Constants.TV_SERIES_WATCH_LIST_ITEM_TAB
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-@Entity
 data class TvSeries(
-    @PrimaryKey val id: Int,
+    val id: Int,
     val overview: String,
     val name: String,
     val originalName: String,

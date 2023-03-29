@@ -10,7 +10,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Movie(
-    @PrimaryKey val id: Int,
+    val id: Int,
     val overview: String,
     val title: String,
     val originalTitle: String,

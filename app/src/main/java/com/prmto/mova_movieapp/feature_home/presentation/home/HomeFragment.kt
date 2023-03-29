@@ -19,7 +19,6 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.prmto.mova_movieapp.R
 import com.prmto.mova_movieapp.core.domain.models.Movie
@@ -103,10 +102,10 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     }
 
     private fun registerPermissionLaunch() {
-        permissionLauncher =registerForActivityResult(
+        permissionLauncher = registerForActivityResult(
             ActivityResultContracts.RequestPermission()
-        ){
-            if (it){
+        ) {
+            if (it) {
                 return@registerForActivityResult
             }
         }
@@ -114,7 +113,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
     private fun observeConnectivityStatus() {
         viewLifecycleOwner.lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.networkState.collectLatest { networkState ->
                     delay(20)
                     if (networkState.isAvaliable()) {
@@ -272,7 +271,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
     private fun collectDataLifecycleAware() =
         viewLifecycleOwner.lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 job = launch {
                     launch {
                         viewModel.homeState.collectLatest { homeState ->
@@ -324,8 +323,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     private fun showSeeAllPage(uiText: UiText?) {
         binding.apply {
             seeAllPage.animation = slideInLeftAnim()
-
-            recyclerViewSeeAll.layoutManager = GridLayoutManager(requireContext(), 4)
             uiText?.let {
                 toolbarText.text = it.asString(requireContext())
             }
@@ -427,8 +424,9 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         }
 
     }
-    private fun checkPermission(view:View){
-        if (Build.VERSION.SDK_INT>=33){
+
+    private fun checkPermission(view: View) {
+        if (Build.VERSION.SDK_INT >= 33) {
 
             if (ContextCompat.checkSelfPermission(
                     requireContext(),
@@ -440,7 +438,11 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                         android.Manifest.permission.POST_NOTIFICATIONS
                     )
                 ) {
-                    Snackbar.make(view,getString(R.string.it_is_necc_for_notification),Snackbar.LENGTH_INDEFINITE).setAction(R.string.allow){
+                    Snackbar.make(
+                        view,
+                        getString(R.string.it_is_necc_for_notification),
+                        Snackbar.LENGTH_INDEFINITE
+                    ).setAction(R.string.allow) {
                         permissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
                     }.show()
                 }
