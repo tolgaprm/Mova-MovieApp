@@ -5,10 +5,10 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.prmto.mova_movieapp.core.data.data_source.local.dao.MovieDao
 import com.prmto.mova_movieapp.core.data.data_source.local.dao.TvSeriesDao
-import com.prmto.mova_movieapp.core.domain.models.FavoriteMovie
-import com.prmto.mova_movieapp.core.domain.models.FavoriteTvSeries
-import com.prmto.mova_movieapp.core.domain.models.MovieWatchListItem
-import com.prmto.mova_movieapp.core.domain.models.TvSeriesWatchListItem
+import com.prmto.mova_movieapp.core.data.data_source.local.models.movie.FavoriteMovie
+import com.prmto.mova_movieapp.core.data.data_source.local.models.movie.MovieWatchListItem
+import com.prmto.mova_movieapp.core.data.data_source.local.models.tv.FavoriteTvSeries
+import com.prmto.mova_movieapp.core.data.data_source.local.models.tv.TvSeriesWatchListItem
 
 @Database(
     entities = [FavoriteMovie::class, MovieWatchListItem::class, FavoriteTvSeries::class, TvSeriesWatchListItem::class],

@@ -4,8 +4,8 @@ import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
-import com.prmto.mova_movieapp.core.domain.models.FavoriteMovie
-import com.prmto.mova_movieapp.core.domain.models.MovieWatchListItem
+import com.prmto.mova_movieapp.core.data.data_source.local.models.movie.FavoriteMovie
+import com.prmto.mova_movieapp.core.data.data_source.local.models.movie.MovieWatchListItem
 import com.prmto.mova_movieapp.core.util.Constants.FAVORITE_MOVIE_TABLE_NAME
 import com.prmto.mova_movieapp.core.util.Constants.MOVIE_WATCH_LIST_ITEM_TABLE_NAME
 import kotlinx.coroutines.flow.Flow

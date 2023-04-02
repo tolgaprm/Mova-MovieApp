@@ -1,6 +1,6 @@
 package com.prmto.mova_movieapp.core.domain.use_case.database
 
-import com.prmto.mova_movieapp.core.domain.repository.LocalDatabaseRepository
+import com.prmto.mova_movieapp.core.domain.repository.local.LocalDatabaseRepository
 import javax.inject.Inject
 
 class ClearAllDatabaseUseCase @Inject constructor(

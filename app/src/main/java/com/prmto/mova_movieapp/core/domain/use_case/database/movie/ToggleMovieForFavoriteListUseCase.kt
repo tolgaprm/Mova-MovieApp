@@ -1,20 +1,26 @@
 package com.prmto.mova_movieapp.core.domain.use_case.database.movie
 
 import com.prmto.mova_movieapp.core.domain.models.Movie
-import com.prmto.mova_movieapp.core.domain.repository.LocalDatabaseRepository
+import com.prmto.mova_movieapp.core.domain.repository.local.LocalDatabaseRepository
 import javax.inject.Inject
 
 class ToggleMovieForFavoriteListUseCase @Inject constructor(
-    private val repository: LocalDatabaseRepository
+    private val repository: LocalDatabaseRepository,
 ) {
+
+    private val movieLocalRepository = repository.movieLocalRepository
     suspend operator fun invoke(
         movie: Movie,
-        doesAddFavoriteList: Boolean
+        doesAddFavoriteList: Boolean,
     ) {
         if (doesAddFavoriteList) {
-            repository.deleteMovieFromFavoriteList(favoriteMovie = movie.toFavoriteMovie())
+            movieLocalRepository.deleteMovieFromFavoriteList(
+                movie = movie
+            )
         } else {
-            repository.insertMovieToFavoriteList(favoriteMovie = movie.toFavoriteMovie())
+            movieLocalRepository.insertMovieToFavoriteList(
+                movie = movie
+            )
         }
     }
 }

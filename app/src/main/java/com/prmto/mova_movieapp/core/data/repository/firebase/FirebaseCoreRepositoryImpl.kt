@@ -1,8 +1,8 @@
-package com.prmto.mova_movieapp.core.data.repository
+package com.prmto.mova_movieapp.core.data.repository.firebase
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.prmto.mova_movieapp.core.domain.repository.FirebaseCoreRepository
+import com.prmto.mova_movieapp.core.domain.repository.firebase.FirebaseCoreRepository
 import javax.inject.Inject
 
 class FirebaseCoreRepositoryImpl @Inject constructor(

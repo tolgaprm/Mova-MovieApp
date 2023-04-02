@@ -2,9 +2,7 @@ package com.prmto.mova_movieapp.feature_authentication.data.repository
 
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
-import com.prmto.mova_movieapp.core.domain.models.FavoriteMovie
 import com.prmto.mova_movieapp.core.domain.models.Movie
-import com.prmto.mova_movieapp.core.domain.models.MovieWatchListItem
 import com.prmto.mova_movieapp.core.domain.util.FirebaseFirestoreErrorMessage.Companion.setExceptionToFirebaseMessage
 import com.prmto.mova_movieapp.core.presentation.util.UiText
 import com.prmto.mova_movieapp.core.util.Constants
@@ -13,20 +11,20 @@ import timber.log.Timber
 import javax.inject.Inject
 
 class FirebaseMovieRepositoryImpl @Inject constructor(
-    private val firestore: FirebaseFirestore
+    private val firestore: FirebaseFirestore,
 ) : FirebaseMovieRepository {
 
     override fun getFavoriteMovie(
         userUid: String,
-        onSuccess: (List<FavoriteMovie>) -> Unit,
-        onFailure: (uiText: UiText) -> Unit
+        onSuccess: (List<Movie>) -> Unit,
+        onFailure: (uiText: UiText) -> Unit,
     ) {
         firestore.collection(userUid).document(Constants.FIREBASE_FAVORITE_MOVIE_DOCUMENT_NAME)
             .get()
             .addOnSuccessListener { document ->
                 documentToListMovie(
                     document = document,
-                    onSuccess = { movies -> onSuccess(movies.map { it.toFavoriteMovie() }) },
+                    onSuccess = { movies -> onSuccess(movies) },
                     onFailure = onFailure
                 )
             }.addOnFailureListener { exception ->
@@ -36,14 +34,14 @@ class FirebaseMovieRepositoryImpl @Inject constructor(
 
     override fun getMovieInWatchList(
         userUid: String,
-        onSuccess: (List<MovieWatchListItem>) -> Unit,
-        onFailure: (uiText: UiText) -> Unit
+        onSuccess: (List<Movie>) -> Unit,
+        onFailure: (uiText: UiText) -> Unit,
     ) {
         firestore.collection(userUid).document(Constants.FIREBASE_MOVIE_WATCH_DOCUMENT_NAME).get()
             .addOnSuccessListener { document ->
                 documentToListMovie(
                     document = document,
-                    onSuccess = { movies -> onSuccess(movies.map { it.toMovieWatchListItem() }) },
+                    onSuccess = { movies -> onSuccess(movies) },
                     onFailure = onFailure
                 )
             }.addOnFailureListener { exception ->
@@ -54,7 +52,7 @@ class FirebaseMovieRepositoryImpl @Inject constructor(
     private fun documentToListMovie(
         document: DocumentSnapshot,
         onSuccess: (List<Movie>) -> Unit,
-        onFailure: (uiText: UiText) -> Unit
+        onFailure: (uiText: UiText) -> Unit,
     ) {
         try {
             val mapOfMovies = document.get("movies") as List<*>

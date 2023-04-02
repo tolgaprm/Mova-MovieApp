@@ -25,6 +25,5 @@ class RemoteRepositoryImpl @Inject constructor(
         } catch (e: Exception) {
             throw e
         }
-
     }
 }

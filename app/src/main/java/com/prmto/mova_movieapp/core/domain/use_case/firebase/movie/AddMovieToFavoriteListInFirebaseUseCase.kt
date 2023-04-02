@@ -1,9 +1,9 @@
 package com.prmto.mova_movieapp.core.domain.use_case.firebase.movie
 
 import com.prmto.mova_movieapp.R
-import com.prmto.mova_movieapp.core.domain.models.FavoriteMovie
-import com.prmto.mova_movieapp.core.domain.repository.FirebaseCoreMovieRepository
-import com.prmto.mova_movieapp.core.domain.repository.FirebaseCoreRepository
+import com.prmto.mova_movieapp.core.domain.models.Movie
+import com.prmto.mova_movieapp.core.domain.repository.firebase.FirebaseCoreMovieRepository
+import com.prmto.mova_movieapp.core.domain.repository.firebase.FirebaseCoreRepository
 import com.prmto.mova_movieapp.core.presentation.util.UiText
 import com.prmto.mova_movieapp.core.util.Constants.FIREBASE_MOVIES_FIELD_NAME
 import javax.inject.Inject
@@ -14,9 +14,9 @@ class AddMovieToFavoriteListInFirebaseUseCase @Inject constructor(
 ) {
 
     operator fun invoke(
-        moviesInFavoriteList: List<FavoriteMovie>,
+        moviesInFavoriteList: List<Movie>,
         onSuccess: () -> Unit,
-        onFailure: (uiText: UiText) -> Unit
+        onFailure: (uiText: UiText) -> Unit,
     ) {
         val currentUser = firebaseCoreRepository.getCurrentUser()
         val userUid = currentUser?.uid

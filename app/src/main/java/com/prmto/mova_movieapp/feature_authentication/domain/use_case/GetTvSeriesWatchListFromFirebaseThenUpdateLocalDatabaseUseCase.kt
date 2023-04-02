@@ -1,8 +1,8 @@
 package com.prmto.mova_movieapp.feature_authentication.domain.use_case
 
 import com.prmto.mova_movieapp.R
-import com.prmto.mova_movieapp.core.domain.repository.FirebaseCoreRepository
-import com.prmto.mova_movieapp.core.domain.repository.LocalDatabaseRepository
+import com.prmto.mova_movieapp.core.domain.repository.firebase.FirebaseCoreRepository
+import com.prmto.mova_movieapp.core.domain.repository.local.LocalDatabaseRepository
 import com.prmto.mova_movieapp.core.presentation.util.UiText
 import com.prmto.mova_movieapp.feature_authentication.domain.repository.FirebaseTvSeriesRepository
 import kotlinx.coroutines.CoroutineScope
@@ -12,12 +12,12 @@ import javax.inject.Inject
 class GetTvSeriesWatchListFromFirebaseThenUpdateLocalDatabaseUseCase @Inject constructor(
     private val firebaseCoreRepository: FirebaseCoreRepository,
     private val firebaseTvSeriesRepository: FirebaseTvSeriesRepository,
-    private val localDatabaseRepository: LocalDatabaseRepository
+    private val localDatabaseRepository: LocalDatabaseRepository,
 ) {
 
     operator fun invoke(
         onFailure: (uiText: UiText) -> Unit,
-        coroutineScope: CoroutineScope
+        coroutineScope: CoroutineScope,
     ) {
         val currentUser = firebaseCoreRepository.getCurrentUser()
         val userUid = currentUser?.uid
@@ -25,10 +25,12 @@ class GetTvSeriesWatchListFromFirebaseThenUpdateLocalDatabaseUseCase @Inject con
 
         firebaseTvSeriesRepository.getTvSeriesInWatchList(
             userUid = userUid,
-            onSuccess = { tvSeriesInWatchList ->
-                tvSeriesInWatchList.forEach { tvSeriesWatchListItem ->
+            onSuccess = { tvSeries ->
+                tvSeries.forEach { tvSeries ->
                     coroutineScope.launch {
-                        localDatabaseRepository.insertTvSeriesToWatchListItem(tvSeriesWatchListItem)
+                        localDatabaseRepository.tvSeriesLocalRepository.insertTvSeriesToWatchListItem(
+                            tvSeries = tvSeries
+                        )
                     }
                 }
             },

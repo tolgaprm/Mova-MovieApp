@@ -13,7 +13,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ListViewModel @Inject constructor(
-    private val localDatabaseUseCases: LocalDatabaseUseCases
+    private val localDatabaseUseCases: LocalDatabaseUseCases,
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(ListState())
@@ -48,7 +48,7 @@ class ListViewModel @Inject constructor(
 
     private fun navigateToDetailBottomSheet(
         movie: Movie? = null,
-        tvSeries: TvSeries? = null
+        tvSeries: TvSeries? = null,
     ) {
         val directions = ListFragmentDirections.actionMyListFragmentToDetailBottomSheet(
             movie,
@@ -69,26 +69,26 @@ class ListViewModel @Inject constructor(
                 ChipType.MOVIE -> {
                     if (currentState.selectedTab.isFavoriteList()) {
                         localDatabaseUseCases.getFavoriteMoviesUseCase()
-                            .collectLatest { favoriteMovies ->
-                                updateListMovieAndLoading(movieList = favoriteMovies.map { it.movie })
+                            .collectLatest { movies ->
+                                updateListMovieAndLoading(movieList = movies)
                             }
                     } else {
                         localDatabaseUseCases.getMoviesInWatchListUseCase()
-                            .collectLatest { moviesInWathList ->
-                                updateListMovieAndLoading(movieList = moviesInWathList.map { it.movie })
+                            .collectLatest { movies ->
+                                updateListMovieAndLoading(movieList = movies)
                             }
                     }
                 }
                 ChipType.TVSERIES -> {
                     if (currentState.selectedTab.isFavoriteList()) {
                         localDatabaseUseCases.getFavoriteTvSeriesUseCase()
-                            .collectLatest { favoriteTvSeries ->
-                                updateListTvSeriesAndLoading(tvSeriesList = favoriteTvSeries.map { it.tvSeries })
+                            .collectLatest { tvSeries ->
+                                updateListTvSeriesAndLoading(tvSeriesList = tvSeries)
                             }
                     } else {
                         localDatabaseUseCases.getTvSeriesInWatchListUseCase()
-                            .collectLatest { tvSeriesInWatchList ->
-                                updateListTvSeriesAndLoading(tvSeriesList = tvSeriesInWatchList.map { it.tvSeries })
+                            .collectLatest { tvSeries ->
+                                updateListTvSeriesAndLoading(tvSeriesList = tvSeries)
                             }
                     }
                 }

@@ -1,8 +1,8 @@
 package com.prmto.mova_movieapp.feature_authentication.domain.use_case
 
 import com.prmto.mova_movieapp.R
-import com.prmto.mova_movieapp.core.domain.repository.FirebaseCoreRepository
-import com.prmto.mova_movieapp.core.domain.repository.LocalDatabaseRepository
+import com.prmto.mova_movieapp.core.domain.repository.firebase.FirebaseCoreRepository
+import com.prmto.mova_movieapp.core.domain.repository.local.LocalDatabaseRepository
 import com.prmto.mova_movieapp.core.presentation.util.UiText
 import com.prmto.mova_movieapp.feature_authentication.domain.repository.FirebaseTvSeriesRepository
 import kotlinx.coroutines.CoroutineScope
@@ -25,10 +25,12 @@ class GetFavoriteTvSeriesFromFirebaseThenUpdateLocalDatabaseUseCase @Inject cons
 
         firebaseTvSeriesRepository.getFavoriteTvSeries(
             userUid = userUid,
-            onSuccess = { favoriteOfListTvSeries ->
-                favoriteOfListTvSeries.forEach { favoriteTvSeries ->
+            onSuccess = { tvSeries ->
+                tvSeries.forEach { tvSeries ->
                     coroutineScope.launch {
-                        localDatabaseRepository.insertTvSeriesToFavoriteList(favoriteTvSeries)
+                        localDatabaseRepository.tvSeriesLocalRepository.insertTvSeriesToFavoriteList(
+                            tvSeries = tvSeries
+                        )
                     }
                 }
             },

@@ -1,20 +1,21 @@
 package com.prmto.mova_movieapp.core.domain.use_case.database.movie
 
 import com.prmto.mova_movieapp.core.domain.models.Movie
-import com.prmto.mova_movieapp.core.domain.repository.LocalDatabaseRepository
+import com.prmto.mova_movieapp.core.domain.repository.local.LocalDatabaseRepository
 import javax.inject.Inject
 
 class ToggleMovieForWatchListUseCase @Inject constructor(
-    private val repository: LocalDatabaseRepository
+    private val repository: LocalDatabaseRepository,
 ) {
+    private val movieLocalRepository = repository.movieLocalRepository
     suspend operator fun invoke(
         movie: Movie,
-        doesAddWatchList: Boolean
+        doesAddWatchList: Boolean,
     ) {
         if (doesAddWatchList) {
-            repository.deleteMovieFromWatchListItem(movieWatchListItem = movie.toMovieWatchListItem())
+            movieLocalRepository.deleteMovieFromWatchListItem(movie = movie)
         } else {
-            repository.insertMovieToWatchList(movieWatchListItem = movie.toMovieWatchListItem())
+            movieLocalRepository.insertMovieToWatchList(movie = movie)
         }
     }
 }

@@ -1,9 +1,9 @@
 package com.prmto.mova_movieapp.core.domain.use_case.firebase.tv
 
 import com.prmto.mova_movieapp.R
-import com.prmto.mova_movieapp.core.domain.models.TvSeriesWatchListItem
-import com.prmto.mova_movieapp.core.domain.repository.FirebaseCoreRepository
-import com.prmto.mova_movieapp.core.domain.repository.FirebaseCoreTvSeriesRepository
+import com.prmto.mova_movieapp.core.domain.models.TvSeries
+import com.prmto.mova_movieapp.core.domain.repository.firebase.FirebaseCoreRepository
+import com.prmto.mova_movieapp.core.domain.repository.firebase.FirebaseCoreTvSeriesRepository
 import com.prmto.mova_movieapp.core.presentation.util.UiText
 import com.prmto.mova_movieapp.core.util.Constants
 import javax.inject.Inject
@@ -14,9 +14,9 @@ class AddTvSeriesToWatchListInFirebaseUseCase @Inject constructor(
 ) {
 
     operator fun invoke(
-        tvSeriesInWatchList: List<TvSeriesWatchListItem>,
+        tvSeriesInWatchList: List<TvSeries>,
         onSuccess: () -> Unit,
-        onFailure: (uiText: UiText) -> Unit
+        onFailure: (uiText: UiText) -> Unit,
     ) {
         val currentUser = firebaseCoreRepository.getCurrentUser()
         val userUid = currentUser?.uid
