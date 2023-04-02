@@ -2,13 +2,13 @@ package com.prmto.mova_movieapp.feature_explore.data.paging_source
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
+import com.prmto.mova_movieapp.core.data.mapper.toMovie
 import com.prmto.mova_movieapp.core.domain.models.Movie
 import com.prmto.mova_movieapp.core.presentation.util.toDiscoveryQueryString
 import com.prmto.mova_movieapp.core.presentation.util.toSeparateWithComma
 import com.prmto.mova_movieapp.core.util.Constants
 import com.prmto.mova_movieapp.feature_explore.data.remote.ExploreApi
 import com.prmto.mova_movieapp.feature_explore.presentation.filter_bottom_sheet.state.FilterBottomState
-import com.prmto.mova_movieapp.feature_home.data.dto.toMovieList
 import kotlinx.coroutines.withTimeout
 import okio.IOException
 import retrofit2.HttpException
@@ -42,7 +42,7 @@ class DiscoverMoviePagingSource @Inject constructor(
             }
 
             LoadResult.Page(
-                data = apiResponse.results.toMovieList(),
+                data = apiResponse.results.map { it.toMovie() },
                 prevKey = if (nextPage == 1) null else nextPage.minus(1),
                 nextKey = if (nextPage < apiResponse.totalPages) nextPage.plus(1) else null
             )

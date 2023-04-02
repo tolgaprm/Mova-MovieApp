@@ -2,12 +2,10 @@ package com.prmto.mova_movieapp.feature_movie_tv_detail.data.dto.detail.movie
 
 import com.prmto.mova_movieapp.core.data.dto.Genre
 import com.prmto.mova_movieapp.feature_movie_tv_detail.data.dto.credit.CreditDto
-import com.prmto.mova_movieapp.feature_movie_tv_detail.data.dto.credit.toCredit
 import com.prmto.mova_movieapp.feature_movie_tv_detail.data.dto.detail.ProductionCompany
 import com.prmto.mova_movieapp.feature_movie_tv_detail.data.dto.detail.ProductionCountry
 import com.prmto.mova_movieapp.feature_movie_tv_detail.data.dto.detail.SpokenLanguage
 import com.prmto.mova_movieapp.feature_movie_tv_detail.data.dto.watch_provider.WatchProviders
-import com.prmto.mova_movieapp.feature_movie_tv_detail.domain.models.detail.MovieDetail
 import com.squareup.moshi.Json
 
 data class MovieDetailDto(
@@ -39,21 +37,3 @@ data class MovieDetailDto(
     val credits: CreditDto,
     @Json(name = "watch/providers") val watchProviders: WatchProviders
 )
-
-fun MovieDetailDto.toMovieDetail(): MovieDetail {
-    return MovieDetail(
-        id = id,
-        genres = genres,
-        imdbId = imdbId,
-        originalTitle = originalTitle,
-        title = title,
-        overview = overview,
-        posterPath = posterPath,
-        releaseDate = releaseDate,
-        runtime = runtime,
-        voteAverage = voteAverage,
-        voteCount = voteCount,
-        credit = credits.toCredit(),
-        watchProviders = watchProviders,
-    )
-}

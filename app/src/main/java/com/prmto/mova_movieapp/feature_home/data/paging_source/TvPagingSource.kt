@@ -2,10 +2,10 @@ package com.prmto.mova_movieapp.feature_home.data.paging_source
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
+import com.prmto.mova_movieapp.core.data.mapper.toTvSeries
 import com.prmto.mova_movieapp.core.data.models.enums.TvSeriesApiFunction
 import com.prmto.mova_movieapp.core.domain.models.TvSeries
 import com.prmto.mova_movieapp.core.util.Constants.STARTING_PAGE
-import com.prmto.mova_movieapp.feature_home.data.dto.toTvSeries
 import com.prmto.mova_movieapp.feature_home.data.remote.HomeApi
 import kotlinx.coroutines.withTimeout
 import javax.inject.Inject
@@ -48,7 +48,7 @@ class TvPagingSource @Inject constructor(
 
 
             LoadResult.Page(
-                data = response.results.toTvSeries(),
+                data = response.results.map { it.toTvSeries() },
                 prevKey = if (nextPage == 1) null else nextPage - 1,
                 nextKey = if (nextPage < response.totalPages)
                     response.page.plus(1) else null

@@ -2,6 +2,7 @@ package com.prmto.mova_movieapp.core.data.mapper
 
 import com.prmto.mova_movieapp.core.data.data_source.local.models.tv.FavoriteTvSeries
 import com.prmto.mova_movieapp.core.data.data_source.local.models.tv.TvSeriesWatchListItem
+import com.prmto.mova_movieapp.core.data.dto.TvSeriesDto
 import com.prmto.mova_movieapp.core.domain.models.TvSeries
 
 fun TvSeries.toFavoriteTvSeries(): FavoriteTvSeries {
@@ -31,5 +32,19 @@ fun FavoriteTvSeries.toTvSeries(): TvSeries {
         voteAverage = this.tvSeries.voteAverage,
         genreByOne = this.tvSeries.genreByOne,
         voteCountByString = this.tvSeries.voteCountByString
+    )
+}
+
+fun TvSeriesDto.toTvSeries(): TvSeries {
+    return TvSeries(
+        id = id,
+        overview = overview,
+        name = name,
+        originalName = originalName,
+        posterPath = posterPath,
+        firstAirDate = firstAirDate,
+        genreIds = genreIds,
+        voteCount = voteCount,
+        voteAverage = voteAverage
     )
 }

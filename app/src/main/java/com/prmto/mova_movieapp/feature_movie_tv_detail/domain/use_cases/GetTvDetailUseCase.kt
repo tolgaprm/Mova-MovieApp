@@ -3,7 +3,6 @@ package com.prmto.mova_movieapp.feature_movie_tv_detail.domain.use_cases
 import com.prmto.mova_movieapp.R
 import com.prmto.mova_movieapp.core.presentation.util.UiText
 import com.prmto.mova_movieapp.core.util.Resource
-import com.prmto.mova_movieapp.feature_movie_tv_detail.data.dto.detail.tv.toTvDetail
 import com.prmto.mova_movieapp.feature_movie_tv_detail.domain.models.detail.TvDetail
 import com.prmto.mova_movieapp.feature_movie_tv_detail.domain.repository.DetailRepository
 import com.prmto.mova_movieapp.feature_movie_tv_detail.domain.util.HandleUtils
@@ -24,8 +23,7 @@ class GetTvDetailUseCase @Inject constructor(
     ): Flow<Resource<TvDetail>> {
         return flow {
             try {
-                val response = detailRepository.getTvDetail(language = language, tvId = tvId)
-                val result = response.toTvDetail()
+                val result = detailRepository.getTvDetail(language = language, tvId = tvId)
                 val tvDetail = result.copy(
                     ratingValue = HandleUtils.calculateRatingBarValue(result.voteAverage),
                     releaseDate = HandleUtils.convertTvSeriesReleaseDateBetweenFirstAndLastDate(

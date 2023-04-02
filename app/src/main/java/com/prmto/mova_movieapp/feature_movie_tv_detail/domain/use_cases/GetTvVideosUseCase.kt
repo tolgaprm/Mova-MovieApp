@@ -3,7 +3,6 @@ package com.prmto.mova_movieapp.feature_movie_tv_detail.domain.use_cases
 import com.prmto.mova_movieapp.R
 import com.prmto.mova_movieapp.core.presentation.util.UiText
 import com.prmto.mova_movieapp.core.util.Resource
-import com.prmto.mova_movieapp.feature_movie_tv_detail.data.dto.detail.video.toVideo
 import com.prmto.mova_movieapp.feature_movie_tv_detail.domain.models.detail.video.Videos
 import com.prmto.mova_movieapp.feature_movie_tv_detail.domain.repository.DetailRepository
 import okio.IOException
@@ -16,12 +15,10 @@ class GetTvVideosUseCase @Inject constructor(
 ) {
     suspend operator fun invoke(tvId: Int, language: String): Resource<Videos> {
         return try {
-            val response = repository.getTvVideos(
+            val tvVideos = repository.getTvVideos(
                 tvId = tvId,
                 language = language.lowercase()
             )
-
-            val tvVideos = response.toVideo()
 
             val result = tvVideos.copy(
                 result = tvVideos.result.filter { it.isTypeTrailer() || it.isTypeTeaser() }

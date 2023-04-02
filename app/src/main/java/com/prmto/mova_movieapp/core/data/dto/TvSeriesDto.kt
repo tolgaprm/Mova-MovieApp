@@ -1,6 +1,5 @@
-package com.prmto.mova_movieapp.feature_home.data.dto
+package com.prmto.mova_movieapp.core.data.dto
 
-import com.prmto.mova_movieapp.core.domain.models.TvSeries
 import com.squareup.moshi.Json
 
 data class TvSeriesDto(
@@ -19,22 +18,6 @@ data class TvSeriesDto(
     @Json(name = "vote_count") val voteCount: Int,
 )
 
-fun List<TvSeriesDto>.toTvSeries(): List<TvSeries> {
-    return map {
-        TvSeries(
-            id = it.id,
-            overview = it.overview,
-            name = it.name,
-            originalName = it.originalName,
-            posterPath = it.posterPath,
-            firstAirDate = it.firstAirDate,
-            genreIds = it.genreIds,
-            voteCount = it.voteCount,
-            voteAverage = it.voteAverage
-        )
-    }
 
-
-}
 
 

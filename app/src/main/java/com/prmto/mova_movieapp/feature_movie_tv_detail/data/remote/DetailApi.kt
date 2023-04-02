@@ -1,9 +1,9 @@
 package com.prmto.mova_movieapp.feature_movie_tv_detail.data.remote
 
 import com.prmto.mova_movieapp.core.data.dto.ApiResponse
+import com.prmto.mova_movieapp.core.data.dto.MovieDto
+import com.prmto.mova_movieapp.core.data.dto.TvSeriesDto
 import com.prmto.mova_movieapp.core.util.Constants
-import com.prmto.mova_movieapp.feature_home.data.dto.MovieDto
-import com.prmto.mova_movieapp.feature_home.data.dto.TvSeriesDto
 import com.prmto.mova_movieapp.feature_movie_tv_detail.data.dto.detail.movie.MovieDetailDto
 import com.prmto.mova_movieapp.feature_movie_tv_detail.data.dto.detail.tv.TvDetailDto
 import com.prmto.mova_movieapp.feature_movie_tv_detail.data.dto.detail.video.VideosDto
