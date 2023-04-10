@@ -20,9 +20,7 @@ class MoviesPagingSource @Inject constructor(
 ) : PagingSource<Int, Movie>() {
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Movie> {
-
         val timeOutTimeMilli = 15000L
-
         val nextPage = params.key ?: STARTING_PAGE
         return try {
             val response = when (apiFunc) {
@@ -48,11 +46,14 @@ class MoviesPagingSource @Inject constructor(
                     }
                 }
             }
+
+
             LoadResult.Page(
                 data = response.results.map { it.toMovie() },
                 prevKey = if (nextPage == 1) null else nextPage - 1,
                 nextKey = if (nextPage < response.totalPages) response.page.plus(1) else null
             )
+
 
         } catch (e: Exception) {
             Timber.d(e)

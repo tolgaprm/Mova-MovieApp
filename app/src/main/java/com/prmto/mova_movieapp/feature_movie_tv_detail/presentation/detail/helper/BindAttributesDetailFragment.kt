@@ -13,7 +13,7 @@ import com.prmto.mova_movieapp.feature_movie_tv_detail.data.dto.watch_provider.W
 
 open class BindAttributesDetailFragment(
     val binding: FragmentDetailBinding,
-    val context: Context
+    val context: Context,
 ) {
 
     protected fun bindImage(posterPath: String?) {
@@ -97,7 +97,7 @@ open class BindAttributesDetailFragment(
         voteAverage: Double,
         voteCount: Int,
         ratingBarValue: Float,
-        genreList: List<Genre>
+        genreList: List<Genre>,
     ) {
         val voteCountText = HandleUtils.convertingVoteCountToString(voteCount = voteCount)
         binding.apply {
@@ -113,10 +113,12 @@ open class BindAttributesDetailFragment(
     }
 
     protected fun removeDirectorsInLayout() {
-        binding.creatorDirectorLinearLayout.removeViewsInLayout(
-            1,
-            binding.creatorDirectorLinearLayout.childCount - 1
-        )
+        if (binding.creatorDirectorLinearLayout.childCount > 1) {
+            binding.creatorDirectorLinearLayout.removeViewsInLayout(
+                1,
+                binding.creatorDirectorLinearLayout.childCount - 1
+            )
+        }
     }
 
     protected fun bindReleaseDate(releaseDate: String) {
