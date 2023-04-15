@@ -7,8 +7,6 @@ import com.prmto.mova_movieapp.core.domain.models.TvSeries
 import com.prmto.mova_movieapp.core.util.Constants
 import com.prmto.mova_movieapp.feature_movie_tv_detail.data.remote.DetailApi
 import kotlinx.coroutines.withTimeout
-import okio.IOException
-import retrofit2.HttpException
 import javax.inject.Inject
 
 class TvRecPagingSource @Inject constructor(
@@ -40,9 +38,7 @@ class TvRecPagingSource @Inject constructor(
                 nextKey = if (nextPage < response.totalPages) response.page.plus(1) else null
             )
 
-        } catch (e: IOException) {
-            LoadResult.Error(e)
-        } catch (e: HttpException) {
+        } catch (e: Exception) {
             LoadResult.Error(e)
         }
     }

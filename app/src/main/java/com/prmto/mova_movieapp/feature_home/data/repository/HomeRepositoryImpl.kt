@@ -3,8 +3,6 @@ package com.prmto.mova_movieapp.feature_home.data.repository
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
-import com.prmto.mova_movieapp.core.data.models.enums.MoviesApiFunction
-import com.prmto.mova_movieapp.core.data.models.enums.TvSeriesApiFunction
 import com.prmto.mova_movieapp.core.domain.models.Movie
 import com.prmto.mova_movieapp.core.domain.models.TvSeries
 import com.prmto.mova_movieapp.core.util.Constants
@@ -29,10 +27,13 @@ class HomeRepositoryImpl @Inject constructor(
             ),
             pagingSourceFactory = {
                 MoviesPagingSource(
-                    homeApi = homeApi,
-                    language = language,
-                    region = region,
-                    apiFunc = MoviesApiFunction.NOW_PLAYING_MOVIES
+                    getMovies = { page ->
+                        homeApi.getNowPlayingMovies(
+                            page = page,
+                            language = language,
+                            region = region
+                        )
+                    }
                 )
             }
         ).flow
@@ -45,9 +46,13 @@ class HomeRepositoryImpl @Inject constructor(
             ),
             pagingSourceFactory = {
                 MoviesPagingSource(
-                    homeApi = homeApi,
-                    language = language,
-                    apiFunc = MoviesApiFunction.POPULAR_MOVIES
+                    getMovies = { page ->
+                        homeApi.getPopularMovies(
+                            page = page,
+                            language = language,
+                            region = region
+                        )
+                    }
                 )
             }
         ).flow
@@ -60,9 +65,13 @@ class HomeRepositoryImpl @Inject constructor(
             ),
             pagingSourceFactory = {
                 MoviesPagingSource(
-                    homeApi = homeApi,
-                    language = language,
-                    apiFunc = MoviesApiFunction.TOP_RATED_MOVIES
+                    getMovies = { page ->
+                        homeApi.getTopRatedMovies(
+                            page = page,
+                            language = language,
+                            region = region
+                        )
+                    }
                 )
             }
         ).flow
@@ -75,9 +84,12 @@ class HomeRepositoryImpl @Inject constructor(
             ),
             pagingSourceFactory = {
                 TvPagingSource(
-                    homeApi = homeApi,
-                    language = language,
-                    apiFunction = TvSeriesApiFunction.POPULAR_TV
+                    getTvSeries = { page ->
+                        homeApi.getPopularTvs(
+                            page = page,
+                            language = language
+                        )
+                    }
                 )
             }
         ).flow
@@ -90,9 +102,12 @@ class HomeRepositoryImpl @Inject constructor(
             ),
             pagingSourceFactory = {
                 TvPagingSource(
-                    homeApi = homeApi,
-                    language = language,
-                    apiFunction = TvSeriesApiFunction.TOP_RATED_TV
+                    getTvSeries = { page ->
+                        homeApi.getTopRatedTvs(
+                            page = page,
+                            language = language
+                        )
+                    }
                 )
             }
         ).flow
