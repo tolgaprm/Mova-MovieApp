@@ -12,10 +12,10 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.gms.ads.AdRequest
 import com.google.android.material.tabs.TabLayout
 import com.prmto.mova_movieapp.R
+import com.prmto.mova_movieapp.core.presentation.adapter.MovieAdapter
+import com.prmto.mova_movieapp.core.presentation.adapter.TvSeriesAdapter
 import com.prmto.mova_movieapp.core.presentation.util.BaseUiEvent
 import com.prmto.mova_movieapp.databinding.FragmentMyListBinding
-import com.prmto.mova_movieapp.feature_mylist.presentation.adapter.MovieAdapter
-import com.prmto.mova_movieapp.feature_mylist.presentation.adapter.TvSeriesAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch

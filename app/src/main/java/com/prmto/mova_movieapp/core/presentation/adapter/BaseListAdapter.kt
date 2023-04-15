@@ -1,4 +1,4 @@
-package com.prmto.mova_movieapp.feature_mylist.presentation.adapter
+package com.prmto.mova_movieapp.core.presentation.adapter
 
 import android.content.Context
 import android.view.LayoutInflater

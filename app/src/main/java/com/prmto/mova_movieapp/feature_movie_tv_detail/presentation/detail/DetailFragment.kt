@@ -16,20 +16,19 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
 import com.prmto.mova_movieapp.R
-import com.prmto.mova_movieapp.core.domain.models.Movie
+import com.prmto.mova_movieapp.core.presentation.adapter.MovieAdapter
+import com.prmto.mova_movieapp.core.presentation.adapter.TvSeriesAdapter
 import com.prmto.mova_movieapp.core.presentation.util.AlertDialogUtil
 import com.prmto.mova_movieapp.core.presentation.util.UtilFunctions
 import com.prmto.mova_movieapp.core.presentation.util.addOnBackPressedCallback
 import com.prmto.mova_movieapp.core.presentation.util.asString
-import com.prmto.mova_movieapp.core.util.HandlePagingLoadStates
 import com.prmto.mova_movieapp.core.util.toolBarTextVisibilityByScrollPositionOfNestedScrollView
 import com.prmto.mova_movieapp.databinding.FragmentDetailBinding
-import com.prmto.mova_movieapp.feature_home.presentation.home.adapter.NowPlayingRecyclerAdapter
+import com.prmto.mova_movieapp.feature_movie_tv_detail.domain.models.detail.MovieDetail
+import com.prmto.mova_movieapp.feature_movie_tv_detail.domain.models.detail.TvDetail
 import com.prmto.mova_movieapp.feature_movie_tv_detail.presentation.detail.adapter.DetailActorAdapter
-import com.prmto.mova_movieapp.feature_movie_tv_detail.presentation.detail.adapter.TvRecommendationAdapter
 import com.prmto.mova_movieapp.feature_movie_tv_detail.presentation.detail.adapter.VideosAdapter
 import com.prmto.mova_movieapp.feature_movie_tv_detail.presentation.detail.event.DetailEvent
-import com.prmto.mova_movieapp.feature_movie_tv_detail.presentation.detail.event.DetailLoadStateEvent
 import com.prmto.mova_movieapp.feature_movie_tv_detail.presentation.detail.event.DetailUiEvent
 import com.prmto.mova_movieapp.feature_movie_tv_detail.presentation.detail.helper.BindMovieDetail
 import com.prmto.mova_movieapp.feature_movie_tv_detail.presentation.detail.helper.BindTvDetail
@@ -54,10 +53,9 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
 
     private lateinit var utilFunctions: UtilFunctions
 
-
+    private val movieRecommendationAdapter: MovieAdapter by lazy { MovieAdapter() }
     private val detailActorAdapter: DetailActorAdapter by lazy { DetailActorAdapter() }
-    private val movieRecommendationAdapter: NowPlayingRecyclerAdapter by lazy { NowPlayingRecyclerAdapter() }
-    private val tvRecommendationAdapter: TvRecommendationAdapter by lazy { TvRecommendationAdapter() }
+    private val tvRecommendationAdapter: TvSeriesAdapter by lazy { TvSeriesAdapter() }
     private val videosAdapter: VideosAdapter by lazy { VideosAdapter(viewLifecycleOwner.lifecycle) }
 
     private val viewModel: DetailViewModel by viewModels()
@@ -114,17 +112,14 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
             toolbar = binding.toolbar,
             context = requireContext()
         )
-
-        handleTvRecommendationsPagingLoadStates()
-        handleMovieRecommendationsPagingLoadStates()
     }
 
     private fun setRecommendationsAdapterListener() {
-        movieRecommendationAdapter.setOnClickListener { movie ->
+        movieRecommendationAdapter.setOnclickListener { movie ->
             viewModel.onEvent(DetailEvent.ClickRecommendationItemClick(movie = movie))
         }
 
-        tvRecommendationAdapter.setOnItemClickListener { tvSeries ->
+        tvRecommendationAdapter.setOnclickListener { tvSeries ->
             viewModel.onEvent(DetailEvent.ClickRecommendationItemClick(tvSeries = tvSeries))
         }
     }
@@ -240,6 +235,7 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
                             is DetailUiEvent.PopBackStack -> {
                                 findNavController().popBackStack()
                             }
+
                             is DetailUiEvent.ShowSnackbar -> {
                                 binding.swipeRefreshLayout.isEnabled = true
                                 Snackbar.make(
@@ -248,12 +244,15 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
                                     Snackbar.LENGTH_SHORT
                                 ).show()
                             }
+
                             is DetailUiEvent.IntentToImdbWebSite -> {
                                 intentToTmdbWebSite(uiEvent.url)
                             }
+
                             is DetailUiEvent.NavigateTo -> {
                                 findNavController().navigate(uiEvent.directions)
                             }
+
                             is DetailUiEvent.ShowAlertDialog -> {
                                 AlertDialogUtil.showAlertDialog(
                                     context = requireContext(),
@@ -273,40 +272,25 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
         }
     }
 
+
     private suspend fun collectMovieIdState(selectedTabPosition: Int) {
         viewModel.movieIdState.collectLatest { movieId ->
             if (movieId != Constants.DETAIL_DEFAULT_ID && selectedTabPosition.isSelectedRecommendationTab()) {
-                collectMovieRecommendationsAndSwapAdapter(movieId = movieId)
+                binding.recommendationRecyclerView.swapAdapter(movieRecommendationAdapter, true)
             } else {
                 jobMovieId?.cancel()
             }
         }
     }
 
-    private suspend fun collectMovieRecommendationsAndSwapAdapter(movieId: Int) {
-        binding.recommendationRecyclerView.swapAdapter(movieRecommendationAdapter, true)
-        viewModel.getMovieRecommendations(movieId = movieId)
-            .collectLatest { pagingData ->
-                movieRecommendationAdapter.submitData(pagingData)
-            }
-    }
-
     private suspend fun collectTvIdState(selectedTabPosition: Int) {
         viewModel.tvIdState.collectLatest { tvId ->
             if (tvId != Constants.DETAIL_DEFAULT_ID && selectedTabPosition.isSelectedRecommendationTab()) {
-                collectTvRecommendationsAndSwapAdapter(tvId = tvId)
+                binding.recommendationRecyclerView.swapAdapter(tvRecommendationAdapter, true)
             } else {
                 jobTvId?.cancel()
             }
         }
-    }
-
-    private suspend fun collectTvRecommendationsAndSwapAdapter(tvId: Int) {
-        binding.recommendationRecyclerView.swapAdapter(tvRecommendationAdapter, true)
-        viewModel.getTvRecommendations(tvId = tvId)
-            .collectLatest { pagingData ->
-                tvRecommendationAdapter.submitData(pagingData)
-            }
     }
 
     private suspend fun collectVideos() {
@@ -322,22 +306,17 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
     private suspend fun collectDetailState() {
         viewModel.detailState.collectLatest { detailState ->
             binding.progressBar.isVisible = detailState.isLoading
-            detailState.tvDetail?.let { tvDetail ->
-                BindTvDetail(
-                    tvDetail = tvDetail,
-                    binding = binding,
-                    context = requireContext()
-                )
-                detailActorAdapter.submitList(tvDetail.credit.cast)
+
+            bindTvDetailAndSubmitCast(tvDetail = detailState.tvDetail)
+
+            bindMoviesAndSubmitCast(movieDetail = detailState.movieDetail)
+
+            detailState.movieRecommendation?.let { movieRecommendation ->
+                movieRecommendationAdapter.submitList(movieRecommendation)
             }
 
-            detailState.movieDetail?.let { movieDetail ->
-                BindMovieDetail(
-                    movieDetail = movieDetail,
-                    binding = binding,
-                    context = requireContext()
-                )
-                detailActorAdapter.submitList(movieDetail.credit.cast)
+            detailState.tvRecommendation?.let {
+                tvRecommendationAdapter.submitList(it)
             }
 
             utilFunctions.setAddFavoriteIcon(
@@ -356,28 +335,32 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
         }
     }
 
-    private fun handleTvRecommendationsPagingLoadStates() {
-        HandlePagingLoadStates(
-            pagingAdapter = tvRecommendationAdapter,
-            onLoading = { viewModel.onAdapterLoadStateEvent(DetailLoadStateEvent.RecommendationLoading) },
-            onNotLoading = { viewModel.onAdapterLoadStateEvent(DetailLoadStateEvent.RecommendationNotLoading) },
-            onError = { viewModel.onAdapterLoadStateEvent(DetailLoadStateEvent.PagingError(it)) }
-        )
-    }
-
-    private fun handleMovieRecommendationsPagingLoadStates() {
-        HandlePagingLoadStates<Movie>(
-            nowPlayingRecyclerAdapter = movieRecommendationAdapter,
-            onLoading = { viewModel.onAdapterLoadStateEvent(DetailLoadStateEvent.RecommendationLoading) },
-            onNotLoading = { viewModel.onAdapterLoadStateEvent(DetailLoadStateEvent.RecommendationNotLoading) },
-            onError = { viewModel.onAdapterLoadStateEvent(DetailLoadStateEvent.PagingError(it)) }
-        )
-    }
-
     private fun intentToTmdbWebSite(tmdbUrl: String) {
         val intent = Intent(Intent.ACTION_VIEW)
         intent.data = Uri.parse(tmdbUrl)
         startActivity(intent)
+    }
+
+    private fun bindTvDetailAndSubmitCast(tvDetail: TvDetail?) {
+        tvDetail?.let { _ ->
+            BindTvDetail(
+                tvDetail = tvDetail,
+                binding = binding,
+                context = requireContext()
+            )
+            detailActorAdapter.submitList(tvDetail.credit.cast)
+        }
+    }
+
+    private fun bindMoviesAndSubmitCast(movieDetail: MovieDetail?) {
+        movieDetail?.let { _ ->
+            BindMovieDetail(
+                movieDetail = movieDetail,
+                binding = binding,
+                context = requireContext()
+            )
+            detailActorAdapter.submitList(movieDetail.credit.cast)
+        }
     }
 
     override fun onDestroyView() {

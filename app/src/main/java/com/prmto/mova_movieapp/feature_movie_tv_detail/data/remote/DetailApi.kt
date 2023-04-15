@@ -31,14 +31,14 @@ interface DetailApi {
     suspend fun getRecommendationsForMovie(
         @Path("movie_id") movieId: Int,
         @Query("language") language: String,
-        @Query("page") page: Int
+        @Query("page") page: Int = 1
     ): ApiResponse<MovieDto>
 
     @GET("tv/{tv_id}/recommendations")
     suspend fun getRecommendationsForTv(
         @Path("tv_id") tvId: Int,
         @Query("language") language: String,
-        @Query("page") page: Int
+        @Query("page") page: Int = 1
     ): ApiResponse<TvSeriesDto>
 
     @GET("movie/{movie_id}/videos")

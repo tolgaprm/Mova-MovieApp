@@ -3,10 +3,6 @@ package com.prmto.mova_movieapp.feature_movie_tv_detail.presentation.detail
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.paging.PagingData
-import androidx.paging.cachedIn
-import com.prmto.mova_movieapp.core.domain.models.Movie
-import com.prmto.mova_movieapp.core.domain.models.TvSeries
 import com.prmto.mova_movieapp.core.domain.repository.DataStoreOperations
 import com.prmto.mova_movieapp.core.domain.use_case.database.LocalDatabaseUseCases
 import com.prmto.mova_movieapp.core.domain.use_case.firebase.FirebaseCoreUseCases
@@ -18,13 +14,21 @@ import com.prmto.mova_movieapp.feature_movie_tv_detail.domain.models.detail.toTv
 import com.prmto.mova_movieapp.feature_movie_tv_detail.domain.models.detail.video.Videos
 import com.prmto.mova_movieapp.feature_movie_tv_detail.domain.use_cases.DetailUseCases
 import com.prmto.mova_movieapp.feature_movie_tv_detail.presentation.detail.event.DetailEvent
-import com.prmto.mova_movieapp.feature_movie_tv_detail.presentation.detail.event.DetailLoadStateEvent
 import com.prmto.mova_movieapp.feature_movie_tv_detail.presentation.detail.event.DetailUiEvent
 import com.prmto.mova_movieapp.feature_movie_tv_detail.util.Constants.DETAIL_DEFAULT_ID
 import com.prmto.mova_movieapp.feature_movie_tv_detail.util.isSelectedTrailerTab
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -100,9 +104,11 @@ class DetailViewModel @Inject constructor(
             is DetailEvent.IntentToImdbWebSite -> {
                 emitUiEventFlow(DetailUiEvent.IntentToImdbWebSite(addLanguageQueryToTmdbUrl(event.url)))
             }
+
             is DetailEvent.OnBackPressed -> {
                 emitUiEventFlow(DetailUiEvent.PopBackStack)
             }
+
             is DetailEvent.ClickToDirectorName -> {
                 val action =
                     DetailFragmentDirections.actionDetailFragmentToPersonDetailFragment(event.directorId)
@@ -111,6 +117,7 @@ class DetailViewModel @Inject constructor(
                     DetailUiEvent.NavigateTo(action)
                 )
             }
+
             is DetailEvent.ClickActorName -> {
                 val action =
                     DetailFragmentDirections.actionDetailFragmentToPersonDetailFragment(event.actorId)
@@ -120,6 +127,7 @@ class DetailViewModel @Inject constructor(
                     )
                 )
             }
+
             is DetailEvent.ClickedAddWatchList -> {
                 val doesAddWatchList = detailState.value.doesAddWatchList
                 addWatchListIfUserSignIn(
@@ -139,6 +147,7 @@ class DetailViewModel @Inject constructor(
                     }
                 )
             }
+
             is DetailEvent.ClickedAddFavoriteList -> {
                 val doesAddFavoriteList = detailState.value.doesAddFavorite
                 addFavoriteListIfUserSignIn(
@@ -158,6 +167,7 @@ class DetailViewModel @Inject constructor(
                     }
                 )
             }
+
             is DetailEvent.SelectedTab -> {
                 _selectedTabPosition.value = event.selectedTabPosition
                 if (selectedTabPosition.value.isSelectedTrailerTab()) {
@@ -168,6 +178,7 @@ class DetailViewModel @Inject constructor(
                     }
                 }
             }
+
             is DetailEvent.ClickRecommendationItemClick -> {
                 val action =
                     DetailFragmentDirections.actionDetailFragmentToDetailBottomSheet(null, null)
@@ -216,21 +227,6 @@ class DetailViewModel @Inject constructor(
         }
     }
 
-    fun onAdapterLoadStateEvent(event: DetailLoadStateEvent) {
-        when (event) {
-            is DetailLoadStateEvent.RecommendationLoading -> {
-                _detailState.update { it.copy(recommendationLoading = true) }
-            }
-            is DetailLoadStateEvent.RecommendationNotLoading -> {
-                _detailState.update { it.copy(recommendationLoading = false) }
-            }
-            is DetailLoadStateEvent.PagingError -> {
-                _detailState.update { it.copy(recommendationLoading = false) }
-                emitUiEventFlow(DetailUiEvent.ShowSnackbar(event.uiText))
-            }
-        }
-    }
-
     private fun emitUiEventFlow(detailUiEvent: DetailUiEvent) {
         viewModelScope.launch {
             _eventUiFlow.emit(detailUiEvent)
@@ -256,12 +252,14 @@ class DetailViewModel @Inject constructor(
                             )
                         )
                     }
+
                     is Resource.Success -> {
                         _detailState.value = _detailState.value.copy(
                             movieDetail = resource.data,
                             tvDetail = null,
                             isLoading = false
                         )
+                        getMovieRecommendations(movieId = movieId)
                     }
                 }
             }
@@ -285,28 +283,46 @@ class DetailViewModel @Inject constructor(
                             )
                         )
                     }
+
                     is Resource.Success -> {
                         _detailState.value = detailState.value.copy(
                             tvDetail = resource.data,
                             movieDetail = null,
                             isLoading = false
                         )
+                        getTvRecommendations(tvId = tvId)
                     }
                 }
             }
         }
     }
 
-    fun getMovieRecommendations(movieId: Int): Flow<PagingData<Movie>> {
-        return detailUseCases.getMovieRecommendationUseCase(
-            movieId = movieId, language = languageIsoCode.value
-        ).cachedIn(viewModelScope)
+    private fun getMovieRecommendations(movieId: Int) {
+        viewModelScope.launch {
+            detailUseCases.getMovieRecommendationUseCase(
+                movieId = movieId, language = languageIsoCode.value
+            ).collect { movies ->
+                _detailState.update {
+                    it.copy(
+                        movieRecommendation = movies
+                    )
+                }
+            }
+        }
     }
 
-    fun getTvRecommendations(tvId: Int): Flow<PagingData<TvSeries>> {
-        return detailUseCases.getTvRecommendationUseCase(
-            tvId = tvId, language = languageIsoCode.value
-        ).cachedIn(viewModelScope)
+    private fun getTvRecommendations(tvId: Int) {
+        viewModelScope.launch {
+            detailUseCases.getTvRecommendationUseCase(
+                tvId = tvId, language = languageIsoCode.value
+            ).collect { tvSeries ->
+                _detailState.update {
+                    it.copy(
+                        tvRecommendation = tvSeries
+                    )
+                }
+            }
+        }
     }
 
     private fun getMovieVideos(movieId: Int) {
@@ -320,6 +336,7 @@ class DetailViewModel @Inject constructor(
                     updateVideosLoading(isLoading = false)
                     _videos.value = resource.data
                 }
+
                 is Resource.Error -> {
                     updateVideosLoading(isLoading = false)
                     _eventUiFlow.emit(
@@ -343,6 +360,7 @@ class DetailViewModel @Inject constructor(
                     updateVideosLoading(isLoading = false)
                     _videos.value = resource.data
                 }
+
                 is Resource.Error -> {
                     updateVideosLoading(isLoading = false)
                     _eventUiFlow.emit(

@@ -1,4 +1,4 @@
-package com.prmto.mova_movieapp.feature_mylist.presentation.adapter
+package com.prmto.mova_movieapp.core.presentation.adapter
 
 import com.prmto.mova_movieapp.core.domain.models.Movie
 
