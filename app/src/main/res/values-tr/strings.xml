@@ -2,21 +2,21 @@
 <resources>
     <string name="splash_screen_logo_text">Mova</string>
     <string name="bottom_nav_home">Ana Sayfa</string>
-    <string name="bottom_nav_explore">Explore</string>
-    <string name="bottom_nav_my_list">My List</string>
+    <string name="bottom_nav_explore">Keşfet</string>
+    <string name="bottom_nav_my_list">Listem</string>
     <string name="now_playing">Vizyondakiler</string>
     <string name="see_all">Hepsini Gör</string>
     <string name="popular_movies">Popüler Filmler</string>
     <string name="popular_tv_series">Popüler Diziler</string>
     <string name="top_rated_movies">En Çok Oy Alan Filmler</string>
     <string name="search">Arama yapın</string>
-    <string name="filter">filter</string>
+    <string name="filter">Filtrele</string>
     <string name="top_rated_tv_series">En Çok Oy Alan Diziler</string>
     <string name="sort_amp_filter"><![CDATA[Sort & Filter]]></string>
     <string name="categories">Kategoriler</string>
     <string name="movie">Film</string>
     <string name="tv_series">Diziler</string>
-    <string name="genre">Genre</string>
+    <string name="genre">Tür</string>
     <string name="tv">Dizi</string>
     <string name="movies">Filmler</string>
 
@@ -51,11 +51,11 @@
     <string name="languages">Diller</string>
     <string name="settings">Ayarlar</string>
 
-    <string name="language_english">English</string>
-    <string name="language_turkish">Turkish</string>
-    <string name="language_spanish">Spanish</string>
-    <string name="language_french">French</string>
-    <string name="language_german">German</string>
+    <string name="language_english">İngilizce</string>
+    <string name="language_turkish">Türkçe</string>
+    <string name="language_spanish">İspanyolca</string>
+    <string name="language_french">Fransızca</string>
+    <string name="language_german">Almanca</string>
 
     <string name="overview">Overview</string>
     <string name="actor">Oyuncu Kadrosu</string>
