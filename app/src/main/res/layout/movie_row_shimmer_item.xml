@@ -5,6 +5,7 @@
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/medium_margin"
     android:background="@drawable/shimmer_background"
+    android:importantForAccessibility="no"
     android:orientation="vertical">
 
     <ImageView

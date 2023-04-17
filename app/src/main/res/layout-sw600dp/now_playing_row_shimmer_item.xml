@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="@dimen/now_playing_row_backdrop_size"
     android:layout_margin="@dimen/medium_margin"
+    android:importantForAccessibility="no"
     android:background="@drawable/shimmer_background">
 
     <ImageView

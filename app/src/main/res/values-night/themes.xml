@@ -10,7 +10,6 @@
         <item name="colorOnSurface">@color/white</item>
 
 
-
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:windowLightStatusBar">?android:isLightTheme</item>
         <!-- Customize your theme here. -->
