@@ -101,10 +101,12 @@
     <TextView
         android:id="@+id/txtForgotPassword"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:layout_marginTop="@dimen/large_margin"
+
         android:background="@drawable/text_ripple"
-        android:padding="@dimen/small_padding"
+        android:gravity="center"
+        android:padding="@dimen/medium_padding"
         android:text="@string/forget_the_password"
         android:textColor="?attr/colorPrimary"
         android:textStyle="bold"

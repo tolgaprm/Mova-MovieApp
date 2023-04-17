@@ -5,45 +5,35 @@
     android:layout_height="match_parent"
     android:paddingTop="@dimen/large_padding">
 
-    <FrameLayout
+
+    <LinearLayout
         android:id="@+id/errorScreen"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:orientation="vertical"
+        android:gravity="center"
+        android:visibility="visible">
 
-        <LinearLayout
+        <TextView
+            style="@style/Mova.H5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:orientation="vertical">
+            android:layout_marginBottom="@dimen/large_margin"
+            android:text="@string/something_went_wrong"
+            android:textAlignment="center" />
 
-            <TextView
-                style="@style/Mova.H5"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginBottom="@dimen/large_margin"
-                android:text="@string/something_went_wrong"
-                android:textAlignment="center" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnError"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/try_again"
+            android:textColor="?attr/colorSurface"
+            app:backgroundTint="?attr/colorOnSurface"
+            app:cornerRadius="@dimen/shape_medium" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnError"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="@string/try_again"
-                android:textColor="?attr/colorSurface"
-                app:backgroundTint="?attr/colorOnSurface"
-                app:cornerRadius="@dimen/shape_medium" />
-
-        </LinearLayout>
-
-
-    </FrameLayout>
+    </LinearLayout>
 
     <!--region seeAllSection that when click see all, the linear layout visible-->
     <LinearLayout
@@ -147,6 +137,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/now_playing_row_backdrop_size"
                 android:layout_marginTop="@dimen/medium_margin"
+                android:importantForAccessibility="no"
                 app:layout_constraintBottom_toTopOf="@id/popularMoviesSeeAll"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -161,6 +152,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/now_playing_row_backdrop_size"
                 android:layout_marginTop="@dimen/medium_margin"
+                android:contentDescription="@string/now_playing"
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
@@ -188,7 +180,8 @@
                 android:id="@+id/popularMoviesSeeAll"
                 style="@style/rippleText"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="48dp"
+                android:gravity="center"
                 android:paddingHorizontal="@dimen/large_padding"
                 android:paddingVertical="@dimen/medium_padding"
                 app:layout_constraintBaseline_toBaselineOf="@+id/popular_movies_text"
@@ -199,8 +192,10 @@
                 android:id="@+id/popularMoviesShimmerLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:importantForAccessibility="no"
                 app:layout_constraintBottom_toTopOf="@id/popularTvSeeAll"
                 app:layout_constraintEnd_toEndOf="parent"
+
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/popular_movies_text">
 
@@ -230,6 +225,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/home_fragment_recycler_height"
                 android:layout_marginTop="@dimen/medium_margin"
+                android:contentDescription="@string/popular_movies"
                 android:orientation="horizontal"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -257,7 +253,8 @@
                 android:id="@+id/popularTvSeeAll"
                 style="@style/rippleText"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="48dp"
+                android:gravity="center"
                 android:paddingHorizontal="@dimen/large_padding"
                 android:paddingVertical="@dimen/medium_padding"
                 app:layout_constraintBaseline_toBaselineOf="@+id/popular_tv_text"
@@ -268,6 +265,7 @@
                 android:id="@+id/popularTvSeriesShimmerLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:importantForAccessibility="no"
                 app:layout_constraintBottom_toTopOf="@id/topRatedMoviesSeeAll"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -299,6 +297,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/home_fragment_recycler_height"
                 android:layout_marginTop="@dimen/medium_margin"
+                android:contentDescription="@string/popular_tv_series"
                 android:orientation="horizontal"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -324,7 +323,8 @@
                 android:id="@+id/topRatedMoviesSeeAll"
                 style="@style/rippleText"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="48dp"
+                android:gravity="center"
                 android:paddingHorizontal="@dimen/large_padding"
                 android:paddingVertical="@dimen/medium_padding"
                 app:layout_constraintBaseline_toBaselineOf="@+id/topRatedMovies"
@@ -335,6 +335,7 @@
                 android:id="@+id/topRatedMoviesShimmerLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:importantForAccessibility="no"
                 app:layout_constraintBottom_toTopOf="@id/topRatedTvSeriesSeeAll"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -367,6 +368,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/home_fragment_recycler_height"
                 android:layout_marginTop="@dimen/medium_margin"
+                android:contentDescription="@string/top_rated_movies"
                 android:orientation="horizontal"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -392,7 +394,8 @@
                 android:id="@+id/topRatedTvSeriesSeeAll"
                 style="@style/rippleText"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="48dp"
+                android:gravity="center"
                 android:paddingHorizontal="@dimen/large_padding"
                 android:paddingVertical="@dimen/medium_padding"
                 app:layout_constraintBaseline_toBaselineOf="@+id/topRatedTvSeries"
@@ -403,6 +406,7 @@
                 android:id="@+id/topRatedTvSeriesShimmerLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:importantForAccessibility="no"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -435,6 +439,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/home_fragment_recycler_height"
                 android:layout_marginTop="@dimen/medium_margin"
+                android:contentDescription="@string/top_rated_tv_series"
                 android:orientation="horizontal"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintEnd_toEndOf="parent"

@@ -169,7 +169,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/iconSizeLarge"
         android:layout_marginTop="@dimen/small_margin"
-        android:background="@drawable/text_ripple"
+        android:background="@drawable/bottom_sheet_detail_and_more_button_ripple"
         android:clickable="true"
         android:focusable="true"
         android:gravity="center_vertical"

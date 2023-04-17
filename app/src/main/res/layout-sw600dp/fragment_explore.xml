@@ -94,6 +94,7 @@
             android:id="@+id/filterShimmerLayout"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:importantForAccessibility="no"
             android:padding="@dimen/large_padding"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -199,45 +200,34 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <FrameLayout
+    <LinearLayout
         android:id="@+id/errorScreen"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="visible">
 
-        <LinearLayout
+        <TextView
+            style="@style/Mova.H5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:orientation="vertical">
+            android:layout_marginBottom="@dimen/large_margin"
+            android:text="@string/something_went_wrong"
+            android:textAlignment="center" />
 
-            <TextView
-                style="@style/Mova.H5"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginBottom="@dimen/large_margin"
-                android:text="@string/something_went_wrong"
-                android:textAlignment="center" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnError"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/try_again"
+            android:textColor="?attr/colorSurface"
+            app:backgroundTint="?attr/colorOnSurface"
+            app:cornerRadius="@dimen/shape_medium" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnError"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="@string/try_again"
-                android:textColor="?attr/colorSurface"
-                app:backgroundTint="?attr/colorOnSurface"
-                app:cornerRadius="@dimen/shape_medium" />
-
-        </LinearLayout>
-
-
-    </FrameLayout>
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
