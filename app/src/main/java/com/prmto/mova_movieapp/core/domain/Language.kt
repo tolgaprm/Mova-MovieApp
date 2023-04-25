@@ -12,7 +12,5 @@ data class Language(
 val supportedLanguages = mutableListOf<Language>(
     Language(R.string.language_english, "en"),
     Language(R.string.language_turkish, "tr"),
-    Language(R.string.language_spanish, "es"),
     Language(R.string.language_german, "de"),
-    Language(R.string.language_french, "fr"),
 )

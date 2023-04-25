@@ -17,8 +17,8 @@ android {
         applicationId "com.prmto.mova_movieapp"
         minSdk 24
         targetSdk 33
-        versionCode 1
-        versionName "1.0"
+        versionCode 9
+        versionName "1.1"
 
         testInstrumentationRunner "com.prmto.mova_movieapp.HiltTestRunner"
 
@@ -27,6 +27,7 @@ android {
 
         buildConfigField "String", "API_KEY", "\"${properties.getProperty("API_KEY")}\""
 
+        resourceConfigurations = ['en', 'tr-rTR', 'de-rDE']
     }
 
     buildTypes {
