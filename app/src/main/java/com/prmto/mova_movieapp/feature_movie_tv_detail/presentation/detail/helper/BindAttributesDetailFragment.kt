@@ -16,6 +16,12 @@ open class BindAttributesDetailFragment(
     val context: Context,
 ) {
 
+    private val watchProvidersHelper: BindWatchProvidersHelper by lazy {
+        BindWatchProvidersHelper(
+            context = context
+        )
+    }
+
     protected fun bindImage(posterPath: String?) {
         binding.imvPoster.load(
             ImageApi.getImage(
@@ -48,44 +54,32 @@ open class BindAttributesDetailFragment(
     protected fun bindWatchProviders(providerRegion: WatchProviderRegion?) {
         providerRegion?.let { provider ->
 
-            var isHaveWatchProvider = false
-
             val watchProvider = when (context.getCountryIsoCode()) {
                 "tr" -> provider.tr
                 "us" -> provider.us
                 "fr" -> provider.fr
                 "de" -> provider.de
                 "es" -> provider.es
-                else -> provider.en
+                else -> provider.us
             }
 
-            val streamLogoPath = watchProvider?.flatRate?.first()?.logoPath
-            val buyLogoPath = watchProvider?.buy?.first()?.logoPath
-            val rentLogoPath = watchProvider?.rent?.first()?.logoPath
+            val streamWatchProviders = watchProvider?.flatRate
+            val buyWatchProviders = watchProvider?.buy
+            val rentWatchProviders = watchProvider?.rent
 
+            watchProvidersHelper.bind(
+                listOfWatchProviderItem = streamWatchProviders,
+                linearLayout = binding.imvStreamLayout!!,
+            )
+            watchProvidersHelper.bind(
+                listOfWatchProviderItem = buyWatchProviders,
+                linearLayout = binding.imvBuyLayout!!,
+            )
+            watchProvidersHelper.bind(
+                listOfWatchProviderItem = rentWatchProviders,
+                linearLayout = binding.imvRentLayout!!,
+            )
 
-
-            streamLogoPath?.let {
-                isHaveWatchProvider = true
-                binding.imvStream.load(
-                    ImageApi.getImage(imageUrl = it)
-                )
-            } ?: binding.imvStream.setBackgroundResource(R.drawable.no_watch_provider)
-
-
-            buyLogoPath?.let {
-                isHaveWatchProvider = true
-                binding.imvBuy.load(
-                    ImageApi.getImage(imageUrl = it)
-                )
-            } ?: binding.imvBuy.setBackgroundResource(R.drawable.no_watch_provider)
-
-            rentLogoPath?.let {
-                isHaveWatchProvider = true
-                binding.imvRent.load(
-                    ImageApi.getImage(imageUrl = it)
-                )
-            } ?: binding.imvRent.setBackgroundResource(R.drawable.no_watch_provider)
         }
     }
 
@@ -124,5 +118,4 @@ open class BindAttributesDetailFragment(
     protected fun bindReleaseDate(releaseDate: String) {
         binding.txtReleaseDate.text = releaseDate
     }
-
 }

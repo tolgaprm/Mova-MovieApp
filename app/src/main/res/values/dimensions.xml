@@ -51,7 +51,7 @@
     <dimen name="iconSizeSmall">16dp</dimen>
     <dimen name="iconSizeExtraSmall">8dp</dimen>
 
-    <dimen name="watchProvidersImageSize">30dp</dimen>
+    <dimen name="watchProvidersImageSize">35dp</dimen>
 
     <dimen name="youtube_player_height">200dp</dimen>
 
