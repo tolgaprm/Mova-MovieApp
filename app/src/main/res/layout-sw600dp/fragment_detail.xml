@@ -331,6 +331,7 @@
                 <!--endregion Btn share,favorite,watch Section -->
 
                 <!--region Watch Provider -->
+
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/titleWatchProvider"
                     style="@style/Mova.Title"
@@ -338,33 +339,39 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/large_margin"
                     android:text="@string/watch_now"
-                    app:layout_constraintBottom_toTopOf="@id/txtStream"
                     app:layout_constraintEnd_toEndOf="@+id/txtOverview"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/materialTextView" />
+
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/txtStream"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/medium_margin"
                     android:paddingHorizontal="@dimen/medium_padding"
                     android:text="@string/stream"
                     android:textSize="20sp"
-                    app:layout_constraintEnd_toStartOf="@+id/txtRent"
-                    app:layout_constraintHorizontal_chainStyle="spread"
+                    app:layout_constraintBottom_toTopOf="@+id/txtRent"
+                    app:layout_constraintEnd_toStartOf="@+id/imvStreamLayout"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintHorizontal_chainStyle="packed"
                     app:layout_constraintStart_toStartOf="@+id/titleWatchProvider"
-                    app:layout_constraintTop_toBottomOf="@+id/titleWatchProvider" />
+                    app:layout_constraintTop_toBottomOf="@+id/titleWatchProvider"
+                    app:layout_constraintVertical_chainStyle="spread" />
 
-                <ImageView
-                    android:id="@+id/imvStream"
-                    android:layout_width="@dimen/watchProvidersImageSize"
-                    android:layout_height="@dimen/watchProvidersImageSize"
-                    android:layout_marginTop="@dimen/medium_margin"
-                    android:backgroundTint="@color/dark_red_variant"
-                    app:layout_constraintEnd_toEndOf="@id/txtStream"
-                    app:layout_constraintStart_toStartOf="@id/txtStream"
-                    app:layout_constraintTop_toBottomOf="@id/txtStream" />
+                <LinearLayout
+                    android:id="@+id/imvStreamLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintBottom_toBottomOf="@+id/txtStream"
+                    app:layout_constraintEnd_toEndOf="@+id/titleWatchProvider"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/txtStream"
+                    app:layout_constraintTop_toTopOf="@+id/txtStream">
+
+                </LinearLayout>
 
 
                 <com.google.android.material.textview.MaterialTextView
@@ -372,67 +379,85 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginVertical="@dimen/medium_margin"
+                    android:background="?attr/colorSurface"
                     android:paddingHorizontal="@dimen/medium_padding"
                     android:text="@string/provides_now_watch_information_by_justwatch"
                     android:textSize="11sp"
-                    app:layout_constraintEnd_toEndOf="@+id/txtBuy"
-                    app:layout_constraintStart_toStartOf="@+id/txtStream"
-                    app:layout_constraintTop_toBottomOf="@+id/imvStream" />
-
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/titleWatchProvider"
+                    app:layout_constraintTop_toBottomOf="@+id/txtBuy" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/txtRent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="32dp"
                     android:paddingHorizontal="@dimen/medium_padding"
                     android:text="@string/rent"
                     android:textSize="20sp"
-                    app:layout_constraintEnd_toStartOf="@+id/txtBuy"
-                    app:layout_constraintStart_toEndOf="@+id/txtStream"
-                    app:layout_constraintTop_toTopOf="@+id/txtStream" />
 
-                <ImageView
-                    android:id="@+id/imvRent"
-                    android:layout_width="@dimen/watchProvidersImageSize"
-                    android:layout_height="@dimen/watchProvidersImageSize"
-                    android:layout_marginTop="@dimen/medium_margin"
-                    android:backgroundTint="@color/dark_red_variant"
-                    app:layout_constraintEnd_toEndOf="@id/txtRent"
-                    app:layout_constraintStart_toStartOf="@id/txtRent"
-                    app:layout_constraintTop_toBottomOf="@id/txtRent" />
+                    app:layout_constraintBottom_toTopOf="@+id/txtBuy"
+                    app:layout_constraintEnd_toStartOf="@+id/imvRentLayout"
+                    app:layout_constraintHorizontal_chainStyle="packed"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txtStream" />
+
+                <LinearLayout
+                    android:id="@+id/imvRentLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintBottom_toBottomOf="@+id/txtRent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/txtRent"
+                    app:layout_constraintTop_toTopOf="@+id/txtRent">
+
+
+                </LinearLayout>
+
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/txtBuy"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="32dp"
                     android:paddingHorizontal="@dimen/medium_padding"
                     android:text="@string/buy"
                     android:textSize="20sp"
-                    app:layout_constraintEnd_toEndOf="@+id/titleWatchProvider"
-                    app:layout_constraintStart_toEndOf="@+id/txtRent"
-                    app:layout_constraintTop_toTopOf="@+id/txtRent" />
+                    app:layout_constraintBottom_toTopOf="@+id/txtActor"
+                    app:layout_constraintEnd_toStartOf="@+id/imvBuyLayout"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintHorizontal_chainStyle="packed"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txtRent" />
 
-                <ImageView
-                    android:id="@+id/imvBuy"
-                    android:layout_width="@dimen/watchProvidersImageSize"
-                    android:layout_height="@dimen/watchProvidersImageSize"
-                    android:layout_marginTop="@dimen/medium_margin"
-                    android:backgroundTint="@color/dark_red_variant"
-                    app:layout_constraintEnd_toEndOf="@id/txtBuy"
-                    app:layout_constraintStart_toStartOf="@id/txtBuy"
-                    app:layout_constraintTop_toBottomOf="@id/txtBuy" />
+                <LinearLayout
+                    android:id="@+id/imvBuyLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintBottom_toBottomOf="@+id/txtBuy"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/txtBuy"
+                    app:layout_constraintTop_toTopOf="@+id/txtBuy">
+
+                </LinearLayout>
+
 
                 <!--endregion Watch Provider -->
 
 
                 <!--region actor  info section-->
+
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/txtActor"
                     style="@style/Mova.H6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/medium_margin"
-                    android:layout_marginTop="8dp"
                     android:paddingHorizontal="@dimen/medium_padding"
                     android:text="@string/actor"
                     android:textSize="20sp"
@@ -476,8 +501,8 @@
                         android:layout_height="wrap_content"
                         android:text="@string/trailers" />
                 </com.google.android.material.tabs.TabLayout>
-
                 <!-- region recommendation Section-->
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recommendationRecyclerView"
                     android:layout_width="0dp"
@@ -488,7 +513,7 @@
                     app:layout_constraintEnd_toEndOf="@id/recyclerViewActor"
                     app:layout_constraintStart_toStartOf="@id/recyclerViewActor"
                     app:layout_constraintTop_toBottomOf="@+id/tabLayout"
-                    app:spanCount="4"
+                    app:spanCount="2"
                     tools:listitem="@layout/movie_row"
                     tools:visibility="gone" />
 
@@ -516,29 +541,12 @@
 
                             <include layout="@layout/movie_row_shimmer_item" />
 
-                            <include layout="@layout/movie_row_shimmer_item" />
-
                         </LinearLayout>
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:orientation="horizontal">
-
-                            <include layout="@layout/movie_row_shimmer_item" />
-
-                            <include layout="@layout/movie_row_shimmer_item" />
-
-                            <include layout="@layout/movie_row_shimmer_item" />
-                        </LinearLayout>
-
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:orientation="horizontal">
-
-                            <include layout="@layout/movie_row_shimmer_item" />
 
                             <include layout="@layout/movie_row_shimmer_item" />
 
@@ -548,7 +556,6 @@
                     </LinearLayout>
 
                 </com.facebook.shimmer.ShimmerFrameLayout>
-
                 <!-- endregion recommendationSection-->
 
 
@@ -583,6 +590,7 @@
 
                 <com.facebook.shimmer.ShimmerFrameLayout
                     android:id="@+id/videosShimmerLayout"
+
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:minHeight="400dp"
@@ -597,9 +605,12 @@
                         android:orientation="vertical">
 
                         <include layout="@layout/youtube_player_view_shimmer" />
+
+                        <include layout="@layout/youtube_player_view_shimmer" />
+
+                        <include layout="@layout/youtube_player_view_shimmer" />
                     </LinearLayout>
                 </com.facebook.shimmer.ShimmerFrameLayout>
-
 
                 <!-- endregion videosSection-->
 
