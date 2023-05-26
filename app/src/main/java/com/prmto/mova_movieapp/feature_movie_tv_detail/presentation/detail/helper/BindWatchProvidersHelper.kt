@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.Toast
 import coil.load
 import com.prmto.mova_movieapp.R
 import com.prmto.mova_movieapp.core.data.data_source.remote.ImageApi
@@ -27,6 +28,9 @@ class BindWatchProvidersHelper(private val context: Context) {
             image.load(
                 ImageApi.getImage(imageUrl = item.logoPath)
             )
+            image.setOnClickListener {
+                Toast.makeText(context, item.providerName, Toast.LENGTH_SHORT).show()
+            }
             linearLayout.addView(image)
         }
     }

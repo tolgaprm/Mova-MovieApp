@@ -117,7 +117,7 @@ dependencies {
     implementation 'com.pierfrancescosoffritti.androidyoutubeplayer:core:11.1.0'
 
     //Paging Library
-    implementation("androidx.paging:paging-runtime:$paging_version")
+    implementation("androidx.paging:paging-runtime-ktx:$paging_version")
 
     // Circle Image View
     implementation 'de.hdodenhof:circleimageview:3.1.0'
