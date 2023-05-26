@@ -26,10 +26,10 @@ class GetTvSeriesWatchListFromFirebaseThenUpdateLocalDatabaseUseCase @Inject con
         firebaseTvSeriesRepository.getTvSeriesInWatchList(
             userUid = userUid,
             onSuccess = { tvSeries ->
-                tvSeries.forEach { tvSeries ->
+                tvSeries.forEach { tvSeriesItem ->
                     coroutineScope.launch {
                         localDatabaseRepository.tvSeriesLocalRepository.insertTvSeriesToWatchListItem(
-                            tvSeries = tvSeries
+                            tvSeries = tvSeriesItem
                         )
                     }
                 }

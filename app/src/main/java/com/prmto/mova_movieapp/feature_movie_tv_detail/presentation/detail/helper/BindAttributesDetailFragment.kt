@@ -69,15 +69,15 @@ open class BindAttributesDetailFragment(
 
             watchProvidersHelper.bind(
                 listOfWatchProviderItem = streamWatchProviders,
-                linearLayout = binding.imvStreamLayout!!,
+                linearLayout = binding.imvStreamLayout,
             )
             watchProvidersHelper.bind(
                 listOfWatchProviderItem = buyWatchProviders,
-                linearLayout = binding.imvBuyLayout!!,
+                linearLayout = binding.imvBuyLayout,
             )
             watchProvidersHelper.bind(
                 listOfWatchProviderItem = rentWatchProviders,
-                linearLayout = binding.imvRentLayout!!,
+                linearLayout = binding.imvRentLayout,
             )
 
         }

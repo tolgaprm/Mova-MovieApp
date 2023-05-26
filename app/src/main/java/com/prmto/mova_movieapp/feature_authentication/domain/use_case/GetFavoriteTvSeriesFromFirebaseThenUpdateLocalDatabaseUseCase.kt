@@ -26,10 +26,10 @@ class GetFavoriteTvSeriesFromFirebaseThenUpdateLocalDatabaseUseCase @Inject cons
         firebaseTvSeriesRepository.getFavoriteTvSeries(
             userUid = userUid,
             onSuccess = { tvSeries ->
-                tvSeries.forEach { tvSeries ->
+                tvSeries.forEach { tvSeriesItem ->
                     coroutineScope.launch {
                         localDatabaseRepository.tvSeriesLocalRepository.insertTvSeriesToFavoriteList(
-                            tvSeries = tvSeries
+                            tvSeries = tvSeriesItem
                         )
                     }
                 }

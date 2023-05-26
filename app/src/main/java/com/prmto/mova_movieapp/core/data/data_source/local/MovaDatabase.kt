@@ -12,6 +12,7 @@ import com.prmto.mova_movieapp.core.data.data_source.local.models.tv.TvSeriesWat
 
 @Database(
     entities = [FavoriteMovie::class, MovieWatchListItem::class, FavoriteTvSeries::class, TvSeriesWatchListItem::class],
+    exportSchema = false,
     version = 1
 )
 @TypeConverters(DatabaseConverter::class)
