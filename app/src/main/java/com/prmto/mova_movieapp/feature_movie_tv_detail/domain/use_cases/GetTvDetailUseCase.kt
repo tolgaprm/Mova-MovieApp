@@ -14,7 +14,8 @@ import timber.log.Timber
 import javax.inject.Inject
 
 class GetTvDetailUseCase @Inject constructor(
-    private val detailRepository: DetailRepository
+    private val detailRepository: DetailRepository,
+    private val getProviderLinksUseCase: GetProviderLinksUseCase
 ) {
 
     operator fun invoke(
@@ -30,6 +31,19 @@ class GetTvDetailUseCase @Inject constructor(
                         firstAirDate = result.firstAirDate,
                         lastAirDate = result.lastAirDate,
                         status = result.status
+                    ),
+                    watchProviders = result.watchProviders.copy(
+                        results = result.watchProviders.results?.copy(
+                            tr = result.watchProviders.results.tr?.copy(
+                                watchProvidersLink = getProviderLinksUseCase.invoke(result.watchProviders.results.tr.link)
+                            ),
+                            us = result.watchProviders.results.us?.copy(
+                                watchProvidersLink = getProviderLinksUseCase.invoke(result.watchProviders.results.us.link)
+                            ),
+                            de = result.watchProviders.results.de?.copy(
+                                watchProvidersLink = getProviderLinksUseCase.invoke(result.watchProviders.results.de.link)
+                            )
+                        )
                     )
                 )
 

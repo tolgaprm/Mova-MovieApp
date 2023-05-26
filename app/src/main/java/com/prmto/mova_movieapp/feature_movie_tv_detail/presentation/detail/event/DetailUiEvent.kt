@@ -6,7 +6,7 @@ import com.prmto.mova_movieapp.core.presentation.util.UiText
 sealed class DetailUiEvent {
     data class ShowSnackbar(val uiText: UiText) : DetailUiEvent()
     object PopBackStack : DetailUiEvent()
-    data class IntentToImdbWebSite(val url: String) : DetailUiEvent()
+    data class IntentToActionView(val url: String) : DetailUiEvent()
     object ShowAlertDialog : DetailUiEvent()
     data class NavigateTo(val directions: NavDirections) : DetailUiEvent()
 

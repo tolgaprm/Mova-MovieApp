@@ -15,6 +15,7 @@ import javax.inject.Inject
 
 class GetMovieDetailUseCase @Inject constructor(
     private val detailRepository: DetailRepository,
+    private val getProviderLinksUseCase: GetProviderLinksUseCase
 ) {
     operator fun invoke(
         language: String,
@@ -27,7 +28,20 @@ class GetMovieDetailUseCase @Inject constructor(
 
                 val movieDetail = result.copy(
                     ratingValue = HandleUtils.calculateRatingBarValue(result.voteAverage),
-                    convertedRuntime = HandleUtils.convertRuntimeAsHourAndMinutes(result.runtime)
+                    convertedRuntime = HandleUtils.convertRuntimeAsHourAndMinutes(result.runtime),
+                    watchProviders = result.watchProviders.copy(
+                        results = result.watchProviders.results?.copy(
+                            tr = result.watchProviders.results.tr?.copy(
+                                watchProvidersLink = getProviderLinksUseCase.invoke(result.watchProviders.results.tr.link)
+                            ),
+                            us = result.watchProviders.results.us?.copy(
+                                watchProvidersLink = getProviderLinksUseCase.invoke(result.watchProviders.results.us.link)
+                            ),
+                            de = result.watchProviders.results.de?.copy(
+                                watchProvidersLink = getProviderLinksUseCase.invoke(result.watchProviders.results.de.link)
+                            )
+                        )
+                    )
                 )
 
                 emit(Resource.Success(movieDetail))

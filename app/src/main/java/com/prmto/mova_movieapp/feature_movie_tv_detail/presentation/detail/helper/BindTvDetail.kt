@@ -12,8 +12,13 @@ import com.prmto.mova_movieapp.feature_movie_tv_detail.domain.models.detail.TvDe
 class BindTvDetail(
     binding: FragmentDetailBinding,
     tvDetail: TvDetail,
-    context: Context
-) : BindAttributesDetailFragment(binding = binding, context = context) {
+    context: Context,
+    onWatchProviderClick: (String) -> Unit
+) : BindAttributesDetailFragment(
+    binding = binding,
+    context = context,
+    onWatchProviderClick = onWatchProviderClick
+) {
 
     init {
         bindImage(posterPath = tvDetail.posterPath)

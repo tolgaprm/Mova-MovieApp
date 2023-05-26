@@ -10,15 +10,18 @@ import com.prmto.mova_movieapp.core.presentation.util.HandleUtils
 import com.prmto.mova_movieapp.core.util.getCountryIsoCode
 import com.prmto.mova_movieapp.databinding.FragmentDetailBinding
 import com.prmto.mova_movieapp.feature_movie_tv_detail.data.dto.watch_provider.WatchProviderRegion
+import com.prmto.mova_movieapp.feature_movie_tv_detail.data.dto.watch_provider.WatchProviderType
+
 
 open class BindAttributesDetailFragment(
     val binding: FragmentDetailBinding,
     val context: Context,
+    val onWatchProviderClick: (String) -> Unit = {}
 ) {
-
     private val watchProvidersHelper: BindWatchProvidersHelper by lazy {
         BindWatchProvidersHelper(
-            context = context
+            context = context,
+            onWatchProviderClick = onWatchProviderClick
         )
     }
 
@@ -57,9 +60,7 @@ open class BindAttributesDetailFragment(
             val watchProvider = when (context.getCountryIsoCode()) {
                 "tr" -> provider.tr
                 "us" -> provider.us
-                "fr" -> provider.fr
                 "de" -> provider.de
-                "es" -> provider.es
                 else -> provider.us
             }
 
@@ -69,17 +70,19 @@ open class BindAttributesDetailFragment(
 
             watchProvidersHelper.bind(
                 listOfWatchProviderItem = streamWatchProviders,
-                linearLayout = binding.imvStreamLayout!!,
+                watchProviderLinks = watchProvider?.watchProvidersLink?.get(WatchProviderType.STREAM),
+                linearLayout = binding.imvStreamLayout,
             )
             watchProvidersHelper.bind(
                 listOfWatchProviderItem = buyWatchProviders,
-                linearLayout = binding.imvBuyLayout!!,
+                watchProviderLinks = watchProvider?.watchProvidersLink?.get(WatchProviderType.BUY),
+                linearLayout = binding.imvBuyLayout,
             )
             watchProvidersHelper.bind(
                 listOfWatchProviderItem = rentWatchProviders,
-                linearLayout = binding.imvRentLayout!!,
+                watchProviderLinks = watchProvider?.watchProvidersLink?.get(WatchProviderType.RENT),
+                linearLayout = binding.imvRentLayout,
             )
-
         }
     }
 

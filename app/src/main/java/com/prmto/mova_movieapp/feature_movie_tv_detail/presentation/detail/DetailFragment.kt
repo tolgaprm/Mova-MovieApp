@@ -245,8 +245,8 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
                                 ).show()
                             }
 
-                            is DetailUiEvent.IntentToImdbWebSite -> {
-                                intentToTmdbWebSite(uiEvent.url)
+                            is DetailUiEvent.IntentToActionView -> {
+                                intentToAnyWebSite(uiEvent.url)
                             }
 
                             is DetailUiEvent.NavigateTo -> {
@@ -335,9 +335,9 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
         }
     }
 
-    private fun intentToTmdbWebSite(tmdbUrl: String) {
+    private fun intentToAnyWebSite(webSite: String) {
         val intent = Intent(Intent.ACTION_VIEW)
-        intent.data = Uri.parse(tmdbUrl)
+        intent.data = Uri.parse(webSite)
         startActivity(intent)
     }
 
@@ -346,7 +346,10 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
             BindTvDetail(
                 tvDetail = tvDetail,
                 binding = binding,
-                context = requireContext()
+                context = requireContext(),
+                onWatchProviderClick = {
+                    viewModel.onEvent(DetailEvent.IntentToWatchProvidersWebSite(it))
+                }
             )
             detailActorAdapter.submitList(tvDetail.credit.cast)
         }
@@ -357,7 +360,10 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
             BindMovieDetail(
                 movieDetail = movieDetail,
                 binding = binding,
-                context = requireContext()
+                context = requireContext(),
+                onWatchProviderClick = {
+                    viewModel.onEvent(DetailEvent.IntentToWatchProvidersWebSite(it))
+                }
             )
             detailActorAdapter.submitList(movieDetail.credit.cast)
         }

@@ -102,7 +102,11 @@ class DetailViewModel @Inject constructor(
     fun onEvent(event: DetailEvent) {
         when (event) {
             is DetailEvent.IntentToImdbWebSite -> {
-                emitUiEventFlow(DetailUiEvent.IntentToImdbWebSite(addLanguageQueryToTmdbUrl(event.url)))
+                emitUiEventFlow(DetailUiEvent.IntentToActionView(addLanguageQueryToTmdbUrl(event.url)))
+            }
+
+            is DetailEvent.IntentToWatchProvidersWebSite -> {
+                emitUiEventFlow(DetailUiEvent.IntentToActionView(event.url))
             }
 
             is DetailEvent.OnBackPressed -> {

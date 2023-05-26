@@ -8,6 +8,7 @@ data class WatchProviderItem(
     val rent: List<WatchProviderItemDetail>?,
     val buy: List<WatchProviderItemDetail>?,
     val free: List<WatchProviderItemDetail>?,
+    val watchProvidersLink: Map<WatchProviderType, List<String>>?
 )
 
 data class WatchProviderItemDetail(
@@ -16,3 +17,10 @@ data class WatchProviderItemDetail(
     @Json(name = "provider_id") val providerId: Int,
     @Json(name = "provider_name") val providerName: String,
 )
+
+
+enum class WatchProviderType(val type: String) {
+    STREAM("flatrate"),
+    RENT("rent"),
+    BUY("buy")
+}

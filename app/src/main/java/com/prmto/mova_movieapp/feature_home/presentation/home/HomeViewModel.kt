@@ -18,7 +18,14 @@ import com.prmto.mova_movieapp.feature_home.presentation.home.state.HomeState
 import com.prmto.mova_movieapp.feature_home.presentation.home.state.PagingAdapterLoadStateItem
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
@@ -51,7 +58,6 @@ class HomeViewModel @Inject constructor(
             collectNetworkState()
             collectLanguageIsoCode()
         }
-
     }
 
     private fun collectNetworkState() {
@@ -84,6 +90,7 @@ class HomeViewModel @Inject constructor(
                     seeAllPageToolBarText = event.seeAllPageToolBarText
                 )
             }
+
             is HomeEvent.NavigateUpFromSeeAllSection -> hideSeeAllPage()
             is HomeEvent.OnBackPressed -> hideSeeAllPage()
             is HomeEvent.NavigateToDetailBottomSheet -> {
@@ -91,6 +98,7 @@ class HomeViewModel @Inject constructor(
                     _eventFlow.emit(BaseUiEvent.NavigateTo(event.directions))
                 }
             }
+
             is HomeEvent.UpdateCountryIsoCode -> {
                 _homeState.value = homeState.value.copy(
                     countryIsoCode = event.countryIsoCode
@@ -118,6 +126,7 @@ class HomeViewModel @Inject constructor(
                     it.copy(nowPlayingState = it.nowPlayingState.copy(isLoading = true))
                 }
             }
+
             is HomeAdapterLoadStateEvent.NowPlayingNotLoading -> {
                 _adapterLoadState.update {
                     it.copy(nowPlayingState = it.nowPlayingState.copy(isLoading = false))
@@ -129,6 +138,7 @@ class HomeViewModel @Inject constructor(
                     it.copy(popularMoviesState = it.popularMoviesState.copy(isLoading = true))
                 }
             }
+
             is HomeAdapterLoadStateEvent.PopularMoviesNotLoading -> {
                 _adapterLoadState.update {
                     it.copy(popularMoviesState = it.popularMoviesState.copy(isLoading = false))
@@ -140,16 +150,19 @@ class HomeViewModel @Inject constructor(
                     it.copy(popularTvSeriesState = it.popularTvSeriesState.copy(isLoading = true))
                 }
             }
+
             is HomeAdapterLoadStateEvent.PopularTvSeriesNotLoading -> {
                 _adapterLoadState.update {
                     it.copy(popularTvSeriesState = it.popularTvSeriesState.copy(isLoading = false))
                 }
             }
+
             is HomeAdapterLoadStateEvent.TopRatedMoviesLoading -> {
                 _adapterLoadState.update {
                     it.copy(topRatedMoviesState = it.topRatedMoviesState.copy(isLoading = true))
                 }
             }
+
             is HomeAdapterLoadStateEvent.TopRatedMoviesNotLoading -> {
                 _adapterLoadState.update {
                     it.copy(topRatedMoviesState = it.topRatedMoviesState.copy(isLoading = false))
@@ -161,6 +174,7 @@ class HomeViewModel @Inject constructor(
                     it.copy(topRatedTvSeriesState = it.topRatedTvSeriesState.copy(isLoading = true))
                 }
             }
+
             is HomeAdapterLoadStateEvent.TopRatedTvSeriesNotLoading -> {
                 _adapterLoadState.update {
                     it.copy(topRatedTvSeriesState = it.topRatedTvSeriesState.copy(isLoading = false))

@@ -13,9 +13,13 @@ import com.prmto.mova_movieapp.feature_movie_tv_detail.util.Constants
 class BindMovieDetail(
     binding: FragmentDetailBinding,
     movieDetail: MovieDetail,
-    context: Context
-) : BindAttributesDetailFragment(binding = binding, context = context) {
-
+    context: Context,
+    onWatchProviderClick: (String) -> Unit
+) : BindAttributesDetailFragment(
+    binding = binding,
+    context = context,
+    onWatchProviderClick = onWatchProviderClick
+) {
     private val DIRECTION_DEPARTMENT_NAME = "Directing"
 
     init {
