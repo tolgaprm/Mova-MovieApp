@@ -7,7 +7,13 @@ import com.prmto.mova_movieapp.core.domain.models.TvSeries
 import com.prmto.mova_movieapp.core.domain.use_case.database.LocalDatabaseUseCases
 import com.prmto.mova_movieapp.core.presentation.util.BaseUiEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -33,13 +39,16 @@ class ListViewModel @Inject constructor(
                 _state.update { it.copy(selectedTab = event.listTab) }
                 getMoviesAndTvSeries()
             }
+
             is ListEvent.UpdateListType -> {
                 _state.update { it.copy(chipType = event.chipType) }
                 getMoviesAndTvSeries()
             }
+
             is ListEvent.ClickedMovieItem -> {
                 navigateToDetailBottomSheet(movie = event.movie)
             }
+
             is ListEvent.ClickedTvSeriesItem -> {
                 navigateToDetailBottomSheet(tvSeries = event.tvSeries)
             }
@@ -79,6 +88,7 @@ class ListViewModel @Inject constructor(
                             }
                     }
                 }
+
                 ChipType.TVSERIES -> {
                     if (currentState.selectedTab.isFavoriteList()) {
                         localDatabaseUseCases.getFavoriteTvSeriesUseCase()

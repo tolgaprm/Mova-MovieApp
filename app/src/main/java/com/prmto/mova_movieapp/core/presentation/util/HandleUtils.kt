@@ -1,7 +1,6 @@
 package com.prmto.mova_movieapp.core.presentation.util
 
 import com.prmto.mova_movieapp.core.data.dto.Genre
-import com.prmto.mova_movieapp.core.domain.models.Movie
 
 object HandleUtils {
 
@@ -11,16 +10,16 @@ object HandleUtils {
 
     fun convertGenreListToStringSeparatedByCommas(
         movieGenreList: List<Genre>,
-        movie: Movie
+        genreIds: List<Int>
     ): String {
         var genreNames = ""
 
-        if (movie.genreIds.isEmpty()) {
+        if (genreIds.isEmpty()) {
             return ""
         }
 
         movieGenreList.forEach { genre ->
-            movie.genreIds.forEach {
+            genreIds.forEach {
                 if (it == genre.id) {
                     genreNames += "${genre.name}, "
                 }

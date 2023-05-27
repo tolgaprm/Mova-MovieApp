@@ -1,34 +1,30 @@
-package com.prmto.mova_movieapp.feature_movie_tv_detail.domain.use_cases
+package com.prmto.mova_movieapp.feature_upcoming.domain.use_case
 
+import androidx.paging.PagingData
+import androidx.paging.map
+import com.prmto.mova_movieapp.core.data.dto.Genre
 import com.prmto.mova_movieapp.core.domain.models.Movie
 import com.prmto.mova_movieapp.core.domain.use_case.GetMovieGenreListUseCase
 import com.prmto.mova_movieapp.core.presentation.util.HandleUtils
-import com.prmto.mova_movieapp.feature_movie_tv_detail.domain.repository.DetailRepository
+import com.prmto.mova_movieapp.feature_upcoming.domain.repository.UpComingRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.yield
 import javax.inject.Inject
 
-class GetMovieRecommendationUseCase @Inject constructor(
-    private val repository: DetailRepository,
-    private val getMovieGenreListUseCase: GetMovieGenreListUseCase
+class GetUpcomingMovieUseCase @Inject constructor(
+    private val repository: UpComingRepository,
+    private val movieGenreListUseCase: GetMovieGenreListUseCase
 ) {
-    suspend operator fun invoke(
-        language: String,
-        movieId: Int
-    ): Flow<List<Movie>> {
 
+    operator fun invoke(language: String): Flow<PagingData<Movie>> {
         val languageLower = language.lowercase()
-
         return combine(
-            repository.getRecommendationsForMovie(
-                movieId = movieId,
+            repository.getUpComingMovies(
                 language = languageLower
             ),
-            getMovieGenreListUseCase(language = languageLower)
-        ) { movies, genres ->
-            yield()
-            movies.map { movie ->
+            movieGenreListUseCase.invoke(languageLower)
+        ) { pagingData: PagingData<Movie>, genres: List<Genre> ->
+            pagingData.map { movie ->
                 movie.copy(
                     genresBySeparatedByComma = HandleUtils.convertGenreListToStringSeparatedByCommas(
                         movieGenreList = genres,
@@ -39,5 +35,6 @@ class GetMovieRecommendationUseCase @Inject constructor(
                 )
             }
         }
+
     }
 }
