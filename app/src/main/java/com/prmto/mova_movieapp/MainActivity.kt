@@ -61,6 +61,7 @@ class MainActivity : AppCompatActivity() {
         return when (destination.id) {
             R.id.homeFragment -> true
             R.id.exploreFragment -> true
+            R.id.upComingFragment -> true
             R.id.myListFragment -> true
             R.id.settingsFragment -> true
             else -> false
