@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/large_margin"
+    android:background="?attr/colorSurface"
+    android:backgroundTint="?attr/colorSurface"
+    app:cardCornerRadius="@dimen/shape_medium"
+    app:cardElevation="15dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?attr/colorSurface">
+
+        <ImageView
+            android:id="@+id/imvMoviePoster"
+            android:layout_width="match_parent"
+            android:layout_height="320dp"
+            android:importantForAccessibility="no"
+            android:scaleType="centerCrop"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/spiderman" />
+
+        <TextView
+            android:id="@+id/txtMovieName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/medium_margin"
+            android:layout_marginTop="@dimen/large_margin"
+            android:textColor="?attr/colorOnSurface"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imvMoviePoster"
+            tools:text="Spiderman No Way Home" />
+
+        <ImageView
+            android:id="@+id/imvRemindMe"
+            android:layout_width="@dimen/iconSizeAverage"
+            android:layout_height="@dimen/iconSizeAverage"
+            android:layout_marginTop="@dimen/large_margin"
+            android:layout_marginEnd="@dimen/extra_large_margin"
+            android:alpha="0.8"
+            android:importantForAccessibility="no"
+            android:src="@drawable/remind"
+            app:layout_constraintEnd_toStartOf="@+id/imvInfo"
+            app:layout_constraintTop_toBottomOf="@+id/imvMoviePoster"
+            app:tint="?attr/colorOnSurface" />
+
+        <TextView
+            android:id="@+id/textRemindMe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/remind_me"
+            android:textAlignment="center"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            app:layout_constraintBaseline_toBaselineOf="@+id/textInfo"
+            app:layout_constraintEnd_toEndOf="@+id/imvRemindMe"
+            app:layout_constraintStart_toStartOf="@+id/imvRemindMe" />
+
+        <ImageView
+            android:id="@+id/imvInfo"
+            android:layout_width="@dimen/iconSizeAverage"
+            android:layout_height="@dimen/iconSizeAverage"
+            android:layout_marginEnd="@dimen/medium_margin"
+            android:alpha="0.8"
+            android:importantForAccessibility="no"
+            android:src="@drawable/info"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/imvRemindMe"
+            app:tint="?attr/colorOnSurface" />
+
+        <TextView
+            android:id="@+id/textInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/small_margin"
+            android:text="@string/info"
+            android:textAlignment="center"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/imvInfo"
+            app:layout_constraintStart_toStartOf="@+id/imvInfo"
+            app:layout_constraintTop_toBottomOf="@+id/imvInfo" />
+
+        <TextView
+            android:id="@+id/txtReleaseDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/medium_margin"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="@+id/txtMovieName"
+            app:layout_constraintTop_toBottomOf="@+id/txtMovieName"
+            tools:text="2023 June" />
+
+        <TextView
+            android:id="@+id/txtOverview"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/medium_margin"
+            android:textColor="?attr/colorOnSurface"
+            app:layout_constraintEnd_toEndOf="@id/imvInfo"
+            app:layout_constraintStart_toStartOf="@+id/txtReleaseDate"
+            app:layout_constraintTop_toBottomOf="@+id/txtReleaseDate"
+            tools:text="The design has been designed with fully auto layout, so it is very adaptive if you want to edit, delete or add some parts. If you are not familiar with auto layout, you can turn it off by right-clicking the layer, and selecting remove auto layout." />
+
+        <TextView
+            android:id="@+id/txtGenre"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/medium_margin"
+            android:layout_marginBottom="@dimen/large_margin"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/txtOverview"
+            app:layout_constraintStart_toStartOf="@+id/txtOverview"
+            app:layout_constraintTop_toBottomOf="@+id/txtOverview"
+            tools:text="Action, Adventure, Science, Fiction, Hero," />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>

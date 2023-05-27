@@ -4,6 +4,7 @@
     <string name="bottom_nav_home">Ana Sayfa</string>
     <string name="bottom_nav_explore">Keşfet</string>
     <string name="bottom_nav_my_list">Listem</string>
+    <string name="bottom_nav_upcoming">Yakında</string>
     <string name="now_playing">Vizyondakiler</string>
     <string name="see_all">Hepsini Gör</string>
     <string name="popular_movies">Popüler Filmler</string>
@@ -149,5 +150,8 @@
     <string name="already_exists_error">Kayıt eklenemedi çünkü zaten var. Lütfen farklı bir kayıt ekleyin.</string>
     <string name="aborted_error">İşlem tamamlanamadı çünkü gereken kaynak artık mevcut değil. Lütfen daha sonra tekrar deneyin.</string>
     <string name="unavailable_error">Firebase sunucularına erişilemiyor. Lütfen internet bağlantınızı kontrol edin ve daha sonra tekrar deneyin.</string>
+    <string name="coming_soon">Yakında</string>
+    <string name="remind_me">Bana Hatırlat</string>
+    <string name="info">Bilgi</string>
 
 </resources>

@@ -50,6 +50,7 @@
     <dimen name="iconSizeMedium">30dp</dimen>
     <dimen name="iconSizeSmall">16dp</dimen>
     <dimen name="iconSizeExtraSmall">8dp</dimen>
+    <dimen name="iconSizeAverage">24dp</dimen>
 
     <dimen name="watchProvidersImageSize">35dp</dimen>
 
