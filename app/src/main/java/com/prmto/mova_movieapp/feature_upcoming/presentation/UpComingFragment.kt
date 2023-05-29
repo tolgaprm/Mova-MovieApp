@@ -8,6 +8,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.prmto.mova_movieapp.R
 import com.prmto.mova_movieapp.core.domain.models.Movie
@@ -53,7 +54,11 @@ class UpComingFragment : Fragment(R.layout.fragment_up_coming) {
             }
         }
 
-
+        upComingMovieAdapter.setOnClickListener { movie ->
+            val action =
+                UpComingFragmentDirections.actionUpComingFragmentToDetailBottomSheet(movie, null)
+            findNavController().navigate(action)
+        }
     }
 
     private fun handlePagingLoadStates() {

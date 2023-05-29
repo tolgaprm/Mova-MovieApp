@@ -48,10 +48,6 @@ class UpComingViewModel @Inject constructor(
                 _state.update { it.copy(error = event.message) }
             }
 
-            is UpComingEvent.ClickOnInfoIcon -> {
-
-            }
-
             is UpComingEvent.NavigateToMovieDetailScreen -> {
 
             }

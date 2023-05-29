@@ -13,6 +13,10 @@ class UpComingMovieAdapter() : UpComingBaseAdapter<Movie>() {
                 releaseDate = movie.releaseDate ?: "",
                 genresBySeparatedByComma = movie.genresBySeparatedByComma
             )
+
+            holder.binding.imvInfo.setOnClickListener {
+                listener(movie)
+            }
         }
     }
 }

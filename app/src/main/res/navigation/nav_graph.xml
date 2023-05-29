@@ -171,5 +171,9 @@
         android:id="@+id/upComingFragment"
         android:name="com.prmto.mova_movieapp.feature_upcoming.presentation.UpComingFragment"
         android:label="fragment_up_coming"
-        tools:layout="@layout/fragment_up_coming" />
+        tools:layout="@layout/fragment_up_coming">
+        <action
+            android:id="@+id/action_upComingFragment_to_detailBottomSheet"
+            app:destination="@id/detailBottomSheet" />
+    </fragment>
 </navigation>

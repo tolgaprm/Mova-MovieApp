@@ -14,6 +14,8 @@ import com.prmto.mova_movieapp.feature_person_detail.domain.util.DateFormatUtils
 abstract class UpComingBaseAdapter<T : Any> :
     PagingDataAdapter<T, UpComingBaseAdapter.UpComingViewHolder>(DiffUtilCallBack<T>()) {
 
+    protected var listener: (T) -> Unit = {}
+
     class UpComingViewHolder(
         val binding: ComingSoonItemBinding
     ) : RecyclerView.ViewHolder(binding.root) {
@@ -45,6 +47,10 @@ abstract class UpComingBaseAdapter<T : Any> :
 
             binding.txtGenre.text = genresBySeparatedByComma
         }
+    }
+
+    fun setOnClickListener(listener: (T) -> Unit) {
+        this.listener = listener
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UpComingViewHolder {
