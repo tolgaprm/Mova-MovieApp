@@ -32,7 +32,7 @@ class GetMovieRecommendationUseCase @Inject constructor(
                 movie.copy(
                     genresBySeparatedByComma = HandleUtils.convertGenreListToStringSeparatedByCommas(
                         movieGenreList = genres,
-                        movie = movie
+                        genreIds = movie.genreIds
                     ),
                     voteCountByString = HandleUtils.convertingVoteCountToString(movie.voteCount),
                     releaseDate = HandleUtils.convertToYearFromDate(movie.releaseDate ?: "")

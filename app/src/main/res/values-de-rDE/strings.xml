@@ -4,6 +4,7 @@
     <string name="bottom_nav_home">Startseite</string>
     <string name="bottom_nav_explore">Erkunden</string>
     <string name="bottom_nav_my_list">Meine Liste</string>
+    <string name="bottom_nav_upcoming">Demnächst</string>
     <string name="now_playing">Jetzt läuft</string>
     <string name="see_all">Alle sehen</string>
     <string name="popular_movies">Beliebte Filme</string>
@@ -146,4 +147,6 @@
     <string name="already_exists_error"> Der Datensatz konnte nicht hinzugefügt werden, weil er bereits existiert. Bitte fügen Sie einen anderen Datensatz hinzu. </string>
     <string name="aborted_error">Die Operation konnte nicht abgeschlossen werden, weil die erforderliche Ressource nicht mehr verfügbar ist. Bitte versuchen Sie es später erneut.</string>
     <string name="unavailable_error">Verbindung zu den Firebase-Servern nicht möglich. Bitte überprüfen Sie Ihre Internetverbindung und versuchen Sie es erneut.</string>
+    <string name="coming_soon">Demnächst</string>
+    <string name="info">Infos</string>
 </resources>

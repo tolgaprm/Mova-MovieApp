@@ -4,6 +4,7 @@
     <string name="bottom_nav_home">Home</string>
     <string name="bottom_nav_explore">Explore</string>
     <string name="bottom_nav_my_list">My List</string>
+    <string name="bottom_nav_upcoming">Upcoming</string>
     <string name="now_playing">Now Playing</string>
     <string name="see_all">See all</string>
     <string name="popular_movies">Popular Movies</string>
@@ -117,7 +118,6 @@
     <string name="it_is_necc_for_notification">it is necessary to show notification</string>
 
 
-
     <string name="cancel">Cancel</string>
     <string name="must_login_able_to_add_in_list"> You must to login to able to add in list</string>
     <string name="error_field_empty">This field can\'t be empty</string>
@@ -149,6 +149,8 @@
     <string name="already_exists_error">The record could not be added because it already exists. Please add a different record.</string>
     <string name="aborted_error">The operation could not be completed because the required resource is no longer available. Please try again later.</string>
     <string name="unavailable_error">Unable to connect to Firebase servers. Please check your internet connection and try again.</string>
-
+    <string name="coming_soon">Coming Soon</string>
+    <string name="remind_me">Remind Me</string>
+    <string name="info">Info</string>
 
 </resources>

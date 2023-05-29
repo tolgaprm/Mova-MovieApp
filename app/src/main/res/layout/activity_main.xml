@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
         android:visibility="gone"
+        app:itemTextColor="#F65656"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

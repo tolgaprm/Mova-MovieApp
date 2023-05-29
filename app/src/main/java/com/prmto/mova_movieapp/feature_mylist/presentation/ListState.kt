@@ -20,8 +20,3 @@ enum class ListTab() {
 
 fun ListTab.isWatchList(): Boolean = this == ListTab.WATCHLIST
 fun ListTab.isFavoriteList(): Boolean = this == ListTab.FAVORITELIST
-
-enum class ChipType {
-    MOVIE,
-    TVSERIES
-}

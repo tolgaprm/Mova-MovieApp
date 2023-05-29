@@ -46,7 +46,7 @@ class HandleUtilsTest {
         assertThat(
             HandleUtils.convertGenreListToStringSeparatedByCommas(
                 movieGenreList = movieGenreList,
-                movie = movie
+                genreIds = movie.genreIds
             )
         ).matches("Drama, Animation, Crime")
     }
@@ -80,7 +80,7 @@ class HandleUtilsTest {
         assertThat(
             HandleUtils.convertGenreListToStringSeparatedByCommas(
                 movieGenreList = movieGenreList,
-                movie = movie
+                genreIds = movie.genreIds
             )
         ).isEmpty()
     }
@@ -104,7 +104,7 @@ class HandleUtilsTest {
         assertThat(
             HandleUtils.convertGenreListToStringSeparatedByCommas(
                 movieGenreList = movieGenreList,
-                movie = movie
+                genreIds = movie.genreIds
             )
         ).isEmpty()
 
