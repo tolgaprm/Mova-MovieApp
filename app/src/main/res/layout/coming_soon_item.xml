@@ -15,28 +15,50 @@
         android:layout_height="match_parent"
         android:background="?attr/colorSurface">
 
-        <ImageView
-            android:id="@+id/imvMoviePoster"
+        <FrameLayout
+            android:id="@+id/imvMovieFrame"
             android:layout_width="match_parent"
-            android:layout_height="320dp"
-            android:importantForAccessibility="no"
-            android:scaleType="centerCrop"
+            android:layout_height="300dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:src="@drawable/spiderman" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/imvMovieBackdrop"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:alpha="0.4"
+                android:importantForAccessibility="no"
+                android:scaleType="centerCrop"
+                tools:src="@drawable/spiderman" />
+
+            <ImageView
+                android:id="@+id/imvMoviePoster"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:elevation="2dp"
+                android:importantForAccessibility="no"
+                tools:src="@drawable/spiderman" />
+
+
+        </FrameLayout>
+
 
         <TextView
             android:id="@+id/txtMovieName"
-            android:layout_width="wrap_content"
+            android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/medium_margin"
             android:layout_marginTop="@dimen/large_margin"
+            android:maxLines="2"
             android:textColor="?attr/colorOnSurface"
             android:textSize="20sp"
             android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/textRemindMe"
+            app:layout_constraintEnd_toStartOf="@+id/textRemindMe"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imvMoviePoster"
+            app:layout_constraintTop_toBottomOf="@+id/imvMovieFrame"
             tools:text="Spiderman No Way Home" />
 
         <ImageView
@@ -49,7 +71,7 @@
             android:importantForAccessibility="no"
             android:src="@drawable/remind"
             app:layout_constraintEnd_toStartOf="@+id/imvInfo"
-            app:layout_constraintTop_toBottomOf="@+id/imvMoviePoster"
+            app:layout_constraintTop_toBottomOf="@+id/imvMovieFrame"
             app:tint="?attr/colorOnSurface" />
 
         <TextView
@@ -68,7 +90,7 @@
             android:id="@+id/imvInfo"
             android:layout_width="@dimen/iconSizeAverage"
             android:layout_height="@dimen/iconSizeAverage"
-            android:layout_marginEnd="@dimen/medium_margin"
+            android:layout_marginEnd="@dimen/large_margin"
             android:alpha="0.8"
             android:importantForAccessibility="no"
             android:src="@drawable/info"
@@ -104,9 +126,11 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/medium_margin"
+            android:padding="@dimen/medium_padding"
+            android:textAlignment="textStart"
             android:textColor="?attr/colorOnSurface"
-            app:layout_constraintEnd_toEndOf="@id/imvInfo"
-            app:layout_constraintStart_toStartOf="@+id/txtReleaseDate"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txtReleaseDate"
             tools:text="The design has been designed with fully auto layout, so it is very adaptive if you want to edit, delete or add some parts. If you are not familiar with auto layout, you can turn it off by right-clicking the layer, and selecting remove auto layout." />
 
@@ -114,8 +138,8 @@
             android:id="@+id/txtGenre"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/medium_margin"
-            android:layout_marginBottom="@dimen/large_margin"
+            android:layout_marginBottom="@dimen/medium_margin"
+            android:padding="@dimen/medium_padding"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/txtOverview"
             app:layout_constraintStart_toStartOf="@+id/txtOverview"

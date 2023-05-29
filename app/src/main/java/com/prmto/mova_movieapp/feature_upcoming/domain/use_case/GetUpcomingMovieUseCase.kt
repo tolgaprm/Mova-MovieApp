@@ -30,9 +30,9 @@ class GetUpcomingMovieUseCase @Inject constructor(
                         movieGenreList = genres,
                         genreIds = movie.genreIds
                     ),
-                    voteCountByString = HandleUtils.convertingVoteCountToString(movie.voteCount),
-                    releaseDate = HandleUtils.convertToYearFromDate(movie.releaseDate ?: "")
+                    voteCountByString = HandleUtils.convertingVoteCountToString(movie.voteCount)
                 )
+
             }
         }
 

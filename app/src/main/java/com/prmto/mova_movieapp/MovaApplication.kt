@@ -3,7 +3,14 @@ package com.prmto.mova_movieapp
 import android.app.Application
 import android.icu.util.Calendar
 import androidx.hilt.work.HiltWorkerFactory
-import androidx.work.*
+import androidx.work.Configuration
+import androidx.work.Constraints
+import androidx.work.ExistingPeriodicWorkPolicy
+import androidx.work.ExistingWorkPolicy
+import androidx.work.NetworkType
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.PeriodicWorkRequestBuilder
+import androidx.work.WorkManager
 import com.prmto.mova_movieapp.core.data.data_source.worker.NotificationWorker
 import com.prmto.mova_movieapp.core.data.data_source.worker.UpdateFirebaseMovieWorker
 import com.prmto.mova_movieapp.core.data.data_source.worker.UpdateFirebaseTvSeriesWorker
@@ -61,11 +68,10 @@ class MovaApplication @Inject constructor(
 
         val calendar = Calendar.getInstance()
 
-
         if (calendar.isWeekend){
             workManager.beginUniqueWork(
                 "notification_worker",
-                ExistingWorkPolicy.KEEP,
+                ExistingWorkPolicy.REPLACE,
                 notificationWorker
             ).enqueue()
         }
