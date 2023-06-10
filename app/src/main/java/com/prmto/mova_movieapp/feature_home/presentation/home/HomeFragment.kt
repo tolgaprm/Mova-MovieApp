@@ -1,17 +1,11 @@
 package com.prmto.mova_movieapp.feature_home.presentation.home
 
 
-import android.content.pm.PackageManager
-import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.Toast
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -23,11 +17,19 @@ import com.google.android.material.snackbar.Snackbar
 import com.prmto.mova_movieapp.R
 import com.prmto.mova_movieapp.core.domain.models.Movie
 import com.prmto.mova_movieapp.core.domain.repository.isAvaliable
-import com.prmto.mova_movieapp.core.presentation.util.*
+import com.prmto.mova_movieapp.core.presentation.util.BaseUiEvent
+import com.prmto.mova_movieapp.core.presentation.util.UiText
+import com.prmto.mova_movieapp.core.presentation.util.addOnBackPressedCallback
+import com.prmto.mova_movieapp.core.presentation.util.asString
+import com.prmto.mova_movieapp.core.presentation.util.isEmpty
 import com.prmto.mova_movieapp.core.util.HandlePagingLoadStates
 import com.prmto.mova_movieapp.core.util.getCountryIsoCode
 import com.prmto.mova_movieapp.databinding.FragmentHomeBinding
-import com.prmto.mova_movieapp.feature_home.presentation.home.adapter.*
+import com.prmto.mova_movieapp.feature_home.presentation.home.adapter.NowPlayingRecyclerAdapter
+import com.prmto.mova_movieapp.feature_home.presentation.home.adapter.PopularMoviesAdapter
+import com.prmto.mova_movieapp.feature_home.presentation.home.adapter.PopularTvSeriesAdapter
+import com.prmto.mova_movieapp.feature_home.presentation.home.adapter.TopRatedMoviesAdapter
+import com.prmto.mova_movieapp.feature_home.presentation.home.adapter.TopRatedTvSeriesAdapter
 import com.prmto.mova_movieapp.feature_home.presentation.home.event.HomeAdapterLoadStateEvent
 import com.prmto.mova_movieapp.feature_home.presentation.home.event.HomeEvent
 import dagger.hilt.android.AndroidEntryPoint
@@ -43,8 +45,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
-
-    private lateinit var permissionLauncher: ActivityResultLauncher<String>
 
     private val nowPlayingAdapter: NowPlayingRecyclerAdapter by lazy { NowPlayingRecyclerAdapter() }
 
@@ -80,8 +80,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             }
         )
         setupClickListener()
-        registerPermissionLaunch()
-        checkPermission(binding.root)
     }
 
     private fun setupClickListener() {
@@ -97,16 +95,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                     getString(R.string.internet_error),
                     Toast.LENGTH_SHORT
                 ).show()
-            }
-        }
-    }
-
-    private fun registerPermissionLaunch() {
-        permissionLauncher = registerForActivityResult(
-            ActivityResultContracts.RequestPermission()
-        ) {
-            if (it) {
-                return@registerForActivityResult
             }
         }
     }
@@ -165,6 +153,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                                     uiEvent.directions
                                 )
                             }
+
                             is BaseUiEvent.ShowSnackbar -> {
                                 Snackbar.make(
                                     requireView(),
@@ -172,6 +161,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                                     Snackbar.LENGTH_LONG
                                 ).show()
                             }
+
                             else -> return@collectLatest
                         }
                     }
@@ -202,18 +192,23 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                     context.getString(R.string.now_playing) -> {
                         nowPlayingAdapter
                     }
+
                     context.getString(R.string.popular_movies) -> {
                         popularMoviesAdapter
                     }
+
                     context.getString(R.string.popular_tv_series) -> {
                         popularTvSeriesAdapter
                     }
+
                     context.getString(R.string.top_rated_movies) -> {
                         topRatedMoviesAdapter
                     }
+
                     context.getString(R.string.top_rated_tv_series) -> {
                         topRatedTvSeriesAdapter
                     }
+
                     else -> nowPlayingAdapter
                 }
             binding.recyclerViewSeeAll.adapter = adapter
@@ -423,34 +418,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             viewModel.onEvent(HomeEvent.NavigateToDetailBottomSheet(action))
         }
 
-    }
-
-    private fun checkPermission(view: View) {
-        if (Build.VERSION.SDK_INT >= 33) {
-
-            if (ContextCompat.checkSelfPermission(
-                    requireContext(),
-                    android.Manifest.permission.POST_NOTIFICATIONS
-                ) != PackageManager.PERMISSION_GRANTED
-            ) {
-                if (ActivityCompat.shouldShowRequestPermissionRationale(
-                        requireActivity(),
-                        android.Manifest.permission.POST_NOTIFICATIONS
-                    )
-                ) {
-                    Snackbar.make(
-                        view,
-                        getString(R.string.it_is_necc_for_notification),
-                        Snackbar.LENGTH_INDEFINITE
-                    ).setAction(R.string.allow) {
-                        permissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
-                    }.show()
-                }
-                permissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
-            } else {
-                return
-            }
-        }
     }
 
     override fun onDestroyView() {
