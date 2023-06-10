@@ -74,8 +74,8 @@
     </style>
 
     <style name="CircleImageSmallButton" parent="Widget.AppCompat.ImageButton">
-        <item name="android:layout_width">@dimen/iconSizeLarge</item>
-        <item name="android:layout_height">@dimen/iconSizeLarge</item>
+        <item name="android:layout_width">@dimen/iconSizeMedium</item>
+        <item name="android:layout_height">@dimen/iconSizeMedium</item>
         <item name="android:background">@drawable/text_ripple</item>
         <item name="tint">?attr/colorPrimary</item>
     </style>
