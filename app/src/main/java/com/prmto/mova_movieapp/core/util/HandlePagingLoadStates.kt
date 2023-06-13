@@ -6,14 +6,14 @@ import com.prmto.mova_movieapp.core.presentation.util.BaseMovieAndTvRecyclerAdap
 import com.prmto.mova_movieapp.core.presentation.util.UiText
 import com.prmto.mova_movieapp.feature_explore.presentation.adapter.SearchRecyclerAdapter
 import com.prmto.mova_movieapp.feature_home.presentation.home.adapter.NowPlayingRecyclerAdapter
-import com.prmto.mova_movieapp.feature_upcoming.presentation.adapter.UpComingBaseAdapter
+import com.prmto.mova_movieapp.feature_upcoming.presentation.adapter.UpComingMovieAdapter
 import okio.IOException
 
 class HandlePagingLoadStates<T : Any>(
     nowPlayingRecyclerAdapter: NowPlayingRecyclerAdapter? = null,
     pagingAdapter: BaseMovieAndTvRecyclerAdapter<T>? = null,
     searchPagingAdapter: SearchRecyclerAdapter? = null,
-    upComingPagingAdapter: UpComingBaseAdapter<T>? = null,
+    upComingPagingAdapter: UpComingMovieAdapter? = null,
     onLoading: () -> Unit,
     onNotLoading: () -> Unit,
     onError: (UiText) -> Unit

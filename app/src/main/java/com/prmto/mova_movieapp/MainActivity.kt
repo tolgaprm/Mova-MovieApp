@@ -1,12 +1,21 @@
 package com.prmto.mova_movieapp
 
+import android.Manifest
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
+import android.view.View
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.navigation.NavDestination
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.gms.ads.MobileAds
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.FirebaseApp
 import com.google.firebase.appcheck.FirebaseAppCheck
 import com.google.firebase.appcheck.playintegrity.PlayIntegrityAppCheckProviderFactory
@@ -17,6 +26,8 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+
+    private lateinit var permissionLauncher: ActivityResultLauncher<String>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,6 +42,9 @@ class MainActivity : AppCompatActivity() {
         MobileAds.initialize(this)
         val navHost =
             supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
+
+        registerPermissionLaunch()
+        checkPermission(binding.root)
 
         val navController = navHost.navController
 
@@ -68,6 +82,49 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun registerPermissionLaunch() {
+        permissionLauncher = registerForActivityResult(
+            ActivityResultContracts.RequestPermission()
+        ) {
+            if (it) {
+                return@registerForActivityResult
+            }
+        }
+    }
+
+    private fun checkPermission(view: View) {
+        if (Build.VERSION.SDK_INT >= 33) {
+            val permissionRequest = listOf(
+                Manifest.permission.POST_NOTIFICATIONS,
+                Manifest.permission.SCHEDULE_EXACT_ALARM,
+            )
+
+            permissionRequest.forEach { permission ->
+                if (ContextCompat.checkSelfPermission(
+                        this,
+                        permission
+                    ) != PackageManager.PERMISSION_GRANTED
+                ) {
+                    if (ActivityCompat.shouldShowRequestPermissionRationale(
+                            this,
+                            permission
+                        )
+                    ) {
+                        Snackbar.make(
+                            view,
+                            getString(R.string.it_is_necc_for_notification),
+                            Snackbar.LENGTH_INDEFINITE
+                        ).setAction(R.string.allow) {
+                            permissionLauncher.launch(permission)
+                        }.show()
+                    }
+                    permissionLauncher.launch(permission)
+                } else {
+                    return
+                }
+            }
+        }
+    }
 }
 
 
