@@ -3,6 +3,7 @@ package com.prmto.mova_movieapp.di
 import android.content.Context
 import androidx.room.Room
 import com.prmto.mova_movieapp.core.data.data_source.local.MovaDatabase
+import com.prmto.mova_movieapp.core.data.data_source.local.migration.Migration_1_2
 import com.prmto.mova_movieapp.core.data.repository.local.LocalDatabaseRepositoryImpl
 import com.prmto.mova_movieapp.core.data.repository.local.MovieLocalRepositoryImpl
 import com.prmto.mova_movieapp.core.data.repository.local.TvSeriesLocalRepositoryImpl
@@ -36,6 +37,8 @@ object DatabaseModule {
             context = context,
             klass = MovaDatabase::class.java,
             "MovaDatabase"
+        ).addMigrations(
+            Migration_1_2
         ).build()
     }
 
