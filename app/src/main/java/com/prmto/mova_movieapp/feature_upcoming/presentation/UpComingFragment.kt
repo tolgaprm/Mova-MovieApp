@@ -12,9 +12,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.prmto.mova_movieapp.R
 import com.prmto.mova_movieapp.core.presentation.util.asString
-import com.prmto.mova_movieapp.core.util.HandlePagingLoadStates
+import com.prmto.mova_movieapp.core.util.handlePagingLoadState.HandlePagingStateUpComingPagingAdapter
 import com.prmto.mova_movieapp.databinding.FragmentUpComingBinding
-import com.prmto.mova_movieapp.feature_upcoming.domain.model.UpcomingMovie
 import com.prmto.mova_movieapp.feature_upcoming.presentation.adapter.UpComingMovieAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -75,7 +74,7 @@ class UpComingFragment : Fragment(R.layout.fragment_up_coming) {
     }
 
     private fun handlePagingLoadStates() {
-        HandlePagingLoadStates<UpcomingMovie>(
+        HandlePagingStateUpComingPagingAdapter(
             upComingPagingAdapter = upComingMovieAdapter,
             onLoading = {
                 viewModel.onEvent(UpComingEvent.Loading)
