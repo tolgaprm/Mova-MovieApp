@@ -1,8 +1,11 @@
 # Mova-Movies App
 
+[<img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg"
+alt="Get it on Google Play Store"
+height="80">](https://play.google.com/store/apps/details?id=com.prmto.mova_movieapp)
+
 "A movie and TV show information app for teaching MVVM, Paging3, Flow-Coroutines with Clean
 Architecture
-
 With this app, you can easily find information about your favorite films and TV series.
 You can view the cast, plot summary, release date, and more. "
 
@@ -29,6 +32,7 @@ You can view the cast, plot summary, release date, and more. "
 <img src="Screenshoots/detail_4_light_turkish.png" width="180" height="360" float:left>
 
 <img src="Screenshoots/explore_light_turkish.png" width="180" height="360" float:left>
+<img src="Screenshoots/upcoming_light.png" width="180" height="360" float:left >
 
 **[Other Screenshots](LIGHTSCREENS.md)**
 
@@ -49,6 +53,8 @@ You can view the cast, plot summary, release date, and more. "
 <img src="Screenshoots/dark/explore_dark.png" width="180" height="360" float:left>
 
 <img src="Screenshoots/dark/person_detail_dark.png" width="180" height="360" float:left>
+<img src="Screenshoots/dark/upcoming_dark.png" width="180" height="360" float:left>
+
 
 **[Other Screenshots](DARKSCREENS.md)**
 
@@ -83,11 +89,19 @@ You can view the cast, plot summary, release date, and more. "
   UI
 - [Navigation](https://developer.android.com/guide/navigation) - Manage transaction among the
   fragments
-- [Room](https://developer.android.com/training/data-storage/room) - -Create, store, and manage
+- [Room](https://developer.android.com/training/data-storage/room) - Create, store, and manage
   persistent data backed by a SQLite database.
 - [WorkManager](https://developer.android.com/topic/libraries/architecture/workmanager) -
   WorkManager is the recommended solution for persistent work. Work is persistent when it remains
   scheduled through app restarts and system reboots.
+- [AlarmManager](https://developer.android.com/training/scheduling/alarms) - AlarmManager is a class
+  provides access to the system alarm services. These
+  allow you to schedule your application to be run at some point in the future. My usage is to set a
+  upcoming movie reminder.
+- [Notification](https://developer.android.com/develop/ui/views/notifications) - A notification is a
+  message that Android displays outside your app's UI to
+  provide the user with reminders, communication from other people, or other timely information from
+  your app.
 - [Retrofit2 & OkHttp3](https://github.com/square/retrofit) - construct the REST APIs and paging
   network data.
 - [Moshi](https://github.com/square/moshi) - A modern JSON library for Android, Java and Kotlin
@@ -99,18 +113,20 @@ You can view the cast, plot summary, release date, and more. "
     - [Truth](https://truth.dev/) - A library for performing assertions in tests
 
 ## Package Structure
+
 The application will then be migrated to the Modularization architecture.
 
 <img src="Screenshoots/package_structure.png" height="700" float:left > 
 
 ## API Key 🔑
- - You will need to provide developer key to fetch the data from TMDB API.
- - Generate a new key (v3 auth) from [here](https://www.themoviedb.org/settings/api). Copy the key and go back to Android project.
- - Open the page is gradle/local.properties
- - Define a constant API_KEY, it looks like 
- 
-  ``` API_KEY = PASTE_YOUR_API_KEY ```
 
+- You will need to provide developer key to fetch the data from TMDB API.
+- Generate a new key (v3 auth) from [here](https://www.themoviedb.org/settings/api). Copy the key
+  and go back to Android project.
+- Open the page is gradle/local.properties
+- Define a constant API_KEY, it looks like
+
+``` API_KEY = PASTE_YOUR_API_KEY ```
 
 ## Upcoming
 
@@ -139,4 +155,3 @@ Don't forget give a star. ⭐
    See the License for the specific language governing permissions and
    limitations under the License.
 ```
-  
