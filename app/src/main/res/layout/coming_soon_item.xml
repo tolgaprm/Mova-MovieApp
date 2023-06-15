@@ -63,8 +63,7 @@
 
         <ImageView
             android:id="@+id/imvRemindMe"
-            android:layout_width="@dimen/iconSizeAverage"
-            android:layout_height="@dimen/iconSizeAverage"
+            style="@style/CircleImageSmallButton"
             android:layout_marginTop="@dimen/large_margin"
             android:layout_marginEnd="@dimen/extra_large_margin"
             android:alpha="0.8"
@@ -88,8 +87,7 @@
 
         <ImageView
             android:id="@+id/imvInfo"
-            android:layout_width="@dimen/iconSizeAverage"
-            android:layout_height="@dimen/iconSizeAverage"
+            style="@style/CircleImageSmallButton"
             android:layout_marginEnd="@dimen/large_margin"
             android:alpha="0.8"
             android:importantForAccessibility="no"

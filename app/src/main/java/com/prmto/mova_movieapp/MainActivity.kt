@@ -132,16 +132,3 @@ class MainActivity : AppCompatActivity() {
             .show()
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

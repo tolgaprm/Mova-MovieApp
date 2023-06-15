@@ -52,8 +52,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var permissionLauncher: ActivityResultLauncher<String>
-
     private val nowPlayingAdapter: NowPlayingRecyclerAdapter by lazy { NowPlayingRecyclerAdapter() }
 
     private val popularMoviesAdapter: PopularMoviesAdapter by lazy { PopularMoviesAdapter() }
@@ -88,8 +86,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             }
         )
         setupClickListener()
-        registerPermissionLaunch()
-        checkPermission(binding.root)
     }
 
     private fun setupClickListener() {
@@ -105,16 +101,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                     getString(R.string.internet_error),
                     Toast.LENGTH_SHORT
                 ).show()
-            }
-        }
-    }
-
-    private fun registerPermissionLaunch() {
-        permissionLauncher = registerForActivityResult(
-            ActivityResultContracts.RequestPermission()
-        ) {
-            if (it) {
-                return@registerForActivityResult
             }
         }
     }
@@ -435,34 +421,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             viewModel.onEvent(HomeEvent.NavigateToDetailBottomSheet(action))
         }
 
-    }
-
-    private fun checkPermission(view: View) {
-        if (Build.VERSION.SDK_INT >= 33) {
-
-            if (ContextCompat.checkSelfPermission(
-                    requireContext(),
-                    android.Manifest.permission.POST_NOTIFICATIONS
-                ) != PackageManager.PERMISSION_GRANTED
-            ) {
-                if (ActivityCompat.shouldShowRequestPermissionRationale(
-                        requireActivity(),
-                        android.Manifest.permission.POST_NOTIFICATIONS
-                    )
-                ) {
-                    Snackbar.make(
-                        view,
-                        getString(R.string.it_is_necc_for_notification),
-                        Snackbar.LENGTH_INDEFINITE
-                    ).setAction(R.string.allow) {
-                        permissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
-                    }.show()
-                }
-                permissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
-            } else {
-                return
-            }
-        }
     }
 
     override fun onDestroyView() {
