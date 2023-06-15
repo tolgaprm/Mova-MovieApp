@@ -9,8 +9,8 @@ import coil.load
 import com.prmto.mova_movieapp.R
 import com.prmto.mova_movieapp.core.data.data_source.remote.ImageApi
 import com.prmto.mova_movieapp.core.data.data_source.remote.ImageSize
+import com.prmto.mova_movieapp.core.domain.util.DateFormatUtils
 import com.prmto.mova_movieapp.databinding.ComingSoonItemBinding
-import com.prmto.mova_movieapp.feature_person_detail.domain.util.DateFormatUtils
 import com.prmto.mova_movieapp.feature_upcoming.domain.model.UpcomingMovie
 
 class UpComingMovieAdapter :

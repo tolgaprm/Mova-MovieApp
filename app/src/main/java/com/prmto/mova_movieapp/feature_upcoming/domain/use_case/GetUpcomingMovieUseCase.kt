@@ -6,6 +6,7 @@ import androidx.paging.filter
 import androidx.paging.map
 import com.prmto.mova_movieapp.core.data.dto.Genre
 import com.prmto.mova_movieapp.core.domain.use_case.GetMovieGenreListUseCase
+import com.prmto.mova_movieapp.core.domain.util.DateFormatUtils
 import com.prmto.mova_movieapp.core.presentation.util.HandleUtils
 import com.prmto.mova_movieapp.feature_upcoming.domain.model.UpcomingMovie
 import com.prmto.mova_movieapp.feature_upcoming.domain.repository.UpComingRepository
@@ -51,17 +52,15 @@ class GetUpcomingMovieUseCase @Inject constructor(
 
 
     private fun isAfterReleaseDate(releaseDate: String): Boolean {
-        val releaseYear = releaseDate.split("-")[0].toInt()
-        val releaseMonth = releaseDate.split("-")[1].toInt() - 1
-        val releaseDay = releaseDate.split("-")[2].toInt()
+        val movaDate = DateFormatUtils.convertToDateFromReleaseDate(releaseDate)
 
         val currentYear = calendar.get(Calendar.YEAR)
-        val currentMonth = calendar.get(Calendar.MONTH)
+        val currentMonth = calendar.get(Calendar.MONTH) + 1
         val currentDay = calendar.get(Calendar.DAY_OF_MONTH)
 
-        return releaseYear >= currentYear &&
-                releaseMonth >= currentMonth &&
-                releaseDay >= currentDay
+        return movaDate.year >= currentYear &&
+                movaDate.month.value >= currentMonth &&
+                movaDate.dayOfMonth >= currentDay
     }
 
 }

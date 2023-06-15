@@ -51,7 +51,7 @@ fragment-testing = "1.5.7"
 
 
 androidGradlePlugin = "7.3.0"
-
+desugar_jdk_libs_version = "1.2.2"
 
 
 [libraries]
@@ -120,6 +120,8 @@ youtubeplayer = { group = "com.pierfrancescosoffritti.androidyoutubeplayer", nam
 
 # Circle Image View
 circleimageview = { group = "de.hdodenhof", name = "circleimageview", version.ref = "cirle_image_view_version" }
+
+desugar_jdk_libs = { group = "com.android.tools", name = "desugar_jdk_libs", version.ref = "desugar_jdk_libs_version" }
 
 # Firebase
 firebase-analytics-ktx = { group = "com.google.firebase", name = "firebase-analytics-ktx" }
