@@ -1,5 +1,7 @@
 package com.prmto.mova_movieapp.feature_upcoming.presentation
 
+import com.prmto.mova_movieapp.feature_upcoming.domain.model.UpcomingRemindEntity
+
 sealed class UpComingEvent {
 
     object Loading : UpComingEvent()
@@ -7,8 +9,7 @@ sealed class UpComingEvent {
     object NotLoading : UpComingEvent()
 
     data class OnClickRemindMe(
-        val movieId: Int,
-        val movieTitle: String,
+        val upcomingRemindEntity: UpcomingRemindEntity,
         val isAddedToRemind: Boolean
     ) : UpComingEvent()
 }

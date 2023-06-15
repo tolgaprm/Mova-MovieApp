@@ -6,6 +6,6 @@ import com.prmto.mova_movieapp.core.util.Constants.UPCOMING_REMIND_TABLE_NAME
 
 val Migration_1_2 = object : Migration(1, 2) {
     override fun migrate(database: SupportSQLiteDatabase) {
-        database.execSQL("Create Table $UPCOMING_REMIND_TABLE_NAME (`movieId` INTEGER NOT NULL, `movieTitle` TEXT NOT NULL, PRIMARY KEY(`movieId`))")
+        database.execSQL("Create Table $UPCOMING_REMIND_TABLE_NAME (`movieId` INTEGER NOT NULL, `movieTitle` TEXT NOT NULL, `movieReleaseDate` TEXT NOT NULL, PRIMARY KEY(`movieId`))")
     }
 }

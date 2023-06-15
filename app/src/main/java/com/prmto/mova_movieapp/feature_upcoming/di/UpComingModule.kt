@@ -1,7 +1,10 @@
 package com.prmto.mova_movieapp.feature_upcoming.di
 
+import android.content.Context
 import com.prmto.mova_movieapp.core.data.data_source.local.MovaDatabase
 import com.prmto.mova_movieapp.core.domain.use_case.GetMovieGenreListUseCase
+import com.prmto.mova_movieapp.feature_upcoming.alarm_manager.AndroidUpComingAlarmScheduler
+import com.prmto.mova_movieapp.feature_upcoming.alarm_manager.UpComingAlarmScheduler
 import com.prmto.mova_movieapp.feature_upcoming.data.remote.UpComingApi
 import com.prmto.mova_movieapp.feature_upcoming.data.repository.UpComingLocalRepositoryImpl
 import com.prmto.mova_movieapp.feature_upcoming.data.repository.UpComingRepositoryImpl
@@ -16,6 +19,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.android.scopes.ViewModelScoped
 import retrofit2.Retrofit
 
@@ -27,6 +31,14 @@ object UpComingModule {
     @ViewModelScoped
     fun provideUpComingApi(retrofit: Retrofit): UpComingApi {
         return retrofit.create(UpComingApi::class.java)
+    }
+
+    @Provides
+    @ViewModelScoped
+    fun upComingAlarmScheduler(
+        @ApplicationContext context: Context
+    ): UpComingAlarmScheduler {
+        return AndroidUpComingAlarmScheduler(context)
     }
 
     @Provides

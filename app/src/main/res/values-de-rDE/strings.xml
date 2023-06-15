@@ -149,4 +149,10 @@
     <string name="unavailable_error">Verbindung zu den Firebase-Servern nicht möglich. Bitte überprüfen Sie Ihre Internetverbindung und versuchen Sie es erneut.</string>
     <string name="coming_soon">Demnächst</string>
     <string name="info">Infos</string>
+
+    <string name="remind_me">Erinnere mich</string>
+    <string name="upcoming_movie_set_big_context">Hallo! Nur eine freundliche Erinnerung an den Film, auf den Sie sich gefreut haben. Wir freuen uns, Ihnen mitteilen zu können, dass %s jetzt veröffentlicht wird!</string>
+    <string name="upcoming_movie_release_basic">%s Jetzt im Kino! Holen Sie sich Ihre Freunde und genießen Sie die Vorstellung!</string>
+    <string name="upcoming_movie_release_title">Kommender Film</string>
+
 </resources>

@@ -14,6 +14,7 @@ import com.prmto.mova_movieapp.R
 import com.prmto.mova_movieapp.core.presentation.util.asString
 import com.prmto.mova_movieapp.core.util.handlePagingLoadState.HandlePagingStateUpComingPagingAdapter
 import com.prmto.mova_movieapp.databinding.FragmentUpComingBinding
+import com.prmto.mova_movieapp.feature_upcoming.domain.model.UpcomingRemindEntity
 import com.prmto.mova_movieapp.feature_upcoming.presentation.adapter.UpComingMovieAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -65,8 +66,11 @@ class UpComingFragment : Fragment(R.layout.fragment_up_coming) {
         upComingMovieAdapter.setOnRemindMeClickListener { upComingMovie ->
             viewModel.onEvent(
                 UpComingEvent.OnClickRemindMe(
-                    movieId = upComingMovie.movie.id,
-                    movieTitle = upComingMovie.movie.title,
+                    upcomingRemindEntity = UpcomingRemindEntity(
+                        upComingMovie.movie.id,
+                        upComingMovie.movie.title,
+                        upComingMovie.movie.releaseDate ?: ""
+                    ),
                     isAddedToRemind = upComingMovie.isAddedToRemind
                 )
             )
