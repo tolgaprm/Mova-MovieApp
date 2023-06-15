@@ -1,11 +1,11 @@
 package com.prmto.mova_movieapp.feature_person_detail.domain.use_case
 
 import com.prmto.mova_movieapp.R
+import com.prmto.mova_movieapp.core.domain.util.DateFormatUtils
 import com.prmto.mova_movieapp.core.presentation.util.UiText
 import com.prmto.mova_movieapp.core.util.Resource
 import com.prmto.mova_movieapp.feature_person_detail.domain.model.PersonDetail
 import com.prmto.mova_movieapp.feature_person_detail.domain.repository.PersonRepository
-import com.prmto.mova_movieapp.feature_person_detail.domain.util.DateFormatUtils
 import kotlinx.coroutines.yield
 import okio.IOException
 import retrofit2.HttpException

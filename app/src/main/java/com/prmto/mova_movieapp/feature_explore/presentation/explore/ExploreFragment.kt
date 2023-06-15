@@ -19,7 +19,8 @@ import com.prmto.mova_movieapp.core.domain.repository.isAvaliable
 import com.prmto.mova_movieapp.core.presentation.util.UiEvent
 import com.prmto.mova_movieapp.core.presentation.util.asString
 import com.prmto.mova_movieapp.core.presentation.util.isEmpty
-import com.prmto.mova_movieapp.core.util.HandlePagingLoadStates
+import com.prmto.mova_movieapp.core.util.handlePagingLoadState.HandlePagingLoadStateMovieAndTvBaseRecyclerAdapter
+import com.prmto.mova_movieapp.core.util.handlePagingLoadState.HandlePagingStateSearchAdapter
 import com.prmto.mova_movieapp.databinding.FragmentExploreBinding
 import com.prmto.mova_movieapp.feature_explore.presentation.adapter.FilterMoviesAdapter
 import com.prmto.mova_movieapp.feature_explore.presentation.adapter.FilterTvSeriesAdapter
@@ -177,9 +178,11 @@ class ExploreFragment : Fragment(R.layout.fragment_explore) {
                                     Snackbar.LENGTH_SHORT
                                 ).show()
                             }
+
                             is UiEvent.PopBackStack -> {
                                 findNavController().popBackStack()
                             }
+
                             is UiEvent.NavigateTo -> {
                                 findNavController().navigate(event.directions)
                             }
@@ -197,12 +200,14 @@ class ExploreFragment : Fragment(R.layout.fragment_explore) {
                                 binding.recyclerDiscoverMovie.isVisible =
                                     !it.filterAdapterState.isLoading
                             }
+
                             Category.TV -> {
                                 binding.filterShimmerLayout.isVisible =
                                     it.filterAdapterState.isLoading
                                 binding.recyclerDiscoverTv.isVisible =
                                     !it.filterAdapterState.isLoading
                             }
+
                             Category.SEARCH -> {
                                 binding.filterShimmerLayout.isVisible =
                                     it.searchAdapterState.isLoading
@@ -249,7 +254,21 @@ class ExploreFragment : Fragment(R.layout.fragment_explore) {
     }
 
     private fun handlePagingLoadStates() {
-        HandlePagingLoadStates(pagingAdapter = tvFilterAdapter,
+        HandlePagingLoadStateMovieAndTvBaseRecyclerAdapter(
+            pagingAdapter = tvFilterAdapter,
+            onLoading = { viewModel.onAdapterLoadStateEvent(ExploreAdapterLoadStateEvent.FilterAdapterLoading) },
+            onNotLoading = { viewModel.onAdapterLoadStateEvent(ExploreAdapterLoadStateEvent.FilterAdapterNotLoading) },
+            onError = {
+                viewModel.onAdapterLoadStateEvent(
+                    ExploreAdapterLoadStateEvent.PagingError(
+                        it
+                    )
+                )
+            }
+        )
+
+        HandlePagingLoadStateMovieAndTvBaseRecyclerAdapter(
+            pagingAdapter = movieFilterAdapter,
             onLoading = { viewModel.onAdapterLoadStateEvent(ExploreAdapterLoadStateEvent.FilterAdapterLoading) },
             onNotLoading = { viewModel.onAdapterLoadStateEvent(ExploreAdapterLoadStateEvent.FilterAdapterNotLoading) },
             onError = {
@@ -260,18 +279,8 @@ class ExploreFragment : Fragment(R.layout.fragment_explore) {
                 )
             })
 
-        HandlePagingLoadStates(pagingAdapter = movieFilterAdapter,
-            onLoading = { viewModel.onAdapterLoadStateEvent(ExploreAdapterLoadStateEvent.FilterAdapterLoading) },
-            onNotLoading = { viewModel.onAdapterLoadStateEvent(ExploreAdapterLoadStateEvent.FilterAdapterNotLoading) },
-            onError = {
-                viewModel.onAdapterLoadStateEvent(
-                    ExploreAdapterLoadStateEvent.PagingError(
-                        it
-                    )
-                )
-            })
-
-        HandlePagingLoadStates<Any>(searchPagingAdapter = searchRecyclerAdapter,
+        HandlePagingStateSearchAdapter(
+            searchPagingAdapter = searchRecyclerAdapter,
             onLoading = { viewModel.onAdapterLoadStateEvent(ExploreAdapterLoadStateEvent.SearchAdapterLoading) },
             onNotLoading = { viewModel.onAdapterLoadStateEvent(ExploreAdapterLoadStateEvent.SearchAdapterNotLoading) },
             onError = {
@@ -280,7 +289,8 @@ class ExploreFragment : Fragment(R.layout.fragment_explore) {
                         it
                     )
                 )
-            })
+            }
+        )
     }
 
     private fun searchRecyclerAdapterListeners() {

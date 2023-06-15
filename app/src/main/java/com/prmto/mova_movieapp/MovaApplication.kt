@@ -42,7 +42,6 @@ class MovaApplication @Inject constructor(
             .build()
 
         val notificationWorker = OneTimeWorkRequestBuilder<NotificationWorker>()
-            .setConstraints(constraints)
             .build()
 
         val updateFirebaseMovieWorker = PeriodicWorkRequestBuilder<UpdateFirebaseMovieWorker>(

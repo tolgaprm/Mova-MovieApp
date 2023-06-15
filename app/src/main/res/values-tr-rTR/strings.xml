@@ -151,7 +151,13 @@
     <string name="aborted_error">İşlem tamamlanamadı çünkü gereken kaynak artık mevcut değil. Lütfen daha sonra tekrar deneyin.</string>
     <string name="unavailable_error">Firebase sunucularına erişilemiyor. Lütfen internet bağlantınızı kontrol edin ve daha sonra tekrar deneyin.</string>
     <string name="coming_soon">Yakında</string>
-    <string name="remind_me">Bana Hatırlat</string>
     <string name="info">Bilgi</string>
+
+
+    <string name="remind_me">Bana Hatırlat</string>
+    <string name="upcoming_movie_set_big_context">Merhaba! Merakla beklediğiniz film hakkında size hatırlatmada bulunmak istedik. Sizi heyecanla bilgilendirmek istiyoruz, %s artık gösterimde!</string>
+    <string name="upcoming_movie_release_basic">%s Şimdi Gösterimde! Arkadaşlarınızı alın ve gösterinin tadını çıkarın!</string>
+    <string name="upcoming_movie_release_title">Yaklaşan Film</string>
+
 
 </resources>

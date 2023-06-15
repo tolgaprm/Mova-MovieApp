@@ -9,11 +9,17 @@ import com.prmto.mova_movieapp.core.data.data_source.local.models.movie.Favorite
 import com.prmto.mova_movieapp.core.data.data_source.local.models.movie.MovieWatchListItem
 import com.prmto.mova_movieapp.core.data.data_source.local.models.tv.FavoriteTvSeries
 import com.prmto.mova_movieapp.core.data.data_source.local.models.tv.TvSeriesWatchListItem
+import com.prmto.mova_movieapp.feature_upcoming.data.local.dao.UpcomingDao
+import com.prmto.mova_movieapp.feature_upcoming.domain.model.UpcomingRemindEntity
 
 @Database(
-    entities = [FavoriteMovie::class, MovieWatchListItem::class, FavoriteTvSeries::class, TvSeriesWatchListItem::class],
+    entities = [
+        FavoriteMovie::class, MovieWatchListItem::class,
+        FavoriteTvSeries::class, TvSeriesWatchListItem::class,
+        UpcomingRemindEntity::class
+    ],
     exportSchema = false,
-    version = 1
+    version = 2
 )
 @TypeConverters(DatabaseConverter::class)
 abstract class MovaDatabase : RoomDatabase() {
@@ -21,4 +27,6 @@ abstract class MovaDatabase : RoomDatabase() {
     abstract val movieDao: MovieDao
 
     abstract val tvSeriesDao: TvSeriesDao
+
+    abstract val upcomingDao: UpcomingDao
 }

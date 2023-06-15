@@ -1,4 +1,4 @@
-package com.prmto.mova_movieapp.feature_upcoming.data.dto
+package com.prmto.mova_movieapp.feature_upcoming.data.remote.dto
 
 import com.squareup.moshi.Json
 

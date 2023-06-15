@@ -1,11 +1,17 @@
 package com.prmto.mova_movieapp.feature_home.presentation.home
 
 
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -22,8 +28,9 @@ import com.prmto.mova_movieapp.core.presentation.util.UiText
 import com.prmto.mova_movieapp.core.presentation.util.addOnBackPressedCallback
 import com.prmto.mova_movieapp.core.presentation.util.asString
 import com.prmto.mova_movieapp.core.presentation.util.isEmpty
-import com.prmto.mova_movieapp.core.util.HandlePagingLoadStates
 import com.prmto.mova_movieapp.core.util.getCountryIsoCode
+import com.prmto.mova_movieapp.core.util.handlePagingLoadState.HandlePagingLoadStateMovieAndTvBaseRecyclerAdapter
+import com.prmto.mova_movieapp.core.util.handlePagingLoadState.HandlePagingStateNowPlayingRecyclerAdapter
 import com.prmto.mova_movieapp.databinding.FragmentHomeBinding
 import com.prmto.mova_movieapp.feature_home.presentation.home.adapter.NowPlayingRecyclerAdapter
 import com.prmto.mova_movieapp.feature_home.presentation.home.adapter.PopularMoviesAdapter
@@ -37,7 +44,6 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import timber.log.Timber
 
 
 @AndroidEntryPoint
@@ -148,7 +154,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                     viewModel.eventFlow.collectLatest { uiEvent ->
                         when (uiEvent) {
                             is BaseUiEvent.NavigateTo -> {
-                                Timber.d("asdasd")
                                 findNavController().navigate(
                                     uiEvent.directions
                                 )
@@ -217,42 +222,40 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
     private fun handlePagingLoadStates() {
 
-        HandlePagingLoadStates<Movie>(
+        HandlePagingStateNowPlayingRecyclerAdapter(
             nowPlayingRecyclerAdapter = nowPlayingAdapter,
             onLoading = { viewModel.onAdapterLoadStateEvent(HomeAdapterLoadStateEvent.NowPlayingLoading) },
             onNotLoading = { viewModel.onAdapterLoadStateEvent(HomeAdapterLoadStateEvent.NowPlayingNotLoading) },
             onError = { eventToPagingError(it) }
         )
 
-
-        HandlePagingLoadStates(
+        HandlePagingLoadStateMovieAndTvBaseRecyclerAdapter<Movie>(
             pagingAdapter = popularMoviesAdapter,
             onLoading = { viewModel.onAdapterLoadStateEvent(HomeAdapterLoadStateEvent.PopularMoviesLoading) },
             onNotLoading = { viewModel.onAdapterLoadStateEvent(HomeAdapterLoadStateEvent.PopularMoviesNotLoading) },
             onError = { eventToPagingError(it) }
         )
 
-        HandlePagingLoadStates(
+        HandlePagingLoadStateMovieAndTvBaseRecyclerAdapter(
             pagingAdapter = topRatedMoviesAdapter,
             onLoading = { viewModel.onAdapterLoadStateEvent(HomeAdapterLoadStateEvent.TopRatedMoviesLoading) },
             onNotLoading = { viewModel.onAdapterLoadStateEvent(HomeAdapterLoadStateEvent.TopRatedMoviesNotLoading) },
             onError = { eventToPagingError(it) }
         )
 
-        HandlePagingLoadStates(
+        HandlePagingLoadStateMovieAndTvBaseRecyclerAdapter(
             pagingAdapter = popularTvSeriesAdapter,
             onLoading = { viewModel.onAdapterLoadStateEvent(HomeAdapterLoadStateEvent.PopularTvSeriesLoading) },
             onNotLoading = { viewModel.onAdapterLoadStateEvent(HomeAdapterLoadStateEvent.PopularTvSeriesNotLoading) },
             onError = { eventToPagingError(it) }
         )
 
-        HandlePagingLoadStates(
+        HandlePagingLoadStateMovieAndTvBaseRecyclerAdapter(
             pagingAdapter = topRatedTvSeriesAdapter,
             onLoading = { viewModel.onAdapterLoadStateEvent(HomeAdapterLoadStateEvent.TopRatedTvSeriesLoading) },
             onNotLoading = { viewModel.onAdapterLoadStateEvent(HomeAdapterLoadStateEvent.TopRatedTvSeriesNotLoading) },
             onError = { eventToPagingError(it) }
         )
-
     }
 
     private fun eventToPagingError(uiText: UiText) {

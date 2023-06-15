@@ -9,12 +9,14 @@ object Constants {
     const val STARTING_PAGE = 1
 
     const val ITEMS_PER_PAGE = 20
-    const val ITEMS_PER_PAGE_FOR_RECOMMENDATION = 8
 
     const val PREFERENCES_NAME = "mova_preferences_name"
 
     const val LOCALE_KEY = "locale_key"
     const val UI_MODE_KEY = "ui_mode_key"
+
+    const val UPCOMING_REMIND_TABLE_NAME = "upcoming_remind"
+
 
     const val DISCOVER_DATE_QUERY_FOR_TV = "first_air_date"
 

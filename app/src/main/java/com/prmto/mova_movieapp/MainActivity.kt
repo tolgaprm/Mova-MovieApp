@@ -8,8 +8,6 @@ import android.view.View
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.navigation.NavDestination
 import androidx.navigation.fragment.NavHostFragment
@@ -44,7 +42,7 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
 
         registerPermissionLaunch()
-        checkPermission(binding.root)
+        checkNotificationPermissions(binding.root)
 
         val navController = navHost.navController
 
@@ -92,49 +90,45 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun checkPermission(view: View) {
-        if (Build.VERSION.SDK_INT >= 33) {
-            val permissionRequest = listOf(
-                Manifest.permission.POST_NOTIFICATIONS,
-            )
+    private fun checkNotificationPermissions(view: View) {
 
-            permissionRequest.forEach { permission ->
-                if (ContextCompat.checkSelfPermission(
-                        this,
-                        permission
-                    ) != PackageManager.PERMISSION_GRANTED
-                ) {
-                    if (ActivityCompat.shouldShowRequestPermissionRationale(
-                            this,
-                            permission
-                        )
-                    ) {
-                        Snackbar.make(
-                            view,
-                            getString(R.string.it_is_necc_for_notification),
-                            Snackbar.LENGTH_INDEFINITE
-                        ).setAction(R.string.allow) {
-                            permissionLauncher.launch(permission)
-                        }.show()
-                    }
-                    permissionLauncher.launch(permission)
-                } else {
-                    return
-                }
+        if (Build.VERSION.SDK_INT >= 33) {
+            if (checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+                handlePermissionRequest(
+                    permission = Manifest.permission.POST_NOTIFICATIONS
+                )
+            }
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            if (checkSelfPermission(Manifest.permission.SCHEDULE_EXACT_ALARM) != PackageManager.PERMISSION_GRANTED) {
+                handlePermissionRequest(
+                    permission = Manifest.permission.SCHEDULE_EXACT_ALARM
+                )
             }
         }
     }
+
+    private fun handlePermissionRequest(
+        permission: String,
+        permissionExplanation: String = getString(R.string.it_is_necc_for_notification)
+    ) {
+        if (shouldShowRequestPermissionRationale(permission)) {
+            showPermissionSnackbar(
+                permission = permission,
+                permissionExplanation = permissionExplanation
+            )
+        }
+        permissionLauncher.launch(permission)
+    }
+
+    private fun showPermissionSnackbar(
+        permission: String,
+        permissionExplanation: String
+    ) {
+        val permissionAction = getString(R.string.allow)
+        Snackbar.make(binding.root, permissionExplanation, Snackbar.LENGTH_INDEFINITE)
+            .setAction(permissionAction) { permissionLauncher.launch(permission) }
+            .show()
+    }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

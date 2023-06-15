@@ -11,10 +11,10 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.prmto.mova_movieapp.R
-import com.prmto.mova_movieapp.core.domain.models.Movie
 import com.prmto.mova_movieapp.core.presentation.util.asString
-import com.prmto.mova_movieapp.core.util.HandlePagingLoadStates
+import com.prmto.mova_movieapp.core.util.handlePagingLoadState.HandlePagingStateUpComingPagingAdapter
 import com.prmto.mova_movieapp.databinding.FragmentUpComingBinding
+import com.prmto.mova_movieapp.feature_upcoming.domain.model.UpcomingRemindEntity
 import com.prmto.mova_movieapp.feature_upcoming.presentation.adapter.UpComingMovieAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -54,15 +54,31 @@ class UpComingFragment : Fragment(R.layout.fragment_up_coming) {
             }
         }
 
-        upComingMovieAdapter.setOnClickListener { movie ->
+        upComingMovieAdapter.setOnInfoClickListener { upComingMovie ->
             val action =
-                UpComingFragmentDirections.actionUpComingFragmentToDetailBottomSheet(movie, null)
+                UpComingFragmentDirections.actionUpComingFragmentToDetailBottomSheet(
+                    upComingMovie.movie,
+                    null
+                )
             findNavController().navigate(action)
+        }
+
+        upComingMovieAdapter.setOnRemindMeClickListener { upComingMovie ->
+            viewModel.onEvent(
+                UpComingEvent.OnClickRemindMe(
+                    upcomingRemindEntity = UpcomingRemindEntity(
+                        upComingMovie.movie.id,
+                        upComingMovie.movie.title,
+                        upComingMovie.movie.releaseDate ?: ""
+                    ),
+                    isAddedToRemind = upComingMovie.isAddedToRemind
+                )
+            )
         }
     }
 
     private fun handlePagingLoadStates() {
-        HandlePagingLoadStates<Movie>(
+        HandlePagingStateUpComingPagingAdapter(
             upComingPagingAdapter = upComingMovieAdapter,
             onLoading = {
                 viewModel.onEvent(UpComingEvent.Loading)
