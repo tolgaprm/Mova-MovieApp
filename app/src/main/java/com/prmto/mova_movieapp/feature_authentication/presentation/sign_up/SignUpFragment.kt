@@ -6,20 +6,16 @@ import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.prmto.mova_movieapp.R
 import com.prmto.mova_movieapp.core.presentation.util.UiEvent
 import com.prmto.mova_movieapp.core.presentation.util.addOnBackPressedCallback
 import com.prmto.mova_movieapp.core.presentation.util.asString
+import com.prmto.mova_movieapp.core.presentation.util.collectFlow
 import com.prmto.mova_movieapp.databinding.FragmentSignUpBinding
 import com.prmto.mova_movieapp.feature_authentication.presentation.util.AuthUtil
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
@@ -28,7 +24,6 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
     val binding get() = _binding!!
 
     private val viewModel: SignUpViewModel by viewModels()
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val binding = FragmentSignUpBinding.bind(view)
@@ -42,7 +37,6 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
                 viewModel.onEvent(SignUpEvent.OnBackPressed)
             }
         )
-
 
         binding.edtEmail.addTextChangedListener {
             it?.let {
@@ -64,18 +58,14 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
     }
 
     private fun collectData() {
-        viewLifecycleOwner.lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                launch { collectSignUpUiState() }
-                launch { collectEmailState() }
-                launch { collectPasswordState() }
-                launch { collectLoadingState() }
-            }
-        }
+        collectSignUpUiState()
+        collectEmailState()
+        collectPasswordState()
+        collectLoadingState()
     }
 
-    private suspend fun collectEmailState() {
-        viewModel.emailState.collectLatest { emailState ->
+    private fun collectEmailState() {
+        collectFlow(viewModel.emailState) { emailState ->
             AuthUtil.updateFieldEmptyErrorInTextInputLayout(
                 textInputLayout = binding.layoutEmail,
                 authError = emailState.error,
@@ -84,17 +74,18 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
         }
     }
 
-    private suspend fun collectLoadingState() {
-        viewModel.isLoading.collectLatest { isLoading ->
+    private fun collectLoadingState() {
+        collectFlow(viewModel.isLoading) { isLoading ->
             binding.edtEmail.isEnabled = !isLoading
             binding.edtPassword.isEnabled = !isLoading
             binding.btnSignUp.isEnabled = !isLoading
             binding.progressBar.isVisible = isLoading
+
         }
     }
 
-    private suspend fun collectPasswordState() {
-        viewModel.passwordState.collectLatest { passwordState ->
+    private fun collectPasswordState() {
+        collectFlow(viewModel.passwordState) { passwordState ->
             AuthUtil.updateFieldEmptyErrorInTextInputLayout(
                 textInputLayout = binding.layoutPassword,
                 authError = passwordState.error,
@@ -103,15 +94,17 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
         }
     }
 
-    private suspend fun collectSignUpUiState() {
-        viewModel.uiEvent.collectLatest { uiEvent ->
+    private fun collectSignUpUiState() {
+        collectFlow(viewModel.uiEvent) { uiEvent ->
             when (uiEvent) {
                 is UiEvent.NavigateTo -> {
                     findNavController().navigate(uiEvent.directions)
                 }
+
                 is UiEvent.PopBackStack -> {
                     findNavController().popBackStack()
                 }
+
                 is UiEvent.ShowSnackbar -> {
                     Snackbar.make(
                         requireView(),
@@ -122,10 +115,8 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
             }
         }
     }
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
-
 }
