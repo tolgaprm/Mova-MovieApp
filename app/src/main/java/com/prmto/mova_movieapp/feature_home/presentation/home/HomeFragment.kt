@@ -1,23 +1,14 @@
 package com.prmto.mova_movieapp.feature_home.presentation.home
 
 
-import android.content.pm.PackageManager
-import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.Toast
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.prmto.mova_movieapp.R
@@ -27,6 +18,8 @@ import com.prmto.mova_movieapp.core.presentation.util.BaseUiEvent
 import com.prmto.mova_movieapp.core.presentation.util.UiText
 import com.prmto.mova_movieapp.core.presentation.util.addOnBackPressedCallback
 import com.prmto.mova_movieapp.core.presentation.util.asString
+import com.prmto.mova_movieapp.core.presentation.util.collectFlow
+import com.prmto.mova_movieapp.core.presentation.util.collectFlowInside
 import com.prmto.mova_movieapp.core.presentation.util.isEmpty
 import com.prmto.mova_movieapp.core.util.getCountryIsoCode
 import com.prmto.mova_movieapp.core.util.handlePagingLoadState.HandlePagingLoadStateMovieAndTvBaseRecyclerAdapter
@@ -42,8 +35,6 @@ import com.prmto.mova_movieapp.feature_home.presentation.home.event.HomeEvent
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint
@@ -106,24 +97,21 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     }
 
     private fun observeConnectivityStatus() {
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.networkState.collectLatest { networkState ->
-                    delay(20)
-                    if (networkState.isAvaliable()) {
-                        job?.cancel()
-                        showScrollView()
-                        hideErrorScreen()
-                        collectDataLifecycleAware()
-                    } else {
-                        job?.cancel()
-                        if (isEmptyAdapters()) {
-                            hideScrollView()
-                            showErrorScreen()
-                        }
-                    }
+        collectFlow(viewModel.networkState) { networkState ->
+            delay(20)
+            if (networkState.isAvaliable()) {
+                job?.cancel()
+                showScrollView()
+                hideErrorScreen()
+                collectDataLifecycleAware()
+            } else {
+                job?.cancel()
+                if (isEmptyAdapters()) {
+                    hideScrollView()
+                    showErrorScreen()
                 }
             }
+
         }
     }
 
@@ -148,43 +136,37 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     }
 
     private fun collectHomeUiEventsAndLoadState() {
-        viewLifecycleOwner.lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                launch {
-                    viewModel.eventFlow.collectLatest { uiEvent ->
-                        when (uiEvent) {
-                            is BaseUiEvent.NavigateTo -> {
-                                findNavController().navigate(
-                                    uiEvent.directions
-                                )
-                            }
 
-                            is BaseUiEvent.ShowSnackbar -> {
-                                Snackbar.make(
-                                    requireView(),
-                                    uiEvent.uiText.asString(requireContext()),
-                                    Snackbar.LENGTH_LONG
-                                ).show()
-                            }
+        collectFlow(viewModel.eventFlow) { uiEvent ->
+            when (uiEvent) {
+                is BaseUiEvent.NavigateTo -> {
+                    findNavController().navigate(
+                        uiEvent.directions
+                    )
+                }
 
-                            else -> return@collectLatest
-                        }
-                    }
+                is BaseUiEvent.ShowSnackbar -> {
+                    Snackbar.make(
+                        requireView(),
+                        uiEvent.uiText.asString(requireContext()),
+                        Snackbar.LENGTH_LONG
+                    ).show()
                 }
-                launch {
-                    viewModel.adapterLoadState.collectLatest {
-                        binding.nowPlayingShimmerLayout.isVisible = it.nowPlayingState.isLoading
-                        binding.popularMoviesShimmerLayout.isVisible =
-                            it.popularMoviesState.isLoading
-                        binding.popularTvSeriesShimmerLayout.isVisible =
-                            it.popularTvSeriesState.isLoading
-                        binding.topRatedMoviesShimmerLayout.isVisible =
-                            it.topRatedMoviesState.isLoading
-                        binding.topRatedTvSeriesShimmerLayout.isVisible =
-                            it.topRatedTvSeriesState.isLoading
-                    }
-                }
+
+                else -> return@collectFlow
             }
+        }
+
+        collectFlow(viewModel.adapterLoadState) {
+            binding.nowPlayingShimmerLayout.isVisible = it.nowPlayingState.isLoading
+            binding.popularMoviesShimmerLayout.isVisible =
+                it.popularMoviesState.isLoading
+            binding.popularTvSeriesShimmerLayout.isVisible =
+                it.popularTvSeriesState.isLoading
+            binding.topRatedMoviesShimmerLayout.isVisible =
+                it.topRatedMoviesState.isLoading
+            binding.topRatedTvSeriesShimmerLayout.isVisible =
+                it.topRatedTvSeriesState.isLoading
         }
     }
 
@@ -267,56 +249,36 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         viewModel.onEvent(HomeEvent.UpdateCountryIsoCode(countryIsoCode))
     }
 
-    private fun collectDataLifecycleAware() =
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                job = launch {
-                    launch {
-                        viewModel.homeState.collectLatest { homeState ->
-                            binding.apply {
-                                seeAllPage.isVisible = homeState.isShowsSeeAllPage
-                                scrollView.isVisible = !homeState.isShowsSeeAllPage
-                                if (homeState.isShowsSeeAllPage) {
-                                    showSeeAllPage(homeState.seeAllPageToolBarText)
-                                } else {
-                                    hideSeeAllPage()
-                                }
-                            }
-                        }
-                    }
-
-                    launch {
-                        viewModel.getNowPlayingMovies().collectLatest { pagingData ->
-                            nowPlayingAdapter.submitData(pagingData)
-                        }
-                    }
-
-                    launch {
-                        viewModel.getPopularMovies().collectLatest { pagingData ->
-                            popularMoviesAdapter.submitData(pagingData)
-                        }
-                    }
-
-                    launch {
-                        viewModel.getTopRatedMovies().collectLatest { pagingData ->
-                            topRatedMoviesAdapter.submitData(pagingData)
-                        }
-                    }
-
-                    launch {
-                        viewModel.getPopularTvSeries().collectLatest { pagingData ->
-                            popularTvSeriesAdapter.submitData(pagingData)
-                        }
-                    }
-
-                    launch {
-                        viewModel.getTopRatedTvSeries().collectLatest { pagingData ->
-                            topRatedTvSeriesAdapter.submitData(pagingData)
-                        }
+    private fun collectDataLifecycleAware() {
+        job = collectFlowInside {
+            collectFlow(viewModel.homeState) { homeState ->
+                binding.apply {
+                    seeAllPage.isVisible = homeState.isShowsSeeAllPage
+                    scrollView.isVisible = !homeState.isShowsSeeAllPage
+                    if (homeState.isShowsSeeAllPage) {
+                        showSeeAllPage(homeState.seeAllPageToolBarText)
+                    } else {
+                        hideSeeAllPage()
                     }
                 }
             }
+            collectFlow(viewModel.getNowPlayingMovies()) { pagingData ->
+                nowPlayingAdapter.submitData(pagingData)
+            }
+            collectFlow(viewModel.getPopularMovies()) { pagingData ->
+                popularMoviesAdapter.submitData(pagingData)
+            }
+            collectFlow(viewModel.getTopRatedMovies()) { pagingData ->
+                topRatedMoviesAdapter.submitData(pagingData)
+            }
+            collectFlow(viewModel.getPopularTvSeries()) { pagingData ->
+                popularTvSeriesAdapter.submitData(pagingData)
+            }
+            collectFlow(viewModel.getTopRatedTvSeries()) { pagingData ->
+                topRatedTvSeriesAdapter.submitData(pagingData)
+            }
         }
+    }
 
     private fun showSeeAllPage(uiText: UiText?) {
         binding.apply {
