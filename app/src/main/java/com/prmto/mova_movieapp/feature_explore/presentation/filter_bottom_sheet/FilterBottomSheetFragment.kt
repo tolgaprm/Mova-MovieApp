@@ -4,10 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
@@ -17,12 +14,11 @@ import com.prmto.mova_movieapp.core.data.models.enums.Category
 import com.prmto.mova_movieapp.core.data.models.enums.Sort
 import com.prmto.mova_movieapp.core.data.models.enums.isMovie
 import com.prmto.mova_movieapp.core.data.models.enums.isPopularity
+import com.prmto.mova_movieapp.core.presentation.util.collectFlow
 import com.prmto.mova_movieapp.databinding.FragmentBottomSheetBinding
 import com.prmto.mova_movieapp.feature_explore.presentation.event.ExploreBottomSheetEvent
 import com.prmto.mova_movieapp.feature_explore.presentation.explore.ExploreViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class FilterBottomSheetFragment : BottomSheetDialogFragment() {
@@ -49,7 +45,6 @@ class FilterBottomSheetFragment : BottomSheetDialogFragment() {
 
         setViewsListener()
     }
-
 
     private fun setViewsListener() {
         binding.categoriesChipGroup.setOnCheckedStateChangeListener { group, _ ->
@@ -78,7 +73,6 @@ class FilterBottomSheetFragment : BottomSheetDialogFragment() {
         }
     }
 
-
     private fun inflateGenreChips(
         chips: List<Genre>,
         parentChip: ChipGroup
@@ -94,28 +88,19 @@ class FilterBottomSheetFragment : BottomSheetDialogFragment() {
         }
     }
 
-
     private fun observeData() {
-        viewLifecycleOwner.lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                launch {
-                    viewModel.filterBottomSheetState.collectLatest { filterBottomSheet ->
-                        updateCheckCategoryFilter(filterBottomSheet.categoryState)
+        collectFlow(viewModel.filterBottomSheetState) { filterBottomSheet ->
+            updateCheckCategoryFilter(filterBottomSheet.categoryState)
 
-                        updateCheckedGenreFilters(filterBottomSheet.checkedGenreIdsState)
+            updateCheckedGenreFilters(filterBottomSheet.checkedGenreIdsState)
 
-                        updateCheckedSortFilter(filterBottomSheet.checkedSortState)
-                    }
-                }
+            updateCheckedSortFilter(filterBottomSheet.checkedSortState)
+        }
 
-                launch {
-                    viewModel.genreList.collect { genre ->
-                        binding.genreListGroup.removeAllViews()
-                        inflateGenreChips(chips = genre, binding.genreListGroup)
-                    }
-                }
+        collectFlow(viewModel.genreList) { genre ->
+            binding.genreListGroup.removeAllViews()
+            inflateGenreChips(chips = genre, binding.genreListGroup)
 
-            }
         }
     }
 
@@ -144,7 +129,6 @@ class FilterBottomSheetFragment : BottomSheetDialogFragment() {
 
         binding.categoriesChipGroup.check(chipId)
     }
-
 }
 
 

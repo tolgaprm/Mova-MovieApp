@@ -6,10 +6,8 @@ import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.ads.AdRequest
 import com.google.android.material.snackbar.Snackbar
@@ -18,6 +16,7 @@ import com.prmto.mova_movieapp.core.data.models.enums.Category
 import com.prmto.mova_movieapp.core.domain.repository.isAvaliable
 import com.prmto.mova_movieapp.core.presentation.util.UiEvent
 import com.prmto.mova_movieapp.core.presentation.util.asString
+import com.prmto.mova_movieapp.core.presentation.util.collectFlow
 import com.prmto.mova_movieapp.core.presentation.util.isEmpty
 import com.prmto.mova_movieapp.core.util.handlePagingLoadState.HandlePagingLoadStateMovieAndTvBaseRecyclerAdapter
 import com.prmto.mova_movieapp.core.util.handlePagingLoadState.HandlePagingStateSearchAdapter
@@ -75,20 +74,16 @@ class ExploreFragment : Fragment(R.layout.fragment_explore) {
     }
 
     private fun observeConnectivityStatus() {
-        viewLifecycleOwner.lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.networkState.collectLatest { networkState ->
-                    if (networkState.isAvaliable()) {
-                        job?.cancel()
-                        hideErrorScreenAndShowDetailScreen()
-                        collectData()
-                    } else {
-                        if (isAdaptersEmpty()) {
-                            showErrorScreenAndHideDetailScreen()
-                        }
-                        job?.cancel()
-                    }
+        collectFlow(viewModel.networkState) { networkState ->
+            if (networkState.isAvaliable()) {
+                job?.cancel()
+                hideErrorScreenAndShowDetailScreen()
+                collectData()
+            } else {
+                if (isAdaptersEmpty()) {
+                    showErrorScreenAndHideDetailScreen()
                 }
+                job?.cancel()
             }
         }
     }
@@ -110,54 +105,41 @@ class ExploreFragment : Fragment(R.layout.fragment_explore) {
     }
 
     private fun collectData() {
-        job = viewLifecycleOwner.lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                launch {
-                    viewModel.query.collectLatest { query ->
-                        binding.edtQuery.setText(query)
+        collectFlow(viewModel.query) { query ->
+            binding.edtQuery.setText(query)
+        }
+
+        job = collectFlow(viewModel.filterBottomSheetState) { filterBottomState ->
+            when (filterBottomState.categoryState) {
+                Category.MOVIE -> {
+                    viewModel.onEventExploreFragment(ExploreFragmentEvent.RemoveQuery)
+                    movieDiscoverJob = collectFlow(viewModel.discoverMovie()) {
+                        hideTvAndSearchAdapters()
+                        cancelTvAndSearchJobs()
+                        binding.recyclerDiscoverMovie.visibility = View.VISIBLE
+                        movieFilterAdapter.submitData(it)
+                    }
+
+                }
+
+                Category.TV -> {
+                    viewModel.onEventExploreFragment(ExploreFragmentEvent.RemoveQuery)
+                    tvDiscoverJob = collectFlow(viewModel.discoverTv()) {
+                        cancelMovieAndSearchJobs()
+                        hideMoviesAndSearchAdapter()
+                        binding.recyclerDiscoverTv.visibility = View.VISIBLE
+                        tvFilterAdapter.submitData(it)
                     }
                 }
 
-                launch {
-                    viewModel.filterBottomSheetState.collectLatest { filterBottomState ->
-                        when (filterBottomState.categoryState) {
-                            Category.MOVIE -> {
-                                viewModel.onEventExploreFragment(ExploreFragmentEvent.RemoveQuery)
-                                movieDiscoverJob = launch {
-                                    viewModel.discoverMovie().collectLatest {
-                                        hideTvAndSearchAdapters()
-                                        cancelTvAndSearchJobs()
-                                        binding.recyclerDiscoverMovie.visibility = View.VISIBLE
-                                        movieFilterAdapter.submitData(it)
-                                    }
-                                }
-                            }
-
-                            Category.TV -> {
-                                viewModel.onEventExploreFragment(ExploreFragmentEvent.RemoveQuery)
-                                tvDiscoverJob = launch {
-                                    viewModel.discoverTv().collectLatest {
-                                        cancelMovieAndSearchJobs()
-                                        hideMoviesAndSearchAdapter()
-                                        binding.recyclerDiscoverTv.visibility = View.VISIBLE
-                                        tvFilterAdapter.submitData(it)
-                                    }
-                                }
-                            }
-
-                            Category.SEARCH -> {
-                                viewModel.query.collectLatest { query ->
-                                    binding.edtQuery.setSelection(query.length)
-                                    searchJob = launch {
-                                        viewModel.multiSearch(query).collectLatest {
-                                            cancelTvAndMovieJobs()
-                                            hideTvAndMovieAdapters()
-                                            binding.recyclerSearch.visibility = View.VISIBLE
-                                            searchRecyclerAdapter.submitData(it)
-                                        }
-                                    }
-                                }
-                            }
+                Category.SEARCH -> {
+                    viewModel.query.collectLatest { query ->
+                        binding.edtQuery.setSelection(query.length)
+                        searchJob = collectFlow(viewModel.multiSearch(query)) {
+                            cancelTvAndMovieJobs()
+                            hideTvAndMovieAdapters()
+                            binding.recyclerSearch.visibility = View.VISIBLE
+                            searchRecyclerAdapter.submitData(it)
                         }
                     }
                 }
@@ -166,60 +148,51 @@ class ExploreFragment : Fragment(R.layout.fragment_explore) {
     }
 
     private fun collectUiEvent() {
-        viewLifecycleOwner.lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                launch {
-                    viewModel.eventFlow.collectLatest { event ->
-                        when (event) {
-                            is UiEvent.ShowSnackbar -> {
-                                Snackbar.make(
-                                    requireView(),
-                                    event.uiText.asString(requireContext()),
-                                    Snackbar.LENGTH_SHORT
-                                ).show()
-                            }
-
-                            is UiEvent.PopBackStack -> {
-                                findNavController().popBackStack()
-                            }
-
-                            is UiEvent.NavigateTo -> {
-                                findNavController().navigate(event.directions)
-                            }
-                        }
-                    }
+        collectFlow(viewModel.eventFlow) { event ->
+            when (event) {
+                is UiEvent.ShowSnackbar -> {
+                    Snackbar.make(
+                        requireView(),
+                        event.uiText.asString(requireContext()),
+                        Snackbar.LENGTH_SHORT
+                    ).show()
                 }
 
-                launch {
-                    viewModel.pagingState.collectLatest {
-
-                        when (viewModel.filterBottomSheetState.value.categoryState) {
-                            Category.MOVIE -> {
-                                binding.filterShimmerLayout.isVisible =
-                                    it.filterAdapterState.isLoading
-                                binding.recyclerDiscoverMovie.isVisible =
-                                    !it.filterAdapterState.isLoading
-                            }
-
-                            Category.TV -> {
-                                binding.filterShimmerLayout.isVisible =
-                                    it.filterAdapterState.isLoading
-                                binding.recyclerDiscoverTv.isVisible =
-                                    !it.filterAdapterState.isLoading
-                            }
-
-                            Category.SEARCH -> {
-                                binding.filterShimmerLayout.isVisible =
-                                    it.searchAdapterState.isLoading
-                                binding.recyclerSearch.isVisible = !it.searchAdapterState.isLoading
-                            }
-                        }
-
-                        if (it.errorUiText != null) {
-                            showErrorScreenAndHideDetailScreen()
-                        }
-                    }
+                is UiEvent.PopBackStack -> {
+                    findNavController().popBackStack()
                 }
+
+                is UiEvent.NavigateTo -> {
+                    findNavController().navigate(event.directions)
+                }
+            }
+        }
+
+        collectFlow(viewModel.pagingState) {
+            when (viewModel.filterBottomSheetState.value.categoryState) {
+                Category.MOVIE -> {
+                    binding.filterShimmerLayout.isVisible =
+                        it.filterAdapterState.isLoading
+                    binding.recyclerDiscoverMovie.isVisible =
+                        !it.filterAdapterState.isLoading
+                }
+
+                Category.TV -> {
+                    binding.filterShimmerLayout.isVisible =
+                        it.filterAdapterState.isLoading
+                    binding.recyclerDiscoverTv.isVisible =
+                        !it.filterAdapterState.isLoading
+                }
+
+                Category.SEARCH -> {
+                    binding.filterShimmerLayout.isVisible =
+                        it.searchAdapterState.isLoading
+                    binding.recyclerSearch.isVisible = !it.searchAdapterState.isLoading
+                }
+            }
+
+            if (it.errorUiText != null) {
+                showErrorScreenAndHideDetailScreen()
             }
         }
     }
@@ -277,7 +250,8 @@ class ExploreFragment : Fragment(R.layout.fragment_explore) {
                         it
                     )
                 )
-            })
+            }
+        )
 
         HandlePagingStateSearchAdapter(
             searchPagingAdapter = searchRecyclerAdapter,
@@ -348,7 +322,6 @@ class ExploreFragment : Fragment(R.layout.fragment_explore) {
             )
         }
     }
-
 
     private fun cancelMovieAndSearchJobs() {
         searchJob?.cancel()

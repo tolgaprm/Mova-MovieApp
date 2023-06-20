@@ -13,8 +13,8 @@ fun <T> Fragment.collectFlow(
     flow: Flow<T>,
     state: Lifecycle.State = Lifecycle.State.STARTED,
     action: suspend (T) -> Unit
-) {
-    viewLifecycleOwner.lifecycleScope.launch {
+): Job? {
+    return viewLifecycleOwner.lifecycleScope.launch {
         viewLifecycleOwner.repeatOnLifecycle(state) {
             flow.collectLatest {
                 action(it)
