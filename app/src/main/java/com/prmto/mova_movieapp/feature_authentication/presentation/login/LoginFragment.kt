@@ -8,9 +8,6 @@ import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -20,11 +17,10 @@ import com.prmto.mova_movieapp.R
 import com.prmto.mova_movieapp.core.presentation.util.UiEvent
 import com.prmto.mova_movieapp.core.presentation.util.addOnBackPressedCallback
 import com.prmto.mova_movieapp.core.presentation.util.asString
+import com.prmto.mova_movieapp.core.presentation.util.collectFlow
 import com.prmto.mova_movieapp.databinding.FragmentLoginBinding
 import com.prmto.mova_movieapp.feature_authentication.presentation.util.AuthUtil
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint
@@ -99,27 +95,20 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
             }
         }
 
-
     private fun collectData() {
-        viewLifecycleOwner.lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                launch { collectLoginUiEvent() }
-
-                launch { collectEmailState() }
-
-                launch { collectPasswordState() }
-
-                launch { collectLoadingState() }
-            }
-        }
+        collectLoginUiEvent()
+        collectEmailState()
+        collectPasswordState()
+        collectLoadingState()
     }
 
-    private suspend fun collectLoginUiEvent() {
-        viewModel.uiEvent.collectLatest { uiEvent ->
+    private fun collectLoginUiEvent() {
+        collectFlow(viewModel.uiEvent) { uiEvent ->
             when (uiEvent) {
                 is UiEvent.NavigateTo -> {
                     findNavController().navigate(uiEvent.directions)
                 }
+
                 is UiEvent.ShowSnackbar -> {
                     Snackbar.make(
                         requireView(), uiEvent.uiText.asString(
@@ -127,6 +116,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                         ), Snackbar.LENGTH_SHORT
                     ).show()
                 }
+
                 is UiEvent.PopBackStack -> {
                     findNavController().popBackStack()
                 }
@@ -134,8 +124,8 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         }
     }
 
-    private suspend fun collectEmailState() {
-        viewModel.emailState.collectLatest { emailState ->
+    private fun collectEmailState() {
+        collectFlow(viewModel.emailState) { emailState ->
             AuthUtil.updateFieldEmptyErrorInTextInputLayout(
                 textInputLayout = binding.layoutEmail,
                 authError = emailState.error,
@@ -144,8 +134,8 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         }
     }
 
-    private suspend fun collectPasswordState() {
-        viewModel.passwordState.collectLatest { passwordState ->
+    private fun collectPasswordState() {
+        collectFlow(viewModel.passwordState) { passwordState ->
             AuthUtil.updateFieldEmptyErrorInTextInputLayout(
                 textInputLayout = binding.layoutPassword,
                 authError = passwordState.error,
@@ -154,8 +144,8 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         }
     }
 
-    private suspend fun collectLoadingState() {
-        viewModel.isLoading.collectLatest { isLoading ->
+    private fun collectLoadingState() {
+        collectFlow(viewModel.isLoading) { isLoading ->
             binding.edtEmail.isEnabled = !isLoading
             binding.edtPassword.isEnabled = !isLoading
             binding.btnSignIn.isEnabled = !isLoading
@@ -168,5 +158,4 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         super.onDestroyView()
         _binding = null
     }
-
 }

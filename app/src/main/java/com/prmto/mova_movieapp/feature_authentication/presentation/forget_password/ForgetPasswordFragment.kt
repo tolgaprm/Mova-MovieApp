@@ -5,19 +5,15 @@ import android.view.View
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.prmto.mova_movieapp.R
 import com.prmto.mova_movieapp.core.presentation.util.UiEvent
 import com.prmto.mova_movieapp.core.presentation.util.asString
+import com.prmto.mova_movieapp.core.presentation.util.collectFlow
 import com.prmto.mova_movieapp.databinding.FragmentForgetPasswordBinding
 import com.prmto.mova_movieapp.feature_authentication.presentation.util.AuthUtil
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class ForgetPasswordFragment : Fragment(R.layout.fragment_forget_password) {
@@ -33,8 +29,6 @@ class ForgetPasswordFragment : Fragment(R.layout.fragment_forget_password) {
         _binding = binding
 
         collectData()
-
-
 
         binding.edtEmail.addTextChangedListener {
             it?.let {
@@ -52,17 +46,12 @@ class ForgetPasswordFragment : Fragment(R.layout.fragment_forget_password) {
     }
 
     private fun collectData() {
-        viewLifecycleOwner.lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                launch { collectForgetPasswordUiEvent() }
-
-                launch { collectEmailState() }
-            }
-        }
+        collectForgetPasswordUiEvent()
+        collectEmailState()
     }
 
-    private suspend fun collectEmailState() {
-        viewModel.emailState.collectLatest { emailState ->
+    private fun collectEmailState() {
+        collectFlow(viewModel.emailState) { emailState ->
             AuthUtil.updateFieldEmptyErrorInTextInputLayout(
                 textInputLayout = binding.layoutEmail,
                 context = requireContext(),
@@ -71,12 +60,13 @@ class ForgetPasswordFragment : Fragment(R.layout.fragment_forget_password) {
         }
     }
 
-    private suspend fun collectForgetPasswordUiEvent() {
-        viewModel.uiEvent.collectLatest { event ->
+    private fun collectForgetPasswordUiEvent() {
+        collectFlow(viewModel.uiEvent) { event ->
             when (event) {
                 is UiEvent.PopBackStack -> {
                     findNavController().popBackStack()
                 }
+
                 is UiEvent.ShowSnackbar -> {
                     Snackbar.make(
                         requireView(),
@@ -84,11 +74,11 @@ class ForgetPasswordFragment : Fragment(R.layout.fragment_forget_password) {
                         Snackbar.LENGTH_LONG
                     ).show()
                 }
+
                 is UiEvent.NavigateTo -> {
                     findNavController().navigate(event.directions)
                 }
             }
         }
     }
-
 }

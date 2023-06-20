@@ -5,9 +5,6 @@ import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.ads.AdRequest
 import com.google.android.material.tabs.TabLayout
@@ -15,10 +12,9 @@ import com.prmto.mova_movieapp.R
 import com.prmto.mova_movieapp.core.presentation.adapter.MovieAdapter
 import com.prmto.mova_movieapp.core.presentation.adapter.TvSeriesAdapter
 import com.prmto.mova_movieapp.core.presentation.util.BaseUiEvent
+import com.prmto.mova_movieapp.core.presentation.util.collectFlow
 import com.prmto.mova_movieapp.databinding.FragmentMyListBinding
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint
@@ -40,12 +36,22 @@ class ListFragment : Fragment(R.layout.fragment_my_list) {
         val adRequest = AdRequest.Builder().build()
         binding.adView.loadAd(adRequest)
 
+        addListTypeChipGroupListener()
+
+        addTabLayoutSelectedListener()
+
+        collectData()
+    }
+
+    private fun addListTypeChipGroupListener() {
         binding.listTypeChipGroup.setOnCheckedStateChangeListener { group, _ ->
             val chipType =
                 if (group.checkedChipId == binding.movieChip.id) ChipType.MOVIE else ChipType.TVSERIES
             viewModel.onEvent(ListEvent.UpdateListType(chipType = chipType))
         }
+    }
 
+    private fun addTabLayoutSelectedListener() {
         binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 if (tab != null) {
@@ -60,35 +66,27 @@ class ListFragment : Fragment(R.layout.fragment_my_list) {
             override fun onTabReselected(tab: TabLayout.Tab?) {
             }
         })
-
-        viewLifecycleOwner.lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                launch {
-                    collectUiState()
-                }
-
-                launch {
-                    collectListState()
-                }
-            }
-
-        }
     }
 
-    private suspend fun collectUiState() {
-        viewModel.eventFlow.collectLatest { event ->
+    private fun collectData() {
+        collectUiState()
+        collectListState()
+    }
+
+    private fun collectUiState() {
+        collectFlow(viewModel.eventFlow) { event ->
             when (event) {
                 is BaseUiEvent.NavigateTo -> {
                     findNavController().navigate(event.directions)
                 }
-                else -> return@collectLatest
+
+                else -> return@collectFlow
             }
         }
     }
 
-    private suspend fun collectListState() {
-        viewModel.state.collectLatest { state ->
-
+    private fun collectListState() {
+        collectFlow(viewModel.state) { state ->
             binding.progressBar.isVisible = state.isLoading
             when (state.chipType) {
                 ChipType.MOVIE -> {
@@ -99,6 +97,7 @@ class ListFragment : Fragment(R.layout.fragment_my_list) {
                         viewModel.onEvent(ListEvent.ClickedMovieItem(movie))
                     }
                 }
+
                 ChipType.TVSERIES -> {
                     tvSeriesAdapter.submitList(state.tvSeriesList)
                     binding.recyclerView.swapAdapter(tvSeriesAdapter, true)
@@ -109,7 +108,6 @@ class ListFragment : Fragment(R.layout.fragment_my_list) {
             }
         }
     }
-
 
     override fun onDestroyView() {
         super.onDestroyView()

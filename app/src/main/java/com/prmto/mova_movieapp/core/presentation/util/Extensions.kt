@@ -1,8 +1,11 @@
 package com.prmto.mova_movieapp.core.presentation.util
 
-import com.prmto.mova_movieapp.core.data.models.enums.*
+import com.prmto.mova_movieapp.core.data.models.enums.Category
+import com.prmto.mova_movieapp.core.data.models.enums.Sort
+import com.prmto.mova_movieapp.core.data.models.enums.isLatestRelease
+import com.prmto.mova_movieapp.core.data.models.enums.isMovie
+import com.prmto.mova_movieapp.core.data.models.enums.isPopularity
 import com.prmto.mova_movieapp.core.util.Constants
-
 
 fun List<Int>.toSeparateWithComma(): String {
 

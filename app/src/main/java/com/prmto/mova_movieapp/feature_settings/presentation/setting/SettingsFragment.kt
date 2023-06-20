@@ -10,9 +10,6 @@ import androidx.core.os.LocaleListCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import com.google.android.gms.ads.AdRequest
 import com.google.android.material.snackbar.Snackbar
 import com.prmto.mova_movieapp.R
@@ -20,10 +17,9 @@ import com.prmto.mova_movieapp.core.domain.supportedLanguages
 import com.prmto.mova_movieapp.core.presentation.util.AlertDialogUtil
 import com.prmto.mova_movieapp.core.presentation.util.BaseUiEvent
 import com.prmto.mova_movieapp.core.presentation.util.asString
+import com.prmto.mova_movieapp.core.presentation.util.collectFlow
 import com.prmto.mova_movieapp.databinding.FragmentSettingsBinding
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class SettingsFragment : Fragment(R.layout.fragment_settings) {
@@ -49,6 +45,11 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
 
         binding.spinner.adapter = adapter
 
+        addSpinnerOnItemSelectedListener()
+        addTxtLogoutClickListener()
+    }
+
+    private fun addSpinnerOnItemSelectedListener() {
         binding.spinner.onItemSelectedListener = object : OnItemSelectedListener {
             override fun onItemSelected(
                 adapterView: AdapterView<*>?,
@@ -64,9 +65,10 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
 
             override fun onNothingSelected(p0: AdapterView<*>?) {
             }
-
         }
+    }
 
+    private fun addTxtLogoutClickListener() {
         binding.txtLogOut.setOnClickListener {
             AlertDialogUtil.showAlertDialog(
                 context = requireContext(),
@@ -79,7 +81,6 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
                 }
             )
         }
-
     }
 
     private fun setListenerSwitch() {
@@ -100,27 +101,27 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
     }
 
     private fun collectDataLifecycleAware() {
-        viewLifecycleOwner.lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                launch {
-                    viewModel.isLoading.collectLatest { isLoaading ->
-                        binding.progressBar.isVisible = isLoaading
-                    }
-                }
-                launch { collectUiEvent() }
-                launch { collectUIMode() }
-                launch { collectLanguageIsoCode() }
-                launch {
-                    viewModel.isSignedIn.collectLatest { isUserSignIn ->
-                        binding.txtLogOut.isVisible = isUserSignIn
-                    }
-                }
-            }
+        collectIsLoading()
+        collectUiEvent()
+        collectUIMode()
+        collectLanguageIsoCode()
+        collectIsSignedIn()
+    }
+
+    private fun collectIsLoading() {
+        collectFlow(viewModel.isLoading) { isLoaading ->
+            binding.progressBar.isVisible = isLoaading
         }
     }
 
-    private suspend fun collectUiEvent() {
-        viewModel.eventFlow.collectLatest { event ->
+    private fun collectIsSignedIn() {
+        collectFlow(viewModel.isSignedIn) { isUserSignIn ->
+            binding.txtLogOut.isVisible = isUserSignIn
+        }
+    }
+
+    private fun collectUiEvent() {
+        collectFlow(viewModel.eventFlow) { event ->
             when (event) {
                 is BaseUiEvent.ShowSnackbar -> {
                     Snackbar.make(
@@ -129,20 +130,21 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
                         Snackbar.LENGTH_SHORT
                     ).show()
                 }
-                else -> return@collectLatest
+
+                else -> return@collectFlow
             }
         }
     }
 
-    private suspend fun collectUIMode() {
-        viewModel.getUIMode().collectLatest { uiMode ->
+    private fun collectUIMode() {
+        collectFlow(viewModel.getUIMode()) { uiMode ->
             binding.switchDarkTheme.isChecked =
                 uiMode == AppCompatDelegate.MODE_NIGHT_YES
         }
     }
 
-    private suspend fun collectLanguageIsoCode() {
-        viewModel.getLanguageIsoCode().collectLatest { langIsoCode ->
+    private fun collectLanguageIsoCode() {
+        collectFlow(viewModel.getLanguageIsoCode()) { langIsoCode ->
             val selectedLangIsoIndex = supportedLanguages.indexOfFirst {
                 it.iso == langIsoCode
             }

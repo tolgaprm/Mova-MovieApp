@@ -6,9 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import coil.load
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -19,10 +16,9 @@ import com.prmto.mova_movieapp.core.domain.models.Movie
 import com.prmto.mova_movieapp.core.domain.models.TvSeries
 import com.prmto.mova_movieapp.core.presentation.util.AlertDialogUtil
 import com.prmto.mova_movieapp.core.presentation.util.UtilFunctions
+import com.prmto.mova_movieapp.core.presentation.util.collectFlow
 import com.prmto.mova_movieapp.databinding.FragmentDetailBottomSheetBinding
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class DetailBottomSheet : BottomSheetDialogFragment() {
@@ -55,46 +51,41 @@ class DetailBottomSheet : BottomSheetDialogFragment() {
     }
 
     private fun collectData() {
-        viewLifecycleOwner.lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                launch {
-                    collectUiEvent()
-                }
+        collectUiEvent()
 
-                launch {
-                    viewModel.state.collectLatest { state ->
-                        if (state.movie != null) {
-                            bindMovie(movie = state.movie)
-                        }
-                        if (state.tvSeries != null) {
-                            bindTvSeries(tvSeries = state.tvSeries)
-                        }
-                        utilFunctions.setAddFavoriteIcon(
-                            doesAddFavorite = state.doesAddFavorite,
-                            imageButton = binding.btnFavoriteList
-                        )
-                        utilFunctions.setAddWatchListIcon(
-                            doesAddWatchList = state.doesAddWatchList,
-                            imageButton = binding.btnWatchingList
-                        )
-                    }
-                }
+        collectFlow(viewModel.state) { state ->
+            if (state.movie != null) {
+                bindMovie(movie = state.movie)
             }
+            if (state.tvSeries != null) {
+                bindTvSeries(tvSeries = state.tvSeries)
+            }
+            utilFunctions.setAddFavoriteIcon(
+                doesAddFavorite = state.doesAddFavorite,
+                imageButton = binding.btnFavoriteList
+            )
+            utilFunctions.setAddWatchListIcon(
+                doesAddWatchList = state.doesAddWatchList,
+                imageButton = binding.btnWatchingList
+            )
         }
     }
 
-    private suspend fun collectUiEvent() {
-        viewModel.uiEvent.collectLatest { uiEvent ->
+    private fun collectUiEvent() {
+        collectFlow(viewModel.uiEvent) { uiEvent ->
             when (uiEvent) {
                 is DetailBottomUiEvent.NavigateTo -> {
                     findNavController().navigate(uiEvent.directions)
                 }
+
                 is DetailBottomUiEvent.PopBackStack -> {
                     findNavController().popBackStack()
                 }
+
                 is DetailBottomUiEvent.ShowSnackbar -> {
-                    return@collectLatest
+                    return@collectFlow
                 }
+
                 is DetailBottomUiEvent.ShowAlertDialog -> {
                     AlertDialogUtil.showAlertDialog(
                         context = requireContext(),
@@ -110,7 +101,6 @@ class DetailBottomSheet : BottomSheetDialogFragment() {
             }
         }
     }
-
     private fun bindMovie(movie: Movie) {
         binding.apply {
             tvName.text = if (movie.title == movie.originalTitle) {

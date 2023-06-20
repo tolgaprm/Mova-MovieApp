@@ -8,9 +8,6 @@ import androidx.activity.OnBackPressedCallback
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import coil.load
 import com.google.android.gms.ads.AdRequest
@@ -19,15 +16,18 @@ import com.prmto.mova_movieapp.R
 import com.prmto.mova_movieapp.core.data.data_source.remote.ImageApi
 import com.prmto.mova_movieapp.core.presentation.util.BaseUiEvent
 import com.prmto.mova_movieapp.core.presentation.util.asString
+import com.prmto.mova_movieapp.core.presentation.util.collectFlow
 import com.prmto.mova_movieapp.core.util.toolBarTextVisibilityByScrollPositionOfNestedScrollView
 import com.prmto.mova_movieapp.databinding.FragmentPersonDetailBinding
 import com.prmto.mova_movieapp.feature_explore.domain.util.MediaType
-import com.prmto.mova_movieapp.feature_person_detail.domain.model.*
+import com.prmto.mova_movieapp.feature_person_detail.domain.model.CastForPerson
+import com.prmto.mova_movieapp.feature_person_detail.domain.model.CrewForPerson
+import com.prmto.mova_movieapp.feature_person_detail.domain.model.PersonDetail
+import com.prmto.mova_movieapp.feature_person_detail.domain.model.toMovie
+import com.prmto.mova_movieapp.feature_person_detail.domain.model.toTvSeries
 import com.prmto.mova_movieapp.feature_person_detail.presentation.adapter.PersonCastMovieAdapter
 import com.prmto.mova_movieapp.feature_person_detail.presentation.adapter.PersonCrewMovieAdapter
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class PersonDetailFragment : Fragment(R.layout.fragment_person_detail) {
@@ -101,6 +101,7 @@ class PersonDetailFragment : Fragment(R.layout.fragment_person_detail) {
                 action.movie = crewForPerson.toMovie()
                 action.tvSeries = null
             }
+
             MediaType.TV_SERIES.value -> {
                 action.movie = null
                 action.tvSeries = crewForPerson.toTvSeries()
@@ -117,6 +118,7 @@ class PersonDetailFragment : Fragment(R.layout.fragment_person_detail) {
                 action.movie = castForPerson.toMovie()
                 action.tvSeries = null
             }
+
             MediaType.TV_SERIES.value -> {
                 action.movie = null
                 action.tvSeries = castForPerson.toTvSeries()
@@ -126,37 +128,32 @@ class PersonDetailFragment : Fragment(R.layout.fragment_person_detail) {
     }
 
     private fun collectData() {
-        viewLifecycleOwner.lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                launch {
-                    viewModel.state.collectLatest { personDetailState ->
-                        binding.progressBar.isVisible = personDetailState.isLoading
-                        personDetailState.personDetail?.let { personDetail ->
-                            bindAttributes(personDetail = personDetail)
+        collectFlow(viewModel.state) { personDetailState ->
+            binding.progressBar.isVisible = personDetailState.isLoading
+            personDetailState.personDetail?.let { personDetail ->
+                bindAttributes(personDetail = personDetail)
 
-                            bindCrewForPerson(personDetail.combinedCredits.crew)
+                bindCrewForPerson(personDetail.combinedCredits.crew)
 
-                            bindCastForPerson(personDetail.combinedCredits.cast)
-                        }
-                    }
+                bindCastForPerson(personDetail.combinedCredits.cast)
+            }
+        }
+
+        collectFlow(viewModel.eventFlow) { event ->
+            when (event) {
+                is BaseUiEvent.ShowSnackbar -> {
+                    Snackbar.make(
+                        requireView(),
+                        event.uiText.asString(requireContext()),
+                        Snackbar.LENGTH_SHORT
+                    ).show()
                 }
-                launch {
-                    viewModel.eventFlow.collectLatest { event ->
-                        when (event) {
-                            is BaseUiEvent.ShowSnackbar -> {
-                                Snackbar.make(
-                                    requireView(),
-                                    event.uiText.asString(requireContext()),
-                                    Snackbar.LENGTH_SHORT
-                                ).show()
-                            }
-                            is BaseUiEvent.NavigateTo -> {
-                                return@collectLatest
-                            }
-                            else -> return@collectLatest
-                        }
-                    }
+
+                is BaseUiEvent.NavigateTo -> {
+                    return@collectFlow
                 }
+
+                else -> return@collectFlow
             }
         }
     }
@@ -218,7 +215,6 @@ class PersonDetailFragment : Fragment(R.layout.fragment_person_detail) {
 
         binding.txtNation.text = personDetail.placeOfBirth
     }
-
 
     override fun onDestroyView() {
         super.onDestroyView()

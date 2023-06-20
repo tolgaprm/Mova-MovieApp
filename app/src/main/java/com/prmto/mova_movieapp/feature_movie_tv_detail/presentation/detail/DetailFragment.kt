@@ -9,9 +9,6 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
@@ -22,6 +19,8 @@ import com.prmto.mova_movieapp.core.presentation.util.AlertDialogUtil
 import com.prmto.mova_movieapp.core.presentation.util.UtilFunctions
 import com.prmto.mova_movieapp.core.presentation.util.addOnBackPressedCallback
 import com.prmto.mova_movieapp.core.presentation.util.asString
+import com.prmto.mova_movieapp.core.presentation.util.collectFlow
+import com.prmto.mova_movieapp.core.presentation.util.collectFlowInside
 import com.prmto.mova_movieapp.core.util.toolBarTextVisibilityByScrollPositionOfNestedScrollView
 import com.prmto.mova_movieapp.databinding.FragmentDetailBinding
 import com.prmto.mova_movieapp.feature_movie_tv_detail.domain.models.detail.MovieDetail
@@ -37,8 +36,6 @@ import com.prmto.mova_movieapp.feature_movie_tv_detail.util.isSelectedRecommenda
 import com.prmto.mova_movieapp.feature_movie_tv_detail.util.isSelectedTrailerTab
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class DetailFragment : Fragment(R.layout.fragment_detail) {
@@ -195,86 +192,56 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
     }
 
     private fun collectDataLifecycleAware() {
-        job = viewLifecycleOwner.lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                launch {
-                    collectDetailState()
-                }
-                launch {
-                    viewModel.selectedTabPosition.collectLatest { selectedTabPosition ->
-                        jobMovieId = launch {
-                            jobVideos?.cancel()
-                            collectMovieIdState(selectedTabPosition = selectedTabPosition)
-                        }
+        job = collectFlowInside {
+            collectDetailState()
+            collectSelectedTabPosition()
+            collectUiEventFlow()
+        }
+    }
 
-                        jobTvId = launch {
-                            jobVideos?.cancel()
-                            collectTvIdState(selectedTabPosition = selectedTabPosition)
-                        }
-
-                        jobVideos = launch {
-                            collectVideos()
-                        }
-
-                        if (selectedTabPosition.isSelectedTrailerTab()) {
-                            jobTvId?.cancel()
-                            jobMovieId?.cancel()
-                            binding.recommendationRecyclerView.isVisible = false
-                            binding.videosRecyclerView.isVisible = true
-                        } else {
-                            jobVideos?.cancel()
-                            binding.videosRecyclerView.isVisible = false
-                            binding.recommendationRecyclerView.isVisible = true
-                        }
-                    }
+    private fun collectUiEventFlow() {
+        collectFlow(viewModel.eventUiFlow) { uiEvent ->
+            when (uiEvent) {
+                is DetailUiEvent.PopBackStack -> {
+                    findNavController().popBackStack()
                 }
 
-                launch {
-                    viewModel.eventUiFlow.collectLatest { uiEvent ->
-                        when (uiEvent) {
-                            is DetailUiEvent.PopBackStack -> {
-                                findNavController().popBackStack()
-                            }
+                is DetailUiEvent.ShowSnackbar -> {
+                    binding.swipeRefreshLayout.isEnabled = true
+                    Snackbar.make(
+                        requireView(),
+                        uiEvent.uiText.asString(requireContext()),
+                        Snackbar.LENGTH_SHORT
+                    ).show()
+                }
 
-                            is DetailUiEvent.ShowSnackbar -> {
-                                binding.swipeRefreshLayout.isEnabled = true
-                                Snackbar.make(
-                                    requireView(),
-                                    uiEvent.uiText.asString(requireContext()),
-                                    Snackbar.LENGTH_SHORT
-                                ).show()
-                            }
+                is DetailUiEvent.IntentToImdbWebSite -> {
+                    intentToTmdbWebSite(uiEvent.url)
+                }
 
-                            is DetailUiEvent.IntentToImdbWebSite -> {
-                                intentToTmdbWebSite(uiEvent.url)
-                            }
+                is DetailUiEvent.NavigateTo -> {
+                    findNavController().navigate(uiEvent.directions)
+                }
 
-                            is DetailUiEvent.NavigateTo -> {
-                                findNavController().navigate(uiEvent.directions)
-                            }
-
-                            is DetailUiEvent.ShowAlertDialog -> {
-                                AlertDialogUtil.showAlertDialog(
-                                    context = requireContext(),
-                                    title = R.string.sign_in,
-                                    message = R.string.must_login_able_to_add_in_list,
-                                    positiveBtnMessage = R.string.sign_in,
-                                    negativeBtnMessage = R.string.cancel,
-                                    onClickPositiveButton = {
-                                        findNavController().navigate(DetailFragmentDirections.actionDetailFragmentToLoginFragment())
-                                    }
-                                )
-                            }
+                is DetailUiEvent.ShowAlertDialog -> {
+                    AlertDialogUtil.showAlertDialog(
+                        context = requireContext(),
+                        title = R.string.sign_in,
+                        message = R.string.must_login_able_to_add_in_list,
+                        positiveBtnMessage = R.string.sign_in,
+                        negativeBtnMessage = R.string.cancel,
+                        onClickPositiveButton = {
+                            findNavController().navigate(DetailFragmentDirections.actionDetailFragmentToLoginFragment())
                         }
-                    }
+                    )
                 }
             }
         }
     }
 
-
-    private suspend fun collectMovieIdState(selectedTabPosition: Int) {
-        viewModel.movieIdState.collectLatest { movieId ->
+    private fun collectMovieIdState(selectedTabPosition: Int): Job? {
+        jobVideos?.cancel()
+        return collectFlow(viewModel.movieIdState) { movieId ->
             if (movieId != Constants.DETAIL_DEFAULT_ID && selectedTabPosition.isSelectedRecommendationTab()) {
                 binding.recommendationRecyclerView.swapAdapter(movieRecommendationAdapter, true)
             } else {
@@ -283,8 +250,9 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
         }
     }
 
-    private suspend fun collectTvIdState(selectedTabPosition: Int) {
-        viewModel.tvIdState.collectLatest { tvId ->
+    private fun collectTvIdState(selectedTabPosition: Int): Job? {
+        jobVideos?.cancel()
+        return collectFlow(viewModel.tvIdState) { tvId ->
             if (tvId != Constants.DETAIL_DEFAULT_ID && selectedTabPosition.isSelectedRecommendationTab()) {
                 binding.recommendationRecyclerView.swapAdapter(tvRecommendationAdapter, true)
             } else {
@@ -293,8 +261,8 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
         }
     }
 
-    private suspend fun collectVideos() {
-        viewModel.videos.collectLatest {
+    private fun collectVideos(): Job? {
+        return collectFlow(viewModel.videos) {
             it?.let { videos ->
                 binding.videosRecyclerView.isVisible = videos.result.isNotEmpty()
                 binding.txtVideoInfo.isVisible = videos.result.isEmpty()
@@ -303,8 +271,29 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
         }
     }
 
-    private suspend fun collectDetailState() {
-        viewModel.detailState.collectLatest { detailState ->
+    private fun collectSelectedTabPosition() {
+        collectFlow(viewModel.selectedTabPosition) { selectedTabPosition ->
+            jobMovieId = collectMovieIdState(selectedTabPosition = selectedTabPosition)
+
+            jobTvId = collectTvIdState(selectedTabPosition = selectedTabPosition)
+
+            jobVideos = collectVideos()
+
+            if (selectedTabPosition.isSelectedTrailerTab()) {
+                jobTvId?.cancel()
+                jobMovieId?.cancel()
+                binding.recommendationRecyclerView.isVisible = false
+                binding.videosRecyclerView.isVisible = true
+            } else {
+                jobVideos?.cancel()
+                binding.videosRecyclerView.isVisible = false
+                binding.recommendationRecyclerView.isVisible = true
+            }
+        }
+    }
+
+    private fun collectDetailState() {
+        collectFlow(viewModel.detailState) { detailState ->
             binding.progressBar.isVisible = detailState.isLoading
 
             bindTvDetailAndSubmitCast(tvDetail = detailState.tvDetail)
