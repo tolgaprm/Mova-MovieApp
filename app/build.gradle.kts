@@ -20,8 +20,8 @@ android {
         applicationId = "com.prmto.mova_movieapp"
         minSdk = 24
         targetSdk = 33
-        versionCode = 9
-        versionName = "1.1"
+        versionCode = 10
+        versionName = "2.0"
 
         testInstrumentationRunner = "com.prmto.mova_movieapp.HiltTestRunner"
         buildConfigField("String", "API_KEY", "\"${properties.getProperty("API_KEY")}\"")
