@@ -5,20 +5,16 @@ import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.prmto.mova_movieapp.R
 import com.prmto.mova_movieapp.core.presentation.util.asString
+import com.prmto.mova_movieapp.core.presentation.util.collectFlow
 import com.prmto.mova_movieapp.core.util.handlePagingLoadState.HandlePagingStateUpComingPagingAdapter
 import com.prmto.mova_movieapp.databinding.FragmentUpComingBinding
 import com.prmto.mova_movieapp.feature_upcoming.domain.model.UpcomingRemindEntity
 import com.prmto.mova_movieapp.feature_upcoming.presentation.adapter.UpComingMovieAdapter
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class UpComingFragment : Fragment(R.layout.fragment_up_coming) {
@@ -39,21 +35,13 @@ class UpComingFragment : Fragment(R.layout.fragment_up_coming) {
 
         handlePagingLoadStates()
 
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                launch {
-                    viewModel.state.collectLatest { state ->
-                        binding.progressBar.isVisible = state.isLoading
-                        binding.upComingRecyclerView.isVisible = !state.isLoading
+        collectData()
 
-                        binding.errorTextView.isVisible = state.error.isNotEmpty()
-                        binding.errorTextView.text = state.error
-                        upComingMovieAdapter.submitData(state.upComingMovieState)
-                    }
-                }
-            }
-        }
+        setInfoClickListener()
+        setOnRemindMeClickListener()
+    }
 
+    private fun setInfoClickListener() {
         upComingMovieAdapter.setOnInfoClickListener { upComingMovie ->
             val action =
                 UpComingFragmentDirections.actionUpComingFragmentToDetailBottomSheet(
@@ -62,7 +50,9 @@ class UpComingFragment : Fragment(R.layout.fragment_up_coming) {
                 )
             findNavController().navigate(action)
         }
+    }
 
+    private fun setOnRemindMeClickListener() {
         upComingMovieAdapter.setOnRemindMeClickListener { upComingMovie ->
             viewModel.onEvent(
                 UpComingEvent.OnClickRemindMe(
@@ -74,6 +64,17 @@ class UpComingFragment : Fragment(R.layout.fragment_up_coming) {
                     isAddedToRemind = upComingMovie.isAddedToRemind
                 )
             )
+        }
+    }
+
+    private fun collectData() {
+        collectFlow(viewModel.state) { state ->
+            binding.progressBar.isVisible = state.isLoading
+            binding.upComingRecyclerView.isVisible = !state.isLoading
+
+            binding.errorTextView.isVisible = state.error.isNotEmpty()
+            binding.errorTextView.text = state.error
+            upComingMovieAdapter.submitData(state.upComingMovieState)
         }
     }
 
