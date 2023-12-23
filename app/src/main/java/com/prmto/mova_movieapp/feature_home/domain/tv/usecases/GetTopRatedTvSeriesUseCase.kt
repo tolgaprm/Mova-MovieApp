@@ -1,17 +1,17 @@
-package com.prmto.mova_movieapp.feature_home.domain.use_cases
+package com.prmto.mova_movieapp.feature_home.domain.tv.usecases
 
 import androidx.paging.PagingData
 import androidx.paging.map
 import com.prmto.mova_movieapp.core.domain.models.TvSeries
 import com.prmto.mova_movieapp.core.domain.use_case.GetTvGenreListUseCase
 import com.prmto.mova_movieapp.core.presentation.util.HandleUtils
-import com.prmto.mova_movieapp.feature_home.domain.repository.HomeRepository
+import com.prmto.mova_movieapp.feature_home.domain.tv.HomeTvRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import javax.inject.Inject
 
-class GetPopularTvSeriesUseCase @Inject constructor(
-    private val homeRepository: HomeRepository,
+class GetTopRatedTvSeriesUseCase @Inject constructor(
+    private val homeTvRepository: HomeTvRepository,
     private val getTvGenreListUseCase: GetTvGenreListUseCase
 ) {
     operator fun invoke(language: String): Flow<PagingData<TvSeries>> {
@@ -19,7 +19,7 @@ class GetPopularTvSeriesUseCase @Inject constructor(
         val languageLower = language.lowercase()
 
         return combine(
-            homeRepository.getPopularTvs(language = languageLower),
+            homeTvRepository.getTopRatedTvs(language = languageLower),
             getTvGenreListUseCase(language = languageLower)
         ) { pagingData, genres ->
             pagingData.map { tv ->

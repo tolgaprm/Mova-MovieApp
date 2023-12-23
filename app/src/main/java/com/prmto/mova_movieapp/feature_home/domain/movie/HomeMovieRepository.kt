@@ -1,13 +1,11 @@
-package com.prmto.mova_movieapp.feature_home.domain.repository
+package com.prmto.mova_movieapp.feature_home.domain.movie
 
 import androidx.paging.PagingData
 import com.prmto.mova_movieapp.core.domain.models.Movie
-import com.prmto.mova_movieapp.core.domain.models.TvSeries
 import com.prmto.mova_movieapp.core.util.Constants
 import kotlinx.coroutines.flow.Flow
 
-interface HomeRepository {
-
+interface HomeMovieRepository {
     fun getNowPlayingMovies(
         language: String,
         region: String = Constants.DEFAULT_REGION
@@ -22,13 +20,4 @@ interface HomeRepository {
         language: String,
         region: String
     ): Flow<PagingData<Movie>>
-
-    fun getPopularTvs(
-        language: String
-    ): Flow<PagingData<TvSeries>>
-
-    fun getTopRatedTvs(
-        language: String
-    ): Flow<PagingData<TvSeries>>
-
 }

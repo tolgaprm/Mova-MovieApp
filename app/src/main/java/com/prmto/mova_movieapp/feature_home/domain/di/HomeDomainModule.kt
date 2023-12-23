@@ -1,4 +1,4 @@
-package com.prmto.mova_movieapp.di
+package com.prmto.mova_movieapp.feature_home.domain.di
 
 import com.prmto.mova_movieapp.core.domain.repository.DataStoreOperations
 import com.prmto.mova_movieapp.core.domain.repository.RemoteRepository
@@ -6,62 +6,52 @@ import com.prmto.mova_movieapp.core.domain.use_case.GetLanguageIsoCodeUseCase
 import com.prmto.mova_movieapp.core.domain.use_case.GetMovieGenreListUseCase
 import com.prmto.mova_movieapp.core.domain.use_case.GetTvGenreListUseCase
 import com.prmto.mova_movieapp.core.domain.use_case.UpdateLanguageIsoCodeUseCase
-import com.prmto.mova_movieapp.feature_home.data.remote.HomeApi
-import com.prmto.mova_movieapp.feature_home.data.repository.HomeRepositoryImpl
-import com.prmto.mova_movieapp.feature_home.domain.repository.HomeRepository
-import com.prmto.mova_movieapp.feature_home.domain.use_cases.*
+import com.prmto.mova_movieapp.feature_home.domain.movie.HomeMovieRepository
+import com.prmto.mova_movieapp.feature_home.domain.movie.usecases.GetNowPlayingMoviesUseCase
+import com.prmto.mova_movieapp.feature_home.domain.movie.usecases.GetPopularMoviesUseCase
+import com.prmto.mova_movieapp.feature_home.domain.movie.usecases.GetTopRatedMoviesUseCase
+import com.prmto.mova_movieapp.feature_home.domain.tv.HomeTvRepository
+import com.prmto.mova_movieapp.feature_home.domain.tv.usecases.GetPopularTvSeriesUseCase
+import com.prmto.mova_movieapp.feature_home.domain.tv.usecases.GetTopRatedTvSeriesUseCase
+import com.prmto.mova_movieapp.feature_home.domain.usecases.HomeUseCases
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
-import retrofit2.Retrofit
-import javax.inject.Singleton
+import dagger.hilt.android.components.ViewModelComponent
+import dagger.hilt.android.scopes.ViewModelScoped
 
 @Module
-@InstallIn(SingletonComponent::class)
-object HomeModule {
+@InstallIn(ViewModelComponent::class)
+object HomeDomainModule {
 
     @Provides
-    @Singleton
-    fun provideHomeApi(retrofit: Retrofit): HomeApi {
-        return retrofit.create(HomeApi::class.java)
-    }
-
-    @Provides
-    @Singleton
-    fun provideHomeRepository(
-        homeApi: HomeApi
-    ): HomeRepository {
-        return HomeRepositoryImpl(homeApi)
-    }
-
-    @Provides
-    @Singleton
+    @ViewModelScoped
     fun provideHomeUseCases(
-        homeRepository: HomeRepository,
+        homeMovieRepository: HomeMovieRepository,
+        homeTvRepository: HomeTvRepository,
         dataStoreOperations: DataStoreOperations,
         remoteRepository: RemoteRepository
     ): HomeUseCases {
         return HomeUseCases(
             getNowPlayingMoviesUseCase = GetNowPlayingMoviesUseCase(
-                homeRepository,
+                homeMovieRepository,
                 GetMovieGenreListUseCase(remoteRepository)
             ),
             getLanguageIsoCodeUseCase = GetLanguageIsoCodeUseCase(dataStoreOperations),
             getPopularMoviesUseCase = GetPopularMoviesUseCase(
-                homeRepository,
+                homeMovieRepository,
                 GetMovieGenreListUseCase(remoteRepository)
             ),
             getTopRatedMoviesUseCase = GetTopRatedMoviesUseCase(
-                homeRepository,
+                homeMovieRepository,
                 GetMovieGenreListUseCase(remoteRepository)
             ),
             getPopularTvSeriesUseCase = GetPopularTvSeriesUseCase(
-                homeRepository,
+                homeTvRepository,
                 GetTvGenreListUseCase(remoteRepository)
             ),
             getTopRatedTvSeriesUseCase = GetTopRatedTvSeriesUseCase(
-                homeRepository,
+                homeTvRepository,
                 GetTvGenreListUseCase(remoteRepository)
             ),
             updateLanguageIsoCodeUseCase = UpdateLanguageIsoCodeUseCase(dataStoreOperations)

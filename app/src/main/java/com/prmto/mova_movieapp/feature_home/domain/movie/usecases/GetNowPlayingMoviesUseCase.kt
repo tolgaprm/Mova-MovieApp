@@ -1,4 +1,4 @@
-package com.prmto.mova_movieapp.feature_home.domain.use_cases
+package com.prmto.mova_movieapp.feature_home.domain.movie.usecases
 
 import androidx.paging.PagingData
 import androidx.paging.map
@@ -7,13 +7,13 @@ import com.prmto.mova_movieapp.core.domain.use_case.GetMovieGenreListUseCase
 import com.prmto.mova_movieapp.core.presentation.util.HandleUtils
 import com.prmto.mova_movieapp.core.util.Constants.DEFAULT_LANGUAGE
 import com.prmto.mova_movieapp.core.util.Constants.DEFAULT_REGION
-import com.prmto.mova_movieapp.feature_home.domain.repository.HomeRepository
+import com.prmto.mova_movieapp.feature_home.domain.movie.HomeMovieRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import javax.inject.Inject
 
 class GetNowPlayingMoviesUseCase @Inject constructor(
-    private val homeRepository: HomeRepository,
+    private val homeMovieRepository: HomeMovieRepository,
     private val getMovieGenreListUseCase: GetMovieGenreListUseCase
 ) {
     operator fun invoke(
@@ -24,7 +24,7 @@ class GetNowPlayingMoviesUseCase @Inject constructor(
         val languageLower = language.lowercase()
 
         return combine(
-            homeRepository.getNowPlayingMovies(language = languageLower, region = region),
+            homeMovieRepository.getNowPlayingMovies(language = languageLower, region = region),
             getMovieGenreListUseCase(language = languageLower)
         ) { pagingData, genres ->
             pagingData.map { movie ->
