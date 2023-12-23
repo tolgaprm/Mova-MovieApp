@@ -9,7 +9,7 @@ import com.prmto.mova_movieapp.core.data.data_source.local.models.movie.Favorite
 import com.prmto.mova_movieapp.core.data.data_source.local.models.movie.MovieWatchListItem
 import com.prmto.mova_movieapp.core.data.data_source.local.models.tv.FavoriteTvSeries
 import com.prmto.mova_movieapp.core.data.data_source.local.models.tv.TvSeriesWatchListItem
-import com.prmto.mova_movieapp.feature_upcoming.data.local.dao.UpcomingDao
+import com.prmto.mova_movieapp.feature_upcoming.data.local.dao.UpComingDao
 import com.prmto.mova_movieapp.feature_upcoming.domain.model.UpcomingRemindEntity
 
 @Database(
@@ -28,5 +28,5 @@ abstract class MovaDatabase : RoomDatabase() {
 
     abstract val tvSeriesDao: TvSeriesDao
 
-    abstract val upcomingDao: UpcomingDao
+    abstract val upcomingDao: UpComingDao
 }

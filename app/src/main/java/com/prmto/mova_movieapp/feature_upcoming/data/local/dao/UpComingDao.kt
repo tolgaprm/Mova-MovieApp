@@ -10,7 +10,7 @@ import com.prmto.mova_movieapp.feature_upcoming.domain.model.UpcomingRemindEntit
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface UpcomingDao {
+interface UpComingDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertUpcomingRemind(upcomingRemindEntity: UpcomingRemindEntity)

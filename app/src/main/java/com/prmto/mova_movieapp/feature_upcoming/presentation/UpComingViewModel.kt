@@ -5,9 +5,10 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
 import com.prmto.mova_movieapp.core.domain.use_case.GetLanguageIsoCodeUseCase
 import com.prmto.mova_movieapp.feature_upcoming.alarm_manager.UpComingAlarmItem
-import com.prmto.mova_movieapp.feature_upcoming.alarm_manager.UpComingAlarmScheduler
+import com.prmto.mova_movieapp.feature_upcoming.domain.alarmManager.UpComingAlarmScheduler
 import com.prmto.mova_movieapp.feature_upcoming.domain.model.UpcomingRemindEntity
-import com.prmto.mova_movieapp.feature_upcoming.domain.use_case.UpComingUseCases
+import com.prmto.mova_movieapp.feature_upcoming.domain.repository.UpcomingRepository
+import com.prmto.mova_movieapp.feature_upcoming.domain.use_case.GetUpcomingMovieUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -21,7 +22,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class UpComingViewModel @Inject constructor(
-    private val upComingUseCases: UpComingUseCases,
+    private val getUpcomingMovieUseCase: GetUpcomingMovieUseCase,
+    private val upcomingRepository: UpcomingRepository,
     private val languageIsoCodeUseCase: GetLanguageIsoCodeUseCase,
     private val upComingAlarmScheduler: UpComingAlarmScheduler
 ) : ViewModel() {
@@ -75,10 +77,10 @@ class UpComingViewModel @Inject constructor(
 
         viewModelScope.launch {
             if (isAddedToRemind) {
-                upComingUseCases.deleteUpcomingRemindUseCase(upcomingRemind)
+                upcomingRepository.deleteUpcomingRemind(upcomingRemind)
                 upComingAlarmScheduler.cancelAlarm(upcomingRemindEntity)
             } else {
-                upComingUseCases.insertUpComingRemindUseCase(upcomingRemind)
+                upcomingRepository.insertUpcomingRemind(upcomingRemind)
                 upComingAlarmScheduler.scheduleAlarm(upcomingRemindEntity)
             }
         }
@@ -86,7 +88,7 @@ class UpComingViewModel @Inject constructor(
 
     private fun getUpComingMovies(languageCode: String) {
         viewModelScope.launch {
-            upComingUseCases.getUpcomingMovieUseCase(languageCode, scope = viewModelScope)
+            getUpcomingMovieUseCase(languageCode, scope = viewModelScope)
                 .cachedIn(viewModelScope)
                 .collectLatest { pagingData ->
                     _state.update {

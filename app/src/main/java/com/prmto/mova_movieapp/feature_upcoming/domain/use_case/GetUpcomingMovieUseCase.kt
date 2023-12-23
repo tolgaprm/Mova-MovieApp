@@ -9,7 +9,7 @@ import com.prmto.mova_movieapp.core.domain.use_case.GetMovieGenreListUseCase
 import com.prmto.mova_movieapp.core.domain.util.DateFormatUtils
 import com.prmto.mova_movieapp.core.presentation.util.HandleUtils
 import com.prmto.mova_movieapp.feature_upcoming.domain.model.UpcomingMovie
-import com.prmto.mova_movieapp.feature_upcoming.domain.repository.UpComingRepository
+import com.prmto.mova_movieapp.feature_upcoming.domain.repository.UpcomingRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
@@ -17,9 +17,8 @@ import java.util.Calendar
 import javax.inject.Inject
 
 class GetUpcomingMovieUseCase @Inject constructor(
-    private val repository: UpComingRepository,
+    private val repository: UpcomingRepository,
     private val movieGenreListUseCase: GetMovieGenreListUseCase,
-    private val getUpcomingRemindMovieUseCase: GetUpcomingRemindMovieUseCase
 ) {
     private val calendar = Calendar.getInstance()
     operator fun invoke(language: String, scope: CoroutineScope): Flow<PagingData<UpcomingMovie>> {
@@ -29,7 +28,7 @@ class GetUpcomingMovieUseCase @Inject constructor(
                 language = languageLower
             ).cachedIn(scope),
             movieGenreListUseCase(languageLower),
-            getUpcomingRemindMovieUseCase()
+            repository.getAllUpcomingRemind()
         ) { pagingData: PagingData<UpcomingMovie>, genres: List<Genre>, upcomingRemind ->
             pagingData.map { upComingMovie ->
                 upComingMovie.copy(
