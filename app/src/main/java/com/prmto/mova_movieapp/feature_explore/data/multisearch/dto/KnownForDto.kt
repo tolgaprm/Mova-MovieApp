@@ -1,5 +1,6 @@
-package com.prmto.mova_movieapp.feature_explore.data.dto
+package com.prmto.mova_movieapp.feature_explore.data.multisearch.dto
 
+import com.prmto.mova_movieapp.core.data.orZero
 import com.prmto.mova_movieapp.feature_explore.domain.model.KnownForSearch
 import com.squareup.moshi.Json
 
@@ -8,8 +9,8 @@ data class KnownForDto(
     @Json(name = "backdrop_path") val backdropPath: String?,
     @Json(name = "first_air_date") val firstAirDate: String?,
     @Json(name = "genre_ids") val genreIds: List<Int>?,
-    val id: Int,
-    @Json(name = "media_type") val mediaType: String,
+    val id: Int?,
+    @Json(name = "media_type") val mediaType: String?,
     val name: String?,
     @Json(name = "origin_country") val originCountry: List<String>?,
     @Json(name = "original_language") val originalLanguage: String?,
@@ -20,27 +21,26 @@ data class KnownForDto(
     @Json(name = "release_date") val releaseDate: String?,
     val title: String?,
     val video: Boolean?,
-    @Json(name = "vote_average") val voteAverage: Double,
-    @Json(name = "vote_count") val voteCount: Int
+    @Json(name = "vote_average") val voteAverage: Double?,
+    @Json(name = "vote_count") val voteCount: Int?
 )
-
 
 fun List<KnownForDto?>.toKnownForSearch(): List<KnownForSearch> {
     return map {
         KnownForSearch(
-            id = it!!.id,
-            overview = it.overview,
-            firstAirDate = it.firstAirDate,
-            genreIds = it.genreIds,
-            mediaType = it.mediaType,
-            name = it.name,
-            originalName = it.originalName,
-            originalTitle = it.originalTitle,
-            posterPath = it.posterPath,
-            releaseDate = it.releaseDate,
-            title = it.title,
-            voteAverage = it.voteAverage,
-            voteCount = it.voteCount
+            id = it?.id.orZero(),
+            overview = it?.overview.orEmpty(),
+            firstAirDate = it?.firstAirDate.orEmpty(),
+            genreIds = it?.genreIds.orEmpty(),
+            mediaType = it?.mediaType.orEmpty(),
+            name = it?.name.orEmpty(),
+            originalName = it?.originalName.orEmpty(),
+            originalTitle = it?.originalTitle.orEmpty(),
+            posterPath = it?.posterPath,
+            releaseDate = it?.releaseDate.orEmpty(),
+            title = it?.title.orEmpty(),
+            voteAverage = it?.voteAverage.orZero(),
+            voteCount = it?.voteCount.orZero()
         )
     }
 }

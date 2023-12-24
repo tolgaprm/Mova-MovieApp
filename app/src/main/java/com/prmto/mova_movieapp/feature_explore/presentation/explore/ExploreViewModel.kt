@@ -15,7 +15,7 @@ import com.prmto.mova_movieapp.core.domain.repository.isAvaliable
 import com.prmto.mova_movieapp.core.presentation.util.UiEvent
 import com.prmto.mova_movieapp.core.presentation.util.UiText
 import com.prmto.mova_movieapp.core.util.Constants.DEFAULT_LANGUAGE
-import com.prmto.mova_movieapp.feature_explore.data.dto.SearchDto
+import com.prmto.mova_movieapp.feature_explore.data.multisearch.dto.SearchDto
 import com.prmto.mova_movieapp.feature_explore.domain.use_case.ExploreUseCases
 import com.prmto.mova_movieapp.feature_explore.presentation.event.ExploreBottomSheetEvent
 import com.prmto.mova_movieapp.feature_explore.presentation.event.ExploreFragmentEvent
@@ -24,7 +24,15 @@ import com.prmto.mova_movieapp.feature_explore.presentation.explore.state.Explor
 import com.prmto.mova_movieapp.feature_explore.presentation.filter_bottom_sheet.state.FilterBottomState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject

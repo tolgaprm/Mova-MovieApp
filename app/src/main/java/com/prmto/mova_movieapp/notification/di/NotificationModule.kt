@@ -1,10 +1,10 @@
-package com.prmto.mova_movieapp.di
+package com.prmto.mova_movieapp.notification.di
 
 import android.app.NotificationManager
 import android.content.Context
 import com.prmto.mova_movieapp.notification.Notifier
-import com.prmto.mova_movieapp.notification.UpcomingMovieReminderNotifier
-import com.prmto.mova_movieapp.notification.WeekendNotifier
+import com.prmto.mova_movieapp.notification.variants.UpcomingMovieReminderNotifier
+import com.prmto.mova_movieapp.notification.variants.WeekendNotifier
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

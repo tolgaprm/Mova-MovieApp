@@ -11,11 +11,13 @@ interface DetailRepository {
     suspend fun getMovieDetail(
         language: String,
         movieId: Int,
+        countryIsoCode: String,
     ): MovieDetail
 
     suspend fun getTvDetail(
         language: String,
         tvId: Int,
+        countryIsoCode: String,
     ): TvDetail
 
     suspend fun getRecommendationsForMovie(

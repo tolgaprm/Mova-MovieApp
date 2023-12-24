@@ -5,7 +5,7 @@ import androidx.paging.map
 import com.prmto.mova_movieapp.core.domain.use_case.GetMovieGenreListUseCase
 import com.prmto.mova_movieapp.core.domain.use_case.GetTvGenreListUseCase
 import com.prmto.mova_movieapp.core.presentation.util.HandleUtils
-import com.prmto.mova_movieapp.feature_explore.data.dto.SearchDto
+import com.prmto.mova_movieapp.feature_explore.data.multisearch.dto.SearchDto
 import com.prmto.mova_movieapp.feature_explore.domain.repository.ExploreRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine

@@ -2,8 +2,8 @@ package com.prmto.mova_movieapp.feature_movie_tv_detail.domain.models.detail
 
 import com.prmto.mova_movieapp.core.data.dto.Genre
 import com.prmto.mova_movieapp.core.domain.models.Movie
-import com.prmto.mova_movieapp.feature_movie_tv_detail.data.dto.watch_provider.WatchProviders
 import com.prmto.mova_movieapp.feature_movie_tv_detail.domain.models.credit.Credit
+import com.prmto.mova_movieapp.feature_movie_tv_detail.domain.models.watchProvider.WatchProviderItem
 
 data class MovieDetail(
     val id: Int,
@@ -18,11 +18,10 @@ data class MovieDetail(
     val voteAverage: Double,
     val voteCount: Int,
     var convertedRuntime: Map<String, String> = emptyMap(),
-    val credit: Credit,
+    val credit: Credit?,
     var ratingValue: Float = 0f,
-    val watchProviders: WatchProviders
+    val watchProviders: WatchProviderItem?
 )
-
 
 fun MovieDetail.toMovie(): Movie {
     return Movie(

@@ -23,7 +23,7 @@ class BindMovieDetail(
         removeDirectorsInLayout()
         bindFilmName(filmName = movieDetail.title)
         bindOverview(overview = movieDetail.overview)
-        bindWatchProviders(providerRegion = movieDetail.watchProviders.results)
+        bindWatchProviders(watchProviderItem = movieDetail.watchProviders)
         bindToolBarTitle(toolbarTitle = movieDetail.title)
         bindDetailInfoSection(
             voteAverage = movieDetail.voteAverage,
@@ -32,7 +32,7 @@ class BindMovieDetail(
             genreList = movieDetail.genres
         )
         bindMovieRuntime(convertedRuntime = movieDetail.convertedRuntime)
-        bindDirectorName(crews = movieDetail.credit.crew)
+        bindDirectorName(crews = movieDetail.credit?.crew)
         bindReleaseDate(releaseDate = movieDetail.releaseDate)
         hideSeasonText()
         showRuntimeTextAndClockIcon()
@@ -61,7 +61,12 @@ class BindMovieDetail(
         }
     }
 
-    private fun bindDirectorName(crews: List<Crew>) {
+    private fun bindDirectorName(crews: List<Crew>?) {
+        if (crews.isNullOrEmpty()) {
+            binding.creatorDirectorLinearLayout.removeAllViews()
+            return
+        }
+
         val director = crews.find {
             it.department == DIRECTION_DEPARTMENT_NAME
         }

@@ -1,12 +1,10 @@
-package com.prmto.mova_movieapp.di
+package com.prmto.mova_movieapp.feature_explore.domain.di
 
 import com.prmto.mova_movieapp.core.domain.repository.DataStoreOperations
 import com.prmto.mova_movieapp.core.domain.repository.RemoteRepository
 import com.prmto.mova_movieapp.core.domain.use_case.GetLanguageIsoCodeUseCase
 import com.prmto.mova_movieapp.core.domain.use_case.GetMovieGenreListUseCase
 import com.prmto.mova_movieapp.core.domain.use_case.GetTvGenreListUseCase
-import com.prmto.mova_movieapp.feature_explore.data.remote.ExploreApi
-import com.prmto.mova_movieapp.feature_explore.data.repository.ExploreRepositoryImpl
 import com.prmto.mova_movieapp.feature_explore.domain.repository.ExploreRepository
 import com.prmto.mova_movieapp.feature_explore.domain.use_case.DiscoverMovieUseCase
 import com.prmto.mova_movieapp.feature_explore.domain.use_case.DiscoverTvUseCase
@@ -15,30 +13,15 @@ import com.prmto.mova_movieapp.feature_explore.domain.use_case.MultiSearchUseCas
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
-import retrofit2.Retrofit
-import javax.inject.Singleton
+import dagger.hilt.android.components.ViewModelComponent
+import dagger.hilt.android.scopes.ViewModelScoped
 
 @Module
-@InstallIn(SingletonComponent::class)
-object ExploreModule {
+@InstallIn(ViewModelComponent::class)
+object ExploreDomainModule {
 
     @Provides
-    @Singleton
-    fun provideExploreApi(retrofit: Retrofit): ExploreApi {
-        return retrofit.create(ExploreApi::class.java)
-    }
-
-    @Provides
-    @Singleton
-    fun provideExploreRepository(
-        exploreApi: ExploreApi
-    ): ExploreRepository {
-        return ExploreRepositoryImpl(exploreApi)
-    }
-
-    @Provides
-    @Singleton
+    @ViewModelScoped
     fun provideExploreUseCases(
         exploreRepository: ExploreRepository,
         remoteRepository: RemoteRepository,

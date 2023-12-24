@@ -9,7 +9,7 @@ import com.prmto.mova_movieapp.feature_movie_tv_detail.data.dto.credit.toCredit
 import com.prmto.mova_movieapp.feature_movie_tv_detail.data.dto.detail.ProductionCompany
 import com.prmto.mova_movieapp.feature_movie_tv_detail.data.dto.detail.ProductionCountry
 import com.prmto.mova_movieapp.feature_movie_tv_detail.data.dto.detail.SpokenLanguage
-import com.prmto.mova_movieapp.feature_movie_tv_detail.data.dto.watch_provider.WatchProviders
+import com.prmto.mova_movieapp.feature_movie_tv_detail.data.dto.watch_provider.WatchProviderDto
 import org.junit.Before
 import org.junit.Test
 
@@ -164,7 +164,7 @@ class TvDetailDtoTest {
                 cast = listOfCastDto,
                 crew = listOfCrewDto
             ),
-            watchProviders = WatchProviders(null)
+            watchProviders = WatchProviderDto(null)
         )
     }
 

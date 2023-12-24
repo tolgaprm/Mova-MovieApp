@@ -2,7 +2,6 @@ package com.prmto.mova_movieapp.core.data.dto
 
 import com.squareup.moshi.Json
 
-
 data class ApiResponse<T>(
     val page: Int,
     val results: List<T>,

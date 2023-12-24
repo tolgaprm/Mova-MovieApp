@@ -337,7 +337,7 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
                 binding = binding,
                 context = requireContext()
             )
-            detailActorAdapter.submitList(tvDetail.credit.cast)
+            detailActorAdapter.submitList(tvDetail.credit?.cast)
         }
     }
 
@@ -348,7 +348,7 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
                 binding = binding,
                 context = requireContext()
             )
-            detailActorAdapter.submitList(movieDetail.credit.cast)
+            detailActorAdapter.submitList(movieDetail.credit?.cast)
         }
     }
 

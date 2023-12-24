@@ -14,5 +14,4 @@ data class VideoResult(
     fun isTypeTrailer() = this.type == TYPE_TRAILER
 
     fun isTypeTeaser() = this.type == TYPE_TEASER
-
 }

@@ -3,6 +3,7 @@ package com.prmto.mova_movieapp.core.data.mapper
 import com.prmto.mova_movieapp.core.data.data_source.local.models.movie.FavoriteMovie
 import com.prmto.mova_movieapp.core.data.data_source.local.models.movie.MovieWatchListItem
 import com.prmto.mova_movieapp.core.data.dto.MovieDto
+import com.prmto.mova_movieapp.core.data.orZero
 import com.prmto.mova_movieapp.core.domain.models.Movie
 
 fun Movie.toFavoriteMovie(): FavoriteMovie {
@@ -21,14 +22,14 @@ fun Movie.toMovieWatchListItem(): MovieWatchListItem {
 
 fun MovieDto.toMovie(): Movie {
     return Movie(
-        id = id,
-        overview = overview,
-        title = title,
-        originalTitle = originalTitle,
+        id = id.orZero(),
+        overview = overview.orEmpty(),
+        title = title.orEmpty(),
+        originalTitle = originalTitle.orEmpty(),
         posterPath = posterPath,
         releaseDate = releaseDate,
-        genreIds = genreIds,
-        voteCount = voteCount,
-        voteAverage = voteAverage
+        genreIds = genreIds.orEmpty(),
+        voteCount = voteCount.orZero(),
+        voteAverage = voteAverage.orZero()
     )
 }

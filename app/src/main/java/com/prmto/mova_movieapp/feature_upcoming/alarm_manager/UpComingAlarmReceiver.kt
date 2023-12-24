@@ -3,9 +3,9 @@ package com.prmto.mova_movieapp.feature_upcoming.alarm_manager
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import com.prmto.mova_movieapp.di.UpcomingMovieReminderNotifierQualifier
 import com.prmto.mova_movieapp.notification.Notifier
-import com.prmto.mova_movieapp.notification.UpcomingMovieReminderNotifier
+import com.prmto.mova_movieapp.notification.di.UpcomingMovieReminderNotifierQualifier
+import com.prmto.mova_movieapp.notification.variants.UpcomingMovieReminderNotifier
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

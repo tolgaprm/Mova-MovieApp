@@ -8,22 +8,22 @@ import android.widget.Toast
 import coil.load
 import com.prmto.mova_movieapp.R
 import com.prmto.mova_movieapp.core.data.data_source.remote.ImageApi
-import com.prmto.mova_movieapp.feature_movie_tv_detail.data.dto.watch_provider.WatchProviderItemDetail
+import com.prmto.mova_movieapp.feature_movie_tv_detail.domain.models.watchProvider.WatchProviderItemInfo
 
 class BindWatchProvidersHelper(private val context: Context) {
     fun bind(
-        listOfWatchProviderItem: List<WatchProviderItemDetail>?,
+        listOfWatchProviderItem: List<WatchProviderItemInfo>,
         linearLayout: LinearLayout,
     ) {
         removeWatchProvidersInLayout(linearLayout)
-        if (listOfWatchProviderItem.isNullOrEmpty()) {
+        if (listOfWatchProviderItem.isEmpty()) {
             val image = inflateImage(context, linearLayout)
             image.setBackgroundResource(R.drawable.no_watch_provider)
             linearLayout.addView(image)
             return
         }
 
-        for (item in listOfWatchProviderItem.sortedBy { it.displayPriority }.take(5)) {
+        for (item in listOfWatchProviderItem) {
             val image = inflateImage(context, linearLayout)
             image.load(
                 ImageApi.getImage(imageUrl = item.logoPath)

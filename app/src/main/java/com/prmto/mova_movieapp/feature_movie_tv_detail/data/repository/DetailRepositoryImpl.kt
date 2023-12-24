@@ -20,18 +20,26 @@ class DetailRepositoryImpl @Inject constructor(
     private val detailApi: DetailApi,
 ) : DetailRepository {
 
-    override suspend fun getMovieDetail(language: String, movieId: Int): MovieDetail {
+    override suspend fun getMovieDetail(
+        language: String,
+        movieId: Int,
+        countryIsoCode: String
+    ): MovieDetail {
         return detailApi.getMovieDetail(
             language = language,
             movieId = movieId
-        ).toMovieDetail()
+        ).toMovieDetail(countryIsoCode = countryIsoCode)
     }
 
-    override suspend fun getTvDetail(language: String, tvId: Int): TvDetail {
+    override suspend fun getTvDetail(
+        language: String,
+        tvId: Int,
+        countryIsoCode: String
+    ): TvDetail {
         return detailApi.getTvDetail(
             language = language,
             tvId = tvId
-        ).toTvDetail()
+        ).toTvDetail(countryIsoCode = countryIsoCode)
     }
 
     override suspend fun getRecommendationsForMovie(

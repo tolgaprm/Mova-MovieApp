@@ -2,6 +2,7 @@ package com.prmto.mova_movieapp.di
 
 import com.prmto.mova_movieapp.core.domain.use_case.GetMovieGenreListUseCase
 import com.prmto.mova_movieapp.core.domain.use_case.GetTvGenreListUseCase
+import com.prmto.mova_movieapp.core.util.countryCode.CountryCodeProvider
 import com.prmto.mova_movieapp.feature_movie_tv_detail.data.remote.DetailApi
 import com.prmto.mova_movieapp.feature_movie_tv_detail.data.repository.DetailRepositoryImpl
 import com.prmto.mova_movieapp.feature_movie_tv_detail.domain.repository.DetailRepository
@@ -36,11 +37,18 @@ object DetailModule {
     fun provideDetailUseCases(
         detailRepository: DetailRepository,
         getMovieGenreListUseCase: GetMovieGenreListUseCase,
-        getTvGenreListUseCase: GetTvGenreListUseCase
+        getTvGenreListUseCase: GetTvGenreListUseCase,
+        countryCodeProvider: CountryCodeProvider
     ): DetailUseCases {
         return DetailUseCases(
-            movieDetailUseCase = GetMovieDetailUseCase(detailRepository),
-            tvDetailUseCase = GetTvDetailUseCase(detailRepository),
+            movieDetailUseCase = GetMovieDetailUseCase(
+                detailRepository,
+                countryCodeProvider
+            ),
+            tvDetailUseCase = GetTvDetailUseCase(
+                detailRepository,
+                countryCodeProvider
+            ),
             getMovieRecommendationUseCase = GetMovieRecommendationUseCase(
                 detailRepository,
                 getMovieGenreListUseCase

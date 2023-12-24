@@ -2,7 +2,6 @@ package com.prmto.mova_movieapp.feature_explore.domain.model
 
 import com.prmto.mova_movieapp.core.domain.models.Movie
 
-
 data class MovieSearch(
     val id: Int,
     val overview: String,

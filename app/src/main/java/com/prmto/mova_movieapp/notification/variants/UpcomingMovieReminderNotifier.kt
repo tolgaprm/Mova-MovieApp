@@ -1,4 +1,4 @@
-package com.prmto.mova_movieapp.notification
+package com.prmto.mova_movieapp.notification.variants
 
 import android.app.Notification
 import android.app.NotificationChannel
@@ -11,6 +11,7 @@ import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import com.prmto.mova_movieapp.MainActivity
 import com.prmto.mova_movieapp.R
+import com.prmto.mova_movieapp.notification.Notifier
 import javax.inject.Inject
 
 class UpcomingMovieReminderNotifier @Inject constructor(

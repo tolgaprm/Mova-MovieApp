@@ -1,5 +1,6 @@
-package com.prmto.mova_movieapp.feature_explore.data.dto
+package com.prmto.mova_movieapp.feature_explore.data.multisearch.dto
 
+import com.prmto.mova_movieapp.core.data.orZero
 import com.prmto.mova_movieapp.feature_explore.domain.model.MovieSearch
 import com.prmto.mova_movieapp.feature_explore.domain.model.PersonSearch
 import com.prmto.mova_movieapp.feature_explore.domain.model.TvSearch
@@ -12,10 +13,10 @@ data class SearchDto(
     @Json(name = "first_air_date") val firstAirDate: String?,
     val gender: Int?,
     @Json(name = "genre_ids") val genreIds: List<Int>?,
-    val id: Int,
+    val id: Int?,
     @Json(name = "known_for") val knownForDto: List<KnownForDto?>?,
     @Json(name = "known_for_department") val knownForDepartment: String?,
-    @Json(name = "media_type") val mediaType: String,
+    @Json(name = "media_type") val mediaType: String?,
     val name: String?,
     @Json(name = "origin_country") val originCountry: List<String>?,
     @Json(name = "original_language") val originalLanguage: String?,
@@ -39,15 +40,15 @@ data class SearchDto(
 fun SearchDto.toMovieSearch(): MovieSearch? {
     if (mediaType == MediaType.MOVIE.value) {
         return MovieSearch(
-            id = id,
-            overview = overview!!,
-            title = title!!,
-            originalTitle = originalTitle!!,
+            id = id.orZero(),
+            overview = overview.orEmpty(),
+            title = title.orEmpty(),
+            originalTitle = originalTitle.orEmpty(),
             posterPath = posterPath,
-            releaseDate = releaseDate!!,
-            genreIds = genreIds!!,
-            voteCount = voteCount!!,
-            voteAverage = voteAverage!!,
+            releaseDate = releaseDate.orEmpty(),
+            genreIds = genreIds.orEmpty(),
+            voteCount = voteCount.orZero(),
+            voteAverage = voteAverage.orZero(),
             genreByOneForMovie = genreByOneForMovie,
             voteCountByString = voteCountByString
         )
@@ -59,15 +60,15 @@ fun SearchDto.toMovieSearch(): MovieSearch? {
 fun SearchDto.toTvSearch(): TvSearch? {
     if (mediaType == MediaType.TV_SERIES.value) {
         return TvSearch(
-            id = id,
-            name = name!!,
-            overview = overview!!,
-            originalName = originalName!!,
+            id = id.orZero(),
+            name = name.orEmpty(),
+            overview = overview.orEmpty(),
+            originalName = originalName.orEmpty(),
             posterPath = posterPath,
             firstAirDate = firstAirDate,
-            genreIds = genreIds!!,
-            voteCount = voteCount!!,
-            voteAverage = voteAverage!!,
+            genreIds = genreIds.orEmpty(),
+            voteCount = voteCount.orZero(),
+            voteAverage = voteAverage.orZero(),
             genreByOneForTv = genreByOneForTv,
             voteCountByString = voteCountByString
         )
@@ -78,8 +79,8 @@ fun SearchDto.toTvSearch(): TvSearch? {
 fun SearchDto.toPersonSearch(): PersonSearch? {
     if (mediaType == MediaType.PERSON.value) {
         return PersonSearch(
-            id = id,
-            name = name!!,
+            id = id.orZero(),
+            name = name.orEmpty(),
             profilePath = profilePath,
             knownForDepartment = knownForDepartment,
             knownFor = knownForDto!!.toKnownForSearch()

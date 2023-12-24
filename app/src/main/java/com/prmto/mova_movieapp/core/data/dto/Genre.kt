@@ -1,6 +1,5 @@
 package com.prmto.mova_movieapp.core.data.dto
 
-
 data class Genre(
     val id: Int,
     val name: String

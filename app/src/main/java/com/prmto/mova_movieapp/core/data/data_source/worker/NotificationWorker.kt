@@ -8,8 +8,8 @@ import androidx.core.content.ContextCompat
 import androidx.hilt.work.HiltWorker
 import androidx.work.Worker
 import androidx.work.WorkerParameters
-import com.prmto.mova_movieapp.di.WeekendNotifierQualifier
 import com.prmto.mova_movieapp.notification.Notifier
+import com.prmto.mova_movieapp.notification.di.WeekendNotifierQualifier
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 

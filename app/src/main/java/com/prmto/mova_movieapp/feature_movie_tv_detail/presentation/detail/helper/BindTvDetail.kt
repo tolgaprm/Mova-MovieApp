@@ -28,14 +28,14 @@ class BindTvDetail(
         bindFilmName(filmName = tvDetail.name)
         bindReleaseDate(releaseDate = tvDetail.releaseDate)
         bindOverview(overview = tvDetail.overview)
-        bindWatchProviders(providerRegion = tvDetail.watchProviders.results)
+        bindWatchProviders(watchProviderItem = tvDetail.watchProviders)
         bindCreatorNames(createdBy = tvDetail.createdBy)
         showSeasonText(season = tvDetail.numberOfSeasons)
         hideRuntimeTextAndClockIcon()
     }
 
-    private fun bindCreatorNames(createdBy: List<CreatedBy>) {
-        if (createdBy.isEmpty()) {
+    private fun bindCreatorNames(createdBy: List<CreatedBy>?) {
+        if (createdBy.isNullOrEmpty()) {
             binding.creatorDirectorLinearLayout.removeAllViews()
             return
         }

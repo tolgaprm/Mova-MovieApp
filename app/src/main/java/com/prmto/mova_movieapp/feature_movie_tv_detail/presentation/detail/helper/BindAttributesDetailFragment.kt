@@ -7,9 +7,8 @@ import com.prmto.mova_movieapp.R
 import com.prmto.mova_movieapp.core.data.data_source.remote.ImageApi
 import com.prmto.mova_movieapp.core.data.dto.Genre
 import com.prmto.mova_movieapp.core.presentation.util.HandleUtils
-import com.prmto.mova_movieapp.core.util.getCountryIsoCode
 import com.prmto.mova_movieapp.databinding.FragmentDetailBinding
-import com.prmto.mova_movieapp.feature_movie_tv_detail.data.dto.watch_provider.WatchProviderRegion
+import com.prmto.mova_movieapp.feature_movie_tv_detail.domain.models.watchProvider.WatchProviderItem
 
 open class BindAttributesDetailFragment(
     val binding: FragmentDetailBinding,
@@ -51,21 +50,12 @@ open class BindAttributesDetailFragment(
         }
     }
 
-    protected fun bindWatchProviders(providerRegion: WatchProviderRegion?) {
-        providerRegion?.let { provider ->
+    protected fun bindWatchProviders(watchProviderItem: WatchProviderItem?) {
+        watchProviderItem?.let { provider ->
 
-            val watchProvider = when (context.getCountryIsoCode()) {
-                "tr" -> provider.tr
-                "us" -> provider.us
-                "fr" -> provider.fr
-                "de" -> provider.de
-                "es" -> provider.es
-                else -> provider.us
-            }
-
-            val streamWatchProviders = watchProvider?.flatRate
-            val buyWatchProviders = watchProvider?.buy
-            val rentWatchProviders = watchProvider?.rent
+            val streamWatchProviders = provider.stream
+            val buyWatchProviders = provider.buy
+            val rentWatchProviders = provider.rent
 
             watchProvidersHelper.bind(
                 listOfWatchProviderItem = streamWatchProviders,

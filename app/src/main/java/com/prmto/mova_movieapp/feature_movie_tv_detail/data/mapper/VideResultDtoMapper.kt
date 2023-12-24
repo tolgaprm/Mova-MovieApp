@@ -5,11 +5,11 @@ import com.prmto.mova_movieapp.feature_movie_tv_detail.domain.models.detail.vide
 
 fun VideoResultDto.toVideoResult(): VideoResult {
     return VideoResult(
-        id = id,
-        key = key,
-        site = site,
-        name = name,
-        type = type,
-        publishedAt = publishedAt
+        id = id.orEmpty(),
+        key = key.orEmpty(),
+        site = site.orEmpty(),
+        name = name.orEmpty(),
+        type = type.orEmpty(),
+        publishedAt = publishedAt.orEmpty()
     )
 }
