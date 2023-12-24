@@ -7,7 +7,7 @@ import com.google.android.material.textview.MaterialTextView
 import com.prmto.mova_movieapp.R
 import com.prmto.mova_movieapp.databinding.FragmentDetailBinding
 import com.prmto.mova_movieapp.feature_movie_tv_detail.domain.models.credit.Crew
-import com.prmto.mova_movieapp.feature_movie_tv_detail.domain.movie.model.MovieDetail
+import com.prmto.mova_movieapp.feature_movie_tv_detail.domain.models.detail.movie.MovieDetail
 import com.prmto.mova_movieapp.feature_movie_tv_detail.util.Constants
 
 class BindMovieDetail(

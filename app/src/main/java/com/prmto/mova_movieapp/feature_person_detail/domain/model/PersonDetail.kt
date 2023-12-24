@@ -5,7 +5,7 @@ data class PersonDetail(
     val name: String,
     val biography: String,
     val birthday: String,
-    val combinedCredits: CombinedCredits,
+    val combinedCredits: CombinedCredits?,
     val deathday: String?,
     val imdbId: String,
     val knownForDepartment: String,

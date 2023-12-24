@@ -1,6 +1,6 @@
 package com.prmto.mova_movieapp.feature_home.presentation.home.state
 
-import com.prmto.mova_movieapp.core.data.dto.Genre
+import com.prmto.mova_movieapp.core.data.remote.dto.genre.Genre
 import com.prmto.mova_movieapp.core.presentation.util.UiText
 
 data class HomeState(

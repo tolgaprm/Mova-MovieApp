@@ -1,12 +1,12 @@
 package com.prmto.mova_movieapp.feature_home.domain.usecases
 
-import com.prmto.mova_movieapp.core.domain.use_case.GetLanguageIsoCodeUseCase
-import com.prmto.mova_movieapp.core.domain.use_case.UpdateLanguageIsoCodeUseCase
-import com.prmto.mova_movieapp.feature_home.domain.movie.usecases.GetNowPlayingMoviesUseCase
-import com.prmto.mova_movieapp.feature_home.domain.movie.usecases.GetPopularMoviesUseCase
-import com.prmto.mova_movieapp.feature_home.domain.movie.usecases.GetTopRatedMoviesUseCase
-import com.prmto.mova_movieapp.feature_home.domain.tv.usecases.GetPopularTvSeriesUseCase
-import com.prmto.mova_movieapp.feature_home.domain.tv.usecases.GetTopRatedTvSeriesUseCase
+import com.prmto.mova_movieapp.core.domain.use_case.languageIsoCode.GetLanguageIsoCodeUseCase
+import com.prmto.mova_movieapp.core.domain.use_case.languageIsoCode.UpdateLanguageIsoCodeUseCase
+import com.prmto.mova_movieapp.feature_home.domain.usecases.movie.GetNowPlayingMoviesUseCase
+import com.prmto.mova_movieapp.feature_home.domain.usecases.movie.GetPopularMoviesUseCase
+import com.prmto.mova_movieapp.feature_home.domain.usecases.movie.GetTopRatedMoviesUseCase
+import com.prmto.mova_movieapp.feature_home.domain.usecases.tv.GetPopularTvSeriesUseCase
+import com.prmto.mova_movieapp.feature_home.domain.usecases.tv.GetTopRatedTvSeriesUseCase
 
 data class HomeUseCases(
     val getNowPlayingMoviesUseCase: GetNowPlayingMoviesUseCase,

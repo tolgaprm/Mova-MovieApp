@@ -1,12 +1,12 @@
 package com.prmto.mova_movieapp.feature_explore.data.di
 
-import com.prmto.mova_movieapp.feature_explore.data.movie.datasource.ExploreMovieRemoteDataSource
-import com.prmto.mova_movieapp.feature_explore.data.movie.datasource.ExploreMovieRemoteDataSourceImpl
-import com.prmto.mova_movieapp.feature_explore.data.multisearch.datasource.ExploreMultiSearchRemoteDataSource
-import com.prmto.mova_movieapp.feature_explore.data.multisearch.datasource.ExploreMultiSearchRemoteDataSourceImpl
+import com.prmto.mova_movieapp.feature_explore.data.remote.dataSources.movie.ExploreMovieRemoteDataSource
+import com.prmto.mova_movieapp.feature_explore.data.remote.dataSources.movie.ExploreMovieRemoteDataSourceImpl
+import com.prmto.mova_movieapp.feature_explore.data.remote.dataSources.multisearch.ExploreMultiSearchRemoteDataSource
+import com.prmto.mova_movieapp.feature_explore.data.remote.dataSources.multisearch.ExploreMultiSearchRemoteDataSourceImpl
+import com.prmto.mova_movieapp.feature_explore.data.remote.dataSources.tv.ExploreTvRemoteDataSource
+import com.prmto.mova_movieapp.feature_explore.data.remote.dataSources.tv.ExploreTvRemoteDataSourceImpl
 import com.prmto.mova_movieapp.feature_explore.data.repository.ExploreRepositoryImpl
-import com.prmto.mova_movieapp.feature_explore.data.tv.datasource.ExploreTvRemoteDataSource
-import com.prmto.mova_movieapp.feature_explore.data.tv.datasource.ExploreTvRemoteDataSourceImpl
 import com.prmto.mova_movieapp.feature_explore.domain.repository.ExploreRepository
 import dagger.Binds
 import dagger.Module

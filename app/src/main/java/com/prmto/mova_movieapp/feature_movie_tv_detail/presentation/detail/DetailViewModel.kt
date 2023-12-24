@@ -9,9 +9,9 @@ import com.prmto.mova_movieapp.core.domain.use_case.firebase.FirebaseCoreUseCase
 import com.prmto.mova_movieapp.core.presentation.util.UiText
 import com.prmto.mova_movieapp.core.util.Constants.DEFAULT_LANGUAGE
 import com.prmto.mova_movieapp.core.util.Resource
-import com.prmto.mova_movieapp.feature_movie_tv_detail.domain.models.video.Videos
-import com.prmto.mova_movieapp.feature_movie_tv_detail.domain.movie.model.toMovie
-import com.prmto.mova_movieapp.feature_movie_tv_detail.domain.tv.model.toTvSeries
+import com.prmto.mova_movieapp.feature_movie_tv_detail.domain.models.detail.movie.toMovie
+import com.prmto.mova_movieapp.feature_movie_tv_detail.domain.models.detail.tv.toTvSeries
+import com.prmto.mova_movieapp.feature_movie_tv_detail.domain.models.detail.video.Videos
 import com.prmto.mova_movieapp.feature_movie_tv_detail.domain.use_cases.DetailUseCases
 import com.prmto.mova_movieapp.feature_movie_tv_detail.presentation.detail.event.DetailEvent
 import com.prmto.mova_movieapp.feature_movie_tv_detail.presentation.detail.event.DetailUiEvent

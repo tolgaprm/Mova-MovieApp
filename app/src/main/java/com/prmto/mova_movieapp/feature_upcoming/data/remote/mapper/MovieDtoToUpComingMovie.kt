@@ -1,7 +1,7 @@
 package com.prmto.mova_movieapp.feature_upcoming.data.remote.mapper
 
-import com.prmto.mova_movieapp.core.data.dto.MovieDto
-import com.prmto.mova_movieapp.core.data.mapper.toMovie
+import com.prmto.mova_movieapp.core.data.remote.dto.movie.MovieDto
+import com.prmto.mova_movieapp.core.data.remote.mapper.movie.toMovie
 import com.prmto.mova_movieapp.feature_upcoming.domain.model.UpcomingMovie
 
 fun MovieDto.toUpComingMovie(): UpcomingMovie {

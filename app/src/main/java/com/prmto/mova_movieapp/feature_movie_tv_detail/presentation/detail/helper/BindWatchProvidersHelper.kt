@@ -7,7 +7,7 @@ import android.widget.LinearLayout
 import android.widget.Toast
 import coil.load
 import com.prmto.mova_movieapp.R
-import com.prmto.mova_movieapp.core.data.data_source.remote.ImageApi
+import com.prmto.mova_movieapp.core.data.remote.api.ImageApi
 import com.prmto.mova_movieapp.feature_movie_tv_detail.domain.models.watchProvider.WatchProviderItemInfo
 
 class BindWatchProvidersHelper(private val context: Context) {

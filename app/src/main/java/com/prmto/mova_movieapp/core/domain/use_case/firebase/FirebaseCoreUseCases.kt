@@ -1,6 +1,5 @@
 package com.prmto.mova_movieapp.core.domain.use_case.firebase
 
-import com.prmto.mova_movieapp.core.domain.use_case.IsUserSignInUseCase
 import com.prmto.mova_movieapp.core.domain.use_case.firebase.movie.AddMovieToFavoriteListInFirebaseUseCase
 import com.prmto.mova_movieapp.core.domain.use_case.firebase.movie.AddMovieToWatchListInFirebaseUseCase
 import com.prmto.mova_movieapp.core.domain.use_case.firebase.tv.AddTvSeriesToFavoriteListInFirebaseUseCase

@@ -10,8 +10,8 @@ import androidx.navigation.fragment.findNavController
 import coil.load
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.prmto.mova_movieapp.R
-import com.prmto.mova_movieapp.core.data.data_source.remote.ImageApi
-import com.prmto.mova_movieapp.core.data.data_source.remote.ImageSize
+import com.prmto.mova_movieapp.core.data.remote.api.ImageApi
+import com.prmto.mova_movieapp.core.data.remote.api.ImageSize
 import com.prmto.mova_movieapp.core.domain.models.Movie
 import com.prmto.mova_movieapp.core.domain.models.TvSeries
 import com.prmto.mova_movieapp.core.presentation.util.AlertDialogUtil

@@ -1,8 +1,8 @@
 package com.prmto.mova_movieapp.feature_upcoming.data.remote.paging_source
 
 import androidx.paging.PagingState
-import com.prmto.mova_movieapp.core.data.dto.MovieDto
-import com.prmto.mova_movieapp.core.data.paging.BasePagingSource
+import com.prmto.mova_movieapp.core.data.remote.dto.movie.MovieDto
+import com.prmto.mova_movieapp.core.data.util.paging.BasePagingSource
 import com.prmto.mova_movieapp.feature_upcoming.data.remote.mapper.toUpComingMovie
 import com.prmto.mova_movieapp.feature_upcoming.domain.model.UpcomingMovie
 import javax.inject.Inject

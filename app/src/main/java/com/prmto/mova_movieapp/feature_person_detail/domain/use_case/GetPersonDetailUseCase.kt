@@ -1,15 +1,10 @@
 package com.prmto.mova_movieapp.feature_person_detail.domain.use_case
 
-import com.prmto.mova_movieapp.R
 import com.prmto.mova_movieapp.core.domain.util.DateFormatUtils
 import com.prmto.mova_movieapp.core.presentation.util.UiText
 import com.prmto.mova_movieapp.core.util.Resource
 import com.prmto.mova_movieapp.feature_person_detail.domain.model.PersonDetail
 import com.prmto.mova_movieapp.feature_person_detail.domain.repository.PersonRepository
-import kotlinx.coroutines.yield
-import okio.IOException
-import retrofit2.HttpException
-import timber.log.Timber
 import javax.inject.Inject
 
 class GetPersonDetailUseCase @Inject constructor(
@@ -20,29 +15,29 @@ class GetPersonDetailUseCase @Inject constructor(
         personId: Int,
         language: String
     ): Resource<PersonDetail> {
-        yield()
-        return try {
-            val result = repository.getPersonDetail(personId = personId, language = language)
-            Resource.Success(
-                data = result.copy(
-                    birthday = DateFormatUtils.convertDateFormat(inputDate = result.birthday),
-                    deathday = if (result.deathday != null) DateFormatUtils.convertDateFormat(
-                        inputDate = result.deathday
-                    ) else null,
-                    combinedCredits = result.combinedCredits.copy(
-                        cast = result.combinedCredits.cast.sortedByDescending { it.popularity },
-                        crew = result.combinedCredits.crew.filter { it.department == "Directing" }
-                            .sortedByDescending { it.popularity }
+        val resource = repository.getPersonDetail(personId = personId, language = language)
+
+        return when (resource) {
+            is Resource.Success -> {
+                resource.data?.let { personDetail ->
+                    val result = personDetail.copy(
+                        birthday = DateFormatUtils.convertDateFormat(inputDate = personDetail.birthday),
+                        deathday = if (personDetail.deathday != null) DateFormatUtils.convertDateFormat(
+                            inputDate = personDetail.deathday
+                        ) else null,
+                        combinedCredits = personDetail.combinedCredits?.copy(
+                            cast = personDetail.combinedCredits.cast.sortedByDescending { it.popularity },
+                            crew = personDetail.combinedCredits.crew.filter { it.department == "Directing" }
+                                .sortedByDescending { it.popularity }
+                        )
                     )
-                )
-            )
-        } catch (e: IOException) {
-            Resource.Error(UiText.StringResource(R.string.internet_error))
-        } catch (e: HttpException) {
-            Resource.Error(UiText.StringResource(R.string.oops_something_went_wrong))
-        } catch (e: Exception) {
-            Timber.e(e)
-            Resource.Error(UiText.StringResource(R.string.oops_something_went_wrong))
+                    Resource.Success(result)
+                } ?: Resource.Error(uiText = UiText.somethingWentWrong())
+            }
+
+            is Resource.Error -> {
+                Resource.Error(resource.uiText ?: UiText.somethingWentWrong())
+            }
         }
     }
 }

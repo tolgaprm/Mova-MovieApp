@@ -3,7 +3,7 @@ package com.prmto.mova_movieapp.feature_upcoming.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
-import com.prmto.mova_movieapp.core.domain.use_case.GetLanguageIsoCodeUseCase
+import com.prmto.mova_movieapp.core.domain.use_case.languageIsoCode.GetLanguageIsoCodeUseCase
 import com.prmto.mova_movieapp.feature_upcoming.alarm_manager.UpComingAlarmItem
 import com.prmto.mova_movieapp.feature_upcoming.domain.alarmManager.UpComingAlarmScheduler
 import com.prmto.mova_movieapp.feature_upcoming.domain.model.UpcomingRemindEntity

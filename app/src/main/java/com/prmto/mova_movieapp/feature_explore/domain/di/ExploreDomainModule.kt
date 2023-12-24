@@ -2,14 +2,14 @@ package com.prmto.mova_movieapp.feature_explore.domain.di
 
 import com.prmto.mova_movieapp.core.domain.repository.DataStoreOperations
 import com.prmto.mova_movieapp.core.domain.repository.RemoteRepository
-import com.prmto.mova_movieapp.core.domain.use_case.GetLanguageIsoCodeUseCase
-import com.prmto.mova_movieapp.core.domain.use_case.GetMovieGenreListUseCase
-import com.prmto.mova_movieapp.core.domain.use_case.GetTvGenreListUseCase
+import com.prmto.mova_movieapp.core.domain.use_case.languageIsoCode.GetLanguageIsoCodeUseCase
+import com.prmto.mova_movieapp.core.domain.use_case.movie.GetMovieGenreListUseCase
+import com.prmto.mova_movieapp.core.domain.use_case.tv.GetTvGenreListUseCase
 import com.prmto.mova_movieapp.feature_explore.domain.repository.ExploreRepository
-import com.prmto.mova_movieapp.feature_explore.domain.use_case.DiscoverMovieUseCase
-import com.prmto.mova_movieapp.feature_explore.domain.use_case.DiscoverTvUseCase
 import com.prmto.mova_movieapp.feature_explore.domain.use_case.ExploreUseCases
-import com.prmto.mova_movieapp.feature_explore.domain.use_case.MultiSearchUseCase
+import com.prmto.mova_movieapp.feature_explore.domain.use_case.movie.DiscoverMovieUseCase
+import com.prmto.mova_movieapp.feature_explore.domain.use_case.multisearch.MultiSearchUseCase
+import com.prmto.mova_movieapp.feature_explore.domain.use_case.tv.DiscoverTvUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

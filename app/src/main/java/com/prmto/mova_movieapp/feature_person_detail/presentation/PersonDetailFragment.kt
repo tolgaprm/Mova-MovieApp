@@ -13,7 +13,7 @@ import coil.load
 import com.google.android.gms.ads.AdRequest
 import com.google.android.material.snackbar.Snackbar
 import com.prmto.mova_movieapp.R
-import com.prmto.mova_movieapp.core.data.data_source.remote.ImageApi
+import com.prmto.mova_movieapp.core.data.remote.api.ImageApi
 import com.prmto.mova_movieapp.core.presentation.util.BaseUiEvent
 import com.prmto.mova_movieapp.core.presentation.util.asString
 import com.prmto.mova_movieapp.core.presentation.util.collectFlow
@@ -133,9 +133,9 @@ class PersonDetailFragment : Fragment(R.layout.fragment_person_detail) {
             personDetailState.personDetail?.let { personDetail ->
                 bindAttributes(personDetail = personDetail)
 
-                bindCrewForPerson(personDetail.combinedCredits.crew)
+                bindCrewForPerson(personDetail.combinedCredits?.crew)
 
-                bindCastForPerson(personDetail.combinedCredits.cast)
+                bindCastForPerson(personDetail.combinedCredits?.cast)
             }
         }
 
@@ -158,8 +158,8 @@ class PersonDetailFragment : Fragment(R.layout.fragment_person_detail) {
         }
     }
 
-    private fun bindCastForPerson(castList: List<CastForPerson>) {
-        if (castList.isEmpty()) {
+    private fun bindCastForPerson(castList: List<CastForPerson>?) {
+        if (castList.isNullOrEmpty()) {
             binding.txtActorsWork.isVisible = false
             binding.actorRecylerView.isVisible = false
         } else {
@@ -168,8 +168,9 @@ class PersonDetailFragment : Fragment(R.layout.fragment_person_detail) {
         }
     }
 
-    private fun bindCrewForPerson(crewList: List<CrewForPerson>) {
-        if (crewList.isEmpty()) {
+    private fun bindCrewForPerson(crewList: List<CrewForPerson>?) {
+
+        if (crewList.isNullOrEmpty()) {
             binding.txtAsDirectorWorks.isVisible = false
             binding.directorRecylerView.isVisible = false
         } else {

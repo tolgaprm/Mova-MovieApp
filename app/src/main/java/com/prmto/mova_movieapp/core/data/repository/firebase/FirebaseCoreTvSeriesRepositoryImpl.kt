@@ -2,10 +2,10 @@ package com.prmto.mova_movieapp.core.data.repository.firebase
 
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
-import com.prmto.mova_movieapp.core.data.data_source.local.models.tv.FavoriteTvSeries
-import com.prmto.mova_movieapp.core.data.data_source.local.models.tv.TvSeriesWatchListItem
-import com.prmto.mova_movieapp.core.data.mapper.toFavoriteTvSeries
-import com.prmto.mova_movieapp.core.data.mapper.toTvSeriesWatchListItem
+import com.prmto.mova_movieapp.core.data.local.entity.tv.FavoriteTvSeries
+import com.prmto.mova_movieapp.core.data.local.entity.tv.TvSeriesWatchListItem
+import com.prmto.mova_movieapp.core.data.remote.mapper.tv.toFavoriteTvSeries
+import com.prmto.mova_movieapp.core.data.remote.mapper.tv.toTvSeriesWatchListItem
 import com.prmto.mova_movieapp.core.domain.models.TvSeries
 import com.prmto.mova_movieapp.core.domain.repository.firebase.FirebaseCoreTvSeriesRepository
 import com.prmto.mova_movieapp.core.domain.util.FirebaseFirestoreErrorMessage.Companion.setExceptionToFirebaseMessage

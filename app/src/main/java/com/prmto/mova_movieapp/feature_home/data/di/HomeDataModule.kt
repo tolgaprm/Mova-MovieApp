@@ -1,13 +1,13 @@
 package com.prmto.mova_movieapp.feature_home.data.di
 
-import com.prmto.mova_movieapp.feature_home.data.movie.datasource.HomeMovieRemoteDataSource
-import com.prmto.mova_movieapp.feature_home.data.movie.datasource.HomeMovieRemoteDataSourceImpl
-import com.prmto.mova_movieapp.feature_home.data.movie.repository.HomeMovieRepositoryImpl
-import com.prmto.mova_movieapp.feature_home.data.tv.datasource.HomeTvRemoteDataSource
-import com.prmto.mova_movieapp.feature_home.data.tv.datasource.HomeTvRemoteDataSourceImpl
-import com.prmto.mova_movieapp.feature_home.data.tv.repository.HomeTvRepositoryImpl
-import com.prmto.mova_movieapp.feature_home.domain.movie.HomeMovieRepository
-import com.prmto.mova_movieapp.feature_home.domain.tv.HomeTvRepository
+import com.prmto.mova_movieapp.feature_home.data.remote.dataSources.movie.HomeMovieRemoteDataSource
+import com.prmto.mova_movieapp.feature_home.data.remote.dataSources.movie.HomeMovieRemoteDataSourceImpl
+import com.prmto.mova_movieapp.feature_home.data.remote.dataSources.tv.HomeTvRemoteDataSource
+import com.prmto.mova_movieapp.feature_home.data.remote.dataSources.tv.HomeTvRemoteDataSourceImpl
+import com.prmto.mova_movieapp.feature_home.data.repository.movie.HomeMovieRepositoryImpl
+import com.prmto.mova_movieapp.feature_home.data.repository.tv.HomeTvRepositoryImpl
+import com.prmto.mova_movieapp.feature_home.domain.repository.movie.HomeMovieRepository
+import com.prmto.mova_movieapp.feature_home.domain.repository.tv.HomeTvRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

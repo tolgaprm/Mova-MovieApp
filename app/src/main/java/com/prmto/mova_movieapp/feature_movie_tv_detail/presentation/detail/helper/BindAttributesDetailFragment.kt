@@ -4,8 +4,8 @@ import android.content.Context
 import android.widget.ImageView
 import coil.load
 import com.prmto.mova_movieapp.R
-import com.prmto.mova_movieapp.core.data.data_source.remote.ImageApi
-import com.prmto.mova_movieapp.core.data.dto.Genre
+import com.prmto.mova_movieapp.core.data.remote.api.ImageApi
+import com.prmto.mova_movieapp.core.data.remote.dto.genre.Genre
 import com.prmto.mova_movieapp.core.presentation.util.HandleUtils
 import com.prmto.mova_movieapp.databinding.FragmentDetailBinding
 import com.prmto.mova_movieapp.feature_movie_tv_detail.domain.models.watchProvider.WatchProviderItem

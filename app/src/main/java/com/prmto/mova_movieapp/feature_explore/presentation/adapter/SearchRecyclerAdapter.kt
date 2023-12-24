@@ -6,10 +6,10 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.prmto.mova_movieapp.core.domain.models.Movie
 import com.prmto.mova_movieapp.core.domain.models.TvSeries
-import com.prmto.mova_movieapp.feature_explore.data.multisearch.dto.SearchDto
-import com.prmto.mova_movieapp.feature_explore.data.multisearch.dto.toMovieSearch
-import com.prmto.mova_movieapp.feature_explore.data.multisearch.dto.toPersonSearch
-import com.prmto.mova_movieapp.feature_explore.data.multisearch.dto.toTvSearch
+import com.prmto.mova_movieapp.feature_explore.data.remote.dto.multisearch.SearchDto
+import com.prmto.mova_movieapp.feature_explore.data.remote.dto.multisearch.toMovieSearch
+import com.prmto.mova_movieapp.feature_explore.data.remote.dto.multisearch.toPersonSearch
+import com.prmto.mova_movieapp.feature_explore.data.remote.dto.multisearch.toTvSearch
 import com.prmto.mova_movieapp.feature_explore.domain.model.PersonSearch
 import com.prmto.mova_movieapp.feature_explore.domain.model.toMovie
 import com.prmto.mova_movieapp.feature_explore.domain.model.toTvSeries

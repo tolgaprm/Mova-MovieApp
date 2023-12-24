@@ -1,6 +1,7 @@
 package com.prmto.mova_movieapp.feature_person_detail.data.remote
 
-import com.prmto.mova_movieapp.feature_person_detail.data.dto.PersonDetailDto
+import com.prmto.mova_movieapp.feature_person_detail.data.remote.dto.PersonDetailDto
+import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -12,5 +13,5 @@ interface PersonApi {
         @Path("person_id") personId: Int,
         @Query("language") language: String,
         @Query("append_to_response") appendToResponse: String = "combined_credits"
-    ): PersonDetailDto
+    ): Response<PersonDetailDto>
 }

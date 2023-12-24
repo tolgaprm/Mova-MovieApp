@@ -9,11 +9,11 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.prmto.mova_movieapp.R
-import com.prmto.mova_movieapp.core.data.dto.Genre
-import com.prmto.mova_movieapp.core.data.models.enums.Category
-import com.prmto.mova_movieapp.core.data.models.enums.Sort
-import com.prmto.mova_movieapp.core.data.models.enums.isMovie
-import com.prmto.mova_movieapp.core.data.models.enums.isPopularity
+import com.prmto.mova_movieapp.core.data.remote.dto.genre.Genre
+import com.prmto.mova_movieapp.core.domain.models.Category
+import com.prmto.mova_movieapp.core.domain.models.Sort
+import com.prmto.mova_movieapp.core.domain.models.isMovie
+import com.prmto.mova_movieapp.core.domain.models.isPopularity
 import com.prmto.mova_movieapp.core.presentation.util.collectFlow
 import com.prmto.mova_movieapp.databinding.FragmentBottomSheetBinding
 import com.prmto.mova_movieapp.feature_explore.presentation.event.ExploreBottomSheetEvent

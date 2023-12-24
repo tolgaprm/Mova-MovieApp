@@ -1,7 +1,7 @@
 package com.prmto.mova_movieapp.core.data.repository
 
-import com.prmto.mova_movieapp.core.data.data_source.remote.TMDBApi
-import com.prmto.mova_movieapp.core.data.dto.GenreList
+import com.prmto.mova_movieapp.core.data.remote.api.TMDBApi
+import com.prmto.mova_movieapp.core.data.remote.dto.genre.GenreList
 import com.prmto.mova_movieapp.core.domain.repository.RemoteRepository
 import javax.inject.Inject
 

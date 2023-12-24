@@ -13,7 +13,7 @@ import androidx.fragment.app.viewModels
 import com.google.android.gms.ads.AdRequest
 import com.google.android.material.snackbar.Snackbar
 import com.prmto.mova_movieapp.R
-import com.prmto.mova_movieapp.core.domain.supportedLanguages
+import com.prmto.mova_movieapp.core.domain.models.supportedLanguages
 import com.prmto.mova_movieapp.core.presentation.util.AlertDialogUtil
 import com.prmto.mova_movieapp.core.presentation.util.BaseUiEvent
 import com.prmto.mova_movieapp.core.presentation.util.asString

@@ -4,8 +4,8 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import androidx.paging.filter
 import androidx.paging.map
-import com.prmto.mova_movieapp.core.data.dto.Genre
-import com.prmto.mova_movieapp.core.domain.use_case.GetMovieGenreListUseCase
+import com.prmto.mova_movieapp.core.data.remote.dto.genre.Genre
+import com.prmto.mova_movieapp.core.domain.use_case.movie.GetMovieGenreListUseCase
 import com.prmto.mova_movieapp.core.domain.util.DateFormatUtils
 import com.prmto.mova_movieapp.core.presentation.util.HandleUtils
 import com.prmto.mova_movieapp.feature_upcoming.domain.model.UpcomingMovie

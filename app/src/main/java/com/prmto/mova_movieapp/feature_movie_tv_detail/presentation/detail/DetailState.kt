@@ -2,8 +2,8 @@ package com.prmto.mova_movieapp.feature_movie_tv_detail.presentation.detail
 
 import com.prmto.mova_movieapp.core.domain.models.Movie
 import com.prmto.mova_movieapp.core.domain.models.TvSeries
-import com.prmto.mova_movieapp.feature_movie_tv_detail.domain.movie.model.MovieDetail
-import com.prmto.mova_movieapp.feature_movie_tv_detail.domain.tv.model.TvDetail
+import com.prmto.mova_movieapp.feature_movie_tv_detail.domain.models.detail.movie.MovieDetail
+import com.prmto.mova_movieapp.feature_movie_tv_detail.domain.models.detail.tv.TvDetail
 
 data class DetailState(
     val isLoading: Boolean = false,

@@ -1,8 +1,8 @@
 package com.prmto.mova_movieapp.core.data.repository.local
 
-import com.prmto.mova_movieapp.core.data.data_source.local.MovaDatabase
-import com.prmto.mova_movieapp.core.data.mapper.toFavoriteTvSeries
-import com.prmto.mova_movieapp.core.data.mapper.toTvSeriesWatchListItem
+import com.prmto.mova_movieapp.core.data.local.MovaDatabase
+import com.prmto.mova_movieapp.core.data.remote.mapper.tv.toFavoriteTvSeries
+import com.prmto.mova_movieapp.core.data.remote.mapper.tv.toTvSeriesWatchListItem
 import com.prmto.mova_movieapp.core.domain.models.TvSeries
 import com.prmto.mova_movieapp.core.domain.repository.local.TvSeriesLocalRepository
 import kotlinx.coroutines.flow.Flow
