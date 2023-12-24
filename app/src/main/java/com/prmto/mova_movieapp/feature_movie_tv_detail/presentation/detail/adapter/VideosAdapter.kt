@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerCallback
 import com.prmto.mova_movieapp.databinding.YoutubePlayerViewBinding
-import com.prmto.mova_movieapp.feature_movie_tv_detail.domain.models.detail.video.VideoResult
+import com.prmto.mova_movieapp.feature_movie_tv_detail.domain.models.video.VideoResult
 
 
 class VideosAdapter(

@@ -2,8 +2,8 @@ package com.prmto.mova_movieapp.feature_explore.data.multisearch.datasource
 
 import com.prmto.mova_movieapp.core.data.dto.ApiResponse
 import com.prmto.mova_movieapp.core.data.tryApiCall
+import com.prmto.mova_movieapp.feature_explore.data.api.ExploreApi
 import com.prmto.mova_movieapp.feature_explore.data.multisearch.dto.SearchDto
-import com.prmto.mova_movieapp.feature_explore.data.remote.ExploreApi
 import javax.inject.Inject
 
 class ExploreMultiSearchRemoteDataSourceImpl @Inject constructor(

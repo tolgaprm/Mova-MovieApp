@@ -9,9 +9,9 @@ import com.prmto.mova_movieapp.core.domain.use_case.firebase.FirebaseCoreUseCase
 import com.prmto.mova_movieapp.core.presentation.util.UiText
 import com.prmto.mova_movieapp.core.util.Constants.DEFAULT_LANGUAGE
 import com.prmto.mova_movieapp.core.util.Resource
-import com.prmto.mova_movieapp.feature_movie_tv_detail.domain.models.detail.toMovie
-import com.prmto.mova_movieapp.feature_movie_tv_detail.domain.models.detail.toTvSeries
-import com.prmto.mova_movieapp.feature_movie_tv_detail.domain.models.detail.video.Videos
+import com.prmto.mova_movieapp.feature_movie_tv_detail.domain.models.video.Videos
+import com.prmto.mova_movieapp.feature_movie_tv_detail.domain.movie.model.toMovie
+import com.prmto.mova_movieapp.feature_movie_tv_detail.domain.tv.model.toTvSeries
 import com.prmto.mova_movieapp.feature_movie_tv_detail.domain.use_cases.DetailUseCases
 import com.prmto.mova_movieapp.feature_movie_tv_detail.presentation.detail.event.DetailEvent
 import com.prmto.mova_movieapp.feature_movie_tv_detail.presentation.detail.event.DetailUiEvent
@@ -240,27 +240,27 @@ class DetailViewModel @Inject constructor(
     private fun getMovieDetail(movieId: Int) {
         viewModelScope.launch {
             _detailState.value = _detailState.value.copy(isLoading = true)
-            detailUseCases.movieDetailUseCase(
+            val resource = detailUseCases.movieDetailUseCase(
                 language = languageIsoCode.value, movieId = movieId
-            ).collect { resource ->
-                when (resource) {
-                    is Resource.Error -> {
-                        _detailState.update { it.copy(isLoading = false) }
-                        _eventUiFlow.emit(
-                            DetailUiEvent.ShowSnackbar(
-                                resource.uiText ?: UiText.unknownError()
-                            )
-                        )
-                    }
+            )
 
-                    is Resource.Success -> {
-                        _detailState.value = _detailState.value.copy(
-                            movieDetail = resource.data,
-                            tvDetail = null,
-                            isLoading = false
+            when (resource) {
+                is Resource.Error -> {
+                    _detailState.update { it.copy(isLoading = false) }
+                    _eventUiFlow.emit(
+                        DetailUiEvent.ShowSnackbar(
+                            resource.uiText ?: UiText.unknownError()
                         )
-                        getMovieRecommendations(movieId = movieId)
-                    }
+                    )
+                }
+
+                is Resource.Success -> {
+                    _detailState.value = _detailState.value.copy(
+                        movieDetail = resource.data,
+                        tvDetail = null,
+                        isLoading = false
+                    )
+                    getMovieRecommendations(movieId = movieId)
                 }
             }
         }
@@ -269,29 +269,29 @@ class DetailViewModel @Inject constructor(
     private fun getTvDetail(tvId: Int) {
         viewModelScope.launch {
             _detailState.update { it.copy(isLoading = true) }
-            detailUseCases.tvDetailUseCase(
+            val resource = detailUseCases.tvDetailUseCase(
                 language = languageIsoCode.value, tvId = tvId
-            ).collect { resource ->
-                when (resource) {
-                    is Resource.Error -> {
-                        _detailState.update {
-                            it.copy(isLoading = false)
-                        }
-                        _eventUiFlow.emit(
-                            DetailUiEvent.ShowSnackbar(
-                                resource.uiText ?: UiText.unknownError()
-                            )
-                        )
-                    }
+            )
 
-                    is Resource.Success -> {
-                        _detailState.value = detailState.value.copy(
-                            tvDetail = resource.data,
-                            movieDetail = null,
-                            isLoading = false
-                        )
-                        getTvRecommendations(tvId = tvId)
+            when (resource) {
+                is Resource.Error -> {
+                    _detailState.update {
+                        it.copy(isLoading = false)
                     }
+                    _eventUiFlow.emit(
+                        DetailUiEvent.ShowSnackbar(
+                            resource.uiText ?: UiText.unknownError()
+                        )
+                    )
+                }
+
+                is Resource.Success -> {
+                    _detailState.value = detailState.value.copy(
+                        tvDetail = resource.data,
+                        movieDetail = null,
+                        isLoading = false
+                    )
+                    getTvRecommendations(tvId = tvId)
                 }
             }
         }

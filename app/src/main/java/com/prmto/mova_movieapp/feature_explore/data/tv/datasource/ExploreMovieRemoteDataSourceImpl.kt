@@ -3,7 +3,7 @@ package com.prmto.mova_movieapp.feature_explore.data.tv.datasource
 import com.prmto.mova_movieapp.core.data.dto.ApiResponse
 import com.prmto.mova_movieapp.core.data.dto.TvSeriesDto
 import com.prmto.mova_movieapp.core.data.tryApiCall
-import com.prmto.mova_movieapp.feature_explore.data.remote.ExploreApi
+import com.prmto.mova_movieapp.feature_explore.data.api.ExploreApi
 import javax.inject.Inject
 
 class ExploreTvRemoteDataSourceImpl @Inject constructor(

@@ -6,8 +6,8 @@ import android.view.View
 import com.google.android.material.textview.MaterialTextView
 import com.prmto.mova_movieapp.R
 import com.prmto.mova_movieapp.databinding.FragmentDetailBinding
-import com.prmto.mova_movieapp.feature_movie_tv_detail.domain.models.detail.CreatedBy
-import com.prmto.mova_movieapp.feature_movie_tv_detail.domain.models.detail.TvDetail
+import com.prmto.mova_movieapp.feature_movie_tv_detail.domain.tv.model.CreatedBy
+import com.prmto.mova_movieapp.feature_movie_tv_detail.domain.tv.model.TvDetail
 
 class BindTvDetail(
     binding: FragmentDetailBinding,

@@ -3,7 +3,7 @@ package com.prmto.mova_movieapp.feature_home.data.tv.datasource
 import com.prmto.mova_movieapp.core.data.dto.ApiResponse
 import com.prmto.mova_movieapp.core.data.dto.TvSeriesDto
 import com.prmto.mova_movieapp.core.data.tryApiCall
-import com.prmto.mova_movieapp.feature_home.data.remote.HomeApi
+import com.prmto.mova_movieapp.feature_home.data.api.HomeApi
 import javax.inject.Inject
 
 class HomeTvRemoteDataSourceImpl @Inject constructor(

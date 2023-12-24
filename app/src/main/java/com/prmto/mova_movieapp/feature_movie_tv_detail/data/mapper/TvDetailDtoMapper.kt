@@ -2,7 +2,7 @@ package com.prmto.mova_movieapp.feature_movie_tv_detail.data.mapper
 
 import com.prmto.mova_movieapp.core.data.orZero
 import com.prmto.mova_movieapp.feature_movie_tv_detail.data.dto.detail.tv.TvDetailDto
-import com.prmto.mova_movieapp.feature_movie_tv_detail.domain.models.detail.TvDetail
+import com.prmto.mova_movieapp.feature_movie_tv_detail.domain.tv.model.TvDetail
 
 fun TvDetailDto.toTvDetail(
     countryIsoCode: String

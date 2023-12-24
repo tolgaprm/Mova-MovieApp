@@ -3,7 +3,7 @@ package com.prmto.mova_movieapp.feature_explore.data.movie.datasource
 import com.prmto.mova_movieapp.core.data.dto.ApiResponse
 import com.prmto.mova_movieapp.core.data.dto.MovieDto
 import com.prmto.mova_movieapp.core.data.tryApiCall
-import com.prmto.mova_movieapp.feature_explore.data.remote.ExploreApi
+import com.prmto.mova_movieapp.feature_explore.data.api.ExploreApi
 import javax.inject.Inject
 
 class ExploreMovieRemoteDataSourceImpl @Inject constructor(
