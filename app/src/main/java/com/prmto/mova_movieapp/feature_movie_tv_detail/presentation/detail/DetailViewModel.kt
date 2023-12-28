@@ -1,14 +1,12 @@
 package com.prmto.mova_movieapp.feature_movie_tv_detail.presentation.detail
 
 import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.prmto.mova_movieapp.core.domain.repository.DataStoreOperations
 import com.prmto.mova_movieapp.core.domain.use_case.database.LocalDatabaseUseCases
 import com.prmto.mova_movieapp.core.domain.use_case.firebase.FirebaseCoreUseCases
-import com.prmto.mova_movieapp.core.presentation.util.UiText
+import com.prmto.mova_movieapp.core.presentation.base.viewModel.BaseViewModelWithUiEvent
 import com.prmto.mova_movieapp.core.util.Constants.DEFAULT_LANGUAGE
-import com.prmto.mova_movieapp.core.util.Resource
 import com.prmto.mova_movieapp.feature_movie_tv_detail.domain.models.detail.movie.toMovie
 import com.prmto.mova_movieapp.feature_movie_tv_detail.domain.models.detail.tv.toTvSeries
 import com.prmto.mova_movieapp.feature_movie_tv_detail.domain.models.detail.video.Videos
@@ -16,17 +14,11 @@ import com.prmto.mova_movieapp.feature_movie_tv_detail.domain.use_cases.DetailUs
 import com.prmto.mova_movieapp.feature_movie_tv_detail.presentation.detail.event.DetailEvent
 import com.prmto.mova_movieapp.feature_movie_tv_detail.presentation.detail.event.DetailUiEvent
 import com.prmto.mova_movieapp.feature_movie_tv_detail.util.Constants.DETAIL_DEFAULT_ID
-import com.prmto.mova_movieapp.feature_movie_tv_detail.util.isSelectedTrailerTab
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -39,97 +31,80 @@ class DetailViewModel @Inject constructor(
     private val firebaseCoreUseCases: FirebaseCoreUseCases,
     private val localDatabaseUseCases: LocalDatabaseUseCases,
     private val savedStateHandle: SavedStateHandle
-) : ViewModel() {
-
+) : BaseViewModelWithUiEvent<DetailUiEvent>() {
     private val _detailState = MutableStateFlow(DetailState())
     val detailState: StateFlow<DetailState> = _detailState.asStateFlow()
 
     private val _videos = MutableStateFlow<Videos?>(null)
     val videos: StateFlow<Videos?> = _videos.asStateFlow()
 
-    private val languageIsoCode = MutableStateFlow(DEFAULT_LANGUAGE)
-
-    private val _movieIdState = MutableStateFlow(DETAIL_DEFAULT_ID)
-    val movieIdState = _movieIdState.asStateFlow()
-
-    private val _tvIdState = MutableStateFlow(DETAIL_DEFAULT_ID)
-    val tvIdState = _tvIdState.asStateFlow()
-
-    private val _selectedTabPosition = MutableStateFlow(0)
-    val selectedTabPosition = _selectedTabPosition.asStateFlow()
-
-    private val _eventUiFlow = MutableSharedFlow<DetailUiEvent>()
-    val eventUiFlow: SharedFlow<DetailUiEvent> = _eventUiFlow.asSharedFlow()
+    private var languageIsoCode = DEFAULT_LANGUAGE
 
     init {
         getLanguageIsoCode()
     }
 
-    fun getLanguageIsoCode() {
+    private fun getLanguageIsoCode() {
         viewModelScope.launch {
-            languageIsoCode.value = dataStoreOperations.getLanguageIsoCode().first()
+            languageIsoCode = dataStoreOperations.getLanguageIsoCode().first()
         }
-        savedStateHandle.get<Int>("movieId")?.let { movieId ->
-            if (movieId != DETAIL_DEFAULT_ID) {
-                _movieIdState.value = movieId
-                updateDoesAddFavoriteState(
-                    idThatCheck = movieId,
-                    addedFavoriteIds = localDatabaseUseCases.getFavoriteMovieIdsUseCase()
-                )
-                updateDoesAddWatchListState(
-                    idThatCheck = movieId,
-                    addedWatchListIds = localDatabaseUseCases.getMovieWatchListItemIdsUseCase()
-                )
+        DetailFragmentArgs.fromSavedStateHandle(savedStateHandle)
+            .movieId.let { movieId ->
+                if (movieId == DETAIL_DEFAULT_ID) return@let
+                _detailState.update {
+                    it.copy(
+                        movieId = movieId,
+                        tvId = null
+                    )
+                }
                 getMovieDetail(movieId = movieId)
             }
-        }
-        savedStateHandle.get<Int>("tvId")?.let { tvId ->
-            if (tvId != DETAIL_DEFAULT_ID) {
-                _tvIdState.value = tvId
-                updateDoesAddFavoriteState(
-                    idThatCheck = tvId,
-                    addedFavoriteIds = localDatabaseUseCases.getFavoriteTvSeriesIdsUseCase()
-                )
-                updateDoesAddWatchListState(
-                    idThatCheck = tvId,
-                    addedWatchListIds = localDatabaseUseCases.getTvSeriesWatchListItemIdsUseCase()
-                )
+
+        DetailFragmentArgs.fromSavedStateHandle(savedStateHandle)
+            .tvId.let { tvId ->
+                if (tvId == DETAIL_DEFAULT_ID) return@let
+                _detailState.update {
+                    it.copy(
+                        movieId = null,
+                        tvId = tvId
+                    )
+                }
                 getTvDetail(tvId = tvId)
             }
-        }
     }
 
     fun onEvent(event: DetailEvent) {
         when (event) {
             is DetailEvent.IntentToImdbWebSite -> {
-                emitUiEventFlow(DetailUiEvent.IntentToImdbWebSite(addLanguageQueryToTmdbUrl(event.url)))
-            }
-
-            is DetailEvent.OnBackPressed -> {
-                emitUiEventFlow(DetailUiEvent.PopBackStack)
+                addConsumableViewEvent(
+                    DetailUiEvent.IntentToImdbWebSite(
+                        addLanguageQueryToTmdbUrl(
+                            event.url
+                        )
+                    )
+                )
             }
 
             is DetailEvent.ClickToDirectorName -> {
                 val action =
                     DetailFragmentDirections.actionDetailFragmentToPersonDetailFragment(event.directorId)
 
-                emitUiEventFlow(
-                    DetailUiEvent.NavigateTo(action)
-                )
+                addConsumableViewEvent(DetailUiEvent.NavigateTo(action))
             }
 
             is DetailEvent.ClickActorName -> {
                 val action =
                     DetailFragmentDirections.actionDetailFragmentToPersonDetailFragment(event.actorId)
-                emitUiEventFlow(
-                    DetailUiEvent.NavigateTo(
-                        action
-                    )
-                )
+                addConsumableViewEvent(DetailUiEvent.NavigateTo(action))
             }
 
             is DetailEvent.ClickedAddWatchList -> {
                 val doesAddWatchList = detailState.value.doesAddWatchList
+                _detailState.update {
+                    it.copy(
+                        doesAddWatchList = !doesAddWatchList
+                    )
+                }
                 addWatchListIfUserSignIn(
                     onAddTvSeries = {
                         localDatabaseUseCases.toggleTvSeriesForWatchListItemUseCase(
@@ -150,6 +125,11 @@ class DetailViewModel @Inject constructor(
 
             is DetailEvent.ClickedAddFavoriteList -> {
                 val doesAddFavoriteList = detailState.value.doesAddFavorite
+                _detailState.update {
+                    it.copy(
+                        doesAddFavorite = !doesAddFavoriteList
+                    )
+                }
                 addFavoriteListIfUserSignIn(
                     onAddTvSeries = {
                         localDatabaseUseCases.toggleTvSeriesForFavoriteListUseCase(
@@ -169,12 +149,12 @@ class DetailViewModel @Inject constructor(
             }
 
             is DetailEvent.SelectedTab -> {
-                _selectedTabPosition.value = event.selectedTabPosition
-                if (selectedTabPosition.value.isSelectedTrailerTab()) {
-                    if (isNotTvIdEmpty()) {
-                        getTvVideos(tvId = tvIdState.value)
+                _detailState.update { it.copy(selectedTab = event.selectedTab) }
+                if (detailState.value.isSelectedTrailerTab()) {
+                    if (detailState.value.isNotNullTvDetail()) {
+                        getTvVideos(tvId = detailState.value.tvId!!)
                     } else {
-                        getMovieVideos(movieId = movieIdState.value)
+                        getMovieVideos(movieId = detailState.value.movieId!!)
                     }
                 }
             }
@@ -188,7 +168,7 @@ class DetailViewModel @Inject constructor(
                 event.movie?.let {
                     action.movie = it
                 }
-                emitUiEventFlow(DetailUiEvent.NavigateTo(action))
+                addConsumableViewEvent(DetailUiEvent.NavigateTo(action))
             }
         }
     }
@@ -199,13 +179,13 @@ class DetailViewModel @Inject constructor(
     ) {
         viewModelScope.launch {
             if (firebaseCoreUseCases.isUserSignInUseCase()) {
-                if (isNotTvIdEmpty()) {
+                if (detailState.value.isNotNullTvDetail()) {
                     onAddTvSeries()
                 } else {
                     onAddMovie()
                 }
             } else {
-                _eventUiFlow.emit(DetailUiEvent.ShowAlertDialog)
+                addConsumableViewEvent(DetailUiEvent.ShowAlertDialog)
             }
         }
     }
@@ -216,91 +196,86 @@ class DetailViewModel @Inject constructor(
     ) {
         viewModelScope.launch {
             if (firebaseCoreUseCases.isUserSignInUseCase()) {
-                if (isNotTvIdEmpty()) {
+                if (detailState.value.isNotNullTvDetail()) {
                     onAddTvSeries()
                 } else {
                     onAddMovie()
                 }
             } else {
-                _eventUiFlow.emit(DetailUiEvent.ShowAlertDialog)
+                addConsumableViewEvent(DetailUiEvent.ShowAlertDialog)
             }
         }
     }
 
-    private fun emitUiEventFlow(detailUiEvent: DetailUiEvent) {
-        viewModelScope.launch {
-            _eventUiFlow.emit(detailUiEvent)
-        }
-    }
-
     private fun addLanguageQueryToTmdbUrl(tmdbUrl: String): String {
-        return tmdbUrl.plus("?language=${languageIsoCode.value}")
+        return tmdbUrl.plus("?language=${languageIsoCode}")
     }
 
     private fun getMovieDetail(movieId: Int) {
         viewModelScope.launch {
             _detailState.value = _detailState.value.copy(isLoading = true)
-            val resource = detailUseCases.movieDetailUseCase(
-                language = languageIsoCode.value, movieId = movieId
-            )
 
-            when (resource) {
-                is Resource.Error -> {
+            handleResourceWithCallbacks(
+                resourceSupplier = {
+                    detailUseCases.movieDetailUseCase(
+                        language = languageIsoCode,
+                        movieId = movieId
+                    )
+                },
+                onErrorCallback = { uiText ->
                     _detailState.update { it.copy(isLoading = false) }
-                    _eventUiFlow.emit(
-                        DetailUiEvent.ShowSnackbar(
-                            resource.uiText ?: UiText.unknownError()
+                    addConsumableViewEvent(DetailUiEvent.showSnackbarErrorMessage(uiText))
+                },
+                onSuccessCallback = { movieDetail ->
+                    _detailState.update {
+                        it.copy(
+                            movieDetail = movieDetail,
+                            tvDetail = null,
+                            tvId = null,
+                            isLoading = false,
+                            doesAddFavorite = movieDetail.isFavorite,
+                            doesAddWatchList = movieDetail.isWatchList
                         )
-                    )
-                }
-
-                is Resource.Success -> {
-                    _detailState.value = _detailState.value.copy(
-                        movieDetail = resource.data,
-                        tvDetail = null,
-                        isLoading = false
-                    )
+                    }
                     getMovieRecommendations(movieId = movieId)
                 }
-            }
+            )
         }
     }
 
     private fun getTvDetail(tvId: Int) {
         viewModelScope.launch {
             _detailState.update { it.copy(isLoading = true) }
-            val resource = detailUseCases.tvDetailUseCase(
-                language = languageIsoCode.value, tvId = tvId
-            )
 
-            when (resource) {
-                is Resource.Error -> {
-                    _detailState.update {
-                        it.copy(isLoading = false)
-                    }
-                    _eventUiFlow.emit(
-                        DetailUiEvent.ShowSnackbar(
-                            resource.uiText ?: UiText.unknownError()
-                        )
+            handleResourceWithCallbacks(
+                resourceSupplier = {
+                    detailUseCases.tvDetailUseCase(
+                        language = languageIsoCode, tvId = tvId
                     )
-                }
-
-                is Resource.Success -> {
-                    _detailState.value = detailState.value.copy(
-                        tvDetail = resource.data,
+                },
+                onErrorCallback = { uiText ->
+                    _detailState.update { it.copy(isLoading = false) }
+                    addConsumableViewEvent(DetailUiEvent.showSnackbarErrorMessage(uiText))
+                },
+                onSuccessCallback = { tvDetail ->
+                    _detailState.value = _detailState.value.copy(
+                        tvDetail = tvDetail,
                         movieDetail = null,
-                        isLoading = false
+                        movieId = null,
+                        isLoading = false,
+                        doesAddFavorite = tvDetail.isFavorite,
+                        doesAddWatchList = tvDetail.isWatchList
                     )
                     getTvRecommendations(tvId = tvId)
                 }
-            }
+            )
         }
     }
 
     private fun getMovieRecommendations(movieId: Int) {
         viewModelScope.launch {
             detailUseCases.getMovieRecommendationUseCase(
-                movieId = movieId, language = languageIsoCode.value
+                movieId = movieId, language = languageIsoCode
             ).collect { movies ->
                 _detailState.update {
                     it.copy(
@@ -314,7 +289,7 @@ class DetailViewModel @Inject constructor(
     private fun getTvRecommendations(tvId: Int) {
         viewModelScope.launch {
             detailUseCases.getTvRecommendationUseCase(
-                tvId = tvId, language = languageIsoCode.value
+                tvId = tvId, language = languageIsoCode
             ).collect { tvSeries ->
                 _detailState.update {
                     it.copy(
@@ -328,83 +303,46 @@ class DetailViewModel @Inject constructor(
     private fun getMovieVideos(movieId: Int) {
         viewModelScope.launch(Dispatchers.IO) {
             updateVideosLoading(isLoading = true)
-            val resource = detailUseCases.getMovieVideosUseCase(
-                movieId = movieId, language = languageIsoCode.value
-            )
-            when (resource) {
-                is Resource.Success -> {
-                    updateVideosLoading(isLoading = false)
-                    _videos.value = resource.data
-                }
-
-                is Resource.Error -> {
-                    updateVideosLoading(isLoading = false)
-                    _eventUiFlow.emit(
-                        DetailUiEvent.ShowSnackbar(
-                            resource.uiText ?: UiText.unknownError()
-                        )
+            handleResourceWithCallbacks(
+                resourceSupplier = {
+                    detailUseCases.getMovieVideosUseCase(
+                        movieId = movieId, language = languageIsoCode
                     )
+                },
+                onErrorCallback = { uiText ->
+                    updateVideosLoading(isLoading = false)
+                    addConsumableViewEvent(DetailUiEvent.showSnackbarErrorMessage(uiText))
+                },
+                onSuccessCallback = { videos ->
+                    updateVideosLoading(isLoading = false)
+                    _videos.value = videos
                 }
-            }
+            )
         }
     }
 
     private fun getTvVideos(tvId: Int) {
         viewModelScope.launch(Dispatchers.IO) {
             updateVideosLoading(isLoading = true)
-            val resource = detailUseCases.getTvVideosUseCase(
-                tvId = tvId, language = languageIsoCode.value
-            )
-            when (resource) {
-                is Resource.Success -> {
-                    updateVideosLoading(isLoading = false)
-                    _videos.value = resource.data
-                }
-
-                is Resource.Error -> {
-                    updateVideosLoading(isLoading = false)
-                    _eventUiFlow.emit(
-                        DetailUiEvent.ShowSnackbar(
-                            resource.uiText ?: UiText.unknownError()
-                        )
+            handleResourceWithCallbacks(
+                resourceSupplier = {
+                    detailUseCases.getTvVideosUseCase(
+                        tvId = tvId, language = languageIsoCode
                     )
+                },
+                onErrorCallback = { uiText ->
+                    updateVideosLoading(isLoading = false)
+                    addConsumableViewEvent(DetailUiEvent.showSnackbarErrorMessage(uiText))
+                },
+                onSuccessCallback = { videos ->
+                    updateVideosLoading(isLoading = false)
+                    _videos.value = videos
                 }
-            }
+            )
         }
     }
 
     private fun updateVideosLoading(isLoading: Boolean) {
         _detailState.update { it.copy(videosLoading = isLoading) }
     }
-
-    private fun updateDoesAddFavoriteState(
-        idThatCheck: Int,
-        addedFavoriteIds: Flow<List<Int>>
-    ) {
-        viewModelScope.launch {
-            addedFavoriteIds.collectLatest { favoriteIds ->
-                _detailState.update { it.copy(doesAddFavorite = favoriteIds.any { id -> id == idThatCheck }) }
-            }
-        }
-    }
-
-    private fun updateDoesAddWatchListState(
-        idThatCheck: Int,
-        addedWatchListIds: Flow<List<Int>>
-    ) {
-        viewModelScope.launch {
-            addedWatchListIds.collectLatest { watchListItemIds ->
-                _detailState.update { it.copy(doesAddWatchList = watchListItemIds.any { id -> id == idThatCheck }) }
-            }
-        }
-    }
-
-    fun isTvIdEmpty(): Boolean {
-        return _tvIdState.value == DETAIL_DEFAULT_ID
-    }
-
-    private fun isNotTvIdEmpty(): Boolean {
-        return _tvIdState.value != DETAIL_DEFAULT_ID
-    }
-
 }

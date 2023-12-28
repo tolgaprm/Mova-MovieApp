@@ -10,4 +10,8 @@ sealed class DetailUiEvent {
     object ShowAlertDialog : DetailUiEvent()
     data class NavigateTo(val directions: NavDirections) : DetailUiEvent()
 
+    companion object {
+        fun showSnackbarErrorMessage(uiText: UiText?) =
+            DetailUiEvent.ShowSnackbar(uiText ?: UiText.somethingWentWrong())
+    }
 }

@@ -1,7 +1,7 @@
 package com.prmto.mova_movieapp.feature_mylist.presentation
 
-import com.prmto.mova_movieapp.core.domain.models.Movie
-import com.prmto.mova_movieapp.core.domain.models.TvSeries
+import com.prmto.mova_movieapp.core.domain.models.movie.Movie
+import com.prmto.mova_movieapp.core.domain.models.tv.TvSeries
 
 
 data class ListState(
@@ -13,7 +13,7 @@ data class ListState(
 )
 
 
-enum class ListTab() {
+enum class ListTab {
     WATCHLIST,
     FAVORITELIST
 }

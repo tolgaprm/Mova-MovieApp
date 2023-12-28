@@ -1,7 +1,7 @@
 package com.prmto.mova_movieapp.feature_home.domain.di
 
 import com.prmto.mova_movieapp.core.domain.repository.DataStoreOperations
-import com.prmto.mova_movieapp.core.domain.repository.RemoteRepository
+import com.prmto.mova_movieapp.core.domain.repository.GenreRepository
 import com.prmto.mova_movieapp.core.domain.use_case.languageIsoCode.GetLanguageIsoCodeUseCase
 import com.prmto.mova_movieapp.core.domain.use_case.languageIsoCode.UpdateLanguageIsoCodeUseCase
 import com.prmto.mova_movieapp.core.domain.use_case.movie.GetMovieGenreListUseCase
@@ -30,29 +30,31 @@ object HomeDomainModule {
         homeMovieRepository: HomeMovieRepository,
         homeTvRepository: HomeTvRepository,
         dataStoreOperations: DataStoreOperations,
-        remoteRepository: RemoteRepository
+        genreRepository: GenreRepository
     ): HomeUseCases {
         return HomeUseCases(
             getNowPlayingMoviesUseCase = GetNowPlayingMoviesUseCase(
-                homeMovieRepository,
-                GetMovieGenreListUseCase(remoteRepository)
+                homeMovieRepository = homeMovieRepository,
+                getMovieGenreListUseCase = GetMovieGenreListUseCase(
+                    genreRepository
+                )
             ),
             getLanguageIsoCodeUseCase = GetLanguageIsoCodeUseCase(dataStoreOperations),
             getPopularMoviesUseCase = GetPopularMoviesUseCase(
-                homeMovieRepository,
-                GetMovieGenreListUseCase(remoteRepository)
+                homeMovieRepository = homeMovieRepository,
+                getMovieGenreListUseCase = GetMovieGenreListUseCase(genreRepository),
             ),
             getTopRatedMoviesUseCase = GetTopRatedMoviesUseCase(
                 homeMovieRepository,
-                GetMovieGenreListUseCase(remoteRepository)
+                GetMovieGenreListUseCase(genreRepository),
             ),
             getPopularTvSeriesUseCase = GetPopularTvSeriesUseCase(
-                homeTvRepository,
-                GetTvGenreListUseCase(remoteRepository)
+                homeTvRepository = homeTvRepository,
+                getTvGenreListUseCase = GetTvGenreListUseCase(genreRepository)
             ),
             getTopRatedTvSeriesUseCase = GetTopRatedTvSeriesUseCase(
                 homeTvRepository,
-                GetTvGenreListUseCase(remoteRepository)
+                GetTvGenreListUseCase(genreRepository),
             ),
             updateLanguageIsoCodeUseCase = UpdateLanguageIsoCodeUseCase(dataStoreOperations)
         )

@@ -1,58 +1,54 @@
 package com.prmto.mova_movieapp.feature_explore.presentation.explore
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.prmto.mova_movieapp.R
-import com.prmto.mova_movieapp.core.data.remote.dto.genre.Genre
 import com.prmto.mova_movieapp.core.domain.models.Category
-import com.prmto.mova_movieapp.core.domain.models.Movie
-import com.prmto.mova_movieapp.core.domain.models.TvSeries
+import com.prmto.mova_movieapp.core.domain.models.genre.Genre
 import com.prmto.mova_movieapp.core.domain.models.isTv
+import com.prmto.mova_movieapp.core.domain.models.movie.Movie
+import com.prmto.mova_movieapp.core.domain.models.tv.TvSeries
 import com.prmto.mova_movieapp.core.domain.repository.ConnectivityObserver
+import com.prmto.mova_movieapp.core.domain.repository.GenreRepository
 import com.prmto.mova_movieapp.core.domain.repository.isAvaliable
+import com.prmto.mova_movieapp.core.presentation.base.viewModel.BaseViewModelWithUiEvent
 import com.prmto.mova_movieapp.core.presentation.util.UiEvent
 import com.prmto.mova_movieapp.core.presentation.util.UiText
 import com.prmto.mova_movieapp.core.util.Constants.DEFAULT_LANGUAGE
 import com.prmto.mova_movieapp.feature_explore.data.remote.dto.multisearch.SearchDto
+import com.prmto.mova_movieapp.feature_explore.domain.model.MultiSearch
 import com.prmto.mova_movieapp.feature_explore.domain.use_case.ExploreUseCases
 import com.prmto.mova_movieapp.feature_explore.presentation.event.ExploreBottomSheetEvent
 import com.prmto.mova_movieapp.feature_explore.presentation.event.ExploreFragmentEvent
-import com.prmto.mova_movieapp.feature_explore.presentation.explore.event.ExploreAdapterLoadStateEvent
-import com.prmto.mova_movieapp.feature_explore.presentation.explore.state.ExplorePagingAdapterLoadState
 import com.prmto.mova_movieapp.feature_explore.presentation.filter_bottom_sheet.state.FilterBottomState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import javax.inject.Inject
-
 
 @HiltViewModel
 class ExploreViewModel @Inject constructor(
     private val exploreUseCases: ExploreUseCases,
-    private val observeNetwork: ConnectivityObserver
-) : ViewModel() {
-
-
-    private val _language = MutableStateFlow(DEFAULT_LANGUAGE)
-    val language = _language.asStateFlow()
-
-    private val _genreList = MutableStateFlow<List<Genre>>(emptyList())
-    val genreList = _genreList.asStateFlow()
+    private val observeNetwork: ConnectivityObserver,
+    private val genreRepository: GenreRepository
+) : BaseViewModelWithUiEvent<UiEvent>() {
+    private var languageState = DEFAULT_LANGUAGE
 
     private val _query = MutableStateFlow("")
     val query: StateFlow<String> get() = _query
+
+    private var movieGenre = emptyList<Genre>()
+    private var tvGenreList = emptyList<Genre>()
+
+    private val _genreList = MutableStateFlow(emptyList<Genre>())
+    val genreListState: StateFlow<List<Genre>> = _genreList.asStateFlow()
 
     private val _networkState = MutableStateFlow(ConnectivityObserver.Status.Unavaliable)
     val networkState: StateFlow<ConnectivityObserver.Status> = _networkState.asStateFlow()
@@ -60,21 +56,12 @@ class ExploreViewModel @Inject constructor(
     private val _filterBottomSheetState = MutableStateFlow(FilterBottomState())
     val filterBottomSheetState = _filterBottomSheetState.asStateFlow()
 
-    private val _pagingState = MutableStateFlow(ExplorePagingAdapterLoadState())
-    val pagingState: StateFlow<ExplorePagingAdapterLoadState> = _pagingState.asStateFlow()
-
-    private val _eventFlow = MutableSharedFlow<UiEvent>()
-    val eventFlow = _eventFlow.asSharedFlow()
-
-
-    private var handler: CoroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
-        Timber.d(throwable.toString())
-    }
-
     init {
         viewModelScope.launch(handler) {
             collectNetworkState()
             collectLanguageIsoCode()
+            getMovieGenreList()
+            getTvGenreList()
         }
     }
 
@@ -89,7 +76,7 @@ class ExploreViewModel @Inject constructor(
     private fun collectLanguageIsoCode() {
         viewModelScope.launch {
             exploreUseCases.getLanguageIsoCodeUseCase().collectLatest { language ->
-                _language.value = language
+                languageState = language
                 getGenreListByCategoriesState()
             }
         }
@@ -99,24 +86,25 @@ class ExploreViewModel @Inject constructor(
         return networkState.value.isAvaliable()
     }
 
-    fun multiSearch(query: String): Flow<PagingData<SearchDto>> {
+    fun multiSearch(query: String): Flow<PagingData<MultiSearch>> {
         return if (query.isNotEmpty()) {
-            exploreUseCases.multiSearchUseCase(query = query, language = language.value)
+            exploreUseCases.multiSearchUseCase(query = query, language = languageState)
+                .cachedIn(viewModelScope)
         } else {
-            flow { PagingData.empty<SearchDto>() }
+            flow<PagingData<MultiSearch>> { PagingData.empty<SearchDto>() }.cachedIn(viewModelScope)
         }
     }
 
     fun discoverMovie(): Flow<PagingData<Movie>> {
         return exploreUseCases.discoverMovieUseCase(
-            language = language.value,
+            language = languageState,
             filterBottomState = filterBottomSheetState.value
         ).cachedIn(viewModelScope)
     }
 
     fun discoverTv(): Flow<PagingData<TvSeries>> {
         return exploreUseCases.discoverTvUseCase(
-            language = language.value,
+            language = languageState,
             filterBottomState = filterBottomSheetState.value
         ).cachedIn(viewModelScope)
     }
@@ -132,18 +120,9 @@ class ExploreViewModel @Inject constructor(
                     _filterBottomSheetState.update { it.copy(categoryState = Category.MOVIE) }
                 }
             }
+
             is ExploreFragmentEvent.RemoveQuery -> {
                 _query.value = ""
-            }
-            is ExploreFragmentEvent.NavigateToDetailBottomSheet -> {
-                viewModelScope.launch {
-                    _eventFlow.emit(UiEvent.NavigateTo(event.directions))
-                }
-            }
-            is ExploreFragmentEvent.NavigateToPersonDetail -> {
-                viewModelScope.launch {
-                    _eventFlow.emit(UiEvent.NavigateTo(event.directions))
-                }
             }
         }
     }
@@ -170,59 +149,10 @@ class ExploreViewModel @Inject constructor(
             }
 
             is ExploreBottomSheetEvent.Apply -> {
-                viewModelScope.launch { _eventFlow.emit(UiEvent.PopBackStack) }
+                addConsumableViewEvent(UiEvent.PopBackStack)
             }
         }
     }
-
-
-    fun onAdapterLoadStateEvent(event: ExploreAdapterLoadStateEvent) {
-        when (event) {
-            is ExploreAdapterLoadStateEvent.PagingError -> {
-                _pagingState.update { it.copy(errorUiText = event.uiText) }
-                viewModelScope.launch {
-                    _eventFlow.emit(UiEvent.ShowSnackbar(event.uiText))
-                }
-            }
-            is ExploreAdapterLoadStateEvent.FilterAdapterLoading -> {
-                _pagingState.update {
-                    it.copy(
-                        filterAdapterState = it.filterAdapterState.copy(
-                            isLoading = true
-                        )
-                    )
-                }
-            }
-            is ExploreAdapterLoadStateEvent.FilterAdapterNotLoading -> {
-                _pagingState.update {
-                    it.copy(
-                        filterAdapterState = it.filterAdapterState.copy(
-                            isLoading = false
-                        )
-                    )
-                }
-            }
-            is ExploreAdapterLoadStateEvent.SearchAdapterLoading -> {
-                _pagingState.update {
-                    it.copy(
-                        searchAdapterState = it.searchAdapterState.copy(
-                            isLoading = true
-                        )
-                    )
-                }
-            }
-            is ExploreAdapterLoadStateEvent.SearchAdapterNotLoading -> {
-                _pagingState.update {
-                    it.copy(
-                        searchAdapterState = it.searchAdapterState.copy(
-                            isLoading = false
-                        )
-                    )
-                }
-            }
-        }
-    }
-
 
     private fun resetSelectedGenreIdsState() {
         _filterBottomSheetState.update { it.copy(checkedGenreIdsState = emptyList()) }
@@ -232,33 +162,27 @@ class ExploreViewModel @Inject constructor(
         viewModelScope.launch(handler) {
             try {
                 if (_filterBottomSheetState.value.categoryState.isTv()) {
-                    getTvGenreList()
+                    _genreList.update { tvGenreList }
                 } else {
-                    getMovieGenreList()
+                    _genreList.update { movieGenre }
                 }
             } catch (e: Exception) {
-                _eventFlow.emit(UiEvent.ShowSnackbar(UiText.StringResource(R.string.internet_error)))
-                Timber.e("Didn't download genreList $e")
+                addConsumableViewEvent(
+                    UiEvent.ShowSnackbar(UiText.StringResource(R.string.internet_error))
+                )
             }
         }
     }
 
     private fun getMovieGenreList() {
         viewModelScope.launch(handler) {
-            exploreUseCases.movieGenreListUseCase(language.value).collectLatest { genreList ->
-                _genreList.value = genreList
-            }
+            movieGenre = genreRepository.getMovieGenreList(languageState).genres
         }
     }
 
     private fun getTvGenreList() {
         viewModelScope.launch(handler) {
-            exploreUseCases.tvGenreListUseCase(language.value).collectLatest { genreList ->
-                _genreList.value = genreList
-            }
+            tvGenreList = genreRepository.getTvGenreList(languageState).genres
         }
     }
 }
-
-
-

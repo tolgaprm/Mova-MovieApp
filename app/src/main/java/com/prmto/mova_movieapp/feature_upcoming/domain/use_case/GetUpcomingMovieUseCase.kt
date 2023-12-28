@@ -4,10 +4,10 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import androidx.paging.filter
 import androidx.paging.map
-import com.prmto.mova_movieapp.core.data.remote.dto.genre.Genre
+import com.prmto.mova_movieapp.core.data.util.HandleUtils
+import com.prmto.mova_movieapp.core.domain.models.genre.Genre
 import com.prmto.mova_movieapp.core.domain.use_case.movie.GetMovieGenreListUseCase
 import com.prmto.mova_movieapp.core.domain.util.DateFormatUtils
-import com.prmto.mova_movieapp.core.presentation.util.HandleUtils
 import com.prmto.mova_movieapp.feature_upcoming.domain.model.UpcomingMovie
 import com.prmto.mova_movieapp.feature_upcoming.domain.repository.UpcomingRepository
 import kotlinx.coroutines.CoroutineScope
@@ -33,16 +33,15 @@ class GetUpcomingMovieUseCase @Inject constructor(
             pagingData.map { upComingMovie ->
                 upComingMovie.copy(
                     movie = upComingMovie.movie.copy(
-                        genresBySeparatedByComma = HandleUtils.convertGenreListToStringSeparatedByCommas(
-                            movieGenreList = genres,
+                        genresBySeparatedByComma = HandleUtils.getGenresBySeparatedByComma(
+                            genres = genres,
                             genreIds = upComingMovie.movie.genreIds
                         ),
-                        voteCountByString = HandleUtils.convertingVoteCountToString(upComingMovie.movie.voteCount)
                     ),
                     isAddedToRemind = upcomingRemind.any { it.movieId == upComingMovie.movie.id }
                 )
             }.filter { upcomingMovie ->
-                upcomingMovie.movie.releaseDate?.let { releaseDate ->
+                upcomingMovie.movie.fullReleaseDate?.let { releaseDate ->
                     isAfterReleaseDate(releaseDate)
                 } ?: false
             }

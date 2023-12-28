@@ -1,7 +1,7 @@
 package com.prmto.mova_movieapp.feature_explore.domain.di
 
 import com.prmto.mova_movieapp.core.domain.repository.DataStoreOperations
-import com.prmto.mova_movieapp.core.domain.repository.RemoteRepository
+import com.prmto.mova_movieapp.core.domain.repository.GenreRepository
 import com.prmto.mova_movieapp.core.domain.use_case.languageIsoCode.GetLanguageIsoCodeUseCase
 import com.prmto.mova_movieapp.core.domain.use_case.movie.GetMovieGenreListUseCase
 import com.prmto.mova_movieapp.core.domain.use_case.tv.GetTvGenreListUseCase
@@ -24,25 +24,23 @@ object ExploreDomainModule {
     @ViewModelScoped
     fun provideExploreUseCases(
         exploreRepository: ExploreRepository,
-        remoteRepository: RemoteRepository,
+        genreRepository: GenreRepository,
         dataStoreOperations: DataStoreOperations
     ): ExploreUseCases {
         return ExploreUseCases(
-            tvGenreListUseCase = GetTvGenreListUseCase(remoteRepository),
-            movieGenreListUseCase = GetMovieGenreListUseCase(remoteRepository),
+            tvGenreListUseCase = GetTvGenreListUseCase(genreRepository),
+            movieGenreListUseCase = GetMovieGenreListUseCase(genreRepository),
             getLanguageIsoCodeUseCase = GetLanguageIsoCodeUseCase(dataStoreOperations),
             discoverMovieUseCase = DiscoverMovieUseCase(
-                exploreRepository,
-                GetMovieGenreListUseCase(remoteRepository)
+                exploreRepository = exploreRepository,
+                getMovieGenreListUseCase = GetMovieGenreListUseCase(genreRepository)
             ),
             discoverTvUseCase = DiscoverTvUseCase(
                 exploreRepository,
-                GetTvGenreListUseCase(remoteRepository)
+                GetTvGenreListUseCase(genreRepository)
             ),
             multiSearchUseCase = MultiSearchUseCase(
-                exploreRepository,
-                GetMovieGenreListUseCase(remoteRepository),
-                GetTvGenreListUseCase(remoteRepository)
+                exploreRepository
             )
         )
     }

@@ -1,7 +1,6 @@
 package com.prmto.mova_movieapp.core.data.util
 
 import retrofit2.Response
-import java.io.IOException
 
 inline fun <reified R> tryApiCall(
     block: () -> Response<R>
@@ -14,7 +13,7 @@ inline fun <reified R> tryApiCall(
         } else {
             throw ServiceUnavailableException()
         }
-    } catch (e: IOException) {
+    } catch (e: Exception) {
         throw ServiceUnavailableException()
     }
 

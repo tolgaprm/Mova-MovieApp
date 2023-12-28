@@ -20,7 +20,7 @@ android {
         applicationId = "com.prmto.mova_movieapp"
         minSdk = 24
         targetSdk = 33
-        versionCode = 10
+        versionCode = 11
         versionName = "2.0"
 
         testInstrumentationRunner = "com.prmto.mova_movieapp.HiltTestRunner"

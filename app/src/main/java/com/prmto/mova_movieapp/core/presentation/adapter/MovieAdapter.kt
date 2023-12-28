@@ -1,6 +1,6 @@
 package com.prmto.mova_movieapp.core.presentation.adapter
 
-import com.prmto.mova_movieapp.core.domain.models.Movie
+import com.prmto.mova_movieapp.core.domain.models.movie.Movie
 
 class MovieAdapter : BaseListAdapter<Movie>() {
 
@@ -11,7 +11,7 @@ class MovieAdapter : BaseListAdapter<Movie>() {
             posterPath = movie.posterPath,
             movieTvName = movie.title,
             voteAverage = movie.voteAverage.toString(),
-            voteCountByString = movie.voteCountByString,
+            voteCountByString = movie.formattedVoteCount,
             releaseDate = movie.releaseDate,
             genreByOne = movie.genreByOne
         )

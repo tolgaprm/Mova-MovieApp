@@ -1,4 +1,4 @@
-package com.prmto.mova_movieapp.core.domain.models
+package com.prmto.mova_movieapp.core.domain.models.movie
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
@@ -8,17 +8,14 @@ data class Movie(
     val id: Int,
     val overview: String,
     val title: String,
-    val originalTitle: String,
+    val isFavorite: Boolean = false,
+    val isWatchList: Boolean = false,
     val posterPath: String?,
     var releaseDate: String?,
+    val fullReleaseDate: String? = null,
     val genreIds: List<Int>,
-    val voteCount: Int,
     val genresBySeparatedByComma: String = "",
     val voteAverage: Double,
     val genreByOne: String = "",
-    val voteCountByString: String = "", // Format like 1000 k
+    val formattedVoteCount: String = "", // Format like 1000 k
 ) : Parcelable
-
-
-
-

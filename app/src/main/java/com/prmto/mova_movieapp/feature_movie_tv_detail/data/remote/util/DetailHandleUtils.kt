@@ -1,11 +1,12 @@
-package com.prmto.mova_movieapp.feature_movie_tv_detail.domain.util
+package com.prmto.mova_movieapp.feature_movie_tv_detail.data.remote.util
 
-import com.prmto.mova_movieapp.core.presentation.util.HandleUtils
+import com.prmto.mova_movieapp.core.data.util.HandleUtils
 import com.prmto.mova_movieapp.feature_movie_tv_detail.util.Constants
 
-object HandleUtils {
+object DetailHandleUtils {
 
-    fun calculateRatingBarValue(voteAverage: Double): Float {
+    fun calculateRatingBarValue(voteAverage: Double?): Float {
+        if (voteAverage == null) return 0f
         return ((voteAverage * 5) / 10).toFloat()
     }
 
@@ -21,10 +22,11 @@ object HandleUtils {
     }
 
     fun convertTvSeriesReleaseDateBetweenFirstAndLastDate(
-        firstAirDate: String,
-        lastAirDate: String,
-        status: String
+        firstAirDate: String?,
+        lastAirDate: String?,
+        status: String?
     ): String {
+        if (firstAirDate == null || lastAirDate == null || status == null) return ""
         val firstAirDateValue = HandleUtils.convertToYearFromDate(firstAirDate)
         return if (status == Constants.TV_SERIES_STATUS_ENDED) {
             val lastAirDateValue = HandleUtils.convertToYearFromDate(lastAirDate)

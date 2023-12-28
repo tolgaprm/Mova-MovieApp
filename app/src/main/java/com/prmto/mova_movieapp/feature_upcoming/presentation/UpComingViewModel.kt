@@ -1,9 +1,8 @@
 package com.prmto.mova_movieapp.feature_upcoming.presentation
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.paging.cachedIn
 import com.prmto.mova_movieapp.core.domain.use_case.languageIsoCode.GetLanguageIsoCodeUseCase
+import com.prmto.mova_movieapp.core.presentation.base.viewModel.BaseViewModel
 import com.prmto.mova_movieapp.feature_upcoming.alarm_manager.UpComingAlarmItem
 import com.prmto.mova_movieapp.feature_upcoming.domain.alarmManager.UpComingAlarmScheduler
 import com.prmto.mova_movieapp.feature_upcoming.domain.model.UpcomingRemindEntity
@@ -14,7 +13,6 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -26,32 +24,32 @@ class UpComingViewModel @Inject constructor(
     private val upcomingRepository: UpcomingRepository,
     private val languageIsoCodeUseCase: GetLanguageIsoCodeUseCase,
     private val upComingAlarmScheduler: UpComingAlarmScheduler
-) : ViewModel() {
+) : BaseViewModel() {
 
-    private val _state = MutableStateFlow(UpComingState())
-    val state: StateFlow<UpComingState> = _state.asStateFlow()
+    private val mutableState = MutableStateFlow(UpComingState())
+    val state: StateFlow<UpComingState> = mutableState.asStateFlow()
 
     init {
         viewModelScope.launch {
             val language = async {
                 languageIsoCodeUseCase().first()
             }
-            getUpComingMovies(language.await())
+            mutableState.update { it.copy(languageIsoCode = language.await()) }
         }
     }
 
     fun onEvent(event: UpComingEvent) {
         when (event) {
             UpComingEvent.Loading -> {
-                _state.update { it.copy(isLoading = true) }
+                mutableState.update { it.copy(isLoading = true) }
             }
 
             UpComingEvent.NotLoading -> {
-                _state.update { it.copy(isLoading = false) }
+                mutableState.update { it.copy(isLoading = false) }
             }
 
             is UpComingEvent.Error -> {
-                _state.update { it.copy(error = event.message) }
+                mutableState.update { it.copy(error = event.message) }
             }
 
             is UpComingEvent.OnClickRemindMe -> {
@@ -86,17 +84,6 @@ class UpComingViewModel @Inject constructor(
         }
     }
 
-    private fun getUpComingMovies(languageCode: String) {
-        viewModelScope.launch {
-            getUpcomingMovieUseCase(languageCode, scope = viewModelScope)
-                .cachedIn(viewModelScope)
-                .collectLatest { pagingData ->
-                    _state.update {
-                        it.copy(
-                            upComingMovieState = pagingData
-                        )
-                    }
-                }
-        }
-    }
+    fun getUpComingMovies() =
+        getUpcomingMovieUseCase(state.value.languageIsoCode, scope = viewModelScope)
 }

@@ -1,7 +1,7 @@
 package com.prmto.mova_movieapp.feature_person_detail.domain.model
 
-import com.prmto.mova_movieapp.core.domain.models.Movie
-import com.prmto.mova_movieapp.core.domain.models.TvSeries
+import com.prmto.mova_movieapp.core.domain.models.movie.Movie
+import com.prmto.mova_movieapp.core.domain.models.tv.TvSeries
 
 data class CrewForPerson(
         val id: Int,
@@ -21,16 +21,13 @@ data class CrewForPerson(
         val voteCount: Int
 )
 
-
 fun CrewForPerson.toMovie(): Movie {
     return Movie(
             id = id,
             overview = overview,
             title = title ?: "",
-            originalTitle = originalTitle ?: "",
             posterPath = posterPath,
             releaseDate = releaseDate,
-            voteCount = voteCount,
             genreIds = emptyList(),
             voteAverage = voteAverage
     )
@@ -41,11 +38,9 @@ fun CrewForPerson.toTvSeries(): TvSeries {
             id = id,
             overview = overview,
             posterPath = posterPath,
-            voteCount = voteCount,
             genreIds = emptyList(),
             voteAverage = voteAverage,
             name = name ?: "",
-            originalName = originalName ?: "",
             firstAirDate = firstAirDate
     )
 }

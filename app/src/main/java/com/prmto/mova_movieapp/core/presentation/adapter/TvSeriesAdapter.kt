@@ -1,6 +1,6 @@
 package com.prmto.mova_movieapp.core.presentation.adapter
 
-import com.prmto.mova_movieapp.core.domain.models.TvSeries
+import com.prmto.mova_movieapp.core.domain.models.tv.TvSeries
 
 class TvSeriesAdapter : BaseListAdapter<TvSeries>() {
 
@@ -9,9 +9,9 @@ class TvSeriesAdapter : BaseListAdapter<TvSeries>() {
         holder.bind(
             context = holder.itemView.context,
             posterPath = tvSeries.posterPath,
-            movieTvName = tvSeries.originalName,
+            movieTvName = tvSeries.name,
             voteAverage = tvSeries.voteAverage.toString(),
-            voteCountByString = tvSeries.voteCountByString,
+            voteCountByString = tvSeries.formattedVoteCount,
             releaseDate = tvSeries.firstAirDate,
             genreByOne = tvSeries.genreByOne
         )

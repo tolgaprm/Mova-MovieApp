@@ -1,6 +1,6 @@
 package com.prmto.mova_movieapp.feature_movie_tv_detail.domain.repository.tv
 
-import com.prmto.mova_movieapp.core.domain.models.TvSeries
+import com.prmto.mova_movieapp.core.domain.models.tv.TvSeries
 import com.prmto.mova_movieapp.core.util.Resource
 import com.prmto.mova_movieapp.feature_movie_tv_detail.domain.models.detail.tv.TvDetail
 import com.prmto.mova_movieapp.feature_movie_tv_detail.domain.models.detail.video.Videos

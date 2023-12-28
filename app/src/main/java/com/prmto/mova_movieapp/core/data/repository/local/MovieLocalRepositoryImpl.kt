@@ -3,7 +3,7 @@ package com.prmto.mova_movieapp.core.data.repository.local
 import com.prmto.mova_movieapp.core.data.local.MovaDatabase
 import com.prmto.mova_movieapp.core.data.remote.mapper.movie.toFavoriteMovie
 import com.prmto.mova_movieapp.core.data.remote.mapper.movie.toMovieWatchListItem
-import com.prmto.mova_movieapp.core.domain.models.Movie
+import com.prmto.mova_movieapp.core.domain.models.movie.Movie
 import com.prmto.mova_movieapp.core.domain.repository.local.MovieLocalRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map

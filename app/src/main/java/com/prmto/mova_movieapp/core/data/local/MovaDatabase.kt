@@ -20,7 +20,7 @@ import com.prmto.mova_movieapp.feature_upcoming.domain.model.UpcomingRemindEntit
         UpcomingRemindEntity::class
     ],
     exportSchema = false,
-    version = 2
+    version = 3
 )
 @TypeConverters(DatabaseConverter::class)
 abstract class MovaDatabase : RoomDatabase() {

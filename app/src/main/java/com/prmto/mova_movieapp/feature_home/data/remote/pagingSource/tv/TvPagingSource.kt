@@ -3,7 +3,7 @@ package com.prmto.mova_movieapp.feature_home.data.remote.pagingSource.tv
 import com.prmto.mova_movieapp.core.data.remote.dto.tv.TvSeriesDto
 import com.prmto.mova_movieapp.core.data.remote.mapper.tv.toTvSeries
 import com.prmto.mova_movieapp.core.data.util.paging.BasePagingSource
-import com.prmto.mova_movieapp.core.domain.models.TvSeries
+import com.prmto.mova_movieapp.core.domain.models.tv.TvSeries
 import javax.inject.Inject
 
 class TvPagingSource @Inject constructor(

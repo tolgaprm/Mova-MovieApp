@@ -5,16 +5,16 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.prmto.mova_movieapp.core.data.util.paging.getPagingMovies
 import com.prmto.mova_movieapp.core.data.util.paging.getPagingTvSeries
-import com.prmto.mova_movieapp.core.domain.models.Movie
-import com.prmto.mova_movieapp.core.domain.models.TvSeries
+import com.prmto.mova_movieapp.core.domain.models.movie.Movie
+import com.prmto.mova_movieapp.core.domain.models.tv.TvSeries
 import com.prmto.mova_movieapp.core.presentation.util.toDiscoveryQueryString
 import com.prmto.mova_movieapp.core.presentation.util.toSeparateWithComma
 import com.prmto.mova_movieapp.core.util.Constants
 import com.prmto.mova_movieapp.feature_explore.data.remote.dataSources.movie.ExploreMovieRemoteDataSource
 import com.prmto.mova_movieapp.feature_explore.data.remote.dataSources.multisearch.ExploreMultiSearchRemoteDataSource
 import com.prmto.mova_movieapp.feature_explore.data.remote.dataSources.tv.ExploreTvRemoteDataSource
-import com.prmto.mova_movieapp.feature_explore.data.remote.dto.multisearch.SearchDto
 import com.prmto.mova_movieapp.feature_explore.data.remote.pagingSource.multisearch.MultiSearchPagingSource
+import com.prmto.mova_movieapp.feature_explore.domain.model.MultiSearch
 import com.prmto.mova_movieapp.feature_explore.domain.repository.ExploreRepository
 import com.prmto.mova_movieapp.feature_explore.presentation.filter_bottom_sheet.state.FilterBottomState
 import kotlinx.coroutines.flow.Flow
@@ -58,7 +58,7 @@ class ExploreRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun multiSearch(query: String, language: String): Flow<PagingData<SearchDto>> {
+    override fun multiSearch(query: String, language: String): Flow<PagingData<MultiSearch>> {
         return Pager(
             config = PagingConfig(
                 pageSize = Constants.ITEMS_PER_PAGE

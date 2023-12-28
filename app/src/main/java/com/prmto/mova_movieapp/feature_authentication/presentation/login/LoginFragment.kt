@@ -1,58 +1,87 @@
 package com.prmto.mova_movieapp.feature_authentication.presentation.login
 
 import android.app.Activity
-import android.os.Bundle
-import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.material.snackbar.Snackbar
 import com.prmto.mova_movieapp.R
-import com.prmto.mova_movieapp.core.presentation.util.UiEvent
-import com.prmto.mova_movieapp.core.presentation.util.addOnBackPressedCallback
-import com.prmto.mova_movieapp.core.presentation.util.asString
+import com.prmto.mova_movieapp.core.presentation.base.fragment.BaseFragmentWithUiEvent
 import com.prmto.mova_movieapp.core.presentation.util.collectFlow
+import com.prmto.mova_movieapp.core.presentation.util.updateFieldEmptyError
 import com.prmto.mova_movieapp.databinding.FragmentLoginBinding
-import com.prmto.mova_movieapp.feature_authentication.presentation.util.AuthUtil
 import dagger.hilt.android.AndroidEntryPoint
 
-
 @AndroidEntryPoint
-class LoginFragment : Fragment(R.layout.fragment_login) {
-
-    private var _binding: FragmentLoginBinding? = null
-    private val binding get() = _binding!!
+class LoginFragment :
+    BaseFragmentWithUiEvent<FragmentLoginBinding, LoginViewModel>(
+        inflater = FragmentLoginBinding::inflate
+    ) {
 
     private lateinit var googleSignInClient: GoogleSignInClient
-    private val viewModel: LoginViewModel by viewModels()
+    override val viewModel: LoginViewModel by viewModels()
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        val binding = FragmentLoginBinding.bind(view)
-        _binding = binding
+    private val launcher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
+                viewModel.onEvent(LoginEvent.SignInWithGoogle(task))
+            }
+        }
 
+    override fun onInitialize() {
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()
             .build()
 
         googleSignInClient = GoogleSignIn.getClient(requireContext(), gso)
-
         collectData()
+        addOnBackPressedCallback()
+        setClickListeners()
+    }
 
-        addOnBackPressedCallback(
-            activity = requireActivity(),
-            onBackPressed = {
-                viewModel.onEvent(LoginEvent.OnBackPressed)
-            }
-        )
+    private fun signInWithGoogle() {
+        val signInIntent = googleSignInClient.signInIntent
+        launcher.launch(signInIntent)
+    }
 
+    private fun collectData() {
+        collectLoginUiEvent()
+        collectUiState()
+    }
+
+    private fun collectLoginUiEvent() {
+        collectFlow(viewModel.consumableViewEvents) { listOfUiEvents ->
+            handleUiEvent(
+                listOfUiEvent = listOfUiEvents,
+                onEventConsumed = viewModel::onEventConsumed
+            )
+        }
+    }
+
+    private fun collectUiState() {
+        collectFlow(viewModel.uiState) { uiState ->
+            binding.layoutEmail.updateFieldEmptyError(
+                authError = uiState.emailState.error
+            )
+            binding.layoutPassword.updateFieldEmptyError(
+                authError = uiState.passwordState.error
+            )
+
+            binding.edtEmail.isEnabled = !uiState.isLoading
+            binding.edtPassword.isEnabled = !uiState.isLoading
+            binding.btnSignIn.isEnabled = !uiState.isLoading
+            binding.btnSignInGoogle.isEnabled = !uiState.isLoading
+            binding.progressBar.isVisible = uiState.isLoading
+        }
+    }
+
+    private fun setClickListeners() {
         binding.edtEmail.addTextChangedListener {
             it?.let {
                 viewModel.onEvent(LoginEvent.EnteredEmail(it.toString()))
@@ -74,88 +103,13 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         }
 
         binding.txtSignUp.setOnClickListener {
-            viewModel.onEvent(LoginEvent.ClickedSignUp)
+            findNavController().navigate(
+                LoginFragmentDirections.actionLoginFragmentToSignUpFragment()
+            )
         }
 
         binding.btnSignInGoogle.setOnClickListener {
             signInWithGoogle()
         }
-    }
-
-    private fun signInWithGoogle() {
-        val signInIntent = googleSignInClient.signInIntent
-        launcher.launch(signInIntent)
-    }
-
-    private val launcher =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == Activity.RESULT_OK) {
-                val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
-                viewModel.onEvent(LoginEvent.SignInWithGoogle(task))
-            }
-        }
-
-    private fun collectData() {
-        collectLoginUiEvent()
-        collectEmailState()
-        collectPasswordState()
-        collectLoadingState()
-    }
-
-    private fun collectLoginUiEvent() {
-        collectFlow(viewModel.uiEvent) { uiEvent ->
-            when (uiEvent) {
-                is UiEvent.NavigateTo -> {
-                    findNavController().navigate(uiEvent.directions)
-                }
-
-                is UiEvent.ShowSnackbar -> {
-                    Snackbar.make(
-                        requireView(), uiEvent.uiText.asString(
-                            requireContext(),
-                        ), Snackbar.LENGTH_SHORT
-                    ).show()
-                }
-
-                is UiEvent.PopBackStack -> {
-                    findNavController().popBackStack()
-                }
-            }
-        }
-    }
-
-    private fun collectEmailState() {
-        collectFlow(viewModel.emailState) { emailState ->
-            AuthUtil.updateFieldEmptyErrorInTextInputLayout(
-                textInputLayout = binding.layoutEmail,
-                authError = emailState.error,
-                context = requireContext()
-            )
-        }
-    }
-
-    private fun collectPasswordState() {
-        collectFlow(viewModel.passwordState) { passwordState ->
-            AuthUtil.updateFieldEmptyErrorInTextInputLayout(
-                textInputLayout = binding.layoutPassword,
-                authError = passwordState.error,
-                context = requireContext()
-            )
-        }
-    }
-
-    private fun collectLoadingState() {
-        collectFlow(viewModel.isLoading) { isLoading ->
-            binding.edtEmail.isEnabled = !isLoading
-            binding.edtPassword.isEnabled = !isLoading
-            binding.btnSignIn.isEnabled = !isLoading
-            binding.btnSignInGoogle.isEnabled = !isLoading
-            binding.progressBar.isVisible = isLoading
-        }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 }

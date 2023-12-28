@@ -1,13 +1,9 @@
 package com.prmto.mova_movieapp.feature_upcoming.presentation
 
-import android.os.Bundle
-import android.view.View
 import androidx.core.view.isVisible
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.prmto.mova_movieapp.R
+import com.prmto.mova_movieapp.core.presentation.base.fragment.BaseFragment
 import com.prmto.mova_movieapp.core.presentation.util.asString
 import com.prmto.mova_movieapp.core.presentation.util.collectFlow
 import com.prmto.mova_movieapp.core.util.handlePagingLoadState.HandlePagingStateUpComingPagingAdapter
@@ -17,26 +13,18 @@ import com.prmto.mova_movieapp.feature_upcoming.presentation.adapter.UpComingMov
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class UpComingFragment : Fragment(R.layout.fragment_up_coming) {
+class UpComingFragment : BaseFragment<FragmentUpComingBinding, UpComingViewModel>(
+    inflater = FragmentUpComingBinding::inflate
+) {
 
-    private var _binding: FragmentUpComingBinding? = null
-    val binding get() = _binding!!
-
-    private val viewModel: UpComingViewModel by viewModels()
-
+    override val viewModel: UpComingViewModel by viewModels()
     private val upComingMovieAdapter by lazy { UpComingMovieAdapter() }
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        val binding = FragmentUpComingBinding.bind(view)
-        _binding = binding
 
+    override fun onInitialize() {
         binding.upComingRecyclerView.adapter = upComingMovieAdapter
-        binding.upComingRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-
         handlePagingLoadStates()
-
+        collectUpComingPagingData()
         collectData()
-
         setInfoClickListener()
         setOnRemindMeClickListener()
     }
@@ -59,7 +47,7 @@ class UpComingFragment : Fragment(R.layout.fragment_up_coming) {
                     upcomingRemindEntity = UpcomingRemindEntity(
                         upComingMovie.movie.id,
                         upComingMovie.movie.title,
-                        upComingMovie.movie.releaseDate ?: ""
+                        upComingMovie.movie.fullReleaseDate ?: ""
                     ),
                     isAddedToRemind = upComingMovie.isAddedToRemind
                 )
@@ -74,7 +62,12 @@ class UpComingFragment : Fragment(R.layout.fragment_up_coming) {
 
             binding.errorTextView.isVisible = state.error.isNotEmpty()
             binding.errorTextView.text = state.error
-            upComingMovieAdapter.submitData(state.upComingMovieState)
+        }
+    }
+
+    private fun collectUpComingPagingData() {
+        collectFlow(viewModel.getUpComingMovies()) { upComingMoviePaging ->
+            upComingMovieAdapter.submitData(upComingMoviePaging)
         }
     }
 

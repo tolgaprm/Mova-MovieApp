@@ -1,13 +1,13 @@
 package com.prmto.mova_movieapp.feature_movie_tv_detail.presentation.detail.helper
 
 import android.content.Context
-import android.view.LayoutInflater
-import android.view.View
-import com.google.android.material.textview.MaterialTextView
 import com.prmto.mova_movieapp.R
+import com.prmto.mova_movieapp.core.presentation.util.makeGone
+import com.prmto.mova_movieapp.core.presentation.util.makeVisible
 import com.prmto.mova_movieapp.databinding.FragmentDetailBinding
 import com.prmto.mova_movieapp.feature_movie_tv_detail.domain.models.credit.Crew
 import com.prmto.mova_movieapp.feature_movie_tv_detail.domain.models.detail.movie.MovieDetail
+import com.prmto.mova_movieapp.feature_movie_tv_detail.presentation.detail.helper.inflater.DirectorTextInflater
 import com.prmto.mova_movieapp.feature_movie_tv_detail.util.Constants
 
 class BindMovieDetail(
@@ -16,7 +16,12 @@ class BindMovieDetail(
     context: Context
 ) : BindAttributesDetailFragment(binding = binding, context = context) {
 
-    private val DIRECTION_DEPARTMENT_NAME = "Directing"
+    private val directorTextInflater by lazy {
+        DirectorTextInflater(
+            context = context,
+            viewGroup = binding.creatorDirectorLinearLayout
+        )
+    }
 
     init {
         bindImage(posterPath = movieDetail.posterPath)
@@ -29,7 +34,7 @@ class BindMovieDetail(
             voteAverage = movieDetail.voteAverage,
             voteCount = movieDetail.voteCount,
             ratingBarValue = movieDetail.ratingValue,
-            genreList = movieDetail.genres
+            genresBySeparatedByComma = movieDetail.genresBySeparatedByComma
         )
         bindMovieRuntime(convertedRuntime = movieDetail.convertedRuntime)
         bindDirectorName(crews = movieDetail.credit?.crew)
@@ -41,14 +46,14 @@ class BindMovieDetail(
 
     private fun hideSeasonText() {
         binding.apply {
-            imvCircle.visibility = View.GONE
-            txtSeason.visibility = View.GONE
+            imvCircle.makeGone()
+            txtSeason.makeGone()
         }
     }
 
     private fun showRuntimeTextAndClockIcon() {
-        binding.txtRuntime.visibility = View.VISIBLE
-        binding.imvClockIcon.visibility = View.VISIBLE
+        binding.txtRuntime.makeVisible()
+        binding.imvClockIcon.makeVisible()
     }
 
     private fun bindMovieRuntime(convertedRuntime: Map<String, String>) {
@@ -62,26 +67,10 @@ class BindMovieDetail(
     }
 
     private fun bindDirectorName(crews: List<Crew>?) {
-        if (crews.isNullOrEmpty()) {
-            binding.creatorDirectorLinearLayout.removeAllViews()
-            return
-        }
-
-        val director = crews.find {
-            it.department == DIRECTION_DEPARTMENT_NAME
-        }
-        director?.let {
+        if (!crews.isNullOrEmpty()) {
             binding.txtDirectorOrCreatorName.text = context.getString(R.string.director_title)
-            val directorText = LayoutInflater.from(context)
-                .inflate(
-                    R.layout.creator_text,
-                    binding.creatorDirectorLinearLayout,
-                    false
-                ) as MaterialTextView
-
-            directorText.text = director.name
-            directorText.id = director.id
-            binding.creatorDirectorLinearLayout.addView(directorText)
         }
+
+        directorTextInflater.createDirectorText(crews = crews)
     }
 }

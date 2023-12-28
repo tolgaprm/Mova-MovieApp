@@ -66,7 +66,7 @@ class UpComingMovieAdapter :
             bindBody(
                 movieTitle = movie.title,
                 movieOverview = movie.overview,
-                movieReleaseDate = movie.releaseDate ?: "",
+                movieReleaseDate = movie.fullReleaseDate ?: "",
                 movieGenres = movie.genresBySeparatedByComma
             )
 

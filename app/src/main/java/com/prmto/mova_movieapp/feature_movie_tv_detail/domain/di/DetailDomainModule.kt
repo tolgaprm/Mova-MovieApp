@@ -1,7 +1,11 @@
 package com.prmto.mova_movieapp.feature_movie_tv_detail.domain.di
 
 import com.prmto.mova_movieapp.core.domain.countryCode.CountryCodeProvider
+import com.prmto.mova_movieapp.core.domain.use_case.database.movie.GetFavoriteMovieIdsUseCase
+import com.prmto.mova_movieapp.core.domain.use_case.database.tv.GetFavoriteTvSeriesIdsUseCase
+import com.prmto.mova_movieapp.core.domain.use_case.database.tv.GetTvSeriesWatchListItemIdsUseCase
 import com.prmto.mova_movieapp.core.domain.use_case.movie.GetMovieGenreListUseCase
+import com.prmto.mova_movieapp.core.domain.use_case.movie.GetMovieWatchListItemIdsUseCase
 import com.prmto.mova_movieapp.core.domain.use_case.tv.GetTvGenreListUseCase
 import com.prmto.mova_movieapp.feature_movie_tv_detail.domain.repository.movie.MovieDetailRepository
 import com.prmto.mova_movieapp.feature_movie_tv_detail.domain.repository.tv.TvDetailRepository
@@ -29,27 +33,35 @@ object DetailDomainModule {
         tvDetailRepository: TvDetailRepository,
         getMovieGenreListUseCase: GetMovieGenreListUseCase,
         getTvGenreListUseCase: GetTvGenreListUseCase,
-        countryCodeProvider: CountryCodeProvider
+        countryCodeProvider: CountryCodeProvider,
+        getFavoriteMovieIdsUseCase: GetFavoriteMovieIdsUseCase,
+        getWatchListMovieIdsUseCase: GetMovieWatchListItemIdsUseCase,
+        getFavoriteTvSeriesIdsUseCase: GetFavoriteTvSeriesIdsUseCase,
+        getTvSeriesWatchListItemIdsUseCase: GetTvSeriesWatchListItemIdsUseCase
     ): DetailUseCases {
         return DetailUseCases(
             movieDetailUseCase = GetMovieDetailUseCase(
-                movieDetailRepository,
-                countryCodeProvider
+                movieDetailRepository = movieDetailRepository,
+                countryCodeProvider = countryCodeProvider,
+                getFavoriteMovieIdsUseCase = getFavoriteMovieIdsUseCase,
+                getWatchListMovieIdsUseCase = getWatchListMovieIdsUseCase
             ),
             tvDetailUseCase = GetTvDetailUseCase(
-                tvDetailRepository,
-                countryCodeProvider
+                tvDetailRepository = tvDetailRepository,
+                countryCodeProvider = countryCodeProvider,
+                getFavoriteTvSeriesIdsUseCase = getFavoriteTvSeriesIdsUseCase,
+                getTvSeriesWatchListItemIdsUseCase = getTvSeriesWatchListItemIdsUseCase
             ),
             getMovieRecommendationUseCase = GetMovieRecommendationUseCase(
-                movieDetailRepository,
-                getMovieGenreListUseCase
+                movieDetailRepository = movieDetailRepository,
+                getMovieGenreListUseCase = getMovieGenreListUseCase
             ),
             getTvRecommendationUseCase = GetTvRecommendationUseCase(
-                tvDetailRepository,
-                getTvGenreListUseCase
+                tvDetailRepository = tvDetailRepository,
+                getTvGenreListUseCase = getTvGenreListUseCase
             ),
-            getMovieVideosUseCase = GetMovieVideosUseCase(movieDetailRepository),
-            getTvVideosUseCase = GetTvVideosUseCase(tvDetailRepository)
+            getMovieVideosUseCase = GetMovieVideosUseCase(movieDetailRepository = movieDetailRepository),
+            getTvVideosUseCase = GetTvVideosUseCase(tvDetailRepository = tvDetailRepository)
         )
     }
 }

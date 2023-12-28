@@ -1,26 +1,21 @@
 package com.prmto.mova_movieapp.feature_home.presentation.home
 
-
-import android.os.Bundle
-import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.core.view.isVisible
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
-import com.google.android.material.snackbar.Snackbar
 import com.prmto.mova_movieapp.R
-import com.prmto.mova_movieapp.core.domain.models.Movie
+import com.prmto.mova_movieapp.core.domain.models.movie.Movie
 import com.prmto.mova_movieapp.core.domain.repository.isAvaliable
-import com.prmto.mova_movieapp.core.presentation.util.BaseUiEvent
+import com.prmto.mova_movieapp.core.presentation.base.fragment.BaseFragmentWithUiEvent
+import com.prmto.mova_movieapp.core.presentation.base.isEmpty
 import com.prmto.mova_movieapp.core.presentation.util.UiText
-import com.prmto.mova_movieapp.core.presentation.util.addOnBackPressedCallback
 import com.prmto.mova_movieapp.core.presentation.util.asString
 import com.prmto.mova_movieapp.core.presentation.util.collectFlow
 import com.prmto.mova_movieapp.core.presentation.util.collectFlowInside
-import com.prmto.mova_movieapp.core.presentation.util.isEmpty
+import com.prmto.mova_movieapp.core.presentation.util.makeGone
+import com.prmto.mova_movieapp.core.presentation.util.makeVisible
 import com.prmto.mova_movieapp.core.util.getCountryIsoCode
 import com.prmto.mova_movieapp.core.util.handlePagingLoadState.HandlePagingLoadStateMovieAndTvBaseRecyclerAdapter
 import com.prmto.mova_movieapp.core.util.handlePagingLoadState.HandlePagingStateNowPlayingRecyclerAdapter
@@ -30,58 +25,38 @@ import com.prmto.mova_movieapp.feature_home.presentation.home.adapter.PopularMov
 import com.prmto.mova_movieapp.feature_home.presentation.home.adapter.PopularTvSeriesAdapter
 import com.prmto.mova_movieapp.feature_home.presentation.home.adapter.TopRatedMoviesAdapter
 import com.prmto.mova_movieapp.feature_home.presentation.home.adapter.TopRatedTvSeriesAdapter
-import com.prmto.mova_movieapp.feature_home.presentation.home.event.HomeAdapterLoadStateEvent
 import com.prmto.mova_movieapp.feature_home.presentation.home.event.HomeEvent
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 
-
 @AndroidEntryPoint
-class HomeFragment : Fragment(R.layout.fragment_home) {
-
-    private var _binding: FragmentHomeBinding? = null
-    private val binding get() = _binding!!
+class HomeFragment : BaseFragmentWithUiEvent<FragmentHomeBinding, HomeViewModel>(
+    inflater = FragmentHomeBinding::inflate
+) {
 
     private val nowPlayingAdapter: NowPlayingRecyclerAdapter by lazy { NowPlayingRecyclerAdapter() }
-
     private val popularMoviesAdapter: PopularMoviesAdapter by lazy { PopularMoviesAdapter() }
-
     private val popularTvSeriesAdapter: PopularTvSeriesAdapter by lazy { PopularTvSeriesAdapter() }
-
     private val topRatedMoviesAdapter: TopRatedMoviesAdapter by lazy { TopRatedMoviesAdapter() }
-
     private val topRatedTvSeriesAdapter: TopRatedTvSeriesAdapter by lazy { TopRatedTvSeriesAdapter() }
+    override val viewModel: HomeViewModel by viewModels()
 
-    private val viewModel: HomeViewModel by viewModels()
-
-    private var job: Job? = null
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        val binding = FragmentHomeBinding.bind(view)
-        _binding = binding
-
+    override fun onInitialize() {
         handlePagingLoadStates()
         observeConnectivityStatus()
-        collectHomeUiEventsAndLoadState()
+        collectHomeUiEvents()
         updateCountryIsoCode()
         setupRecyclerAdapters()
-        setAdaptersClickListener()
-        setupListenerSeeAllClickEvents()
-
-        addOnBackPressedCallback(
-            activity = requireActivity(),
-            onBackPressed = {
-                viewModel.onEvent(HomeEvent.OnBackPressed)
-            }
-        )
+        addOnBackPressedCallback(addCustomBehavior = { hideSeeAllPage() })
         setupClickListener()
     }
 
+    private var job: Job? = null
+
     private fun setupClickListener() {
         binding.btnNavigateUp.setOnClickListener {
-            viewModel.onEvent(HomeEvent.NavigateUpFromSeeAllSection)
+            hideSeeAllPage()
         }
         binding.btnError.setOnClickListener {
             if (viewModel.isNetworkAvaliable()) {
@@ -94,6 +69,8 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 ).show()
             }
         }
+        setAdaptersClickListener()
+        setupListenerSeeAllClickEvents()
     }
 
     private fun observeConnectivityStatus() {
@@ -111,7 +88,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                     showErrorScreen()
                 }
             }
-
         }
     }
 
@@ -120,53 +96,27 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     }
 
     private fun showScrollView() {
-        binding.scrollView.isVisible = true
+        binding.scrollView.makeVisible()
     }
 
     private fun hideScrollView() {
-        binding.scrollView.isVisible = false
+        binding.scrollView.makeGone()
     }
 
     private fun showErrorScreen() {
-        binding.errorScreen.isVisible = true
+        binding.errorScreen.makeVisible()
     }
 
     private fun hideErrorScreen() {
-        binding.errorScreen.isVisible = false
+        binding.errorScreen.makeGone()
     }
 
-    private fun collectHomeUiEventsAndLoadState() {
-
-        collectFlow(viewModel.eventFlow) { uiEvent ->
-            when (uiEvent) {
-                is BaseUiEvent.NavigateTo -> {
-                    findNavController().navigate(
-                        uiEvent.directions
-                    )
-                }
-
-                is BaseUiEvent.ShowSnackbar -> {
-                    Snackbar.make(
-                        requireView(),
-                        uiEvent.uiText.asString(requireContext()),
-                        Snackbar.LENGTH_LONG
-                    ).show()
-                }
-
-                else -> return@collectFlow
-            }
-        }
-
-        collectFlow(viewModel.adapterLoadState) {
-            binding.nowPlayingShimmerLayout.isVisible = it.nowPlayingState.isLoading
-            binding.popularMoviesShimmerLayout.isVisible =
-                it.popularMoviesState.isLoading
-            binding.popularTvSeriesShimmerLayout.isVisible =
-                it.popularTvSeriesState.isLoading
-            binding.topRatedMoviesShimmerLayout.isVisible =
-                it.topRatedMoviesState.isLoading
-            binding.topRatedTvSeriesShimmerLayout.isVisible =
-                it.topRatedTvSeriesState.isLoading
+    private fun collectHomeUiEvents() {
+        collectFlow(viewModel.consumableViewEvents) { listOfUiEvent ->
+            handleUiEvent(
+                listOfUiEvent = listOfUiEvent,
+                onEventConsumed = viewModel::onEventConsumed
+            )
         }
     }
 
@@ -203,45 +153,35 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     }
 
     private fun handlePagingLoadStates() {
-
         HandlePagingStateNowPlayingRecyclerAdapter(
             nowPlayingRecyclerAdapter = nowPlayingAdapter,
-            onLoading = { viewModel.onAdapterLoadStateEvent(HomeAdapterLoadStateEvent.NowPlayingLoading) },
-            onNotLoading = { viewModel.onAdapterLoadStateEvent(HomeAdapterLoadStateEvent.NowPlayingNotLoading) },
-            onError = { eventToPagingError(it) }
+            onLoading = binding.nowPlayingShimmerLayout::makeVisible,
+            onNotLoading = binding.nowPlayingShimmerLayout::makeGone
         )
 
         HandlePagingLoadStateMovieAndTvBaseRecyclerAdapter<Movie>(
             pagingAdapter = popularMoviesAdapter,
-            onLoading = { viewModel.onAdapterLoadStateEvent(HomeAdapterLoadStateEvent.PopularMoviesLoading) },
-            onNotLoading = { viewModel.onAdapterLoadStateEvent(HomeAdapterLoadStateEvent.PopularMoviesNotLoading) },
-            onError = { eventToPagingError(it) }
+            onLoading = binding.popularMoviesShimmerLayout::makeVisible,
+            onNotLoading = binding.popularMoviesShimmerLayout::makeGone
         )
 
         HandlePagingLoadStateMovieAndTvBaseRecyclerAdapter(
             pagingAdapter = topRatedMoviesAdapter,
-            onLoading = { viewModel.onAdapterLoadStateEvent(HomeAdapterLoadStateEvent.TopRatedMoviesLoading) },
-            onNotLoading = { viewModel.onAdapterLoadStateEvent(HomeAdapterLoadStateEvent.TopRatedMoviesNotLoading) },
-            onError = { eventToPagingError(it) }
+            onLoading = binding.topRatedMoviesShimmerLayout::makeVisible,
+            onNotLoading = binding.topRatedMoviesShimmerLayout::makeGone
         )
 
         HandlePagingLoadStateMovieAndTvBaseRecyclerAdapter(
             pagingAdapter = popularTvSeriesAdapter,
-            onLoading = { viewModel.onAdapterLoadStateEvent(HomeAdapterLoadStateEvent.PopularTvSeriesLoading) },
-            onNotLoading = { viewModel.onAdapterLoadStateEvent(HomeAdapterLoadStateEvent.PopularTvSeriesNotLoading) },
-            onError = { eventToPagingError(it) }
+            onLoading = binding.popularTvSeriesShimmerLayout::makeVisible,
+            onNotLoading = binding.popularTvSeriesShimmerLayout::makeGone
         )
 
         HandlePagingLoadStateMovieAndTvBaseRecyclerAdapter(
             pagingAdapter = topRatedTvSeriesAdapter,
-            onLoading = { viewModel.onAdapterLoadStateEvent(HomeAdapterLoadStateEvent.TopRatedTvSeriesLoading) },
-            onNotLoading = { viewModel.onAdapterLoadStateEvent(HomeAdapterLoadStateEvent.TopRatedTvSeriesNotLoading) },
-            onError = { eventToPagingError(it) }
+            onLoading = binding.topRatedTvSeriesShimmerLayout::makeVisible,
+            onNotLoading = binding.topRatedTvSeriesShimmerLayout::makeGone,
         )
-    }
-
-    private fun eventToPagingError(uiText: UiText) {
-        viewModel.onAdapterLoadStateEvent(HomeAdapterLoadStateEvent.PagingError(uiText))
     }
 
     private fun updateCountryIsoCode() {
@@ -298,7 +238,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
     private fun setupListenerSeeAllClickEvents() {
         binding.apply {
-
             nowPlayingSeeAll.setOnClickListener {
                 viewModel.onEvent(
                     HomeEvent.ClickSeeAllText(UiText.StringResource(R.string.now_playing))
@@ -382,11 +321,5 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             action.movie = null
             viewModel.onEvent(HomeEvent.NavigateToDetailBottomSheet(action))
         }
-
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 }

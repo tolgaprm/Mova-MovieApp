@@ -3,5 +3,4 @@ package com.prmto.mova_movieapp.feature_authentication.presentation.forget_passw
 sealed class ForgetEvent {
     data class EnteredEmail(val email: String) : ForgetEvent()
     object ClickedForgetPassword : ForgetEvent()
-    object ClickedBackToLogin : ForgetEvent()
 }

@@ -3,8 +3,9 @@ package com.prmto.mova_movieapp.core.data.remote.mapper.tv
 import com.prmto.mova_movieapp.core.data.local.entity.tv.FavoriteTvSeries
 import com.prmto.mova_movieapp.core.data.local.entity.tv.TvSeriesWatchListItem
 import com.prmto.mova_movieapp.core.data.remote.dto.tv.TvSeriesDto
+import com.prmto.mova_movieapp.core.data.util.HandleUtils
 import com.prmto.mova_movieapp.core.data.util.orZero
-import com.prmto.mova_movieapp.core.domain.models.TvSeries
+import com.prmto.mova_movieapp.core.domain.models.tv.TvSeries
 
 fun TvSeries.toFavoriteTvSeries(): FavoriteTvSeries {
     return FavoriteTvSeries(
@@ -25,14 +26,12 @@ fun FavoriteTvSeries.toTvSeries(): TvSeries {
         id = tvSeriesId,
         overview = this.tvSeries.overview,
         name = this.tvSeries.name,
-        originalName = this.tvSeries.originalName,
         posterPath = this.tvSeries.posterPath,
         firstAirDate = this.tvSeries.firstAirDate,
         genreIds = this.tvSeries.genreIds,
-        voteCount = this.tvSeries.voteCount,
         voteAverage = this.tvSeries.voteAverage,
         genreByOne = this.tvSeries.genreByOne,
-        voteCountByString = this.tvSeries.voteCountByString
+        formattedVoteCount = this.tvSeries.formattedVoteCount
     )
 }
 
@@ -41,11 +40,10 @@ fun TvSeriesDto.toTvSeries(): TvSeries {
         id = id.orZero(),
         overview = overview.orEmpty(),
         name = name.orEmpty(),
-        originalName = originalName.orEmpty(),
         posterPath = posterPath,
-        firstAirDate = firstAirDate,
+        firstAirDate = HandleUtils.convertToYearFromDate(firstAirDate),
         genreIds = genreIds.orEmpty(),
-        voteCount = voteCount.orZero(),
-        voteAverage = voteAverage.orZero()
+        voteAverage = voteAverage.orZero(),
+        formattedVoteCount = HandleUtils.formatVoteCount(voteCount),
     )
 }

@@ -1,9 +1,11 @@
 package com.prmto.mova_movieapp.feature_explore.data.remote.dto.multisearch
 
+import com.prmto.mova_movieapp.core.data.util.HandleUtils
 import com.prmto.mova_movieapp.core.data.util.orZero
-import com.prmto.mova_movieapp.feature_explore.domain.model.MovieSearch
+import com.prmto.mova_movieapp.core.domain.models.movie.Movie
+import com.prmto.mova_movieapp.core.domain.models.tv.TvSeries
+import com.prmto.mova_movieapp.feature_explore.domain.model.MultiSearch
 import com.prmto.mova_movieapp.feature_explore.domain.model.PersonSearch
-import com.prmto.mova_movieapp.feature_explore.domain.model.TvSearch
 import com.prmto.mova_movieapp.feature_explore.domain.util.MediaType
 import com.squareup.moshi.Json
 
@@ -36,55 +38,56 @@ data class SearchDto(
     val voteCountByString: String = ""
 )
 
+fun SearchDto.multiSearch(): MultiSearch? {
+    return when (mediaType!!) {
+        MediaType.MOVIE.value -> {
+            MultiSearch.MovieItem(movie = this.toMovie())
+        }
 
-fun SearchDto.toMovieSearch(): MovieSearch? {
-    if (mediaType == MediaType.MOVIE.value) {
-        return MovieSearch(
-            id = id.orZero(),
-            overview = overview.orEmpty(),
-            title = title.orEmpty(),
-            originalTitle = originalTitle.orEmpty(),
-            posterPath = posterPath,
-            releaseDate = releaseDate.orEmpty(),
-            genreIds = genreIds.orEmpty(),
-            voteCount = voteCount.orZero(),
-            voteAverage = voteAverage.orZero(),
-            genreByOneForMovie = genreByOneForMovie,
-            voteCountByString = voteCountByString
-        )
+        MediaType.TV_SERIES.value -> {
+            MultiSearch.TvSeriesItem(tvSeries = this.toTvSeries())
+        }
+
+        MediaType.PERSON.value -> {
+            MultiSearch.PersonItem(person = this.toPersonSearch())
+        }
+
+        else -> null
     }
-    return null
 }
 
-
-fun SearchDto.toTvSearch(): TvSearch? {
-    if (mediaType == MediaType.TV_SERIES.value) {
-        return TvSearch(
-            id = id.orZero(),
-            name = name.orEmpty(),
-            overview = overview.orEmpty(),
-            originalName = originalName.orEmpty(),
-            posterPath = posterPath,
-            firstAirDate = firstAirDate,
-            genreIds = genreIds.orEmpty(),
-            voteCount = voteCount.orZero(),
-            voteAverage = voteAverage.orZero(),
-            genreByOneForTv = genreByOneForTv,
-            voteCountByString = voteCountByString
-        )
-    }
-    return null
+fun SearchDto.toMovie(): Movie {
+    return Movie(
+        id = id.orZero(),
+        overview = overview.orEmpty(),
+        title = title.orEmpty(),
+        posterPath = posterPath,
+        releaseDate = releaseDate,
+        voteAverage = voteAverage.orZero(),
+        formattedVoteCount = HandleUtils.formatVoteCount(voteCount),
+        genreIds = genreIds.orEmpty()
+    )
 }
 
-fun SearchDto.toPersonSearch(): PersonSearch? {
-    if (mediaType == MediaType.PERSON.value) {
-        return PersonSearch(
-            id = id.orZero(),
-            name = name.orEmpty(),
-            profilePath = profilePath,
-            knownForDepartment = knownForDepartment,
-            knownFor = knownForDto!!.toKnownForSearch()
-        )
-    }
-    return null
+fun SearchDto.toTvSeries(): TvSeries {
+    return TvSeries(
+        id = id.orZero(),
+        name = name.orEmpty(),
+        overview = overview.orEmpty(),
+        posterPath = posterPath,
+        firstAirDate = HandleUtils.convertToYearFromDate(firstAirDate),
+        genreIds = genreIds.orEmpty(),
+        voteAverage = voteAverage.orZero(),
+        formattedVoteCount = HandleUtils.formatVoteCount(voteCount)
+    )
+}
+
+fun SearchDto.toPersonSearch(): PersonSearch {
+    return PersonSearch(
+        id = id.orZero(),
+        name = name.orEmpty(),
+        profilePath = posterPath,
+        knownForDepartment = knownForDepartment.orEmpty(),
+        knownFor = knownForDto!!.toKnownForSearch()
+    )
 }

@@ -1,14 +1,17 @@
 package com.prmto.mova_movieapp.feature_person_detail.presentation
 
 import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.prmto.mova_movieapp.core.presentation.util.BaseUiEvent
-import com.prmto.mova_movieapp.core.presentation.util.UiText
-import com.prmto.mova_movieapp.core.util.Resource
+import com.prmto.mova_movieapp.core.presentation.base.viewModel.BaseViewModelWithUiEvent
+import com.prmto.mova_movieapp.core.presentation.util.UiEvent
 import com.prmto.mova_movieapp.feature_person_detail.domain.use_case.PersonDetailUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.async
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -16,50 +19,43 @@ import javax.inject.Inject
 class PersonDetailViewModel @Inject constructor(
     private val personDetailUseCases: PersonDetailUseCases,
     savedStateHandle: SavedStateHandle
-) : ViewModel() {
+) : BaseViewModelWithUiEvent<UiEvent>() {
 
-    private val _state = MutableStateFlow(PersonDetailState())
-    val state: StateFlow<PersonDetailState> = _state.asStateFlow()
-
-    private val _eventFlow = MutableSharedFlow<BaseUiEvent>()
-    val eventFlow: SharedFlow<BaseUiEvent> = _eventFlow.asSharedFlow()
-
-    private val _language = MutableStateFlow("")
-    val language: StateFlow<String> = _language.asStateFlow()
+    private val mutableState = MutableStateFlow(PersonDetailState())
+    val state = mutableState.asStateFlow()
 
     init {
-        getLanguage()
-        savedStateHandle.get<Int>("personId")?.let { personId ->
-            getPersonDetail(personId = personId)
-        }
+        PersonDetailFragmentArgs.fromSavedStateHandle(savedStateHandle)
+            .personId.let { personId ->
+                getPersonDetail(personId = personId)
+            }
     }
 
-    private fun getLanguage() {
-        viewModelScope.launch {
-            val language = personDetailUseCases.getLanguageIsoCodeUseCase().first()
-            _language.value = language
+    private fun getLanguage(): Deferred<String> {
+        return viewModelScope.async(handler) {
+            personDetailUseCases.getLanguageIsoCodeUseCase().first()
         }
     }
 
     private fun getPersonDetail(personId: Int) {
-        _state.update { it.copy(isLoading = true) }
-        viewModelScope.launch {
-            when (val result = personDetailUseCases.getPersonDetailUseCase(
-                personId = personId,
-                language = language.value
-            )) {
-                is Resource.Success -> {
-                    _state.value = PersonDetailState(personDetail = result.data)
-                }
-                is Resource.Error -> {
-                    _state.update { it.copy(isLoading = false) }
-                    _eventFlow.emit(
-                        BaseUiEvent.ShowSnackbar(
-                            result.uiText ?: UiText.unknownError()
-                        )
+        mutableState.update { it.copy(isLoading = true) }
+        viewModelScope.launch(handler) {
+            handleResourceWithCallbacks(
+                resourceSupplier = {
+                    val language = getLanguage().await()
+                    personDetailUseCases.getPersonDetailUseCase(
+                        personId = personId,
+                        language = language
                     )
+                },
+                onErrorCallback = { uiText ->
+                    mutableState.update { it.copy(isLoading = false) }
+                    addConsumableViewEvent(UiEvent.ShowSnackbar(uiText))
+                },
+                onSuccessCallback = { personDetail ->
+                    mutableState.value = PersonDetailState(personDetail = personDetail)
                 }
-            }
+            )
         }
     }
 }

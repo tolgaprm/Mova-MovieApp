@@ -12,11 +12,12 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.prmto.mova_movieapp.R
 import com.prmto.mova_movieapp.core.data.remote.api.ImageApi
 import com.prmto.mova_movieapp.core.data.remote.api.ImageSize
-import com.prmto.mova_movieapp.core.domain.models.Movie
-import com.prmto.mova_movieapp.core.domain.models.TvSeries
+import com.prmto.mova_movieapp.core.domain.models.movie.Movie
+import com.prmto.mova_movieapp.core.domain.models.tv.TvSeries
 import com.prmto.mova_movieapp.core.presentation.util.AlertDialogUtil
-import com.prmto.mova_movieapp.core.presentation.util.UtilFunctions
 import com.prmto.mova_movieapp.core.presentation.util.collectFlow
+import com.prmto.mova_movieapp.core.presentation.util.setAddFavoriteIconByFavoriteState
+import com.prmto.mova_movieapp.core.presentation.util.setWatchListIconByWatchState
 import com.prmto.mova_movieapp.databinding.FragmentDetailBottomSheetBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -28,8 +29,6 @@ class DetailBottomSheet : BottomSheetDialogFragment() {
 
     private val viewModel: DetailBottomSheetViewModel by viewModels()
 
-    private lateinit var utilFunctions: UtilFunctions
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -37,7 +36,6 @@ class DetailBottomSheet : BottomSheetDialogFragment() {
     ): View {
         val binding = FragmentDetailBottomSheetBinding.inflate(inflater, container, false)
         _binding = binding
-        utilFunctions = UtilFunctions()
 
         return binding.root
     }
@@ -60,14 +58,8 @@ class DetailBottomSheet : BottomSheetDialogFragment() {
             if (state.tvSeries != null) {
                 bindTvSeries(tvSeries = state.tvSeries)
             }
-            utilFunctions.setAddFavoriteIcon(
-                doesAddFavorite = state.doesAddFavorite,
-                imageButton = binding.btnFavoriteList
-            )
-            utilFunctions.setAddWatchListIcon(
-                doesAddWatchList = state.doesAddWatchList,
-                imageButton = binding.btnWatchingList
-            )
+            binding.btnFavoriteList.setAddFavoriteIconByFavoriteState(isFavorite = state.doesAddFavorite)
+            binding.btnWatchingList.setWatchListIconByWatchState(isAddedWatchList = state.doesAddWatchList)
         }
     }
 
@@ -101,17 +93,10 @@ class DetailBottomSheet : BottomSheetDialogFragment() {
             }
         }
     }
+
     private fun bindMovie(movie: Movie) {
         binding.apply {
-            tvName.text = if (movie.title == movie.originalTitle) {
-                movie.title
-            } else {
-                getString(
-                    R.string.tv_name_with_original_name,
-                    movie.title,
-                    movie.originalTitle
-                )
-            }
+            tvName.text = movie.title
             tvReleaseDate.text = movie.releaseDate
             tvOverview.text = movie.overview
             if (movie.posterPath != null) {
@@ -124,15 +109,7 @@ class DetailBottomSheet : BottomSheetDialogFragment() {
 
     private fun bindTvSeries(tvSeries: TvSeries) {
         binding.apply {
-            tvName.text = if (tvSeries.name == tvSeries.originalName) {
-                tvSeries.name
-            } else {
-                getString(
-                    R.string.tv_name_with_original_name,
-                    tvSeries.name,
-                    tvSeries.originalName
-                )
-            }
+            tvName.text = tvSeries.name
             tvOverview.text = tvSeries.overview
             tvReleaseDate.text = tvSeries.firstAirDate
             if (tvSeries.posterPath != null) {
@@ -174,5 +151,4 @@ class DetailBottomSheet : BottomSheetDialogFragment() {
         super.onDestroyView()
         _binding = null
     }
-
 }

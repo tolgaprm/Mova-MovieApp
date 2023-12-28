@@ -4,8 +4,8 @@ import android.content.Context
 import coil.load
 import com.prmto.mova_movieapp.core.data.remote.api.ImageApi
 import com.prmto.mova_movieapp.core.data.remote.api.ImageSize
-import com.prmto.mova_movieapp.core.domain.models.Movie
-import com.prmto.mova_movieapp.core.presentation.util.BaseMovieAndTvRecyclerAdapter
+import com.prmto.mova_movieapp.core.domain.models.movie.Movie
+import com.prmto.mova_movieapp.core.presentation.base.BaseMovieAndTvRecyclerAdapter
 import com.prmto.mova_movieapp.databinding.MovieRowBinding
 
 class TopRatedMoviesAdapter : BaseMovieAndTvRecyclerAdapter<Movie>() {

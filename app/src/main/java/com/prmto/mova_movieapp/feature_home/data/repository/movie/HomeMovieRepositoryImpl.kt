@@ -2,7 +2,7 @@ package com.prmto.mova_movieapp.feature_home.data.repository.movie
 
 import androidx.paging.PagingData
 import com.prmto.mova_movieapp.core.data.util.paging.getPagingMovies
-import com.prmto.mova_movieapp.core.domain.models.Movie
+import com.prmto.mova_movieapp.core.domain.models.movie.Movie
 import com.prmto.mova_movieapp.feature_home.data.remote.dataSources.movie.HomeMovieRemoteDataSource
 import com.prmto.mova_movieapp.feature_home.domain.repository.movie.HomeMovieRepository
 import kotlinx.coroutines.flow.Flow

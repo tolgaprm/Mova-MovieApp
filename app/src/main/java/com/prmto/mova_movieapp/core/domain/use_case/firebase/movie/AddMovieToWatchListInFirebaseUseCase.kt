@@ -1,7 +1,7 @@
 package com.prmto.mova_movieapp.core.domain.use_case.firebase.movie
 
 import com.prmto.mova_movieapp.R
-import com.prmto.mova_movieapp.core.domain.models.Movie
+import com.prmto.mova_movieapp.core.domain.models.movie.Movie
 import com.prmto.mova_movieapp.core.domain.repository.firebase.FirebaseCoreMovieRepository
 import com.prmto.mova_movieapp.core.domain.repository.firebase.FirebaseCoreRepository
 import com.prmto.mova_movieapp.core.presentation.util.UiText

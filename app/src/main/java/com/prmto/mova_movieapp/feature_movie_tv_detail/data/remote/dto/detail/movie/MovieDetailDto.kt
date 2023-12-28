@@ -1,6 +1,6 @@
 package com.prmto.mova_movieapp.feature_movie_tv_detail.data.remote.dto.detail.movie
 
-import com.prmto.mova_movieapp.core.data.remote.dto.genre.Genre
+import com.prmto.mova_movieapp.core.domain.models.genre.Genre
 import com.prmto.mova_movieapp.feature_movie_tv_detail.data.remote.dto.credit.CreditDto
 import com.prmto.mova_movieapp.feature_movie_tv_detail.data.remote.dto.detail.ProductionCompany
 import com.prmto.mova_movieapp.feature_movie_tv_detail.data.remote.dto.detail.ProductionCountry

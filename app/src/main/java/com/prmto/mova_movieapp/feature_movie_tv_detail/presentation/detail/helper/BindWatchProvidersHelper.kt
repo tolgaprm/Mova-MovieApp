@@ -11,6 +11,7 @@ import com.prmto.mova_movieapp.core.data.remote.api.ImageApi
 import com.prmto.mova_movieapp.feature_movie_tv_detail.domain.models.watchProvider.WatchProviderItemInfo
 
 class BindWatchProvidersHelper(private val context: Context) {
+    // TODO ADD WatchProviderImageInflater
     fun bind(
         listOfWatchProviderItem: List<WatchProviderItemInfo>,
         linearLayout: LinearLayout,

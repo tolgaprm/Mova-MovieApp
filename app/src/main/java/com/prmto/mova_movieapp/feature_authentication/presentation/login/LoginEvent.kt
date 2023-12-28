@@ -9,6 +9,4 @@ sealed class LoginEvent {
     object ClickedForgetPassword : LoginEvent()
     data class SignInWithGoogle(val task: Task<GoogleSignInAccount>) : LoginEvent()
     object SignIn : LoginEvent()
-    object ClickedSignUp : LoginEvent()
-    object OnBackPressed : LoginEvent()
 }

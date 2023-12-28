@@ -2,7 +2,7 @@ package com.prmto.mova_movieapp.feature_movie_tv_detail.data.repository.tv
 
 import com.prmto.mova_movieapp.core.data.remote.mapper.tv.toTvSeries
 import com.prmto.mova_movieapp.core.data.util.safeApiCallReturnResource
-import com.prmto.mova_movieapp.core.domain.models.TvSeries
+import com.prmto.mova_movieapp.core.domain.models.tv.TvSeries
 import com.prmto.mova_movieapp.core.util.Resource
 import com.prmto.mova_movieapp.feature_movie_tv_detail.data.remote.dataSource.tv.TvDetailRemoteDataSource
 import com.prmto.mova_movieapp.feature_movie_tv_detail.data.remote.mapper.detail.tv.toTvDetail

@@ -7,7 +7,7 @@ class HandlePagingStateNowPlayingRecyclerAdapter(
     nowPlayingRecyclerAdapter: NowPlayingRecyclerAdapter,
     onLoading: () -> Unit,
     onNotLoading: () -> Unit,
-    onError: (UiText) -> Unit
+    onError: (UiText) -> Unit = {}
 ) : BasePagingLoadState() {
 
     init {

@@ -5,8 +5,7 @@ import android.widget.ImageView
 import coil.load
 import com.prmto.mova_movieapp.R
 import com.prmto.mova_movieapp.core.data.remote.api.ImageApi
-import com.prmto.mova_movieapp.core.data.remote.dto.genre.Genre
-import com.prmto.mova_movieapp.core.presentation.util.HandleUtils
+import com.prmto.mova_movieapp.core.data.util.HandleUtils
 import com.prmto.mova_movieapp.databinding.FragmentDetailBinding
 import com.prmto.mova_movieapp.feature_movie_tv_detail.domain.models.watchProvider.WatchProviderItem
 
@@ -69,7 +68,6 @@ open class BindAttributesDetailFragment(
                 listOfWatchProviderItem = rentWatchProviders,
                 linearLayout = binding.imvRentLayout,
             )
-
         }
     }
 
@@ -81,13 +79,12 @@ open class BindAttributesDetailFragment(
         voteAverage: Double,
         voteCount: Int,
         ratingBarValue: Float,
-        genreList: List<Genre>,
+        genresBySeparatedByComma: String,
     ) {
-        val voteCountText = HandleUtils.convertingVoteCountToString(voteCount = voteCount)
+        val voteCountText = HandleUtils.formatVoteCount(voteCount = voteCount)
         binding.apply {
             ratingBar.rating = ratingBarValue
-            txtGenres.text =
-                HandleUtils.convertGenreListToStringSeparatedByCommas(genreList = genreList)
+            txtGenres.text = genresBySeparatedByComma
             txtVoteAverageCount.text = context.getString(
                 R.string.voteAverageDetail,
                 voteAverage.toString().subSequence(0, 3),

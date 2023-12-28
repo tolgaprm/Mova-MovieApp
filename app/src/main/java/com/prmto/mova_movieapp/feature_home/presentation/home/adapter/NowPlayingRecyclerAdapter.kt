@@ -10,9 +10,8 @@ import coil.load
 import com.prmto.mova_movieapp.R
 import com.prmto.mova_movieapp.core.data.remote.api.ImageApi
 import com.prmto.mova_movieapp.core.data.remote.api.ImageSize
-import com.prmto.mova_movieapp.core.domain.models.Movie
-import com.prmto.mova_movieapp.core.domain.models.TvSeries
-import com.prmto.mova_movieapp.core.presentation.util.HandleUtils
+import com.prmto.mova_movieapp.core.domain.models.movie.Movie
+import com.prmto.mova_movieapp.core.domain.models.tv.TvSeries
 import com.prmto.mova_movieapp.databinding.NowPlayingRowBinding
 
 class NowPlayingRecyclerAdapter :
@@ -27,10 +26,11 @@ class NowPlayingRecyclerAdapter :
         fun bind(movie: Movie, context: Context, onItemClickListener: (Movie) -> Unit = {}) {
             binding.movieTitle.text = movie.title
 
-            val voteCount = HandleUtils.convertingVoteCountToString(movie.voteCount)
 
             binding.voteAverage.text = context.getString(
-                R.string.voteAverage, movie.voteAverage.toString(), voteCount
+                R.string.voteAverage,
+                movie.voteAverage.toString(),
+                movie.formattedVoteCount
             )
 
             binding.backdropImage.load(

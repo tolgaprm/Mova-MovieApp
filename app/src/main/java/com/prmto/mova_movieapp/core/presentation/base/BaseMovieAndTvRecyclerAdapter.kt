@@ -1,4 +1,4 @@
-package com.prmto.mova_movieapp.core.presentation.util
+package com.prmto.mova_movieapp.core.presentation.base
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -6,8 +6,8 @@ import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.prmto.mova_movieapp.R
-import com.prmto.mova_movieapp.core.domain.models.Movie
-import com.prmto.mova_movieapp.core.domain.models.TvSeries
+import com.prmto.mova_movieapp.core.domain.models.movie.Movie
+import com.prmto.mova_movieapp.core.domain.models.tv.TvSeries
 import com.prmto.mova_movieapp.databinding.MovieRowBinding
 import com.prmto.mova_movieapp.feature_home.presentation.home.adapter.DiffUtilCallBack
 
@@ -38,7 +38,7 @@ abstract class BaseMovieAndTvRecyclerAdapter<T : Any>(
 
             binding.voteAverage.text = context.getString(
                 R.string.voteAverage,
-                movie.voteAverage.toString(), movie.voteCountByString
+                movie.voteAverage.toString(), movie.formattedVoteCount
             )
 
         }
@@ -47,7 +47,7 @@ abstract class BaseMovieAndTvRecyclerAdapter<T : Any>(
             tv: TvSeries,
             context: Context
         ) {
-            binding.tvMovieTvName.text = tv.originalName
+            binding.tvMovieTvName.text = tv.name
 
             tv.firstAirDate?.let {
                 binding.tvReleaseDateGenre.text =
@@ -57,7 +57,7 @@ abstract class BaseMovieAndTvRecyclerAdapter<T : Any>(
             binding.voteAverage.text = context.getString(
                 R.string.voteAverage,
                 tv.voteAverage.toString(),
-                tv.voteCountByString
+                tv.formattedVoteCount
             )
         }
     }

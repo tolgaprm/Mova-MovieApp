@@ -27,8 +27,9 @@ object DatabaseModule {
             context = context,
             klass = MovaDatabase::class.java,
             "MovaDatabase"
-        ).addMigrations(
-            Migration_1_2
-        ).build()
+        ).fallbackToDestructiveMigration()
+            .addMigrations(
+                Migration_1_2
+            ).build()
     }
 }

@@ -1,9 +1,9 @@
 package com.prmto.mova_movieapp.core.domain.di
 
 import com.prmto.mova_movieapp.core.data.repository.DataOperationsImpl
-import com.prmto.mova_movieapp.core.data.repository.RemoteRepositoryImpl
+import com.prmto.mova_movieapp.core.data.repository.GenreRepositoryImpl
 import com.prmto.mova_movieapp.core.domain.repository.DataStoreOperations
-import com.prmto.mova_movieapp.core.domain.repository.RemoteRepository
+import com.prmto.mova_movieapp.core.domain.repository.GenreRepository
 import com.prmto.mova_movieapp.core.util.DefaultDispatchers
 import com.prmto.mova_movieapp.core.util.DispatchersProvider
 import dagger.Binds
@@ -19,8 +19,8 @@ abstract class CoreDomainModule {
     @Binds
     @Singleton
     abstract fun bindsRemoteRepository(
-        remoteRepositoryImpl: RemoteRepositoryImpl
-    ): RemoteRepository
+        remoteRepositoryImpl: GenreRepositoryImpl
+    ): GenreRepository
 
     @Binds
     @Singleton

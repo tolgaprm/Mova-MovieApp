@@ -6,8 +6,8 @@ import coil.load
 import com.prmto.mova_movieapp.R
 import com.prmto.mova_movieapp.core.data.remote.api.ImageApi
 import com.prmto.mova_movieapp.core.data.remote.api.ImageSize
-import com.prmto.mova_movieapp.core.domain.models.TvSeries
-import com.prmto.mova_movieapp.core.presentation.util.BaseMovieAndTvRecyclerAdapter
+import com.prmto.mova_movieapp.core.domain.models.tv.TvSeries
+import com.prmto.mova_movieapp.core.presentation.base.BaseMovieAndTvRecyclerAdapter
 import com.prmto.mova_movieapp.databinding.MovieRowBinding
 
 class FilterTvSeriesAdapter : BaseMovieAndTvRecyclerAdapter<TvSeries>() {

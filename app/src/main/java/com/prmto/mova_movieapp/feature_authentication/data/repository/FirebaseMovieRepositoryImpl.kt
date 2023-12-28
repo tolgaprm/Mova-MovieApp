@@ -2,7 +2,7 @@ package com.prmto.mova_movieapp.feature_authentication.data.repository
 
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
-import com.prmto.mova_movieapp.core.domain.models.Movie
+import com.prmto.mova_movieapp.core.domain.models.movie.Movie
 import com.prmto.mova_movieapp.core.domain.util.FirebaseFirestoreErrorMessage.Companion.setExceptionToFirebaseMessage
 import com.prmto.mova_movieapp.core.presentation.util.UiText
 import com.prmto.mova_movieapp.core.util.Constants
@@ -65,9 +65,7 @@ class FirebaseMovieRepositoryImpl @Inject constructor(
                 val releaseDate = data["releaseDate"] as String
                 val genresBySeparatedByComma =
                     data["genresBySeparatedByComma"] as String
-                val originalTitle = data["originalTitle"] as String
                 val voteCountByString = data["voteCountByString"] as String
-                val voteCount = data["voteCount"] as Number
                 val genreByOne = data["genreByOne"] as String
                 val id = data["id"] as Number
                 val genreIds = data["genreIds"] as List<*>
@@ -78,12 +76,10 @@ class FirebaseMovieRepositoryImpl @Inject constructor(
                     id = id.toInt(),
                     overview = overview,
                     title = title,
-                    originalTitle = originalTitle,
                     posterPath = posterPath,
                     releaseDate = releaseDate,
                     genreIds = genreIds.map { it.toString().toInt() },
-                    voteCount = voteCount.toInt(),
-                    voteCountByString = voteCountByString,
+                    formattedVoteCount = voteCountByString,
                     genreByOne = genreByOne,
                     genresBySeparatedByComma = genresBySeparatedByComma,
                     voteAverage = voteAverage

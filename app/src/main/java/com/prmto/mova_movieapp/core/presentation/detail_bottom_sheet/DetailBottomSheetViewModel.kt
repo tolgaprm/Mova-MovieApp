@@ -3,12 +3,23 @@ package com.prmto.mova_movieapp.core.presentation.detail_bottom_sheet
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.prmto.mova_movieapp.core.domain.models.Movie
-import com.prmto.mova_movieapp.core.domain.models.TvSeries
+import com.prmto.mova_movieapp.core.domain.models.movie.Movie
+import com.prmto.mova_movieapp.core.domain.models.tv.TvSeries
 import com.prmto.mova_movieapp.core.domain.use_case.database.LocalDatabaseUseCases
 import com.prmto.mova_movieapp.core.domain.use_case.firebase.FirebaseCoreUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.updateAndGet
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -20,37 +31,44 @@ class DetailBottomSheetViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(DetailBottomSheetState())
-    val state: StateFlow<DetailBottomSheetState> = _state.asStateFlow()
-
+    val state: StateFlow<DetailBottomSheetState> = combine(
+        localDatabaseUseCases.getFavoriteMovieIdsUseCase(),
+        localDatabaseUseCases.getMovieWatchListItemIdsUseCase(),
+        localDatabaseUseCases.getFavoriteTvSeriesIdsUseCase(),
+        localDatabaseUseCases.getTvSeriesWatchListItemIdsUseCase()
+    ) { favoriteMovieIds, movieWatchListIds, favoriteTvIds, tvWatchListIds ->
+        _state.updateAndGet {
+            it.copy(
+                doesAddFavorite = if (it.movie != null) {
+                    favoriteMovieIds.contains(it.movie.id)
+                } else {
+                    favoriteTvIds.contains(it.tvSeries!!.id)
+                },
+                doesAddWatchList = if (it.movie != null) {
+                    movieWatchListIds.contains(it.movie.id)
+                } else {
+                    tvWatchListIds.contains(it.tvSeries!!.id)
+                },
+            )
+        }
+    }.stateIn(
+        viewModelScope,
+        SharingStarted.WhileSubscribed(5000),
+        DetailBottomSheetState()
+    )
 
     private val _uiEvent = MutableSharedFlow<DetailBottomUiEvent>()
     val uiEvent: SharedFlow<DetailBottomUiEvent> = _uiEvent.asSharedFlow()
 
-
     init {
-        savedStateHandle.get<Movie>("Movie")?.let { movie ->
-            _state.value = DetailBottomSheetState(movie = movie)
-            updateDoesAddFavoriteState(
-                idThatCheck = movie.id,
-                addedFavoriteIds = localDatabaseUseCases.getFavoriteMovieIdsUseCase()
-            )
-            updateDoesAddWatchListState(
-                idThatCheck = movie.id,
-                addedMovieWatchListIds = localDatabaseUseCases.getMovieWatchListItemIdsUseCase()
-            )
-        }
-        savedStateHandle.get<TvSeries>("TvSeries")?.let { tvSeries ->
-            _state.value = DetailBottomSheetState(tvSeries = tvSeries)
-            updateDoesAddFavoriteState(
-                idThatCheck = tvSeries.id,
-                addedFavoriteIds = localDatabaseUseCases.getFavoriteTvSeriesIdsUseCase()
-            )
-            updateDoesAddWatchListState(
-                idThatCheck = tvSeries.id,
-                addedMovieWatchListIds = localDatabaseUseCases.getTvSeriesWatchListItemIdsUseCase()
-            )
-        }
+        DetailBottomSheetArgs.fromSavedStateHandle(savedStateHandle)
+            .movie?.let { movie ->
+                _state.value = DetailBottomSheetState(movie = movie)
+            }
 
+        DetailBottomSheetArgs.fromSavedStateHandle(savedStateHandle).tvSeries?.let { tvSeries ->
+            _state.value = DetailBottomSheetState(tvSeries = tvSeries)
+        }
     }
 
     private fun updateDoesAddFavoriteState(
@@ -80,12 +98,15 @@ class DetailBottomSheetViewModel @Inject constructor(
             is DetailBottomSheetEvent.Close -> {
                 emitUiEvent(DetailBottomUiEvent.PopBackStack)
             }
+
             is DetailBottomSheetEvent.NavigateToDetailFragment -> {
                 navigateToDetailFragment(movieId = getMovie()?.id, tvId = getTvSeries()?.id)
             }
+
             is DetailBottomSheetEvent.Share -> {
 
             }
+
             is DetailBottomSheetEvent.ClickedAddFavoriteList -> {
                 if (isUserSignIn()) {
                     getMovie()?.let { movie ->
@@ -98,6 +119,7 @@ class DetailBottomSheetViewModel @Inject constructor(
                     emitUiEvent(DetailBottomUiEvent.ShowAlertDialog)
                 }
             }
+
             is DetailBottomSheetEvent.ClickedAddWatchList -> {
                 if (isUserSignIn()) {
                     getMovie()?.let { movie ->

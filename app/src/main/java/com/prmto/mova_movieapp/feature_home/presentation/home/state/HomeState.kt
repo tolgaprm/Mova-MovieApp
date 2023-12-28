@@ -1,6 +1,6 @@
 package com.prmto.mova_movieapp.feature_home.presentation.home.state
 
-import com.prmto.mova_movieapp.core.data.remote.dto.genre.Genre
+import com.prmto.mova_movieapp.core.domain.models.genre.Genre
 import com.prmto.mova_movieapp.core.presentation.util.UiText
 
 data class HomeState(
@@ -9,5 +9,5 @@ data class HomeState(
     val countryIsoCode: String = "",
     val languageIsoCode: String = "",
     val movieGenreList: List<Genre> = emptyList(),
-    val tvGenreList: List<Genre> = emptyList()
+    val tvGenreList: List<Genre> = emptyList(),
 )

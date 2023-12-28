@@ -1,7 +1,7 @@
 package com.prmto.mova_movieapp.feature_movie_tv_detail.domain.models.detail.movie
 
-import com.prmto.mova_movieapp.core.data.remote.dto.genre.Genre
-import com.prmto.mova_movieapp.core.domain.models.Movie
+import com.prmto.mova_movieapp.core.domain.models.genre.Genre
+import com.prmto.mova_movieapp.core.domain.models.movie.Movie
 import com.prmto.mova_movieapp.feature_movie_tv_detail.domain.models.credit.Credit
 import com.prmto.mova_movieapp.feature_movie_tv_detail.domain.models.watchProvider.WatchProviderItem
 
@@ -14,13 +14,15 @@ data class MovieDetail(
     val overview: String?,
     val posterPath: String?,
     val releaseDate: String,
-    val runtime: Int?,
     val voteAverage: Double,
     val voteCount: Int,
     var convertedRuntime: Map<String, String> = emptyMap(),
     val credit: Credit?,
     var ratingValue: Float = 0f,
-    val watchProviders: WatchProviderItem?
+    val isFavorite: Boolean = false,
+    val isWatchList: Boolean = false,
+    val watchProviders: WatchProviderItem?,
+    val genresBySeparatedByComma: String = "",
 )
 
 fun MovieDetail.toMovie(): Movie {
@@ -28,11 +30,9 @@ fun MovieDetail.toMovie(): Movie {
         id = id,
         overview = overview ?: "",
         title = title,
-        originalTitle = originalTitle,
         posterPath = posterPath,
         releaseDate = releaseDate,
         genreIds = genres.map { it.id },
-        voteCount = voteCount,
         voteAverage = voteAverage,
         genreByOne = genres.first().name
     )

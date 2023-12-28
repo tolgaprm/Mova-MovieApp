@@ -9,8 +9,8 @@ import coil.load
 import com.prmto.mova_movieapp.R
 import com.prmto.mova_movieapp.core.data.remote.api.ImageApi
 import com.prmto.mova_movieapp.core.data.remote.api.ImageSize
+import com.prmto.mova_movieapp.core.domain.models.tv.TvSeries
 import com.prmto.mova_movieapp.databinding.NowPlayingRowBinding
-import com.prmto.mova_movieapp.feature_explore.domain.model.TvSearch
 
 class SearchTvViewHolder(
     val binding: NowPlayingRowBinding,
@@ -18,31 +18,31 @@ class SearchTvViewHolder(
 ) : ViewHolder(binding.root) {
 
     fun bindSearchTv(
-        searchTv: TvSearch,
-        onSearchTvItemClick: (TvSearch) -> Unit = {}
+        tvSeries: TvSeries,
+        onSearchTvItemClick: (TvSeries) -> Unit = {}
     ) {
         binding.backdropImage.load(
             ImageApi.getImage(
-                imageUrl = searchTv.posterPath,
+                imageUrl = tvSeries.posterPath,
                 imageSize = ImageSize.W500.path
             )
         )
 
         binding.voteAverage.text = context.getString(
             R.string.voteAverage,
-            searchTv.voteAverage.toString(),
-            searchTv.voteCountByString
+            tvSeries.voteAverage.toString(),
+            tvSeries.formattedVoteCount
         )
 
-        binding.genresText.text = searchTv.genreByOneForTv
+        binding.genresText.text = tvSeries.genreByOne
 
         binding.movieTitle.textSize = 16f
-        binding.movieTitle.text = searchTv.name
+        binding.movieTitle.text = tvSeries.name
         binding.txtCategory.visibility = View.VISIBLE
         binding.txtCategory.text = context.getString(R.string.tv)
 
         binding.root.setOnClickListener {
-            onSearchTvItemClick(searchTv)
+            onSearchTvItemClick(tvSeries)
         }
     }
 

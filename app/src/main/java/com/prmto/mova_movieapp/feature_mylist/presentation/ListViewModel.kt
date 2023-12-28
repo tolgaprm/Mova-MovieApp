@@ -1,48 +1,60 @@
 package com.prmto.mova_movieapp.feature_mylist.presentation
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.prmto.mova_movieapp.core.domain.models.Movie
-import com.prmto.mova_movieapp.core.domain.models.TvSeries
+import com.prmto.mova_movieapp.core.domain.models.movie.Movie
+import com.prmto.mova_movieapp.core.domain.models.tv.TvSeries
 import com.prmto.mova_movieapp.core.domain.use_case.database.LocalDatabaseUseCases
-import com.prmto.mova_movieapp.core.presentation.util.BaseUiEvent
+import com.prmto.mova_movieapp.core.presentation.base.viewModel.BaseViewModelWithUiEvent
+import com.prmto.mova_movieapp.core.presentation.util.UiEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.updateAndGet
 import javax.inject.Inject
 
 @HiltViewModel
 class ListViewModel @Inject constructor(
     private val localDatabaseUseCases: LocalDatabaseUseCases,
-) : ViewModel() {
+) : BaseViewModelWithUiEvent<UiEvent>() {
 
-    private val _state = MutableStateFlow(ListState())
-    val state: StateFlow<ListState> = _state.asStateFlow()
+    private val mutableState = MutableStateFlow(ListState())
+    val state = combine(
+        mutableState,
+        localDatabaseUseCases.getFavoriteMoviesUseCase(),
+        localDatabaseUseCases.getFavoriteTvSeriesUseCase(),
+        localDatabaseUseCases.getMoviesInWatchListUseCase(),
+        localDatabaseUseCases.getTvSeriesInWatchListUseCase()
+    ) { listState, favoriteMovies, favoriteTvSeries, moviesInWatchList, tvSeriesInWatchList ->
+        when (listState.chipType) {
+            ChipType.MOVIE -> {
+                if (listState.selectedTab.isFavoriteList()) {
+                    updateListMovieAndLoading(movieList = favoriteMovies)
+                } else {
+                    updateListMovieAndLoading(movieList = moviesInWatchList)
+                }
+            }
 
-    private val _eventFlow = MutableSharedFlow<BaseUiEvent>()
-    val eventFlow = _eventFlow.asSharedFlow()
-
-    init {
-        getMoviesAndTvSeries()
-    }
-
+            ChipType.TVSERIES -> {
+                if (listState.selectedTab.isFavoriteList()) {
+                    updateListTvSeriesAndLoading(tvSeriesList = favoriteTvSeries)
+                } else {
+                    updateListTvSeriesAndLoading(tvSeriesList = tvSeriesInWatchList)
+                }
+            }
+        }
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), ListState())
 
     fun onEvent(event: ListEvent) {
         when (event) {
             is ListEvent.SelectedTab -> {
-                _state.update { it.copy(selectedTab = event.listTab) }
-                getMoviesAndTvSeries()
+                mutableState.update { it.copy(selectedTab = event.listTab) }
             }
 
             is ListEvent.UpdateListType -> {
-                _state.update { it.copy(chipType = event.chipType) }
-                getMoviesAndTvSeries()
+                mutableState.update { it.copy(chipType = event.chipType) }
             }
 
             is ListEvent.ClickedMovieItem -> {
@@ -63,51 +75,11 @@ class ListViewModel @Inject constructor(
             movie,
             tvSeries
         )
-        viewModelScope.launch {
-            _eventFlow.emit(
-                BaseUiEvent.NavigateTo(directions)
-            )
-        }
+        addConsumableViewEvent(UiEvent.NavigateTo(directions))
     }
 
-    private fun getMoviesAndTvSeries() {
-        viewModelScope.launch {
-            _state.update { it.copy(isLoading = true) }
-            val currentState = state.value
-            when (currentState.chipType) {
-                ChipType.MOVIE -> {
-                    if (currentState.selectedTab.isFavoriteList()) {
-                        localDatabaseUseCases.getFavoriteMoviesUseCase()
-                            .collectLatest { movies ->
-                                updateListMovieAndLoading(movieList = movies)
-                            }
-                    } else {
-                        localDatabaseUseCases.getMoviesInWatchListUseCase()
-                            .collectLatest { movies ->
-                                updateListMovieAndLoading(movieList = movies)
-                            }
-                    }
-                }
-
-                ChipType.TVSERIES -> {
-                    if (currentState.selectedTab.isFavoriteList()) {
-                        localDatabaseUseCases.getFavoriteTvSeriesUseCase()
-                            .collectLatest { tvSeries ->
-                                updateListTvSeriesAndLoading(tvSeriesList = tvSeries)
-                            }
-                    } else {
-                        localDatabaseUseCases.getTvSeriesInWatchListUseCase()
-                            .collectLatest { tvSeries ->
-                                updateListTvSeriesAndLoading(tvSeriesList = tvSeries)
-                            }
-                    }
-                }
-            }
-        }
-    }
-
-    private fun updateListMovieAndLoading(movieList: List<Movie>) {
-        _state.update {
+    private fun updateListMovieAndLoading(movieList: List<Movie>): ListState {
+        return mutableState.updateAndGet {
             it.copy(
                 movieList = movieList,
                 isLoading = false
@@ -115,8 +87,8 @@ class ListViewModel @Inject constructor(
         }
     }
 
-    private fun updateListTvSeriesAndLoading(tvSeriesList: List<TvSeries>) {
-        _state.update {
+    private fun updateListTvSeriesAndLoading(tvSeriesList: List<TvSeries>): ListState {
+        return mutableState.updateAndGet {
             it.copy(
                 tvSeriesList = tvSeriesList,
                 isLoading = false

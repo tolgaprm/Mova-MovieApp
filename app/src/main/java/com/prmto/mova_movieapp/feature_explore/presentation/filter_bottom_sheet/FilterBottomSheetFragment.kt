@@ -6,16 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.google.android.material.chip.Chip
-import com.google.android.material.chip.ChipGroup
-import com.prmto.mova_movieapp.R
-import com.prmto.mova_movieapp.core.data.remote.dto.genre.Genre
 import com.prmto.mova_movieapp.core.domain.models.Category
 import com.prmto.mova_movieapp.core.domain.models.Sort
 import com.prmto.mova_movieapp.core.domain.models.isMovie
 import com.prmto.mova_movieapp.core.domain.models.isPopularity
 import com.prmto.mova_movieapp.core.presentation.util.collectFlow
 import com.prmto.mova_movieapp.databinding.FragmentBottomSheetBinding
+import com.prmto.mova_movieapp.feature_explore.presentation.GenreChipInflater
 import com.prmto.mova_movieapp.feature_explore.presentation.event.ExploreBottomSheetEvent
 import com.prmto.mova_movieapp.feature_explore.presentation.explore.ExploreViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -23,26 +20,30 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class FilterBottomSheetFragment : BottomSheetDialogFragment() {
 
-    private lateinit var binding: FragmentBottomSheetBinding
+    private var _binding: FragmentBottomSheetBinding? = null
+    private val binding get() = _binding!!
 
     lateinit var viewModel: ExploreViewModel
+
+    private var genreChipInflater: GenreChipInflater? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentBottomSheetBinding.inflate(inflater, container, false)
+        _binding = FragmentBottomSheetBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         viewModel = ViewModelProvider(requireActivity())[ExploreViewModel::class.java]
-
+        genreChipInflater = GenreChipInflater(
+            context = requireContext(),
+            genreListChipGroup = binding.genreListGroup
+        )
         observeData()
-
         setViewsListener()
     }
 
@@ -73,34 +74,19 @@ class FilterBottomSheetFragment : BottomSheetDialogFragment() {
         }
     }
 
-    private fun inflateGenreChips(
-        chips: List<Genre>,
-        parentChip: ChipGroup
-    ) {
-        chips.forEach {
-            val chip = LayoutInflater.from(requireContext()).inflate(
-                R.layout.chip, parentChip, false
-            ) as Chip
-
-            chip.text = it.name
-            chip.id = it.id
-            parentChip.addView(chip)
-        }
-    }
-
     private fun observeData() {
         collectFlow(viewModel.filterBottomSheetState) { filterBottomSheet ->
             updateCheckCategoryFilter(filterBottomSheet.categoryState)
 
-            updateCheckedGenreFilters(filterBottomSheet.checkedGenreIdsState)
+            genreChipInflater?.updateCheckedGenreFilters(filterBottomSheet.checkedGenreIdsState)
 
             updateCheckedSortFilter(filterBottomSheet.checkedSortState)
         }
 
-        collectFlow(viewModel.genreList) { genre ->
-            binding.genreListGroup.removeAllViews()
-            inflateGenreChips(chips = genre, binding.genreListGroup)
-
+        collectFlow(viewModel.genreListState) { genre ->
+            genreChipInflater?.createGenreChips(
+                genreList = genre
+            )
         }
     }
 
@@ -111,23 +97,18 @@ class FilterBottomSheetFragment : BottomSheetDialogFragment() {
         binding.sortChipGroup.check(checkedSortId)
     }
 
-    private fun updateCheckedGenreFilters(checkedGenreIds: List<Int>) {
-
-        if (checkedGenreIds.isEmpty()) {
-            binding.genreListGroup.clearCheck()
-            return
-        }
-        checkedGenreIds.forEach {
-            binding.genreListGroup.check(it)
-        }
-    }
-
     private fun updateCheckCategoryFilter(categoryState: Category) {
         val chipId = if (categoryState.isMovie()) {
             binding.movieChip.id
         } else binding.tvSeriesChip.id
 
         binding.categoriesChipGroup.check(chipId)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+        genreChipInflater = null
     }
 }
 

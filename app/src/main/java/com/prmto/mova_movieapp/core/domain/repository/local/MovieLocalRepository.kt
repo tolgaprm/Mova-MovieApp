@@ -1,6 +1,6 @@
 package com.prmto.mova_movieapp.core.domain.repository.local
 
-import com.prmto.mova_movieapp.core.domain.models.Movie
+import com.prmto.mova_movieapp.core.domain.models.movie.Movie
 import kotlinx.coroutines.flow.Flow
 
 interface MovieLocalRepository {

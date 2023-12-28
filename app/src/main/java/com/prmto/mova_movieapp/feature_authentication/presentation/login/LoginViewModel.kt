@@ -1,21 +1,20 @@
 package com.prmto.mova_movieapp.feature_authentication.presentation.login
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.tasks.Task
-import com.prmto.mova_movieapp.R
-import com.prmto.mova_movieapp.core.presentation.util.StandardTextFieldState
+import com.prmto.mova_movieapp.core.presentation.base.viewModel.BaseViewModelWithUiEvent
 import com.prmto.mova_movieapp.core.presentation.util.UiEvent
 import com.prmto.mova_movieapp.core.presentation.util.UiText
 import com.prmto.mova_movieapp.feature_authentication.domain.use_case.FirebaseUseCases
 import com.prmto.mova_movieapp.feature_authentication.domain.use_case.SignInWithCredentialUseCase
 import com.prmto.mova_movieapp.feature_authentication.domain.use_case.SignInWithEmailAndPasswordUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -24,51 +23,39 @@ class LoginViewModel @Inject constructor(
     private val signInWithEmailAndUserName: SignInWithEmailAndPasswordUseCase,
     private val signInWithCredentialUseCase: SignInWithCredentialUseCase,
     private val firebaseUseCases: FirebaseUseCases
-) : ViewModel() {
+) : BaseViewModelWithUiEvent<UiEvent>() {
 
-    private val _emailState = MutableStateFlow(StandardTextFieldState())
-    val emailState: StateFlow<StandardTextFieldState> = _emailState.asStateFlow()
-
-    private val _passwordState = MutableStateFlow(StandardTextFieldState())
-    val passwordState: StateFlow<StandardTextFieldState> = _passwordState.asStateFlow()
-
-    private val _isLoading = MutableStateFlow(false)
-    val isLoading: StateFlow<Boolean> = _isLoading.asStateFlow()
-
-    private val _uiEvent = MutableSharedFlow<UiEvent>()
-    val uiEvent: SharedFlow<UiEvent> = _uiEvent.asSharedFlow()
-
+    private val mutableState = MutableStateFlow(LoginUiState())
+    val uiState: StateFlow<LoginUiState> = mutableState.asStateFlow()
 
     fun onEvent(event: LoginEvent) {
         when (event) {
             is LoginEvent.EnteredEmail -> {
-                _emailState.update { it.copy(text = event.email, error = null) }
+                mutableState.updateEmailText(event.email)
             }
+
             is LoginEvent.EnteredPassword -> {
-                _passwordState.update { it.copy(text = event.password, error = null) }
+                mutableState.updatePasswordText(event.password)
             }
+
             is LoginEvent.ClickedForgetPassword -> {
                 val directions =
                     LoginFragmentDirections.actionLoginFragmentToForgetPasswordFragment(null)
-                if (emailState.value.text.isNotBlank()) {
-                    directions.email = emailState.value.text
+                if (mutableState.value.emailIsNotBlank()) {
+                    directions.email = mutableState.value.emailState.text
                 }
-                emitUiEvent(UiEvent.NavigateTo(directions))
+                addConsumableViewEvent(UiEvent.NavigateTo(directions))
             }
+
             is LoginEvent.SignIn -> {
                 signIn(
-                    email = emailState.value.text,
-                    password = passwordState.value.text
+                    email = mutableState.value.emailState.text,
+                    password = mutableState.value.passwordState.text
                 )
             }
+
             is LoginEvent.SignInWithGoogle -> {
                 handleResultsForSignInWithGoogle(task = event.task)
-            }
-            is LoginEvent.ClickedSignUp -> {
-                emitUiEvent(UiEvent.NavigateTo(LoginFragmentDirections.actionLoginFragmentToSignUpFragment()))
-            }
-            is LoginEvent.OnBackPressed -> {
-                emitUiEvent(UiEvent.PopBackStack)
             }
         }
     }
@@ -79,46 +66,40 @@ class LoginViewModel @Inject constructor(
             password = password,
             onSuccess = { onLoginSuccess() },
             onFailure = { uiText ->
-                emitUiEvent(UiEvent.ShowSnackbar(uiText = uiText))
-                _isLoading.value = false
+                addConsumableViewEvent(UiEvent.ShowSnackbar(uiText = uiText))
+                mutableState.updateIsLoading(false)
             }
         )
 
         if (loginResult.passwordError == null && loginResult.emailError == null) {
-            _isLoading.value = true
+            mutableState.updateIsLoading(true)
         }
 
         if (loginResult.emailError != null) {
-            _emailState.update { it.copy(error = loginResult.emailError) }
+            mutableState.updateEmailError(loginResult.emailError)
         }
         if (loginResult.passwordError != null) {
-            _passwordState.update { it.copy(error = loginResult.passwordError) }
-        }
-    }
-
-    private fun emitUiEvent(uiEvent: UiEvent) {
-        viewModelScope.launch {
-            _uiEvent.emit(uiEvent)
+            mutableState.updatePasswordError(loginResult.passwordError)
         }
     }
 
     private fun handleResultsForSignInWithGoogle(task: Task<GoogleSignInAccount>) {
         if (task.isSuccessful) {
-            _isLoading.value = true
+            mutableState.updateIsLoading(true)
             val result = signInWithCredentialUseCase(
                 task = task,
                 onSuccess = { onLoginSuccess() },
                 onFailure = { uiText ->
-                    emitUiEvent(UiEvent.ShowSnackbar(uiText))
-                    _isLoading.value = false
+                    addConsumableViewEvent(UiEvent.ShowSnackbar(uiText = uiText))
+                    mutableState.updateIsLoading(false)
                 }
             )
             if (result.errorMessage != null) {
-                emitUiEvent(UiEvent.ShowSnackbar(result.errorMessage))
-                _isLoading.value = false
+                addConsumableViewEvent(UiEvent.ShowSnackbar(result.errorMessage))
+                mutableState.updateIsLoading(false)
             }
         } else {
-            emitUiEvent(UiEvent.ShowSnackbar(UiText.StringResource(R.string.something_went_wrong)))
+            addConsumableViewEvent(UiEvent.ShowSnackbar(UiText.somethingWentWrong()))
         }
     }
 
@@ -128,8 +109,10 @@ class LoginViewModel @Inject constructor(
         viewModelScope.launch {
             movieJob.join()
             tvSeriesJob.join()
-            _uiEvent.emit(UiEvent.NavigateTo(LoginFragmentDirections.actionLoginFragmentToHomeFragment()))
-            _isLoading.value = false
+            addConsumableViewEvent(
+                UiEvent.NavigateTo(LoginFragmentDirections.actionLoginFragmentToHomeFragment())
+            )
+            mutableState.updateIsLoading(false)
         }
     }
 

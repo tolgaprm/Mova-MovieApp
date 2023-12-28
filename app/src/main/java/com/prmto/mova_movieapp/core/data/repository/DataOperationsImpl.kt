@@ -2,7 +2,11 @@ package com.prmto.mova_movieapp.core.data.repository
 
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.*
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.emptyPreferences
+import androidx.datastore.preferences.core.intPreferencesKey
+import androidx.datastore.preferences.core.stringPreferencesKey
 import com.prmto.mova_movieapp.core.domain.repository.DataStoreOperations
 import com.prmto.mova_movieapp.core.util.Constants.LOCALE_KEY
 import com.prmto.mova_movieapp.core.util.Constants.UI_MODE_KEY
@@ -10,7 +14,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import okio.IOException
-import java.util.*
+import java.util.Locale
 import javax.inject.Inject
 
 

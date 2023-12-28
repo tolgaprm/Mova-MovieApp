@@ -9,8 +9,8 @@ import coil.load
 import com.prmto.mova_movieapp.R
 import com.prmto.mova_movieapp.core.data.remote.api.ImageApi
 import com.prmto.mova_movieapp.core.data.remote.api.ImageSize
+import com.prmto.mova_movieapp.core.domain.models.movie.Movie
 import com.prmto.mova_movieapp.databinding.NowPlayingRowBinding
-import com.prmto.mova_movieapp.feature_explore.domain.model.MovieSearch
 
 class SearchMovieViewHolder(
     private val binding: NowPlayingRowBinding,
@@ -18,12 +18,12 @@ class SearchMovieViewHolder(
 ) : RecyclerView.ViewHolder(binding.root) {
 
     fun bindMovie(
-        movieSearch: MovieSearch,
-        onMovieSearchItemClick: (MovieSearch) -> Unit = {}
+        movie: Movie,
+        onMovieSearchItemClick: (Movie) -> Unit = {}
     ) {
         binding.backdropImage.load(
             ImageApi.getImage(
-                imageUrl = movieSearch.posterPath,
+                imageUrl = movie.posterPath,
                 imageSize = ImageSize.W500.path
             )
         )
@@ -31,19 +31,19 @@ class SearchMovieViewHolder(
 
         binding.voteAverage.text = context.getString(
             R.string.voteAverage,
-            movieSearch.voteAverage.toString(),
-            movieSearch.voteCountByString
+            movie.voteAverage.toString(),
+            movie.formattedVoteCount
         )
 
-        binding.genresText.text = movieSearch.genreByOneForMovie
+        binding.genresText.text = movie.genreByOne
 
         binding.movieTitle.textSize = 16f
-        binding.movieTitle.text = movieSearch.title
+        binding.movieTitle.text = movie.title
         binding.txtCategory.visibility = View.VISIBLE
         binding.txtCategory.text = context.getString(R.string.movie)
 
         binding.root.setOnClickListener {
-            onMovieSearchItemClick(movieSearch)
+            onMovieSearchItemClick(movie)
         }
     }
 

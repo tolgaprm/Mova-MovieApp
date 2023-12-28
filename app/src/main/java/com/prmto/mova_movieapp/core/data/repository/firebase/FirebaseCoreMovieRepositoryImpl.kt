@@ -6,7 +6,7 @@ import com.prmto.mova_movieapp.core.data.local.entity.movie.FavoriteMovie
 import com.prmto.mova_movieapp.core.data.local.entity.movie.MovieWatchListItem
 import com.prmto.mova_movieapp.core.data.remote.mapper.movie.toFavoriteMovie
 import com.prmto.mova_movieapp.core.data.remote.mapper.movie.toMovieWatchListItem
-import com.prmto.mova_movieapp.core.domain.models.Movie
+import com.prmto.mova_movieapp.core.domain.models.movie.Movie
 import com.prmto.mova_movieapp.core.domain.repository.firebase.FirebaseCoreMovieRepository
 import com.prmto.mova_movieapp.core.domain.util.FirebaseFirestoreErrorMessage.Companion.setExceptionToFirebaseMessage
 import com.prmto.mova_movieapp.core.presentation.util.UiText
