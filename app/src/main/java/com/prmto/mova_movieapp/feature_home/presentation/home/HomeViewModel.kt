@@ -5,8 +5,6 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.prmto.mova_movieapp.core.domain.models.movie.Movie
 import com.prmto.mova_movieapp.core.domain.models.tv.TvSeries
-import com.prmto.mova_movieapp.core.domain.repository.ConnectivityObserver
-import com.prmto.mova_movieapp.core.domain.repository.isAvaliable
 import com.prmto.mova_movieapp.core.presentation.base.viewModel.BaseViewModelWithUiEvent
 import com.prmto.mova_movieapp.core.presentation.util.UiEvent
 import com.prmto.mova_movieapp.feature_home.domain.usecases.HomeUseCases
@@ -15,53 +13,29 @@ import com.prmto.mova_movieapp.feature_home.presentation.home.state.HomeState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.updateAndGet
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val homeUseCases: HomeUseCases,
-    private val observeNetwork: ConnectivityObserver
+    private val homeUseCases: HomeUseCases
 ) : BaseViewModelWithUiEvent<UiEvent>() {
 
     private val _homeState = MutableStateFlow(HomeState())
-    val homeState: StateFlow<HomeState> = _homeState.asStateFlow()
-
-    private val _networkState = MutableStateFlow(ConnectivityObserver.Status.Unavaliable)
-    val networkState: StateFlow<ConnectivityObserver.Status> = _networkState.asStateFlow()
-
-    init {
-        viewModelScope.launch(handler) {
-            collectNetworkState()
-            collectLanguageIsoCode()
+    val homeState: StateFlow<HomeState> = combine(
+        _homeState,
+        homeUseCases.getLanguageIsoCodeUseCase()
+    ) { state, languageIsoCode ->
+        _homeState.updateAndGet {
+            it.copy(
+                languageIsoCode = languageIsoCode
+            )
         }
-
-    }
-
-    private fun collectNetworkState() {
-        viewModelScope.launch(handler) {
-            observeNetwork.observe().collectLatest { status ->
-                _networkState.value = status
-            }
-        }
-    }
-
-    private fun collectLanguageIsoCode() {
-        viewModelScope.launch(handler) {
-            homeUseCases.getLanguageIsoCodeUseCase().collect { languageIsoCode ->
-                _homeState.value = _homeState.value.copy(
-                    languageIsoCode = languageIsoCode
-                )
-            }
-        }
-    }
-
-    fun isNetworkAvaliable(): Boolean {
-        return networkState.value.isAvaliable()
-    }
+    }.stateIn(viewModelScope, SharingStarted.Eagerly, HomeState())
 
     fun onEvent(event: HomeEvent) {
         when (event) {
@@ -83,10 +57,6 @@ class HomeViewModel @Inject constructor(
                 )
             }
         }
-    }
-
-    private fun hideSeeAllPage() {
-        _homeState.value = _homeState.value.copy(isShowsSeeAllPage = false)
     }
 
     fun getNowPlayingMovies(): Flow<PagingData<Movie>> {

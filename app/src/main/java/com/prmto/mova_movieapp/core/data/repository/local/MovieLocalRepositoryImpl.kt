@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class MovieLocalRepositoryImpl @Inject constructor(
-    private val movaDatabase: MovaDatabase,
+    private val movaDatabase: MovaDatabase
 ) : MovieLocalRepository {
 
     private val movieDao = movaDatabase.movieDao

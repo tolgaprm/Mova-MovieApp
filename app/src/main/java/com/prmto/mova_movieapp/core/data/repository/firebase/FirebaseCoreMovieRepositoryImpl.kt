@@ -14,7 +14,7 @@ import com.prmto.mova_movieapp.core.util.Constants
 import javax.inject.Inject
 
 class FirebaseCoreMovieRepositoryImpl @Inject constructor(
-    private val firestore: FirebaseFirestore,
+    private val firestore: FirebaseFirestore
 ) : FirebaseCoreMovieRepository {
     override fun addMovieToFavoriteList(
         userUid: String,

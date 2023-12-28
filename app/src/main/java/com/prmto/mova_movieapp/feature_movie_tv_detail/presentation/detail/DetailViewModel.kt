@@ -15,7 +15,6 @@ import com.prmto.mova_movieapp.feature_movie_tv_detail.presentation.detail.event
 import com.prmto.mova_movieapp.feature_movie_tv_detail.presentation.detail.event.DetailUiEvent
 import com.prmto.mova_movieapp.feature_movie_tv_detail.util.Constants.DETAIL_DEFAULT_ID
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -301,7 +300,7 @@ class DetailViewModel @Inject constructor(
     }
 
     private fun getMovieVideos(movieId: Int) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             updateVideosLoading(isLoading = true)
             handleResourceWithCallbacks(
                 resourceSupplier = {
@@ -322,7 +321,7 @@ class DetailViewModel @Inject constructor(
     }
 
     private fun getTvVideos(tvId: Int) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             updateVideosLoading(isLoading = true)
             handleResourceWithCallbacks(
                 resourceSupplier = {

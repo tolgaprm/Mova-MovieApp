@@ -2,14 +2,11 @@ package com.prmto.mova_movieapp.feature_home.presentation.home
 
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
-import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.prmto.mova_movieapp.R
-import com.prmto.mova_movieapp.core.domain.models.movie.Movie
-import com.prmto.mova_movieapp.core.domain.repository.isAvaliable
 import com.prmto.mova_movieapp.core.presentation.base.fragment.BaseFragmentWithUiEvent
-import com.prmto.mova_movieapp.core.presentation.base.isEmpty
 import com.prmto.mova_movieapp.core.presentation.util.UiText
 import com.prmto.mova_movieapp.core.presentation.util.asString
 import com.prmto.mova_movieapp.core.presentation.util.collectFlow
@@ -27,8 +24,6 @@ import com.prmto.mova_movieapp.feature_home.presentation.home.adapter.TopRatedMo
 import com.prmto.mova_movieapp.feature_home.presentation.home.adapter.TopRatedTvSeriesAdapter
 import com.prmto.mova_movieapp.feature_home.presentation.home.event.HomeEvent
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
 
 @AndroidEntryPoint
 class HomeFragment : BaseFragmentWithUiEvent<FragmentHomeBinding, HomeViewModel>(
@@ -44,71 +39,40 @@ class HomeFragment : BaseFragmentWithUiEvent<FragmentHomeBinding, HomeViewModel>
 
     override fun onInitialize() {
         handlePagingLoadStates()
-        observeConnectivityStatus()
         collectHomeUiEvents()
         updateCountryIsoCode()
         setupRecyclerAdapters()
         addOnBackPressedCallback(addCustomBehavior = { hideSeeAllPage() })
         setupClickListener()
+        collectDataLifecycleAware()
     }
-
-    private var job: Job? = null
 
     private fun setupClickListener() {
         binding.btnNavigateUp.setOnClickListener {
             hideSeeAllPage()
+            binding.seeAllPage.makeGone()
+            binding.scrollView.makeVisible()
         }
         binding.btnError.setOnClickListener {
-            if (viewModel.isNetworkAvaliable()) {
-                collectDataLifecycleAware()
-            } else {
-                Toast.makeText(
-                    requireContext(),
-                    getString(R.string.internet_error),
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
+            hideErrorScreenAndShowScrollView()
+            nowPlayingAdapter.retry()
+            popularMoviesAdapter.retry()
+            popularTvSeriesAdapter.retry()
+            topRatedMoviesAdapter.retry()
+            topRatedTvSeriesAdapter.retry()
         }
         setAdaptersClickListener()
         setupListenerSeeAllClickEvents()
     }
 
-    private fun observeConnectivityStatus() {
-        collectFlow(viewModel.networkState) { networkState ->
-            delay(20)
-            if (networkState.isAvaliable()) {
-                job?.cancel()
-                showScrollView()
-                hideErrorScreen()
-                collectDataLifecycleAware()
-            } else {
-                job?.cancel()
-                if (isEmptyAdapters()) {
-                    hideScrollView()
-                    showErrorScreen()
-                }
-            }
-        }
-    }
-
-    private fun isEmptyAdapters(): Boolean {
-        return nowPlayingAdapter.itemCount <= 0 || popularMoviesAdapter.isEmpty() || popularTvSeriesAdapter.isEmpty() || topRatedMoviesAdapter.isEmpty() || topRatedTvSeriesAdapter.isEmpty()
-    }
-
-    private fun showScrollView() {
-        binding.scrollView.makeVisible()
-    }
-
-    private fun hideScrollView() {
+    private fun hideScrollViewAndShowErrorScreen() {
         binding.scrollView.makeGone()
-    }
-
-    private fun showErrorScreen() {
         binding.errorScreen.makeVisible()
     }
 
-    private fun hideErrorScreen() {
+    private fun hideErrorScreenAndShowScrollView() {
         binding.errorScreen.makeGone()
+        binding.scrollView.makeVisible()
     }
 
     private fun collectHomeUiEvents() {
@@ -156,31 +120,36 @@ class HomeFragment : BaseFragmentWithUiEvent<FragmentHomeBinding, HomeViewModel>
         HandlePagingStateNowPlayingRecyclerAdapter(
             nowPlayingRecyclerAdapter = nowPlayingAdapter,
             onLoading = binding.nowPlayingShimmerLayout::makeVisible,
-            onNotLoading = binding.nowPlayingShimmerLayout::makeGone
+            onNotLoading = binding.nowPlayingShimmerLayout::makeGone,
+            onError = { hideScrollViewAndShowErrorScreen() }
         )
 
-        HandlePagingLoadStateMovieAndTvBaseRecyclerAdapter<Movie>(
+        HandlePagingLoadStateMovieAndTvBaseRecyclerAdapter(
             pagingAdapter = popularMoviesAdapter,
             onLoading = binding.popularMoviesShimmerLayout::makeVisible,
-            onNotLoading = binding.popularMoviesShimmerLayout::makeGone
+            onNotLoading = binding.popularMoviesShimmerLayout::makeGone,
+            onError = { hideScrollViewAndShowErrorScreen() }
         )
 
         HandlePagingLoadStateMovieAndTvBaseRecyclerAdapter(
             pagingAdapter = topRatedMoviesAdapter,
             onLoading = binding.topRatedMoviesShimmerLayout::makeVisible,
-            onNotLoading = binding.topRatedMoviesShimmerLayout::makeGone
+            onNotLoading = binding.topRatedMoviesShimmerLayout::makeGone,
+            onError = { hideScrollViewAndShowErrorScreen() }
         )
 
         HandlePagingLoadStateMovieAndTvBaseRecyclerAdapter(
             pagingAdapter = popularTvSeriesAdapter,
             onLoading = binding.popularTvSeriesShimmerLayout::makeVisible,
-            onNotLoading = binding.popularTvSeriesShimmerLayout::makeGone
+            onNotLoading = binding.popularTvSeriesShimmerLayout::makeGone,
+            onError = { hideScrollViewAndShowErrorScreen() }
         )
 
         HandlePagingLoadStateMovieAndTvBaseRecyclerAdapter(
             pagingAdapter = topRatedTvSeriesAdapter,
             onLoading = binding.topRatedTvSeriesShimmerLayout::makeVisible,
             onNotLoading = binding.topRatedTvSeriesShimmerLayout::makeGone,
+            onError = { hideScrollViewAndShowErrorScreen() }
         )
     }
 
@@ -190,7 +159,7 @@ class HomeFragment : BaseFragmentWithUiEvent<FragmentHomeBinding, HomeViewModel>
     }
 
     private fun collectDataLifecycleAware() {
-        job = collectFlowInside {
+        collectFlowInside {
             collectFlow(viewModel.homeState) { homeState ->
                 binding.apply {
                     seeAllPage.isVisible = homeState.isShowsSeeAllPage
@@ -295,13 +264,13 @@ class HomeFragment : BaseFragmentWithUiEvent<FragmentHomeBinding, HomeViewModel>
         popularMoviesAdapter.setOnItemClickListener { movie ->
             action.movie = movie
             action.tvSeries = null
-            viewModel.onEvent(HomeEvent.NavigateToDetailBottomSheet(action))
+            findNavController().navigate(action)
         }
 
         topRatedMoviesAdapter.setOnItemClickListener { movie ->
             action.movie = movie
             action.tvSeries = null
-            viewModel.onEvent(HomeEvent.NavigateToDetailBottomSheet(action))
+            findNavController().navigate(action)
         }
 
         nowPlayingAdapter.setOnClickListener { movie ->

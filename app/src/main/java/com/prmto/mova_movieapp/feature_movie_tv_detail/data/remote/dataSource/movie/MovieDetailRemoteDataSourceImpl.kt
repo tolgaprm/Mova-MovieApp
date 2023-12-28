@@ -1,19 +1,24 @@
 package com.prmto.mova_movieapp.feature_movie_tv_detail.data.remote.dataSource.movie
 
+import com.prmto.mova_movieapp.core.data.dispatcher.DispatcherProvider
 import com.prmto.mova_movieapp.core.data.remote.dto.ApiResponse
 import com.prmto.mova_movieapp.core.data.remote.dto.movie.MovieDto
 import com.prmto.mova_movieapp.core.data.util.tryApiCall
 import com.prmto.mova_movieapp.feature_movie_tv_detail.data.remote.api.DetailApi
 import com.prmto.mova_movieapp.feature_movie_tv_detail.data.remote.dto.detail.movie.MovieDetailDto
 import com.prmto.mova_movieapp.feature_movie_tv_detail.data.remote.dto.detail.video.VideosDto
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class MovieDetailRemoteDataSourceImpl @Inject constructor(
-    private val detailApi: DetailApi
+    private val detailApi: DetailApi,
+    private val dispatcherProvider: DispatcherProvider
 ) : MovieDetailRemoteDataSource {
     override suspend fun getMovieDetail(movieId: Int, language: String): MovieDetailDto {
-        return tryApiCall {
-            detailApi.getMovieDetail(movieId, language)
+        return withContext(dispatcherProvider.IO) {
+            tryApiCall {
+                detailApi.getMovieDetail(movieId, language)
+            }
         }
     }
 
@@ -22,14 +27,18 @@ class MovieDetailRemoteDataSourceImpl @Inject constructor(
         language: String,
         page: Int
     ): ApiResponse<MovieDto> {
-        return tryApiCall {
-            detailApi.getRecommendationsForMovie(movieId, language, page)
+        return withContext(dispatcherProvider.IO) {
+            tryApiCall {
+                detailApi.getRecommendationsForMovie(movieId, language, page)
+            }
         }
     }
 
     override suspend fun getMovieVideos(movieId: Int, language: String): VideosDto {
-        return tryApiCall {
-            detailApi.getMovieVideos(movieId, language)
+        return withContext(dispatcherProvider.IO) {
+            tryApiCall {
+                detailApi.getMovieVideos(movieId, language)
+            }
         }
     }
 }
