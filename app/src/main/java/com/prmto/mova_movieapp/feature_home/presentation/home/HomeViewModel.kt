@@ -26,6 +26,7 @@ class HomeViewModel @Inject constructor(
 ) : BaseViewModelWithUiEvent<UiEvent>() {
 
     private val _homeState = MutableStateFlow(HomeState())
+
     val homeState: StateFlow<HomeState> = combine(
         _homeState,
         homeUseCases.getLanguageIsoCodeUseCase()

@@ -19,5 +19,4 @@ enum class ImageSize(val path: String) {
     W92("w92"),
     H632("h632"),
     ORIGINAL("original");
-
 }

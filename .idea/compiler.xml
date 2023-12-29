@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
-    <bytecodeTargetLevel target="17" />
+    <bytecodeTargetLevel target="17">
+      <module name="Mova-MovieApp.buildlogic.convention" target="1.7" />
+      <module name="Mova-MovieApp.buildlogic.convention.main" target="1.7" />
+      <module name="Mova-MovieApp.buildlogic.convention.test" target="1.7" />
+      <module name="Mova-MovieApp.buildLogic.main" target="1.7" />
+      <module name="Mova-MovieApp.buildLogic.test" target="1.7" />
+      <module name="Mova-MovieApp.core.main" target="1.7" />
+      <module name="Mova-MovieApp.core.test" target="1.7" />
+    </bytecodeTargetLevel>
   </component>
 </project>
