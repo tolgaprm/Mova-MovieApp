@@ -7,7 +7,7 @@ import android.widget.LinearLayout
 import android.widget.Toast
 import coil.load
 import com.prmto.mova_movieapp.R
-import com.prmto.mova_movieapp.core.data.remote.api.ImageApi
+import com.prmto.mova_movieapp.core.presentation.util.ImageUtil
 import com.prmto.mova_movieapp.feature_movie_tv_detail.domain.models.watchProvider.WatchProviderItemInfo
 
 class BindWatchProvidersHelper(private val context: Context) {
@@ -27,7 +27,7 @@ class BindWatchProvidersHelper(private val context: Context) {
         for (item in listOfWatchProviderItem) {
             val image = inflateImage(context, linearLayout)
             image.load(
-                ImageApi.getImage(imageUrl = item.logoPath)
+                ImageUtil.getImage(imageUrl = item.logoPath)
             )
             image.setOnClickListener {
                 Toast.makeText(context, item.providerName, Toast.LENGTH_SHORT).show()

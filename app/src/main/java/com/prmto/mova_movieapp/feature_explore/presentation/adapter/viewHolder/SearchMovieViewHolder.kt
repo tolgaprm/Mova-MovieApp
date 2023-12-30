@@ -7,9 +7,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.prmto.mova_movieapp.R
-import com.prmto.mova_movieapp.core.data.remote.api.ImageApi
-import com.prmto.mova_movieapp.core.data.remote.api.ImageSize
 import com.prmto.mova_movieapp.core.domain.models.movie.Movie
+import com.prmto.mova_movieapp.core.presentation.util.ImageSize
+import com.prmto.mova_movieapp.core.presentation.util.ImageUtil
 import com.prmto.mova_movieapp.databinding.NowPlayingRowBinding
 
 class SearchMovieViewHolder(
@@ -22,7 +22,7 @@ class SearchMovieViewHolder(
         onMovieSearchItemClick: (Movie) -> Unit = {}
     ) {
         binding.backdropImage.load(
-            ImageApi.getImage(
+            ImageUtil.getImage(
                 imageUrl = movie.posterPath,
                 imageSize = ImageSize.W500.path
             )

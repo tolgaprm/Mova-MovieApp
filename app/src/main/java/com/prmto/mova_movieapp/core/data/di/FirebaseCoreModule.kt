@@ -2,15 +2,13 @@ package com.prmto.mova_movieapp.core.data.di
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.prmto.mova_movieapp.core.data.repository.firebase.FirebaseCoreManager
 import com.prmto.mova_movieapp.core.data.repository.firebase.FirebaseCoreMovieRepositoryImpl
 import com.prmto.mova_movieapp.core.data.repository.firebase.FirebaseCoreRepositoryImpl
 import com.prmto.mova_movieapp.core.data.repository.firebase.FirebaseCoreTvSeriesRepositoryImpl
+import com.prmto.mova_movieapp.core.domain.repository.firebase.FirebaseCoreManager
 import com.prmto.mova_movieapp.core.domain.repository.firebase.FirebaseCoreMovieRepository
 import com.prmto.mova_movieapp.core.domain.repository.firebase.FirebaseCoreRepository
 import com.prmto.mova_movieapp.core.domain.repository.firebase.FirebaseCoreTvSeriesRepository
-import com.prmto.mova_movieapp.core.domain.use_case.*
-import com.prmto.mova_movieapp.core.domain.use_case.firebase.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

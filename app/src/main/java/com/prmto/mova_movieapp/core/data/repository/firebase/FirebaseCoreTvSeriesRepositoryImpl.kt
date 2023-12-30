@@ -6,11 +6,11 @@ import com.prmto.mova_movieapp.core.data.local.entity.tv.FavoriteTvSeries
 import com.prmto.mova_movieapp.core.data.local.entity.tv.TvSeriesWatchListItem
 import com.prmto.mova_movieapp.core.data.remote.mapper.tv.toFavoriteTvSeries
 import com.prmto.mova_movieapp.core.data.remote.mapper.tv.toTvSeriesWatchListItem
+import com.prmto.mova_movieapp.core.data.util.Constants
 import com.prmto.mova_movieapp.core.domain.models.tv.TvSeries
 import com.prmto.mova_movieapp.core.domain.repository.firebase.FirebaseCoreTvSeriesRepository
 import com.prmto.mova_movieapp.core.domain.util.FirebaseFirestoreErrorMessage.Companion.setExceptionToFirebaseMessage
-import com.prmto.mova_movieapp.core.presentation.util.UiText
-import com.prmto.mova_movieapp.core.util.Constants
+import com.prmto.mova_movieapp.core.domain.util.UiText
 import javax.inject.Inject
 
 class FirebaseCoreTvSeriesRepositoryImpl @Inject constructor(

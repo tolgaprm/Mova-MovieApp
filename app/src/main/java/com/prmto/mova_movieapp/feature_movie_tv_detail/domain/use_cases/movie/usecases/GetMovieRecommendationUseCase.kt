@@ -1,8 +1,8 @@
 package com.prmto.mova_movieapp.feature_movie_tv_detail.domain.use_cases.movie.usecases
 
-import com.prmto.mova_movieapp.core.data.util.HandleUtils
 import com.prmto.mova_movieapp.core.domain.models.movie.Movie
 import com.prmto.mova_movieapp.core.domain.use_case.movie.GetMovieGenreListUseCase
+import com.prmto.mova_movieapp.core.domain.util.GenreDomainUtils
 import com.prmto.mova_movieapp.feature_movie_tv_detail.domain.repository.movie.MovieDetailRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
@@ -27,7 +27,7 @@ class GetMovieRecommendationUseCase @Inject constructor(
         ) { movies, genres ->
             movies.map { movie ->
                 movie.copy(
-                    genreByOne = HandleUtils.handleConvertingGenreListToOneGenreString(
+                    genreByOne = GenreDomainUtils.handleConvertingGenreListToOneGenreString(
                         genreList = genres,
                         genreIds = movie.genreIds
                     )

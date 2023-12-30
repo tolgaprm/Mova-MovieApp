@@ -1,7 +1,7 @@
 package com.prmto.mova_movieapp.core.domain.repository.firebase
 
 import com.prmto.mova_movieapp.core.domain.models.tv.TvSeries
-import com.prmto.mova_movieapp.core.presentation.util.UiText
+import com.prmto.mova_movieapp.core.domain.util.UiText
 
 interface FirebaseCoreTvSeriesRepository {
     fun addTvSeriesToFavoriteList(

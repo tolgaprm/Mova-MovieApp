@@ -5,7 +5,7 @@ import android.widget.ImageView
 import androidx.core.view.isVisible
 import coil.load
 import com.prmto.mova_movieapp.R
-import com.prmto.mova_movieapp.core.data.remote.api.ImageApi
+import com.prmto.mova_movieapp.core.presentation.util.ImageUtil
 import com.prmto.mova_movieapp.core.util.toolBarTextVisibilityByScrollPositionOfNestedScrollView
 import com.prmto.mova_movieapp.databinding.FragmentPersonDetailBinding
 import com.prmto.mova_movieapp.feature_person_detail.domain.model.CastForPerson
@@ -62,7 +62,7 @@ class BindPersonDetailHelper(
 
     private fun bindAttributes(personDetail: PersonDetail) {
         binding.imvPerson.load(
-            ImageApi.getImage(imageUrl = personDetail.profilePath)
+            ImageUtil.getImage(imageUrl = personDetail.profilePath)
         ) {
             listener(
                 onStart = {

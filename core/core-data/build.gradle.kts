@@ -5,3 +5,7 @@ plugins {
 android {
     namespace = "com.prmto.core_data"
 }
+
+dependencies {
+    api(project(":database"))
+}

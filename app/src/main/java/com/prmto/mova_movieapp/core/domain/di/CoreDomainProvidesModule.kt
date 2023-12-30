@@ -2,8 +2,6 @@ package com.prmto.mova_movieapp.core.domain.di
 
 import android.content.Context
 import com.prmto.mova_movieapp.core.data.repository.NetworkConnectivityObserver
-import com.prmto.mova_movieapp.core.domain.countryCode.CountryCodeProvider
-import com.prmto.mova_movieapp.core.domain.countryCode.CountryCodeProviderImpl
 import com.prmto.mova_movieapp.core.domain.repository.ConnectivityObserver
 import com.prmto.mova_movieapp.core.domain.repository.local.LocalDatabaseRepository
 import com.prmto.mova_movieapp.core.domain.use_case.database.ClearAllDatabaseUseCase
@@ -30,14 +28,6 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object CoreDomainProvidesModule {
-
-    @Provides
-    @Singleton
-    fun bindCountryCodeProvider(
-        @ApplicationContext context: Context
-    ): CountryCodeProvider {
-        return CountryCodeProviderImpl(context)
-    }
 
     @Provides
     @Singleton

@@ -1,8 +1,8 @@
 package com.prmto.mova_movieapp.core.presentation.base.viewModel
 
 import androidx.lifecycle.ViewModel
-import com.prmto.mova_movieapp.core.presentation.util.UiText
-import com.prmto.mova_movieapp.core.util.Resource
+import com.prmto.mova_movieapp.core.domain.util.Resource
+import com.prmto.mova_movieapp.core.domain.util.UiText
 import kotlinx.coroutines.CoroutineExceptionHandler
 import timber.log.Timber
 

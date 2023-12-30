@@ -3,7 +3,7 @@ package com.prmto.mova_movieapp.feature_authentication.domain.use_case
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.GoogleAuthProvider
-import com.prmto.mova_movieapp.core.presentation.util.UiText
+import com.prmto.mova_movieapp.core.domain.util.UiText
 import com.prmto.mova_movieapp.feature_authentication.domain.models.GoogleAuthenticationResult
 import com.prmto.mova_movieapp.feature_authentication.domain.repository.AuthenticationRepository
 import javax.inject.Inject

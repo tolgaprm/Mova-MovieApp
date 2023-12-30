@@ -3,7 +3,7 @@ package com.prmto.mova_movieapp.feature_movie_tv_detail.data.repository.movie
 import com.prmto.mova_movieapp.core.data.remote.mapper.movie.toMovie
 import com.prmto.mova_movieapp.core.data.util.safeApiCallReturnResource
 import com.prmto.mova_movieapp.core.domain.models.movie.Movie
-import com.prmto.mova_movieapp.core.util.Resource
+import com.prmto.mova_movieapp.core.domain.util.Resource
 import com.prmto.mova_movieapp.feature_movie_tv_detail.data.remote.dataSource.movie.MovieDetailRemoteDataSource
 import com.prmto.mova_movieapp.feature_movie_tv_detail.data.remote.mapper.detail.movie.toMovieDetail
 import com.prmto.mova_movieapp.feature_movie_tv_detail.data.remote.mapper.video.toVideo

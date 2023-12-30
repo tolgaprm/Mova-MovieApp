@@ -4,8 +4,8 @@ import com.prmto.mova_movieapp.R
 import com.prmto.mova_movieapp.core.domain.models.movie.Movie
 import com.prmto.mova_movieapp.core.domain.repository.firebase.FirebaseCoreMovieRepository
 import com.prmto.mova_movieapp.core.domain.repository.firebase.FirebaseCoreRepository
-import com.prmto.mova_movieapp.core.presentation.util.UiText
-import com.prmto.mova_movieapp.core.util.Constants
+import com.prmto.mova_movieapp.core.domain.util.Constants.FIREBASE_MOVIES_FIELD_NAME
+import com.prmto.mova_movieapp.core.domain.util.UiText
 import javax.inject.Inject
 
 class AddMovieToWatchListInFirebaseUseCase @Inject constructor(
@@ -23,7 +23,7 @@ class AddMovieToWatchListInFirebaseUseCase @Inject constructor(
             ?: return onFailure(UiText.StringResource(R.string.must_login_able_to_add_in_list))
 
         val data = mapOf(
-            Constants.FIREBASE_MOVIES_FIELD_NAME to moviesInWatchList
+            FIREBASE_MOVIES_FIELD_NAME to moviesInWatchList
         )
 
         firebaseCoreMovieRepository.addMovieToWatchList(

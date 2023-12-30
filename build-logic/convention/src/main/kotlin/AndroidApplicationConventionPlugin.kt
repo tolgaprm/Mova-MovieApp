@@ -42,7 +42,7 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
         }
     }
 
-    private fun DefaultConfig.addTmdbApi(
+    fun DefaultConfig.addTmdbApi(
         properties: Properties
     ) {
         buildConfigField(

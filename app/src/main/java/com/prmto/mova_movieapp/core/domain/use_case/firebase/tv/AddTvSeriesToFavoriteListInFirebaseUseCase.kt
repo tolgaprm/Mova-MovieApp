@@ -4,8 +4,8 @@ import com.prmto.mova_movieapp.R
 import com.prmto.mova_movieapp.core.domain.models.tv.TvSeries
 import com.prmto.mova_movieapp.core.domain.repository.firebase.FirebaseCoreRepository
 import com.prmto.mova_movieapp.core.domain.repository.firebase.FirebaseCoreTvSeriesRepository
-import com.prmto.mova_movieapp.core.presentation.util.UiText
-import com.prmto.mova_movieapp.core.util.Constants
+import com.prmto.mova_movieapp.core.domain.util.Constants
+import com.prmto.mova_movieapp.core.domain.util.UiText
 import javax.inject.Inject
 
 class AddTvSeriesToFavoriteListInFirebaseUseCase @Inject constructor(

@@ -5,10 +5,10 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.prmto.mova_movieapp.core.data.util.paging.getPagingMovies
 import com.prmto.mova_movieapp.core.data.util.paging.getPagingTvSeries
+import com.prmto.mova_movieapp.core.data.util.toDiscoveryQueryString
+import com.prmto.mova_movieapp.core.data.util.toSeparateWithComma
 import com.prmto.mova_movieapp.core.domain.models.movie.Movie
 import com.prmto.mova_movieapp.core.domain.models.tv.TvSeries
-import com.prmto.mova_movieapp.core.presentation.util.toDiscoveryQueryString
-import com.prmto.mova_movieapp.core.presentation.util.toSeparateWithComma
 import com.prmto.mova_movieapp.core.util.Constants
 import com.prmto.mova_movieapp.feature_explore.data.remote.dataSources.movie.ExploreMovieRemoteDataSource
 import com.prmto.mova_movieapp.feature_explore.data.remote.dataSources.multisearch.ExploreMultiSearchRemoteDataSource

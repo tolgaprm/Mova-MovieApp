@@ -3,9 +3,9 @@ package com.prmto.mova_movieapp.feature_authentication.presentation.login
 import androidx.lifecycle.viewModelScope
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.tasks.Task
+import com.prmto.mova_movieapp.core.domain.util.UiText
 import com.prmto.mova_movieapp.core.presentation.base.viewModel.BaseViewModelWithUiEvent
 import com.prmto.mova_movieapp.core.presentation.util.UiEvent
-import com.prmto.mova_movieapp.core.presentation.util.UiText
 import com.prmto.mova_movieapp.feature_authentication.domain.use_case.FirebaseUseCases
 import com.prmto.mova_movieapp.feature_authentication.domain.use_case.SignInWithCredentialUseCase
 import com.prmto.mova_movieapp.feature_authentication.domain.use_case.SignInWithEmailAndPasswordUseCase

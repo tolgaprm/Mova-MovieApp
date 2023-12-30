@@ -1,7 +1,7 @@
 package com.prmto.mova_movieapp.core.util.handlePagingLoadState
 
+import com.prmto.mova_movieapp.core.domain.util.UiText
 import com.prmto.mova_movieapp.core.presentation.base.BaseMovieAndTvRecyclerAdapter
-import com.prmto.mova_movieapp.core.presentation.util.UiText
 
 class HandlePagingLoadStateMovieAndTvBaseRecyclerAdapter<T : Any>(
     pagingAdapter: BaseMovieAndTvRecyclerAdapter<T>,

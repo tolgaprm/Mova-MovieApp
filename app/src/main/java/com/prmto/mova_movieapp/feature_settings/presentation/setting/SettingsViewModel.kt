@@ -1,5 +1,6 @@
 package com.prmto.mova_movieapp.feature_settings.presentation.setting
 
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.viewModelScope
 import com.prmto.mova_movieapp.R
 import com.prmto.mova_movieapp.core.domain.use_case.database.LocalDatabaseUseCases
@@ -8,9 +9,9 @@ import com.prmto.mova_movieapp.core.domain.use_case.firebase.movie.GetFavoriteMo
 import com.prmto.mova_movieapp.core.domain.use_case.firebase.movie.GetMovieWatchListFromLocalDatabaseThenUpdateToFirebase
 import com.prmto.mova_movieapp.core.domain.use_case.firebase.tv.GetFavoriteTvSeriesFromLocalDatabaseThenUpdateToFirebase
 import com.prmto.mova_movieapp.core.domain.use_case.firebase.tv.GetTvSeriesWatchFromLocalDatabaseThenUpdateToFirebase
+import com.prmto.mova_movieapp.core.domain.util.UiText
 import com.prmto.mova_movieapp.core.presentation.base.viewModel.BaseViewModelWithUiEvent
 import com.prmto.mova_movieapp.core.presentation.util.UiEvent
-import com.prmto.mova_movieapp.core.presentation.util.UiText
 import com.prmto.mova_movieapp.feature_settings.domain.use_case.SettingUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -18,6 +19,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -45,7 +47,9 @@ class SettingsViewModel @Inject constructor(
     }
 
     fun getUIMode(): Flow<Int> {
-        return settingUseCase.getUIModeUseCase()
+        return settingUseCase.getUIModeUseCase().map {
+            it ?: AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+        }
     }
 
     fun updateUIMode(uiMode: Int) {

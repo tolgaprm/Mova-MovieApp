@@ -4,8 +4,8 @@ import com.prmto.mova_movieapp.R
 import com.prmto.mova_movieapp.core.domain.models.movie.Movie
 import com.prmto.mova_movieapp.core.domain.repository.firebase.FirebaseCoreMovieRepository
 import com.prmto.mova_movieapp.core.domain.repository.firebase.FirebaseCoreRepository
-import com.prmto.mova_movieapp.core.presentation.util.UiText
-import com.prmto.mova_movieapp.core.util.Constants.FIREBASE_MOVIES_FIELD_NAME
+import com.prmto.mova_movieapp.core.domain.util.Constants.FIREBASE_MOVIES_FIELD_NAME
+import com.prmto.mova_movieapp.core.domain.util.UiText
 import javax.inject.Inject
 
 class AddMovieToFavoriteListInFirebaseUseCase @Inject constructor(

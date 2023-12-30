@@ -7,7 +7,7 @@ import javax.inject.Inject
 class GetUIModeUseCase @Inject constructor(
     private val dataStoreOperations: DataStoreOperations
 ) {
-    operator fun invoke(): Flow<Int> {
+    operator fun invoke(): Flow<Int?> {
         return dataStoreOperations.getUIMode()
     }
 }

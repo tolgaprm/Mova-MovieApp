@@ -27,7 +27,7 @@ class BindTvDetail(
         removeDirectorsInLayout()
         bindDetailInfoSection(
             voteAverage = tvDetail.voteAverage,
-            voteCount = tvDetail.voteCount,
+            formattedVoteCount = tvDetail.formattedVoteCount,
             ratingBarValue = tvDetail.ratingValue,
             genresBySeparatedByComma = tvDetail.genresBySeparatedByComma
         )

@@ -1,6 +1,6 @@
 package com.prmto.mova_movieapp.feature_authentication.domain.use_case
 
-import com.prmto.mova_movieapp.core.presentation.util.UiText
+import com.prmto.mova_movieapp.core.domain.util.UiText
 import com.prmto.mova_movieapp.feature_authentication.domain.models.AuthenticationResult
 import com.prmto.mova_movieapp.feature_authentication.domain.repository.AuthenticationRepository
 import com.prmto.mova_movieapp.feature_authentication.util.AuthError

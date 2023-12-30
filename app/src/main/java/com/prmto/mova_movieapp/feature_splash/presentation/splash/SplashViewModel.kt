@@ -1,6 +1,7 @@
 package com.prmto.mova_movieapp.feature_splash.presentation.splash
 
 import androidx.annotation.VisibleForTesting
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.prmto.mova_movieapp.core.domain.use_case.languageIsoCode.GetLanguageIsoCodeUseCase
@@ -40,7 +41,11 @@ class SplashViewModel @Inject constructor(
     @VisibleForTesting
     fun getUiMode() {
         viewModelScope.launch {
-            _eventFlow.emit(SplashEvent.UpdateUiMode(getUIModeUseCase().first()))
+            _eventFlow.emit(
+                SplashEvent.UpdateUiMode(
+                    getUIModeUseCase().first() ?: AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+                )
+            )
         }
     }
 

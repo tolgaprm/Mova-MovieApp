@@ -10,11 +10,11 @@ import androidx.navigation.fragment.findNavController
 import coil.load
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.prmto.mova_movieapp.R
-import com.prmto.mova_movieapp.core.data.remote.api.ImageApi
-import com.prmto.mova_movieapp.core.data.remote.api.ImageSize
 import com.prmto.mova_movieapp.core.domain.models.movie.Movie
 import com.prmto.mova_movieapp.core.domain.models.tv.TvSeries
 import com.prmto.mova_movieapp.core.presentation.util.AlertDialogUtil
+import com.prmto.mova_movieapp.core.presentation.util.ImageSize
+import com.prmto.mova_movieapp.core.presentation.util.ImageUtil
 import com.prmto.mova_movieapp.core.presentation.util.collectFlow
 import com.prmto.mova_movieapp.core.presentation.util.setAddFavoriteIconByFavoriteState
 import com.prmto.mova_movieapp.core.presentation.util.setWatchListIconByWatchState
@@ -123,7 +123,7 @@ class DetailBottomSheet : BottomSheetDialogFragment() {
 
     private fun loadImage(posterPath: String) {
         binding.ivPoster.load(
-            ImageApi.getImage(
+            ImageUtil.getImage(
                 imageSize = ImageSize.W185.path,
                 imageUrl = posterPath
             )

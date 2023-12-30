@@ -2,10 +2,10 @@ package com.prmto.mova_movieapp.feature_authentication.data.repository
 
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
+import com.prmto.mova_movieapp.core.data.util.Constants
 import com.prmto.mova_movieapp.core.domain.models.tv.TvSeries
 import com.prmto.mova_movieapp.core.domain.util.FirebaseFirestoreErrorMessage.Companion.setExceptionToFirebaseMessage
-import com.prmto.mova_movieapp.core.presentation.util.UiText
-import com.prmto.mova_movieapp.core.util.Constants
+import com.prmto.mova_movieapp.core.domain.util.UiText
 import com.prmto.mova_movieapp.feature_authentication.domain.repository.FirebaseTvSeriesRepository
 import timber.log.Timber
 import javax.inject.Inject

@@ -2,7 +2,7 @@ package com.prmto.mova_movieapp.feature_authentication.domain.repository
 
 
 import com.prmto.mova_movieapp.core.domain.models.tv.TvSeries
-import com.prmto.mova_movieapp.core.presentation.util.UiText
+import com.prmto.mova_movieapp.core.domain.util.UiText
 
 interface FirebaseTvSeriesRepository {
 

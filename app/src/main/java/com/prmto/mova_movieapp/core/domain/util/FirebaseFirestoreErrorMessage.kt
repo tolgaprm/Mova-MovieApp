@@ -2,7 +2,6 @@ package com.prmto.mova_movieapp.core.domain.util
 
 import com.google.firebase.firestore.FirebaseFirestoreException
 import com.prmto.mova_movieapp.R
-import com.prmto.mova_movieapp.core.presentation.util.UiText
 import timber.log.Timber
 
 class FirebaseFirestoreErrorMessage {

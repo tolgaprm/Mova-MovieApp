@@ -15,7 +15,6 @@ fun Project.dataLayerDependencies(
             addImplementation(libs.findLibrary("retrofit.converter.moshi").get())
             addImplementation(libs.findLibrary("retrofit.converter.moshi").get())
             addImplementation(libs.findLibrary("datastore.preferences").get())
-
         }
     }
 }

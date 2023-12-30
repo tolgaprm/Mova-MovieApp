@@ -15,3 +15,6 @@ dependencyResolutionManagement {
 }
 rootProject.name = "Mova-MovieApp"
 include(":app")
+include(":core:core-data")
+include(":core:core-domain")
+include(":database")

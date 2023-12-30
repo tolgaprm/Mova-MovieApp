@@ -3,7 +3,7 @@ package com.prmto.mova_movieapp.feature_authentication.data.repository
 import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthException
-import com.prmto.mova_movieapp.core.presentation.util.UiText
+import com.prmto.mova_movieapp.core.domain.util.UiText
 import com.prmto.mova_movieapp.feature_authentication.domain.repository.AuthenticationRepository
 import com.prmto.mova_movieapp.feature_authentication.domain.util.FirebaseAuthMessage
 import javax.inject.Inject

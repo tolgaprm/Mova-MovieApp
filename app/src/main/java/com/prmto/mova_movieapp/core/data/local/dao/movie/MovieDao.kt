@@ -6,8 +6,8 @@ import androidx.room.Insert
 import androidx.room.Query
 import com.prmto.mova_movieapp.core.data.local.entity.movie.FavoriteMovie
 import com.prmto.mova_movieapp.core.data.local.entity.movie.MovieWatchListItem
-import com.prmto.mova_movieapp.core.util.Constants.FAVORITE_MOVIE_TABLE_NAME
-import com.prmto.mova_movieapp.core.util.Constants.MOVIE_WATCH_LIST_ITEM_TABLE_NAME
+import  com.prmto.mova_movieapp.core.data.util.Constants.FAVORITE_MOVIE_TABLE_NAME
+import com.prmto.mova_movieapp.core.data.util.Constants.MOVIE_WATCH_LIST_ITEM_TABLE_NAME
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -24,7 +24,6 @@ interface MovieDao {
 
     @Delete
     suspend fun deleteMovieFromWatchListItem(movieWatchListItem: MovieWatchListItem)
-
 
     @Query("SELECT movieId FROM $FAVORITE_MOVIE_TABLE_NAME")
     fun getFavoriteMovieIds(): Flow<List<Int>>

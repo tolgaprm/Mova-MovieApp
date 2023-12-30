@@ -3,7 +3,7 @@ package com.prmto.mova_movieapp.feature_authentication.domain.use_case
 import com.prmto.mova_movieapp.R
 import com.prmto.mova_movieapp.core.domain.repository.firebase.FirebaseCoreRepository
 import com.prmto.mova_movieapp.core.domain.repository.local.LocalDatabaseRepository
-import com.prmto.mova_movieapp.core.presentation.util.UiText
+import com.prmto.mova_movieapp.core.domain.util.UiText
 import com.prmto.mova_movieapp.feature_authentication.domain.repository.FirebaseTvSeriesRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch

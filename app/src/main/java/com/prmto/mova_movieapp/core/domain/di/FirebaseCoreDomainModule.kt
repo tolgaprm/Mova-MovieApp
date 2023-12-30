@@ -1,6 +1,6 @@
 package com.prmto.mova_movieapp.core.domain.di
 
-import com.prmto.mova_movieapp.core.data.repository.firebase.FirebaseCoreManager
+import com.prmto.mova_movieapp.core.domain.repository.firebase.FirebaseCoreManager
 import com.prmto.mova_movieapp.core.domain.use_case.firebase.FirebaseCoreUseCases
 import com.prmto.mova_movieapp.core.domain.use_case.firebase.GetCurrentUserUseCase
 import com.prmto.mova_movieapp.core.domain.use_case.firebase.IsUserSignInUseCase

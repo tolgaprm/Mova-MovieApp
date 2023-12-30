@@ -1,6 +1,5 @@
 package com.prmto.mova_movieapp.core.data.repository
 
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
@@ -57,7 +56,7 @@ class DataOperationsImpl @Inject constructor(
         }
     }
 
-    override fun getUIMode(): Flow<Int> {
+    override fun getUIMode(): Flow<Int?> {
         return dataStore.data.catch { exception ->
             if (exception is IOException) {
                 emit(emptyPreferences())
@@ -65,8 +64,7 @@ class DataOperationsImpl @Inject constructor(
                 throw exception
             }
         }.map {
-            val uiMode = it[PreferencesKey.uiModeKey] ?: AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
-            uiMode
+            it[PreferencesKey.uiModeKey]
         }
     }
 }

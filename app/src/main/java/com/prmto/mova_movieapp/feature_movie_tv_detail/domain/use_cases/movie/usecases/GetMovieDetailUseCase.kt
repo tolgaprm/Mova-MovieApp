@@ -1,10 +1,10 @@
 package com.prmto.mova_movieapp.feature_movie_tv_detail.domain.use_cases.movie.usecases
 
-import com.prmto.mova_movieapp.core.domain.countryCode.CountryCodeProvider
 import com.prmto.mova_movieapp.core.domain.use_case.database.movie.GetFavoriteMovieIdsUseCase
 import com.prmto.mova_movieapp.core.domain.use_case.movie.GetMovieWatchListItemIdsUseCase
+import com.prmto.mova_movieapp.core.domain.util.Resource
 import com.prmto.mova_movieapp.core.domain.util.handleResource
-import com.prmto.mova_movieapp.core.util.Resource
+import com.prmto.mova_movieapp.core.presentation.countryCode.CountryCodeProvider
 import com.prmto.mova_movieapp.feature_movie_tv_detail.domain.models.detail.movie.MovieDetail
 import com.prmto.mova_movieapp.feature_movie_tv_detail.domain.repository.movie.MovieDetailRepository
 import kotlinx.coroutines.flow.combine

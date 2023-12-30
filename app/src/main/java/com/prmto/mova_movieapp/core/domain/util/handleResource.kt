@@ -1,8 +1,6 @@
 package com.prmto.mova_movieapp.core.domain.util
 
 import com.prmto.mova_movieapp.R
-import com.prmto.mova_movieapp.core.presentation.util.UiText
-import com.prmto.mova_movieapp.core.util.Resource
 
 inline fun <T> handleResource(
     resourceSupplier: () -> Resource<T>,

@@ -1,7 +1,7 @@
 package com.prmto.mova_movieapp.feature_movie_tv_detail.domain.repository.movie
 
 import com.prmto.mova_movieapp.core.domain.models.movie.Movie
-import com.prmto.mova_movieapp.core.util.Resource
+import com.prmto.mova_movieapp.core.domain.util.Resource
 import com.prmto.mova_movieapp.feature_movie_tv_detail.domain.models.detail.movie.MovieDetail
 import com.prmto.mova_movieapp.feature_movie_tv_detail.domain.models.detail.video.Videos
 import kotlinx.coroutines.flow.Flow

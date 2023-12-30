@@ -22,7 +22,7 @@ fun TvDetailDto.toTvDetail(
         posterPath = posterPath,
         seasons = seasons.orEmpty(),
         voteAverage = voteAverage.orZero(),
-        voteCount = voteCount.orZero(),
+        formattedVoteCount = HandleUtils.formatVoteCount(voteCount),
         watchProviders = watchProviders?.results?.toWatchProviderItem(countryIsoCode = countryIsoCode),
         credit = credits?.toCredit(),
         genresBySeparatedByComma = HandleUtils.getGenresBySeparatedByComma(genreList = genres),

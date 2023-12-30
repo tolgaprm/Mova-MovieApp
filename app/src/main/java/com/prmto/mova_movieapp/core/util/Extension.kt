@@ -12,7 +12,6 @@ fun Context.getCountryIsoCode(): String {
     }
 }
 
-
 fun CombinedLoadStates.isErrorWithLoadState(): LoadState.Error? {
     return when {
         this.source.refresh is LoadState.Error -> this.source.refresh as LoadState.Error

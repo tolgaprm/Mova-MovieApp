@@ -4,8 +4,7 @@ import android.content.Context
 import android.widget.ImageView
 import coil.load
 import com.prmto.mova_movieapp.R
-import com.prmto.mova_movieapp.core.data.remote.api.ImageApi
-import com.prmto.mova_movieapp.core.data.util.HandleUtils
+import com.prmto.mova_movieapp.core.presentation.util.ImageUtil
 import com.prmto.mova_movieapp.databinding.FragmentDetailBinding
 import com.prmto.mova_movieapp.feature_movie_tv_detail.domain.models.watchProvider.WatchProviderItem
 
@@ -22,7 +21,7 @@ open class BindAttributesDetailFragment(
 
     protected fun bindImage(posterPath: String?) {
         binding.imvPoster.load(
-            ImageApi.getImage(
+            ImageUtil.getImage(
                 imageUrl = posterPath
             )
         ) {
@@ -77,18 +76,17 @@ open class BindAttributesDetailFragment(
 
     protected fun bindDetailInfoSection(
         voteAverage: Double,
-        voteCount: Int,
+        formattedVoteCount: String,
         ratingBarValue: Float,
         genresBySeparatedByComma: String,
     ) {
-        val voteCountText = HandleUtils.formatVoteCount(voteCount = voteCount)
         binding.apply {
             ratingBar.rating = ratingBarValue
             txtGenres.text = genresBySeparatedByComma
             txtVoteAverageCount.text = context.getString(
                 R.string.voteAverageDetail,
                 voteAverage.toString().subSequence(0, 3),
-                voteCountText
+                formattedVoteCount
             )
         }
     }

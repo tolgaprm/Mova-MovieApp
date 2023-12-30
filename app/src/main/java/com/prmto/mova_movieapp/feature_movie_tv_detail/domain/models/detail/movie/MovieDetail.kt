@@ -15,7 +15,7 @@ data class MovieDetail(
     val posterPath: String?,
     val releaseDate: String,
     val voteAverage: Double,
-    val voteCount: Int,
+    val formattedVoteCount: String,
     var convertedRuntime: Map<String, String> = emptyMap(),
     val credit: Credit?,
     var ratingValue: Float = 0f,

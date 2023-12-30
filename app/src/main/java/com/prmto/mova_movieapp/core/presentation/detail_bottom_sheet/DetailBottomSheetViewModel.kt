@@ -61,10 +61,9 @@ class DetailBottomSheetViewModel @Inject constructor(
     val uiEvent: SharedFlow<DetailBottomUiEvent> = _uiEvent.asSharedFlow()
 
     init {
-        DetailBottomSheetArgs.fromSavedStateHandle(savedStateHandle)
-            .movie?.let { movie ->
-                _state.value = DetailBottomSheetState(movie = movie)
-            }
+        DetailBottomSheetArgs.fromSavedStateHandle(savedStateHandle).movie?.let { movie ->
+            _state.value = DetailBottomSheetState(movie = movie)
+        }
 
         DetailBottomSheetArgs.fromSavedStateHandle(savedStateHandle).tvSeries?.let { tvSeries ->
             _state.value = DetailBottomSheetState(tvSeries = tvSeries)

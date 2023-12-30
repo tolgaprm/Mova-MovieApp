@@ -2,7 +2,6 @@ package com.prmto.mova_movieapp.core.domain.util
 
 import androidx.paging.PagingData
 import androidx.paging.map
-import com.prmto.mova_movieapp.core.data.util.HandleUtils
 import com.prmto.mova_movieapp.core.domain.models.genre.Genre
 import com.prmto.mova_movieapp.core.domain.models.movie.Movie
 import kotlinx.coroutines.flow.Flow
@@ -18,7 +17,7 @@ fun combineMovieAndGenreReturnFlow(
     ) { moviePagingData, movieGenreList ->
         moviePagingData.map { movie ->
             movie.copy(
-                genresBySeparatedByComma = HandleUtils.getGenresBySeparatedByComma(
+                genresBySeparatedByComma = GenreDomainUtils.getGenresBySeparatedByComma(
                     movie.genreIds,
                     movieGenreList
                 )
@@ -37,7 +36,7 @@ fun combineMovieAndGenreMapOneGenre(
     ) { moviePagingData, movieGenreList ->
         moviePagingData.map { movie ->
             movie.copy(
-                genreByOne = HandleUtils.handleConvertingGenreListToOneGenreString(
+                genreByOne = GenreDomainUtils.handleConvertingGenreListToOneGenreString(
                     genreList = movieGenreList,
                     genreIds = movie.genreIds
                 )

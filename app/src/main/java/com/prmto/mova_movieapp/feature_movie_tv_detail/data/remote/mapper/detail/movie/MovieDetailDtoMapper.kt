@@ -19,7 +19,7 @@ fun MovieDetailDto.toMovieDetail(countryIsoCode: String): MovieDetail {
         posterPath = posterPath,
         releaseDate = releaseDate.orEmpty(),
         voteAverage = voteAverage.orZero(),
-        voteCount = voteCount.orZero(),
+        formattedVoteCount = HandleUtils.formatVoteCount(voteCount),
         credit = credits?.toCredit(),
         watchProviders = watchProviders?.results?.toWatchProviderItem(countryIsoCode = countryIsoCode),
         genresBySeparatedByComma = HandleUtils.getGenresBySeparatedByComma(genreList = genres),

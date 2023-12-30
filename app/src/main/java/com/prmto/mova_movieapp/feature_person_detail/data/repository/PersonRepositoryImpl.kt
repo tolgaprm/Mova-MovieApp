@@ -1,7 +1,7 @@
 package com.prmto.mova_movieapp.feature_person_detail.data.repository
 
 import com.prmto.mova_movieapp.core.data.util.safeApiCallReturnResource
-import com.prmto.mova_movieapp.core.util.Resource
+import com.prmto.mova_movieapp.core.domain.util.Resource
 import com.prmto.mova_movieapp.feature_person_detail.data.remote.datasource.PersonRemoteDataSource
 import com.prmto.mova_movieapp.feature_person_detail.data.remote.dto.toPersonDetail
 import com.prmto.mova_movieapp.feature_person_detail.domain.model.PersonDetail

@@ -12,9 +12,9 @@ import com.prmto.mova_movieapp.core.domain.models.tv.TvSeries
 import com.prmto.mova_movieapp.core.domain.repository.ConnectivityObserver
 import com.prmto.mova_movieapp.core.domain.repository.GenreRepository
 import com.prmto.mova_movieapp.core.domain.repository.isAvaliable
+import com.prmto.mova_movieapp.core.domain.util.UiText
 import com.prmto.mova_movieapp.core.presentation.base.viewModel.BaseViewModelWithUiEvent
 import com.prmto.mova_movieapp.core.presentation.util.UiEvent
-import com.prmto.mova_movieapp.core.presentation.util.UiText
 import com.prmto.mova_movieapp.core.util.Constants.DEFAULT_LANGUAGE
 import com.prmto.mova_movieapp.feature_explore.data.remote.dto.multisearch.SearchDto
 import com.prmto.mova_movieapp.feature_explore.domain.model.MultiSearch

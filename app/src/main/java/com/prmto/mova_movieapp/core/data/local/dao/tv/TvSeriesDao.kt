@@ -6,8 +6,8 @@ import androidx.room.Insert
 import androidx.room.Query
 import com.prmto.mova_movieapp.core.data.local.entity.tv.FavoriteTvSeries
 import com.prmto.mova_movieapp.core.data.local.entity.tv.TvSeriesWatchListItem
-import com.prmto.mova_movieapp.core.util.Constants.FAVORITE_TV_SERIES_TABLE_NAME
-import com.prmto.mova_movieapp.core.util.Constants.TV_SERIES_WATCH_LIST_ITEM_TABLE_NAME
+import com.prmto.mova_movieapp.core.data.util.Constants.FAVORITE_TV_SERIES_TABLE_NAME
+import com.prmto.mova_movieapp.core.data.util.Constants.TV_SERIES_WATCH_LIST_ITEM_TABLE_NAME
 import kotlinx.coroutines.flow.Flow
 
 @Dao

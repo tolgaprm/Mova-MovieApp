@@ -32,7 +32,7 @@ class BindMovieDetail(
         bindToolBarTitle(toolbarTitle = movieDetail.title)
         bindDetailInfoSection(
             voteAverage = movieDetail.voteAverage,
-            voteCount = movieDetail.voteCount,
+            formattedVoteCount = movieDetail.formattedVoteCount,
             ratingBarValue = movieDetail.ratingValue,
             genresBySeparatedByComma = movieDetail.genresBySeparatedByComma
         )

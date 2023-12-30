@@ -6,9 +6,9 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.prmto.mova_movieapp.R
+import com.prmto.mova_movieapp.core.domain.util.UiText
+import com.prmto.mova_movieapp.core.domain.util.asString
 import com.prmto.mova_movieapp.core.presentation.base.fragment.BaseFragmentWithUiEvent
-import com.prmto.mova_movieapp.core.presentation.util.UiText
-import com.prmto.mova_movieapp.core.presentation.util.asString
 import com.prmto.mova_movieapp.core.presentation.util.collectFlow
 import com.prmto.mova_movieapp.core.presentation.util.collectFlowInside
 import com.prmto.mova_movieapp.core.presentation.util.makeGone

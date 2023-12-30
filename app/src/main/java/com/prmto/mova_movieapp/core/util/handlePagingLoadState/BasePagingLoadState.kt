@@ -2,7 +2,7 @@ package com.prmto.mova_movieapp.core.util.handlePagingLoadState
 
 import androidx.paging.CombinedLoadStates
 import com.prmto.mova_movieapp.R
-import com.prmto.mova_movieapp.core.presentation.util.UiText
+import com.prmto.mova_movieapp.core.domain.util.UiText
 import com.prmto.mova_movieapp.core.util.isErrorWithLoadState
 import com.prmto.mova_movieapp.core.util.isLoading
 import okio.IOException

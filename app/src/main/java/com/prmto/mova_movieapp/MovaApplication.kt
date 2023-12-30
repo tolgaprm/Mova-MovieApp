@@ -11,9 +11,9 @@ import androidx.work.NetworkType
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
-import com.prmto.mova_movieapp.core.data.worker.NotificationWorker
-import com.prmto.mova_movieapp.core.data.worker.UpdateFirebaseMovieWorker
-import com.prmto.mova_movieapp.core.data.worker.UpdateFirebaseTvSeriesWorker
+import com.prmto.mova_movieapp.worker.NotificationWorker
+import com.prmto.mova_movieapp.worker.UpdateFirebaseMovieWorker
+import com.prmto.mova_movieapp.worker.UpdateFirebaseTvSeriesWorker
 import dagger.hilt.android.HiltAndroidApp
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
