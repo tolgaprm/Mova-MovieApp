@@ -1,7 +1,7 @@
 package com.prmto.mova_movieapp.feature_explore.domain.model
 
-import com.prmto.mova_movieapp.core.domain.models.movie.Movie
-import com.prmto.mova_movieapp.core.domain.models.tv.TvSeries
+import com.prmto.core_domain.models.movie.Movie
+import com.prmto.core_domain.models.tv.TvSeries
 
 sealed interface MultiSearch {
     data class MovieItem(val movie: Movie) : MultiSearch

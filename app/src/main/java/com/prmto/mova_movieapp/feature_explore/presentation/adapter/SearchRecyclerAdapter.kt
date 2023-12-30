@@ -4,8 +4,8 @@ import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import com.prmto.mova_movieapp.core.domain.models.movie.Movie
-import com.prmto.mova_movieapp.core.domain.models.tv.TvSeries
+import com.prmto.core_domain.models.movie.Movie
+import com.prmto.core_domain.models.tv.TvSeries
 import com.prmto.mova_movieapp.feature_explore.domain.model.MultiSearch
 import com.prmto.mova_movieapp.feature_explore.domain.model.PersonSearch
 import com.prmto.mova_movieapp.feature_explore.presentation.adapter.viewHolder.SearchMovieViewHolder

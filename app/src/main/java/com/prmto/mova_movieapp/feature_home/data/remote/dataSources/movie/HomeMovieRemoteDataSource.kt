@@ -1,7 +1,7 @@
 package com.prmto.mova_movieapp.feature_home.data.remote.dataSources.movie
 
-import com.prmto.mova_movieapp.core.data.remote.dto.ApiResponse
-import com.prmto.mova_movieapp.core.data.remote.dto.movie.MovieDto
+import com.prmto.core_data.remote.dto.ApiResponse
+import com.prmto.core_data.remote.dto.movie.MovieDto
 
 interface HomeMovieRemoteDataSource {
 

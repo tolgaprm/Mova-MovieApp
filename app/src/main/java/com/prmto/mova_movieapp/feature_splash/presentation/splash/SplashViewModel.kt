@@ -4,8 +4,8 @@ import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.prmto.mova_movieapp.core.domain.use_case.languageIsoCode.GetLanguageIsoCodeUseCase
-import com.prmto.mova_movieapp.core.domain.use_case.uIMode.GetUIModeUseCase
+import com.prmto.core_domain.use_case.languageIsoCode.GetLanguageIsoCodeUseCase
+import com.prmto.core_domain.use_case.uIMode.GetUIModeUseCase
 import com.prmto.mova_movieapp.feature_splash.presentation.splash.event.SplashEvent
 import com.prmto.mova_movieapp.feature_splash.util.Constants.SPLASH_SCREEN_DELAY
 import dagger.hilt.android.lifecycle.HiltViewModel

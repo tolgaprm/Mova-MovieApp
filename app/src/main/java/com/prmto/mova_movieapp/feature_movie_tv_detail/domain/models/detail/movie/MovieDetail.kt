@@ -1,7 +1,7 @@
 package com.prmto.mova_movieapp.feature_movie_tv_detail.domain.models.detail.movie
 
-import com.prmto.mova_movieapp.core.domain.models.genre.Genre
-import com.prmto.mova_movieapp.core.domain.models.movie.Movie
+import com.prmto.core_domain.models.genre.Genre
+import com.prmto.core_domain.models.movie.Movie
 import com.prmto.mova_movieapp.feature_movie_tv_detail.domain.models.credit.Credit
 import com.prmto.mova_movieapp.feature_movie_tv_detail.domain.models.watchProvider.WatchProviderItem
 

@@ -1,6 +1,6 @@
 package com.prmto.mova_movieapp.feature_upcoming.presentation
 
-import com.prmto.mova_movieapp.feature_upcoming.domain.model.UpcomingRemindEntity
+import com.prmto.database.entity.movie.UpcomingRemindEntity
 
 sealed class UpComingEvent {
 

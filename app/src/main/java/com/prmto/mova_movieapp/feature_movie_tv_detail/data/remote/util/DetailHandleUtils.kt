@@ -1,6 +1,6 @@
 package com.prmto.mova_movieapp.feature_movie_tv_detail.data.remote.util
 
-import com.prmto.mova_movieapp.core.data.util.HandleUtils
+import com.prmto.core_data.util.HandleUtils
 import com.prmto.mova_movieapp.feature_movie_tv_detail.util.Constants
 
 object DetailHandleUtils {

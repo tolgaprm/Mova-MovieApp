@@ -1,6 +1,6 @@
 package com.prmto.mova_movieapp.feature_upcoming.data.remote.datasource
 
-import com.prmto.mova_movieapp.core.data.remote.dto.movie.MovieDto
+import com.prmto.core_data.remote.dto.movie.MovieDto
 import com.prmto.mova_movieapp.feature_upcoming.data.remote.dto.UpComingApiResponse
 
 interface UpcomingMovieRemoteDataSource {

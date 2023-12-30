@@ -1,9 +1,9 @@
 package com.prmto.mova_movieapp.feature_explore.domain.use_case.tv
 
 import androidx.paging.PagingData
-import com.prmto.mova_movieapp.core.domain.models.tv.TvSeries
-import com.prmto.mova_movieapp.core.domain.use_case.tv.GetTvGenreListUseCase
-import com.prmto.mova_movieapp.core.domain.util.combineTvAndGenreMapOneGenre
+import com.prmto.core_domain.models.tv.TvSeries
+import com.prmto.core_domain.use_case.tv.GetTvGenreListUseCase
+import com.prmto.core_domain.util.combineTvAndGenreMapOneGenre
 import com.prmto.mova_movieapp.feature_explore.domain.repository.ExploreRepository
 import com.prmto.mova_movieapp.feature_explore.presentation.filter_bottom_sheet.state.FilterBottomState
 import kotlinx.coroutines.flow.Flow

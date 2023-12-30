@@ -9,9 +9,9 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import coil.load
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.prmto.core_domain.models.movie.Movie
+import com.prmto.core_domain.models.tv.TvSeries
 import com.prmto.mova_movieapp.R
-import com.prmto.mova_movieapp.core.domain.models.movie.Movie
-import com.prmto.mova_movieapp.core.domain.models.tv.TvSeries
 import com.prmto.mova_movieapp.core.presentation.util.AlertDialogUtil
 import com.prmto.mova_movieapp.core.presentation.util.ImageSize
 import com.prmto.mova_movieapp.core.presentation.util.ImageUtil
@@ -121,7 +121,7 @@ class DetailBottomSheet : BottomSheetDialogFragment() {
         }
     }
 
-    private fun loadImage(posterPath: String) {
+    private fun loadImage(posterPath: String?) {
         binding.ivPoster.load(
             ImageUtil.getImage(
                 imageSize = ImageSize.W185.path,

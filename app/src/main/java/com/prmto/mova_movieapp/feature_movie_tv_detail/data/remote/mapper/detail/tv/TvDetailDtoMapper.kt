@@ -1,7 +1,7 @@
 package com.prmto.mova_movieapp.feature_movie_tv_detail.data.remote.mapper.detail.tv
 
-import com.prmto.mova_movieapp.core.data.util.HandleUtils
-import com.prmto.mova_movieapp.core.data.util.orZero
+import com.prmto.core_data.util.HandleUtils
+import com.prmto.core_data.util.orZero
 import com.prmto.mova_movieapp.feature_movie_tv_detail.data.remote.dto.detail.tv.TvDetailDto
 import com.prmto.mova_movieapp.feature_movie_tv_detail.data.remote.mapper.credit.toCredit
 import com.prmto.mova_movieapp.feature_movie_tv_detail.data.remote.mapper.watchProvider.toWatchProviderItem

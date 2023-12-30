@@ -1,9 +1,9 @@
 package com.prmto.mova_movieapp.feature_explore.data.remote.api
 
-import com.prmto.mova_movieapp.core.data.remote.dto.ApiResponse
-import com.prmto.mova_movieapp.core.data.remote.dto.movie.MovieDto
-import com.prmto.mova_movieapp.core.data.remote.dto.tv.TvSeriesDto
-import com.prmto.mova_movieapp.core.util.Constants
+import com.prmto.core_data.remote.dto.ApiResponse
+import com.prmto.core_data.remote.dto.movie.MovieDto
+import com.prmto.core_data.remote.dto.tv.TvSeriesDto
+import com.prmto.core_data.util.Constants
 import com.prmto.mova_movieapp.feature_explore.data.remote.dto.multisearch.SearchDto
 import retrofit2.Response
 import retrofit2.http.GET

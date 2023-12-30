@@ -1,8 +1,8 @@
 package com.prmto.mova_movieapp.feature_explore.data.remote.dataSources.multisearch
 
-import com.prmto.mova_movieapp.core.data.dispatcher.DispatcherProvider
-import com.prmto.mova_movieapp.core.data.remote.dto.ApiResponse
-import com.prmto.mova_movieapp.core.data.util.tryApiCall
+import com.prmto.core_data.dispatcher.DispatcherProvider
+import com.prmto.core_data.remote.dto.ApiResponse
+import com.prmto.core_data.util.tryApiCall
 import com.prmto.mova_movieapp.feature_explore.data.remote.api.ExploreApi
 import com.prmto.mova_movieapp.feature_explore.data.remote.dto.multisearch.SearchDto
 import kotlinx.coroutines.withContext

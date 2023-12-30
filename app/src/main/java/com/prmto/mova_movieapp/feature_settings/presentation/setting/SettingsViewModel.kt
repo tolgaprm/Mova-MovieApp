@@ -2,14 +2,14 @@ package com.prmto.mova_movieapp.feature_settings.presentation.setting
 
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.viewModelScope
+import com.prmto.core_domain.use_case.database.LocalDatabaseUseCases
+import com.prmto.core_domain.use_case.firebase.FirebaseCoreUseCases
+import com.prmto.core_domain.use_case.firebase.movie.GetFavoriteMoviesFromLocalDatabaseThenUpdateToFirebaseUseCase
+import com.prmto.core_domain.use_case.firebase.movie.GetMovieWatchListFromLocalDatabaseThenUpdateToFirebase
+import com.prmto.core_domain.use_case.firebase.tv.GetFavoriteTvSeriesFromLocalDatabaseThenUpdateToFirebase
+import com.prmto.core_domain.use_case.firebase.tv.GetTvSeriesWatchFromLocalDatabaseThenUpdateToFirebase
+import com.prmto.core_domain.util.UiText
 import com.prmto.mova_movieapp.R
-import com.prmto.mova_movieapp.core.domain.use_case.database.LocalDatabaseUseCases
-import com.prmto.mova_movieapp.core.domain.use_case.firebase.FirebaseCoreUseCases
-import com.prmto.mova_movieapp.core.domain.use_case.firebase.movie.GetFavoriteMoviesFromLocalDatabaseThenUpdateToFirebaseUseCase
-import com.prmto.mova_movieapp.core.domain.use_case.firebase.movie.GetMovieWatchListFromLocalDatabaseThenUpdateToFirebase
-import com.prmto.mova_movieapp.core.domain.use_case.firebase.tv.GetFavoriteTvSeriesFromLocalDatabaseThenUpdateToFirebase
-import com.prmto.mova_movieapp.core.domain.use_case.firebase.tv.GetTvSeriesWatchFromLocalDatabaseThenUpdateToFirebase
-import com.prmto.mova_movieapp.core.domain.util.UiText
 import com.prmto.mova_movieapp.core.presentation.base.viewModel.BaseViewModelWithUiEvent
 import com.prmto.mova_movieapp.core.presentation.util.UiEvent
 import com.prmto.mova_movieapp.feature_settings.domain.use_case.SettingUseCase

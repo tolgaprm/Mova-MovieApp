@@ -13,6 +13,7 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
+
 rootProject.name = "Mova-MovieApp"
 include(":app")
 include(":core:core-data")

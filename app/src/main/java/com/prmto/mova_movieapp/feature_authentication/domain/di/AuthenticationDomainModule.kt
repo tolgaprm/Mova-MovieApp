@@ -1,7 +1,7 @@
 package com.prmto.mova_movieapp.feature_authentication.domain.di
 
-import com.prmto.mova_movieapp.core.domain.repository.firebase.FirebaseCoreRepository
-import com.prmto.mova_movieapp.core.domain.repository.local.LocalDatabaseRepository
+import com.prmto.core_domain.repository.firebase.FirebaseCoreRepository
+import com.prmto.core_domain.repository.local.LocalDatabaseRepository
 import com.prmto.mova_movieapp.feature_authentication.domain.repository.FirebaseMovieRepository
 import com.prmto.mova_movieapp.feature_authentication.domain.repository.FirebaseTvSeriesRepository
 import com.prmto.mova_movieapp.feature_authentication.domain.use_case.FirebaseUseCases

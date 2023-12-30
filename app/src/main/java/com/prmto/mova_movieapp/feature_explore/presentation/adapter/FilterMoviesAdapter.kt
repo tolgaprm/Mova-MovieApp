@@ -3,13 +3,12 @@ package com.prmto.mova_movieapp.feature_explore.presentation.adapter
 import android.content.Context
 import android.view.View
 import coil.load
+import com.prmto.core_domain.models.movie.Movie
 import com.prmto.mova_movieapp.R
-import com.prmto.mova_movieapp.core.domain.models.movie.Movie
 import com.prmto.mova_movieapp.core.presentation.base.BaseMovieAndTvRecyclerAdapter
 import com.prmto.mova_movieapp.core.presentation.util.ImageSize
 import com.prmto.mova_movieapp.core.presentation.util.ImageUtil
 import com.prmto.mova_movieapp.databinding.MovieRowBinding
-
 
 class FilterMoviesAdapter : BaseMovieAndTvRecyclerAdapter<Movie>() {
 

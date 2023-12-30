@@ -1,9 +1,9 @@
 package com.prmto.mova_movieapp.feature_home.data.remote.dataSources.tv
 
-import com.prmto.mova_movieapp.core.data.dispatcher.DispatcherProvider
-import com.prmto.mova_movieapp.core.data.remote.dto.ApiResponse
-import com.prmto.mova_movieapp.core.data.remote.dto.tv.TvSeriesDto
-import com.prmto.mova_movieapp.core.data.util.tryApiCall
+import com.prmto.core_data.dispatcher.DispatcherProvider
+import com.prmto.core_data.remote.dto.ApiResponse
+import com.prmto.core_data.remote.dto.tv.TvSeriesDto
+import com.prmto.core_data.util.tryApiCall
 import com.prmto.mova_movieapp.feature_home.data.remote.api.HomeApi
 import kotlinx.coroutines.withContext
 import javax.inject.Inject

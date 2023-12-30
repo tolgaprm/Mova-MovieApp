@@ -1,7 +1,7 @@
 package com.prmto.mova_movieapp.feature_upcoming.data.di
 
-import com.prmto.mova_movieapp.database.MovaDatabase
-import com.prmto.mova_movieapp.feature_upcoming.data.local.dao.UpComingDao
+import com.prmto.database.MovaDatabase
+import com.prmto.database.dao.movie.UpComingDao
 import com.prmto.mova_movieapp.feature_upcoming.data.remote.api.UpcomingApi
 import dagger.Module
 import dagger.Provides

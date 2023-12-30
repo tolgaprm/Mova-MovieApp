@@ -1,8 +1,8 @@
 package com.prmto.mova_movieapp.feature_explore.domain.use_case
 
-import com.prmto.mova_movieapp.core.domain.use_case.languageIsoCode.GetLanguageIsoCodeUseCase
-import com.prmto.mova_movieapp.core.domain.use_case.movie.GetMovieGenreListUseCase
-import com.prmto.mova_movieapp.core.domain.use_case.tv.GetTvGenreListUseCase
+import com.prmto.core_domain.use_case.languageIsoCode.GetLanguageIsoCodeUseCase
+import com.prmto.core_domain.use_case.movie.GetMovieGenreListUseCase
+import com.prmto.core_domain.use_case.tv.GetTvGenreListUseCase
 import com.prmto.mova_movieapp.feature_explore.domain.use_case.movie.DiscoverMovieUseCase
 import com.prmto.mova_movieapp.feature_explore.domain.use_case.multisearch.MultiSearchUseCase
 import com.prmto.mova_movieapp.feature_explore.domain.use_case.tv.DiscoverTvUseCase

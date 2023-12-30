@@ -1,7 +1,7 @@
 package com.prmto.mova_movieapp.feature_home.presentation.home.state
 
-import com.prmto.mova_movieapp.core.domain.models.genre.Genre
-import com.prmto.mova_movieapp.core.domain.util.UiText
+import com.prmto.core_domain.models.genre.Genre
+import com.prmto.core_domain.util.UiText
 
 data class HomeState(
     val isShowsSeeAllPage: Boolean = false,

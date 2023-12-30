@@ -1,7 +1,7 @@
 package com.prmto.mova_movieapp.feature_explore.data.remote.dataSources.tv
 
-import com.prmto.mova_movieapp.core.data.remote.dto.ApiResponse
-import com.prmto.mova_movieapp.core.data.remote.dto.tv.TvSeriesDto
+import com.prmto.core_data.remote.dto.ApiResponse
+import com.prmto.core_data.remote.dto.tv.TvSeriesDto
 
 interface ExploreTvRemoteDataSource {
 

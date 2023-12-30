@@ -1,9 +1,9 @@
 package com.prmto.mova_movieapp.feature_home.domain.usecases.tv
 
 import androidx.paging.PagingData
-import com.prmto.mova_movieapp.core.domain.models.tv.TvSeries
-import com.prmto.mova_movieapp.core.domain.use_case.tv.GetTvGenreListUseCase
-import com.prmto.mova_movieapp.core.domain.util.combineTvAndGenreMapOneGenre
+import com.prmto.core_domain.models.tv.TvSeries
+import com.prmto.core_domain.use_case.tv.GetTvGenreListUseCase
+import com.prmto.core_domain.util.combineTvAndGenreMapOneGenre
 import com.prmto.mova_movieapp.feature_home.domain.repository.tv.HomeTvRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject

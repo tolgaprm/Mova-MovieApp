@@ -1,11 +1,11 @@
 package com.prmto.mova_movieapp.feature_home.domain.usecases.movie
 
 import androidx.paging.PagingData
-import com.prmto.mova_movieapp.core.domain.models.movie.Movie
-import com.prmto.mova_movieapp.core.domain.use_case.movie.GetMovieGenreListUseCase
-import com.prmto.mova_movieapp.core.domain.util.combineMovieAndGenreReturnFlow
-import com.prmto.mova_movieapp.core.util.Constants.DEFAULT_LANGUAGE
-import com.prmto.mova_movieapp.core.util.Constants.DEFAULT_REGION
+import com.prmto.core_domain.models.movie.Movie
+import com.prmto.core_domain.use_case.movie.GetMovieGenreListUseCase
+import com.prmto.core_domain.util.Constants.DEFAULT_LANGUAGE
+import com.prmto.core_domain.util.Constants.DEFAULT_REGION
+import com.prmto.core_domain.util.combineMovieAndGenreReturnFlow
 import com.prmto.mova_movieapp.feature_home.domain.repository.movie.HomeMovieRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject

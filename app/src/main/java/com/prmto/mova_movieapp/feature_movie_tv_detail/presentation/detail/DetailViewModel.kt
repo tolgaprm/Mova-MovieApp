@@ -2,11 +2,11 @@ package com.prmto.mova_movieapp.feature_movie_tv_detail.presentation.detail
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
-import com.prmto.mova_movieapp.core.domain.repository.DataStoreOperations
-import com.prmto.mova_movieapp.core.domain.use_case.database.LocalDatabaseUseCases
-import com.prmto.mova_movieapp.core.domain.use_case.firebase.FirebaseCoreUseCases
+import com.prmto.core_domain.repository.DataStoreOperations
+import com.prmto.core_domain.use_case.database.LocalDatabaseUseCases
+import com.prmto.core_domain.use_case.firebase.FirebaseCoreUseCases
+import com.prmto.core_domain.util.Constants.DEFAULT_LANGUAGE
 import com.prmto.mova_movieapp.core.presentation.base.viewModel.BaseViewModelWithUiEvent
-import com.prmto.mova_movieapp.core.util.Constants.DEFAULT_LANGUAGE
 import com.prmto.mova_movieapp.feature_movie_tv_detail.domain.models.detail.movie.toMovie
 import com.prmto.mova_movieapp.feature_movie_tv_detail.domain.models.detail.tv.toTvSeries
 import com.prmto.mova_movieapp.feature_movie_tv_detail.domain.models.detail.video.Videos

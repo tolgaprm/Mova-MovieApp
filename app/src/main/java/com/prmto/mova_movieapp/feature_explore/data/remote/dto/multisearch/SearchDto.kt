@@ -1,9 +1,9 @@
 package com.prmto.mova_movieapp.feature_explore.data.remote.dto.multisearch
 
-import com.prmto.mova_movieapp.core.data.util.HandleUtils
-import com.prmto.mova_movieapp.core.data.util.orZero
-import com.prmto.mova_movieapp.core.domain.models.movie.Movie
-import com.prmto.mova_movieapp.core.domain.models.tv.TvSeries
+import com.prmto.core_data.util.HandleUtils
+import com.prmto.core_data.util.orZero
+import com.prmto.core_domain.models.movie.Movie
+import com.prmto.core_domain.models.tv.TvSeries
 import com.prmto.mova_movieapp.feature_explore.domain.model.MultiSearch
 import com.prmto.mova_movieapp.feature_explore.domain.model.PersonSearch
 import com.prmto.mova_movieapp.feature_explore.domain.util.MediaType

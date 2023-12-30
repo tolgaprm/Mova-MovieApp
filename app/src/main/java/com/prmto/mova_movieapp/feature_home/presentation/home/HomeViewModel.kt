@@ -3,8 +3,8 @@ package com.prmto.mova_movieapp.feature_home.presentation.home
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.prmto.mova_movieapp.core.domain.models.movie.Movie
-import com.prmto.mova_movieapp.core.domain.models.tv.TvSeries
+import com.prmto.core_domain.models.movie.Movie
+import com.prmto.core_domain.models.tv.TvSeries
 import com.prmto.mova_movieapp.core.presentation.base.viewModel.BaseViewModelWithUiEvent
 import com.prmto.mova_movieapp.core.presentation.util.UiEvent
 import com.prmto.mova_movieapp.feature_home.domain.usecases.HomeUseCases

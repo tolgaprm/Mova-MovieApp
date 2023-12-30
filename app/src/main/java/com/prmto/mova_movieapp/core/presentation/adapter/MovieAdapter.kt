@@ -1,6 +1,7 @@
 package com.prmto.mova_movieapp.core.presentation.adapter
 
-import com.prmto.mova_movieapp.core.domain.models.movie.Movie
+import com.prmto.core_domain.models.movie.Movie
+
 
 class MovieAdapter : BaseListAdapter<Movie>() {
 

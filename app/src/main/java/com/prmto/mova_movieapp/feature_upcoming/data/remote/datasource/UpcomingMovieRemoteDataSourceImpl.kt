@@ -1,8 +1,8 @@
 package com.prmto.mova_movieapp.feature_upcoming.data.remote.datasource
 
-import com.prmto.mova_movieapp.core.data.dispatcher.DispatcherProvider
-import com.prmto.mova_movieapp.core.data.remote.dto.movie.MovieDto
-import com.prmto.mova_movieapp.core.data.util.tryApiCall
+import com.prmto.core_data.dispatcher.DispatcherProvider
+import com.prmto.core_data.remote.dto.movie.MovieDto
+import com.prmto.core_data.util.tryApiCall
 import com.prmto.mova_movieapp.feature_upcoming.data.remote.api.UpcomingApi
 import com.prmto.mova_movieapp.feature_upcoming.data.remote.dto.UpComingApiResponse
 import kotlinx.coroutines.withContext

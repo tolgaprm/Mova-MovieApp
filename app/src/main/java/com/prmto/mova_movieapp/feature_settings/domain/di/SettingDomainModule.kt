@@ -1,10 +1,10 @@
 package com.prmto.mova_movieapp.feature_settings.domain.di
 
-import com.prmto.mova_movieapp.core.domain.repository.DataStoreOperations
-import com.prmto.mova_movieapp.core.domain.use_case.languageIsoCode.GetLanguageIsoCodeUseCase
-import com.prmto.mova_movieapp.core.domain.use_case.languageIsoCode.UpdateLanguageIsoCodeUseCase
-import com.prmto.mova_movieapp.core.domain.use_case.uIMode.GetUIModeUseCase
-import com.prmto.mova_movieapp.core.domain.use_case.uIMode.UpdateUIModeUseCase
+import com.prmto.core_domain.repository.DataStoreOperations
+import com.prmto.core_domain.use_case.languageIsoCode.GetLanguageIsoCodeUseCase
+import com.prmto.core_domain.use_case.languageIsoCode.UpdateLanguageIsoCodeUseCase
+import com.prmto.core_domain.use_case.uIMode.GetUIModeUseCase
+import com.prmto.core_domain.use_case.uIMode.UpdateUIModeUseCase
 import com.prmto.mova_movieapp.feature_settings.domain.use_case.SettingUseCase
 import dagger.Module
 import dagger.Provides

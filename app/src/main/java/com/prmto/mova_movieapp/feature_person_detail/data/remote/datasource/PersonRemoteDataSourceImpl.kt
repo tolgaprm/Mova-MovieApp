@@ -1,7 +1,7 @@
 package com.prmto.mova_movieapp.feature_person_detail.data.remote.datasource
 
-import com.prmto.mova_movieapp.core.data.dispatcher.DispatcherProvider
-import com.prmto.mova_movieapp.core.data.util.tryApiCall
+import com.prmto.core_data.dispatcher.DispatcherProvider
+import com.prmto.core_data.util.tryApiCall
 import com.prmto.mova_movieapp.feature_person_detail.data.remote.PersonApi
 import com.prmto.mova_movieapp.feature_person_detail.data.remote.dto.PersonDetailDto
 import kotlinx.coroutines.withContext

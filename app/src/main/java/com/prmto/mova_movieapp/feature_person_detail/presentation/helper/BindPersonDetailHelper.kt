@@ -6,7 +6,7 @@ import androidx.core.view.isVisible
 import coil.load
 import com.prmto.mova_movieapp.R
 import com.prmto.mova_movieapp.core.presentation.util.ImageUtil
-import com.prmto.mova_movieapp.core.util.toolBarTextVisibilityByScrollPositionOfNestedScrollView
+import com.prmto.mova_movieapp.core.presentation.util.toolBarTextVisibilityByScrollPositionOfNestedScrollView
 import com.prmto.mova_movieapp.databinding.FragmentPersonDetailBinding
 import com.prmto.mova_movieapp.feature_person_detail.domain.model.CastForPerson
 import com.prmto.mova_movieapp.feature_person_detail.domain.model.CrewForPerson

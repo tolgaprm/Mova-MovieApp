@@ -71,11 +71,11 @@
         tools:layout="@layout/fragment_detail_bottom_sheet" >
         <argument
             android:name="Movie"
-            app:argType="com.prmto.mova_movieapp.core.domain.models.movie.Movie"
+            app:argType="com.prmto.core_domain.models.movie.Movie"
             app:nullable="true" />
         <argument
             android:name="TvSeries"
-            app:argType="com.prmto.mova_movieapp.core.domain.models.tv.TvSeries"
+            app:argType="com.prmto.core_domain.models.tv.TvSeries"
             app:nullable="true" />
         <action
             android:id="@+id/action_detailBottomSheet_to_detailFragment"

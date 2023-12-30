@@ -4,8 +4,8 @@ import android.content.Context
 import android.view.LayoutInflater
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
+import com.prmto.core_domain.models.genre.Genre
 import com.prmto.mova_movieapp.R
-import com.prmto.mova_movieapp.core.domain.models.genre.Genre
 
 class GenreChipInflater(
     private val context: Context,

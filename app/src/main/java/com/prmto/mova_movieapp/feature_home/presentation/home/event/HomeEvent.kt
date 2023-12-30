@@ -1,6 +1,6 @@
 package com.prmto.mova_movieapp.feature_home.presentation.home.event
 
-import com.prmto.mova_movieapp.core.domain.util.UiText
+import com.prmto.core_domain.util.UiText
 import com.prmto.mova_movieapp.feature_home.presentation.home.HomeFragmentDirections
 
 

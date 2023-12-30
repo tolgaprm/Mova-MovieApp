@@ -10,8 +10,8 @@ import androidx.lifecycle.ViewModel
 import androidx.navigation.fragment.findNavController
 import androidx.viewbinding.ViewBinding
 import com.google.android.material.snackbar.Snackbar
-import com.prmto.mova_movieapp.core.domain.util.UiText
-import com.prmto.mova_movieapp.core.domain.util.asString
+import com.prmto.core_domain.util.UiText
+import com.prmto.core_domain.util.asString
 
 abstract class BaseFragment<VB : ViewBinding, VM : ViewModel>(
     private val inflater: (LayoutInflater, ViewGroup?, Boolean) -> VB

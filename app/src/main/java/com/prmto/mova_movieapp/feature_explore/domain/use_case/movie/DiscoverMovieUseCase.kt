@@ -1,9 +1,9 @@
 package com.prmto.mova_movieapp.feature_explore.domain.use_case.movie
 
 import androidx.paging.PagingData
-import com.prmto.mova_movieapp.core.domain.models.movie.Movie
-import com.prmto.mova_movieapp.core.domain.use_case.movie.GetMovieGenreListUseCase
-import com.prmto.mova_movieapp.core.domain.util.combineMovieAndGenreMapOneGenre
+import com.prmto.core_domain.models.movie.Movie
+import com.prmto.core_domain.use_case.movie.GetMovieGenreListUseCase
+import com.prmto.core_domain.util.combineMovieAndGenreMapOneGenre
 import com.prmto.mova_movieapp.feature_explore.domain.repository.ExploreRepository
 import com.prmto.mova_movieapp.feature_explore.presentation.filter_bottom_sheet.state.FilterBottomState
 import kotlinx.coroutines.flow.Flow

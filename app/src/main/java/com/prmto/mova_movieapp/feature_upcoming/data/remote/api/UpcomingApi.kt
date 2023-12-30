@@ -1,7 +1,7 @@
 package com.prmto.mova_movieapp.feature_upcoming.data.remote.api
 
-import com.prmto.mova_movieapp.core.data.remote.dto.movie.MovieDto
-import com.prmto.mova_movieapp.core.util.Constants
+import com.prmto.core_data.remote.dto.movie.MovieDto
+import com.prmto.core_data.util.Constants
 import com.prmto.mova_movieapp.feature_upcoming.data.remote.dto.UpComingApiResponse
 import retrofit2.Response
 import retrofit2.http.GET

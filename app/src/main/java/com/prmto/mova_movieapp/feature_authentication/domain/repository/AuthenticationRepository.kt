@@ -1,7 +1,7 @@
 package com.prmto.mova_movieapp.feature_authentication.domain.repository
 
 import com.google.firebase.auth.AuthCredential
-import com.prmto.mova_movieapp.core.domain.util.UiText
+import com.prmto.core_domain.util.UiText
 
 interface AuthenticationRepository {
 

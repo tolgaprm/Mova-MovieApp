@@ -1,6 +1,6 @@
 package com.prmto.mova_movieapp.core.presentation.util
 
-import com.prmto.mova_movieapp.core.util.Constants.IMAGE_BASE_URL
+const val IMAGE_BASE_URL = "https://image.tmdb.org/t/p/"
 
 object ImageUtil {
     fun getImage(

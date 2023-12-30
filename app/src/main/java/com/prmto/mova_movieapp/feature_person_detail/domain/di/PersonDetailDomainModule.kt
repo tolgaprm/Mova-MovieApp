@@ -1,7 +1,7 @@
 package com.prmto.mova_movieapp.feature_person_detail.domain.di
 
-import com.prmto.mova_movieapp.core.domain.repository.DataStoreOperations
-import com.prmto.mova_movieapp.core.domain.use_case.languageIsoCode.GetLanguageIsoCodeUseCase
+import com.prmto.core_domain.repository.DataStoreOperations
+import com.prmto.core_domain.use_case.languageIsoCode.GetLanguageIsoCodeUseCase
 import com.prmto.mova_movieapp.feature_person_detail.domain.repository.PersonRepository
 import com.prmto.mova_movieapp.feature_person_detail.domain.use_case.GetPersonDetailUseCase
 import com.prmto.mova_movieapp.feature_person_detail.domain.use_case.PersonDetailUseCases

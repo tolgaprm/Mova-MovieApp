@@ -2,6 +2,7 @@ package com.prmto.core_data.util
 
 object Constants {
     const val ITEMS_PER_PAGE = 20
+    const val STARTING_PAGE = 1
 
     const val LOCALE_KEY = "locale_key"
     const val UI_MODE_KEY = "ui_mode_key"

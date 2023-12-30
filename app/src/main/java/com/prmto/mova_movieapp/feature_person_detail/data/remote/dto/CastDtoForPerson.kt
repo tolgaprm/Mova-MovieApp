@@ -1,6 +1,6 @@
 package com.prmto.mova_movieapp.feature_person_detail.data.remote.dto
 
-import com.prmto.mova_movieapp.core.data.util.orZero
+import com.prmto.core_data.util.orZero
 import com.prmto.mova_movieapp.feature_person_detail.domain.model.CastForPerson
 import com.squareup.moshi.Json
 

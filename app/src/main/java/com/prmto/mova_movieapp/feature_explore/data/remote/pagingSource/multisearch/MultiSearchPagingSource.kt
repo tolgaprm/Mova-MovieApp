@@ -1,7 +1,7 @@
 package com.prmto.mova_movieapp.feature_explore.data.remote.pagingSource.multisearch
 
 import androidx.paging.PagingState
-import com.prmto.mova_movieapp.core.data.util.paging.BasePagingSource
+import com.prmto.core_data.util.paging.BasePagingSource
 import com.prmto.mova_movieapp.feature_explore.data.remote.dto.multisearch.SearchDto
 import com.prmto.mova_movieapp.feature_explore.data.remote.dto.multisearch.multiSearch
 import com.prmto.mova_movieapp.feature_explore.domain.model.MultiSearch

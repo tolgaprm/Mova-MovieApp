@@ -1,6 +1,6 @@
 package com.prmto.mova_movieapp.core.presentation.adapter
 
-import com.prmto.mova_movieapp.core.domain.models.tv.TvSeries
+import com.prmto.core_domain.models.tv.TvSeries
 
 class TvSeriesAdapter : BaseListAdapter<TvSeries>() {
 

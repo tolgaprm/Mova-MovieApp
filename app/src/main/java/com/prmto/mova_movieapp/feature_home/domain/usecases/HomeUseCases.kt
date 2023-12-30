@@ -1,7 +1,7 @@
 package com.prmto.mova_movieapp.feature_home.domain.usecases
 
-import com.prmto.mova_movieapp.core.domain.use_case.languageIsoCode.GetLanguageIsoCodeUseCase
-import com.prmto.mova_movieapp.core.domain.use_case.languageIsoCode.UpdateLanguageIsoCodeUseCase
+import com.prmto.core_domain.use_case.languageIsoCode.GetLanguageIsoCodeUseCase
+import com.prmto.core_domain.use_case.languageIsoCode.UpdateLanguageIsoCodeUseCase
 import com.prmto.mova_movieapp.feature_home.domain.usecases.movie.GetNowPlayingMoviesUseCase
 import com.prmto.mova_movieapp.feature_home.domain.usecases.movie.GetPopularMoviesUseCase
 import com.prmto.mova_movieapp.feature_home.domain.usecases.movie.GetTopRatedMoviesUseCase

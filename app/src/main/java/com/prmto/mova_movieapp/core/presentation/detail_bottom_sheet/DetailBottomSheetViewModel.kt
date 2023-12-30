@@ -3,10 +3,10 @@ package com.prmto.mova_movieapp.core.presentation.detail_bottom_sheet
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.prmto.mova_movieapp.core.domain.models.movie.Movie
-import com.prmto.mova_movieapp.core.domain.models.tv.TvSeries
-import com.prmto.mova_movieapp.core.domain.use_case.database.LocalDatabaseUseCases
-import com.prmto.mova_movieapp.core.domain.use_case.firebase.FirebaseCoreUseCases
+import com.prmto.core_domain.models.movie.Movie
+import com.prmto.core_domain.models.tv.TvSeries
+import com.prmto.core_domain.use_case.database.LocalDatabaseUseCases
+import com.prmto.core_domain.use_case.firebase.FirebaseCoreUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow

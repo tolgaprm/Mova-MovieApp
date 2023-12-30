@@ -1,8 +1,8 @@
 package com.prmto.mova_movieapp.feature_explore.presentation.filter_bottom_sheet.state
 
-import com.prmto.mova_movieapp.core.domain.models.Category
-import com.prmto.mova_movieapp.core.domain.models.Sort
-import com.prmto.mova_movieapp.core.domain.models.genre.Genre
+import com.prmto.core_domain.models.Category
+import com.prmto.core_domain.models.Sort
+import com.prmto.core_domain.models.genre.Genre
 
 data class FilterBottomState(
     val categoryState: Category = Category.MOVIE,

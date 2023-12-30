@@ -1,7 +1,7 @@
 package com.prmto.mova_movieapp.feature_explore.presentation.event
 
-import com.prmto.mova_movieapp.core.domain.models.Category
-import com.prmto.mova_movieapp.core.domain.models.Sort
+import com.prmto.core_domain.models.Category
+import com.prmto.core_domain.models.Sort
 
 
 sealed class ExploreBottomSheetEvent {

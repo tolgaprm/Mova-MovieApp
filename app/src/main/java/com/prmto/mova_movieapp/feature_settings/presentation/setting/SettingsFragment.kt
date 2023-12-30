@@ -8,8 +8,8 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.LocaleListCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import com.prmto.core_domain.models.supportedLanguages
 import com.prmto.mova_movieapp.R
-import com.prmto.mova_movieapp.core.domain.models.supportedLanguages
 import com.prmto.mova_movieapp.core.presentation.base.fragment.BaseFragmentWithUiEvent
 import com.prmto.mova_movieapp.core.presentation.util.AlertDialogUtil
 import com.prmto.mova_movieapp.core.presentation.util.collectFlow

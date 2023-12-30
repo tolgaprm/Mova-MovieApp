@@ -2,10 +2,11 @@ package com.prmto.mova_movieapp.feature_authentication.data.repository
 
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
-import com.prmto.mova_movieapp.core.data.util.Constants
-import com.prmto.mova_movieapp.core.domain.models.movie.Movie
-import com.prmto.mova_movieapp.core.domain.util.FirebaseFirestoreErrorMessage.Companion.setExceptionToFirebaseMessage
-import com.prmto.mova_movieapp.core.domain.util.UiText
+import com.prmto.core_data.util.Constants.FIREBASE_FAVORITE_MOVIE_DOCUMENT_NAME
+import com.prmto.core_data.util.Constants.FIREBASE_MOVIE_WATCH_DOCUMENT_NAME
+import com.prmto.core_domain.models.movie.Movie
+import com.prmto.core_domain.util.FirebaseFirestoreErrorMessage.Companion.setExceptionToFirebaseMessage
+import com.prmto.core_domain.util.UiText
 import com.prmto.mova_movieapp.feature_authentication.domain.repository.FirebaseMovieRepository
 import timber.log.Timber
 import javax.inject.Inject
@@ -19,7 +20,7 @@ class FirebaseMovieRepositoryImpl @Inject constructor(
         onSuccess: (List<Movie>) -> Unit,
         onFailure: (uiText: UiText) -> Unit,
     ) {
-        firestore.collection(userUid).document(Constants.FIREBASE_FAVORITE_MOVIE_DOCUMENT_NAME)
+        firestore.collection(userUid).document(FIREBASE_FAVORITE_MOVIE_DOCUMENT_NAME)
             .get()
             .addOnSuccessListener { document ->
                 documentToListMovie(
@@ -37,7 +38,7 @@ class FirebaseMovieRepositoryImpl @Inject constructor(
         onSuccess: (List<Movie>) -> Unit,
         onFailure: (uiText: UiText) -> Unit,
     ) {
-        firestore.collection(userUid).document(Constants.FIREBASE_MOVIE_WATCH_DOCUMENT_NAME).get()
+        firestore.collection(userUid).document(FIREBASE_MOVIE_WATCH_DOCUMENT_NAME).get()
             .addOnSuccessListener { document ->
                 documentToListMovie(
                     document = document,

@@ -1,8 +1,8 @@
 package com.prmto.mova_movieapp.feature_movie_tv_detail.domain.use_cases.tv
 
-import com.prmto.mova_movieapp.core.domain.models.tv.TvSeries
-import com.prmto.mova_movieapp.core.domain.use_case.tv.GetTvGenreListUseCase
-import com.prmto.mova_movieapp.core.domain.util.GenreDomainUtils
+import com.prmto.core_domain.models.tv.TvSeries
+import com.prmto.core_domain.use_case.tv.GetTvGenreListUseCase
+import com.prmto.core_domain.util.GenreDomainUtils
 import com.prmto.mova_movieapp.feature_movie_tv_detail.domain.repository.tv.TvDetailRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine

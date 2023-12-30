@@ -1,6 +1,6 @@
 package com.prmto.mova_movieapp.feature_explore.data.remote.dto.multisearch
 
-import com.prmto.mova_movieapp.core.data.util.orZero
+import com.prmto.core_data.util.orZero
 import com.prmto.mova_movieapp.feature_explore.domain.model.KnownForSearch
 import com.squareup.moshi.Json
 

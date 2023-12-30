@@ -1,8 +1,8 @@
 package com.prmto.mova_movieapp.feature_upcoming.domain.repository
 
 import androidx.paging.PagingData
+import com.prmto.database.entity.movie.UpcomingRemindEntity
 import com.prmto.mova_movieapp.feature_upcoming.domain.model.UpcomingMovie
-import com.prmto.mova_movieapp.feature_upcoming.domain.model.UpcomingRemindEntity
 import kotlinx.coroutines.flow.Flow
 
 interface UpcomingRepository {

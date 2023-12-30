@@ -1,11 +1,11 @@
 package com.prmto.mova_movieapp.feature_home.domain.di
 
-import com.prmto.mova_movieapp.core.domain.repository.DataStoreOperations
-import com.prmto.mova_movieapp.core.domain.repository.GenreRepository
-import com.prmto.mova_movieapp.core.domain.use_case.languageIsoCode.GetLanguageIsoCodeUseCase
-import com.prmto.mova_movieapp.core.domain.use_case.languageIsoCode.UpdateLanguageIsoCodeUseCase
-import com.prmto.mova_movieapp.core.domain.use_case.movie.GetMovieGenreListUseCase
-import com.prmto.mova_movieapp.core.domain.use_case.tv.GetTvGenreListUseCase
+import com.prmto.core_domain.repository.DataStoreOperations
+import com.prmto.core_domain.repository.GenreRepository
+import com.prmto.core_domain.use_case.languageIsoCode.GetLanguageIsoCodeUseCase
+import com.prmto.core_domain.use_case.languageIsoCode.UpdateLanguageIsoCodeUseCase
+import com.prmto.core_domain.use_case.movie.GetMovieGenreListUseCase
+import com.prmto.core_domain.use_case.tv.GetTvGenreListUseCase
 import com.prmto.mova_movieapp.feature_home.domain.repository.movie.HomeMovieRepository
 import com.prmto.mova_movieapp.feature_home.domain.repository.tv.HomeTvRepository
 import com.prmto.mova_movieapp.feature_home.domain.usecases.HomeUseCases
