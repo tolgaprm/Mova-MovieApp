@@ -4,10 +4,10 @@ import androidx.lifecycle.viewModelScope
 import com.prmto.core_domain.use_case.languageIsoCode.GetLanguageIsoCodeUseCase
 import com.prmto.database.entity.movie.UpcomingRemindEntity
 import com.prmto.mova_movieapp.core.presentation.base.viewModel.BaseViewModel
-import com.prmto.mova_movieapp.feature_upcoming.alarm_manager.UpComingAlarmItem
-import com.prmto.mova_movieapp.feature_upcoming.domain.alarmManager.UpComingAlarmScheduler
-import com.prmto.mova_movieapp.feature_upcoming.domain.repository.UpcomingRepository
-import com.prmto.mova_movieapp.feature_upcoming.domain.use_case.GetUpcomingMovieUseCase
+import com.prmto.mova_movieapp.notification.alarmManager.UpComingAlarmItem
+import com.prmto.mova_movieapp.notification.alarmManager.UpComingAlarmScheduler
+import com.prmto.upcoming_domain.repository.UpcomingRepository
+import com.prmto.upcoming_domain.use_case.GetUpcomingMovieUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow

@@ -11,7 +11,7 @@ import com.prmto.mova_movieapp.R
 import com.prmto.mova_movieapp.core.presentation.util.ImageSize
 import com.prmto.mova_movieapp.core.presentation.util.ImageUtil
 import com.prmto.mova_movieapp.databinding.ComingSoonItemBinding
-import com.prmto.mova_movieapp.feature_upcoming.domain.model.UpcomingMovie
+import com.prmto.upcoming_domain.model.UpcomingMovie
 
 class UpComingMovieAdapter :
     PagingDataAdapter<UpcomingMovie, UpComingMovieAdapter.UpComingViewHolder>(

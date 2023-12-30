@@ -45,7 +45,6 @@ object NotificationModule {
             notificationManager = notificationManager
         )
     }
-
 }
 
 @Qualifier
