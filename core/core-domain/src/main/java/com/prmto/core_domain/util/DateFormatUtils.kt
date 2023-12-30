@@ -30,9 +30,9 @@ object DateFormatUtils {
     fun convertToDateFromReleaseDate(releaseDate: String): MovaDate {
 
         val releaseDateSplit = releaseDate.split("-")
-        val releaseYear = releaseDateSplit[0].toInt()
-        val releaseMonth = releaseDateSplit[1].toInt()
-        val releaseDay = releaseDateSplit[2].toInt()
+        val releaseYear = releaseDateSplit[0].toIntOrNull() ?: 0
+        val releaseMonth = releaseDateSplit[1].toIntOrNull() ?: 0
+        val releaseDay = releaseDateSplit[2].toIntOrNull() ?: 0
 
         return MovaDate(
             year = releaseYear,

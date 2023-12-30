@@ -32,3 +32,7 @@ internal fun DependencyHandlerScope.addKapt(dependency: Provider<MinimalExternal
 internal fun DependencyHandlerScope.addDebugImplementation(dependency: Provider<MinimalExternalModuleDependency>) {
     add("debugImplementation", dependency)
 }
+
+internal fun DependencyHandlerScope.addCoreLibraryDesugaring(dependency: Provider<MinimalExternalModuleDependency>) {
+    add("coreLibraryDesugaring", dependency)
+}

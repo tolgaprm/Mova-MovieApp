@@ -42,7 +42,7 @@ class HomeFragment : BaseFragmentWithUiEvent<FragmentHomeBinding, HomeViewModel>
         collectHomeUiEvents()
         updateCountryIsoCode()
         setupRecyclerAdapters()
-        addOnBackPressedCallback(addCustomBehavior = { hideSeeAllPage() })
+        addOnBackPressedCallback(addCustomBehavior = this::hideSeeAllPage)
         setupClickListener()
         collectDataLifecycleAware()
     }

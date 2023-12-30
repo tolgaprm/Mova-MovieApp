@@ -100,15 +100,16 @@ val diffCallback = object : DiffUtil.ItemCallback<MultiSearch>() {
     override fun areItemsTheSame(oldItem: MultiSearch, newItem: MultiSearch): Boolean {
         return when (oldItem) {
             is MultiSearch.MovieItem -> {
-                oldItem.movie.id == (newItem as? MultiSearch.MovieItem)?.movie?.id
+                oldItem.movie.id == ((newItem as? MultiSearch.MovieItem)?.movie?.id ?: false)
             }
 
             is MultiSearch.PersonItem -> {
-                oldItem.person.id == (newItem as? MultiSearch.PersonItem)?.person?.id
+                oldItem.person.id == ((newItem as? MultiSearch.PersonItem)?.person?.id ?: false)
             }
 
             is MultiSearch.TvSeriesItem -> {
-                oldItem.tvSeries.id == (newItem as? MultiSearch.TvSeriesItem)?.tvSeries?.id
+                oldItem.tvSeries.id == ((newItem as? MultiSearch.TvSeriesItem)?.tvSeries?.id
+                    ?: false)
             }
         }
     }
@@ -116,15 +117,15 @@ val diffCallback = object : DiffUtil.ItemCallback<MultiSearch>() {
     override fun areContentsTheSame(oldItem: MultiSearch, newItem: MultiSearch): Boolean {
         return when (oldItem) {
             is MultiSearch.MovieItem -> {
-                oldItem.movie == (newItem as? MultiSearch.MovieItem)?.movie
+                oldItem.movie == ((newItem as? MultiSearch.MovieItem)?.movie ?: false)
             }
 
             is MultiSearch.PersonItem -> {
-                oldItem.person == (newItem as? MultiSearch.PersonItem)?.person
+                oldItem.person == ((newItem as? MultiSearch.PersonItem)?.person ?: false)
             }
 
             is MultiSearch.TvSeriesItem -> {
-                oldItem.tvSeries == (newItem as? MultiSearch.TvSeriesItem)?.tvSeries
+                oldItem.tvSeries == ((newItem as? MultiSearch.TvSeriesItem)?.tvSeries ?: false)
             }
         }
     }
