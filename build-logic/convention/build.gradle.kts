@@ -42,6 +42,11 @@ gradlePlugin {
             implementationClass = "specific_library_plugin.MoshiConventionPlugin"
         }
 
+        register("navigation") {
+            id = "mova.android.navigation"
+            implementationClass = "specific_library_plugin.NavigationConventionPlugin"
+        }
+
         register("androidApplicationFirebase") {
             id = "mova.android.application.firebase"
             implementationClass = "AndroidApplicationFirebaseConventionPlugin"

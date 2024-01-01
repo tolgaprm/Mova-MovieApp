@@ -21,6 +21,10 @@ internal fun DependencyHandlerScope.addAndroidTestImplementation(dependency: Pro
     add("androidTestImplementation", dependency)
 }
 
+internal fun DependencyHandlerScope.addKaptAndroidTest(dependency: Provider<MinimalExternalModuleDependency>) {
+    add("kaptAndroidTest", dependency)
+}
+
 internal fun DependencyHandlerScope.addKsp(dependency: Provider<MinimalExternalModuleDependency>) {
     add("ksp", dependency)
 }

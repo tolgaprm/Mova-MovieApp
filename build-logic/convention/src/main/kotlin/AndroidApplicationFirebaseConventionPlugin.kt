@@ -1,8 +1,8 @@
-import com.android.build.api.dsl.ApplicationExtension
-import com.prmto.convention.firebaseCommonDependencies
+import com.prmto.convention.dependency.firebase
+import com.prmto.convention.libs
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.gradle.kotlin.dsl.configure
+import org.gradle.kotlin.dsl.dependencies
 
 class AndroidApplicationFirebaseConventionPlugin : Plugin<Project> {
 
@@ -13,8 +13,8 @@ class AndroidApplicationFirebaseConventionPlugin : Plugin<Project> {
                 apply("com.google.gms.google-services")
             }
 
-            extensions.configure<ApplicationExtension> {
-                firebaseCommonDependencies(this)
+            dependencies {
+                firebase(libs)
             }
         }
     }

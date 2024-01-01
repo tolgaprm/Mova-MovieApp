@@ -3,9 +3,11 @@ package layer_plugin
 import com.android.build.api.dsl.DefaultConfig
 import com.android.build.gradle.LibraryExtension
 import com.prmto.convention.commonDependenciesForEachModule
-import com.prmto.convention.dataLayerDependencies
+import com.prmto.convention.dependency.dataStore
+import com.prmto.convention.dependency.firebase
+import com.prmto.convention.dependency.retrofit
 import com.prmto.convention.dependencyHandler.addModule
-import com.prmto.convention.firebaseCommonDependencies
+import com.prmto.convention.libs
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
@@ -28,11 +30,12 @@ class DataLayerPlugin : Plugin<Project> {
 
             extensions.configure<LibraryExtension> {
                 commonDependenciesForEachModule(this)
-                firebaseCommonDependencies(this)
-                dataLayerDependencies(this)
 
                 dependencies {
                     addModule(":core:core-domain")
+                    firebase(libs)
+                    retrofit(libs)
+                    dataStore(libs)
                 }
 
                 defaultConfig {

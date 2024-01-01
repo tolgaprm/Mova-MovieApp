@@ -1,9 +1,22 @@
 import com.android.build.api.dsl.ApplicationExtension
 import com.android.build.api.dsl.DefaultConfig
 import com.prmto.convention.configureCommon
+import com.prmto.convention.dependency.addAllUiDependencies
+import com.prmto.convention.dependency.addCommonTestDependencies
+import com.prmto.convention.dependency.androidXKtx
+import com.prmto.convention.dependency.coroutines
+import com.prmto.convention.dependency.dataStore
+import com.prmto.convention.dependency.paging
+import com.prmto.convention.dependency.retrofit
+import com.prmto.convention.dependency.timber
+import com.prmto.convention.dependency.workManager
+import com.prmto.convention.dependencyHandler.addCoreLibraryDesugaring
+import com.prmto.convention.dependencyHandler.addModule
+import com.prmto.convention.libs
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
+import org.gradle.kotlin.dsl.dependencies
 import java.util.Properties
 
 class AndroidApplicationConventionPlugin : Plugin<Project> {
@@ -17,6 +30,11 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
                 apply("com.android.application")
                 apply("org.jetbrains.kotlin.android")
                 apply("kotlin-parcelize")
+                apply("mova.android.hilt")
+                apply("mova.android.room")
+                apply("mova.android.navigation")
+                apply("mova.android.moshi")
+                apply("mova.android.application.firebase")
             }
 
             extensions.configure<ApplicationExtension> {
@@ -24,10 +42,10 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
                 compileSdk = 33
                 defaultConfig {
                     targetSdk = 33
-                    addTmdbApi(properties)
-                    addFirebaseProjectIdToBuildConfig(properties)
-                    addFirebaseApplicationIdToBuildConfig(properties)
-                    addFirebaseApiKeyToBuildConfig(properties)
+                    addBuildConfigField(properties, "API_KEY")
+                    addBuildConfigField(properties, "FIREBASE_PROJECT_ID")
+                    addBuildConfigField(properties, "FIREBASE_APPLICATION_ID")
+                    addBuildConfigField(properties, "FIREBASE_API_KEY")
 
                     val resourceConfigurations = listOf("en", "tr-rTR", "de-rDE")
                     resourceConfigurations.forEach { resConfig ->
@@ -39,46 +57,37 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
                     isCoreLibraryDesugaringEnabled = true
                 }
             }
+
+            dependencies {
+                addModule(":core:core-data")
+                addModule(":core:core-domain")
+                addModule(":upcoming:upcoming-domain")
+                addModule(":upcoming:upcoming-data")
+                addModule(":authentication:authentication-data")
+                addModule(":authentication:authentication-domain")
+
+                addAllUiDependencies(libs)
+                addCoreLibraryDesugaring(libs.findLibrary("desugar.jdk.libs").get())
+                androidXKtx(libs)
+                coroutines(libs)
+                dataStore(libs)
+                paging(libs)
+                retrofit(libs)
+                timber(libs)
+                workManager(libs)
+                addCommonTestDependencies(libs)
+            }
         }
     }
 
-    fun DefaultConfig.addTmdbApi(
-        properties: Properties
+    private fun DefaultConfig.addBuildConfigField(
+        properties: Properties,
+        name: String
     ) {
         buildConfigField(
             "String",
-            "API_KEY",
-            "\"${properties.getProperty("API_KEY")}\""
-        )
-    }
-
-    private fun DefaultConfig.addFirebaseProjectIdToBuildConfig(
-        properties: Properties
-    ) {
-        buildConfigField(
-            "String",
-            "FIREBASE_PROJECT_ID",
-            "\"${properties.getProperty("FIREBASE_PROJECT_ID")}\""
-        )
-    }
-
-    private fun DefaultConfig.addFirebaseApplicationIdToBuildConfig(
-        properties: Properties
-    ) {
-        buildConfigField(
-            "String",
-            "FIREBASE_APPLICATION_ID",
-            "\"${properties.getProperty("FIREBASE_APPLICATION_ID")}\""
-        )
-    }
-
-    private fun DefaultConfig.addFirebaseApiKeyToBuildConfig(
-        properties: Properties
-    ) {
-        buildConfigField(
-            "String",
-            "FIREBASE_API_KEY",
-            "\"${properties.getProperty("FIREBASE_API_KEY")}\""
+            name,
+            "\"${properties.getProperty(name)}\""
         )
     }
 }
