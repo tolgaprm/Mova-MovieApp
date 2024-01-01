@@ -11,7 +11,6 @@ import coil.load
 import com.prmto.mova_movieapp.R
 import com.prmto.mova_movieapp.core.presentation.util.ImageUtil
 import com.prmto.mova_movieapp.databinding.ActorMovieRowBinding
-import com.prmto.mova_movieapp.feature_explore.domain.util.MediaType
 import com.prmto.mova_movieapp.feature_person_detail.domain.model.CastForPerson
 import com.prmto.mova_movieapp.feature_person_detail.domain.model.CrewForPerson
 
@@ -48,14 +47,16 @@ abstract class PersonMovieBaseAdapter<T : Any> :
 
         private fun bindTxtCategory(mediaType: String) {
             when (mediaType) {
-                MediaType.MOVIE.value -> {
+                com.prmto.explore_domain.util.MediaType.MOVIE.value -> {
                     binding.txtCategory.isVisible = true
                     binding.txtCategory.text = context.getString(R.string.movie)
                 }
-                MediaType.TV_SERIES.value -> {
+
+                com.prmto.explore_domain.util.MediaType.TV_SERIES.value -> {
                     binding.txtCategory.isVisible = true
                     binding.txtCategory.text = context.getString(R.string.tv)
                 }
+
                 else -> binding.txtCategory.isVisible = false
             }
         }

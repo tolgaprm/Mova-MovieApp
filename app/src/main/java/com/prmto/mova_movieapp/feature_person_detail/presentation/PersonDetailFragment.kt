@@ -8,7 +8,6 @@ import com.prmto.mova_movieapp.core.presentation.base.fragment.BaseFragmentWithU
 import com.prmto.mova_movieapp.core.presentation.util.collectFlow
 import com.prmto.mova_movieapp.core.presentation.util.loadAd
 import com.prmto.mova_movieapp.databinding.FragmentPersonDetailBinding
-import com.prmto.mova_movieapp.feature_explore.domain.util.MediaType
 import com.prmto.mova_movieapp.feature_person_detail.domain.model.CastForPerson
 import com.prmto.mova_movieapp.feature_person_detail.domain.model.CrewForPerson
 import com.prmto.mova_movieapp.feature_person_detail.domain.model.toMovie
@@ -85,12 +84,12 @@ class PersonDetailFragment :
         val action =
             PersonDetailFragmentDirections.actionPersonDetailFragmentToDetailBottomSheet(null, null)
         when (crewForPerson.mediaType) {
-            MediaType.MOVIE.value -> {
+            com.prmto.explore_domain.util.MediaType.MOVIE.value -> {
                 action.movie = crewForPerson.toMovie()
                 action.tvSeries = null
             }
 
-            MediaType.TV_SERIES.value -> {
+            com.prmto.explore_domain.util.MediaType.TV_SERIES.value -> {
                 action.movie = null
                 action.tvSeries = crewForPerson.toTvSeries()
             }
@@ -102,12 +101,12 @@ class PersonDetailFragment :
         val action =
             PersonDetailFragmentDirections.actionPersonDetailFragmentToDetailBottomSheet(null, null)
         when (castForPerson.mediaType) {
-            MediaType.MOVIE.value -> {
+            com.prmto.explore_domain.util.MediaType.MOVIE.value -> {
                 action.movie = castForPerson.toMovie()
                 action.tvSeries = null
             }
 
-            MediaType.TV_SERIES.value -> {
+            com.prmto.explore_domain.util.MediaType.TV_SERIES.value -> {
                 action.movie = null
                 action.tvSeries = castForPerson.toTvSeries()
             }

@@ -32,6 +32,7 @@
             <option value="$PROJECT_DIR$/core/core-domain" />
             <option value="$PROJECT_DIR$/database" />
             <option value="$PROJECT_DIR$/explore" />
+            <option value="$PROJECT_DIR$/explore/explore-data" />
             <option value="$PROJECT_DIR$/explore/explore-domain" />
             <option value="$PROJECT_DIR$/upcoming" />
             <option value="$PROJECT_DIR$/upcoming/upcoming-data" />

@@ -10,7 +10,6 @@ import com.prmto.mova_movieapp.R
 import com.prmto.mova_movieapp.core.presentation.util.ImageSize
 import com.prmto.mova_movieapp.core.presentation.util.ImageUtil
 import com.prmto.mova_movieapp.databinding.SearchPersonRowBinding
-import com.prmto.mova_movieapp.feature_explore.domain.model.PersonSearch
 
 class SearchPersonViewHolder(
     val binding: SearchPersonRowBinding,
@@ -19,8 +18,8 @@ class SearchPersonViewHolder(
 
 
     fun bindPerson(
-        personSearch: PersonSearch,
-        onClickPersonItem: (PersonSearch) -> Unit = {}
+        personSearch: com.prmto.explore_domain.model.PersonSearch,
+        onClickPersonItem: (com.prmto.explore_domain.model.PersonSearch) -> Unit = {}
     ) {
         binding.ivProfile.load(
             ImageUtil.getImage(

@@ -16,12 +16,8 @@ import com.prmto.core_domain.util.UiText
 import com.prmto.mova_movieapp.R
 import com.prmto.mova_movieapp.core.presentation.base.viewModel.BaseViewModelWithUiEvent
 import com.prmto.mova_movieapp.core.presentation.util.UiEvent
-import com.prmto.mova_movieapp.feature_explore.data.remote.dto.multisearch.SearchDto
-import com.prmto.mova_movieapp.feature_explore.domain.model.MultiSearch
-import com.prmto.mova_movieapp.feature_explore.domain.use_case.ExploreUseCases
 import com.prmto.mova_movieapp.feature_explore.presentation.event.ExploreBottomSheetEvent
 import com.prmto.mova_movieapp.feature_explore.presentation.event.ExploreFragmentEvent
-import com.prmto.mova_movieapp.feature_explore.presentation.filter_bottom_sheet.state.FilterBottomState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -35,7 +31,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ExploreViewModel @Inject constructor(
-    private val exploreUseCases: ExploreUseCases,
+    private val exploreUseCases: com.prmto.explore_domain.use_case.ExploreUseCases,
     private val observeNetwork: ConnectivityObserver,
     private val genreRepository: GenreRepository
 ) : BaseViewModelWithUiEvent<UiEvent>() {
@@ -53,7 +49,8 @@ class ExploreViewModel @Inject constructor(
     private val _networkState = MutableStateFlow(ConnectivityObserver.Status.Unavaliable)
     val networkState: StateFlow<ConnectivityObserver.Status> = _networkState.asStateFlow()
 
-    private val _filterBottomSheetState = MutableStateFlow(FilterBottomState())
+    private val _filterBottomSheetState =
+        MutableStateFlow(com.prmto.explore_domain.model.FilterBottomState())
     val filterBottomSheetState = _filterBottomSheetState.asStateFlow()
 
     init {
@@ -86,12 +83,14 @@ class ExploreViewModel @Inject constructor(
         return networkState.value.isAvaliable()
     }
 
-    fun multiSearch(query: String): Flow<PagingData<MultiSearch>> {
+    fun multiSearch(query: String): Flow<PagingData<com.prmto.explore_domain.model.MultiSearch>> {
         return if (query.isNotEmpty()) {
             exploreUseCases.multiSearchUseCase(query = query, language = languageState)
                 .cachedIn(viewModelScope)
         } else {
-            flow<PagingData<MultiSearch>> { PagingData.empty<SearchDto>() }.cachedIn(viewModelScope)
+            flow<PagingData<com.prmto.explore_domain.model.MultiSearch>> { PagingData.empty<com.prmto.explore_data.remote.dto.multisearch.SearchDto>() }.cachedIn(
+                viewModelScope
+            )
         }
     }
 
@@ -145,7 +144,7 @@ class ExploreViewModel @Inject constructor(
             }
 
             is ExploreBottomSheetEvent.ResetFilterBottomState -> {
-                _filterBottomSheetState.value = FilterBottomState()
+                _filterBottomSheetState.value = com.prmto.explore_domain.model.FilterBottomState()
             }
 
             is ExploreBottomSheetEvent.Apply -> {

@@ -10,6 +10,8 @@ import com.prmto.convention.dependency.coreDataModule
 import com.prmto.convention.dependency.coreDomainModule
 import com.prmto.convention.dependency.coroutines
 import com.prmto.convention.dependency.dataStore
+import com.prmto.convention.dependency.exploreDataModule
+import com.prmto.convention.dependency.exploreDomainModule
 import com.prmto.convention.dependency.paging
 import com.prmto.convention.dependency.retrofit
 import com.prmto.convention.dependency.timber
@@ -70,6 +72,8 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
                 upcomingDomainModule()
                 authenticationDataModule()
                 authenticationDomainModule()
+                exploreDataModule()
+                exploreDomainModule()
 
                 addAllUiDependencies(libs)
                 addCoreLibraryDesugaring(libs.findLibrary("desugar.jdk.libs").get())
