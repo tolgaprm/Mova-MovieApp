@@ -1,7 +1,7 @@
 package com.prmto.mova_movieapp.feature_authentication.presentation.sign_up
 
+import com.prmto.authentication_domain.util.AuthError
 import com.prmto.mova_movieapp.core.presentation.util.StandardTextFieldState
-import com.prmto.mova_movieapp.feature_authentication.util.AuthError
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 

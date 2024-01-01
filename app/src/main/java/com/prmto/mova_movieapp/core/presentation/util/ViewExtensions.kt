@@ -6,8 +6,8 @@ import androidx.core.view.isVisible
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.material.textfield.TextInputLayout
+import com.prmto.authentication_domain.util.AuthError
 import com.prmto.mova_movieapp.R
-import com.prmto.mova_movieapp.feature_authentication.util.AuthError
 
 fun AdView.loadAd() {
     val adRequest = AdRequest.Builder().build()

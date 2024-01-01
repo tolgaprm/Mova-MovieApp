@@ -2,6 +2,8 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel target="17">
+      <module name="Mova-MovieApp.authentication.main" target="1.7" />
+      <module name="Mova-MovieApp.authentication.test" target="1.7" />
       <module name="Mova-MovieApp.buildlogic.convention" target="1.7" />
       <module name="Mova-MovieApp.buildlogic.convention.main" target="1.7" />
       <module name="Mova-MovieApp.buildlogic.convention.test" target="1.7" />

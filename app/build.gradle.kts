@@ -35,6 +35,8 @@ dependencies {
     implementation(project(":core:core-domain"))
     implementation(project(":upcoming:upcoming-domain"))
     implementation(project(":upcoming:upcoming-data"))
+    implementation(project(":authentication:authentication-data"))
+    implementation(project(":authentication:authentication-domain"))
 
     coreLibraryDesugaring(libs.desugar.jdk.libs)
 

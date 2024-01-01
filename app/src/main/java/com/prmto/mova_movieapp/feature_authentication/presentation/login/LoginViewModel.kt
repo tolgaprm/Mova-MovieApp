@@ -3,12 +3,12 @@ package com.prmto.mova_movieapp.feature_authentication.presentation.login
 import androidx.lifecycle.viewModelScope
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.tasks.Task
+import com.prmto.authentication_domain.use_case.FirebaseUseCases
+import com.prmto.authentication_domain.use_case.SignInWithCredentialUseCase
+import com.prmto.authentication_domain.use_case.SignInWithEmailAndPasswordUseCase
 import com.prmto.core_domain.util.UiText
 import com.prmto.mova_movieapp.core.presentation.base.viewModel.BaseViewModelWithUiEvent
 import com.prmto.mova_movieapp.core.presentation.util.UiEvent
-import com.prmto.mova_movieapp.feature_authentication.domain.use_case.FirebaseUseCases
-import com.prmto.mova_movieapp.feature_authentication.domain.use_case.SignInWithCredentialUseCase
-import com.prmto.mova_movieapp.feature_authentication.domain.use_case.SignInWithEmailAndPasswordUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -75,11 +75,12 @@ class LoginViewModel @Inject constructor(
             mutableState.updateIsLoading(true)
         }
 
-        if (loginResult.emailError != null) {
-            mutableState.updateEmailError(loginResult.emailError)
+        loginResult.emailError?.let { emailError ->
+            mutableState.updateEmailError(emailError)
         }
-        if (loginResult.passwordError != null) {
-            mutableState.updatePasswordError(loginResult.passwordError)
+
+        loginResult.passwordError?.let { passwordError ->
+            mutableState.updatePasswordError(passwordError)
         }
     }
 
@@ -94,8 +95,8 @@ class LoginViewModel @Inject constructor(
                     mutableState.updateIsLoading(false)
                 }
             )
-            if (result.errorMessage != null) {
-                addConsumableViewEvent(UiEvent.ShowSnackbar(result.errorMessage))
+            result.errorMessage?.let { errorMessage ->
+                addConsumableViewEvent(UiEvent.ShowSnackbar(errorMessage))
                 mutableState.updateIsLoading(false)
             }
         } else {

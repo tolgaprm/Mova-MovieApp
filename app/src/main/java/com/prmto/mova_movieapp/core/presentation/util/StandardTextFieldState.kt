@@ -1,6 +1,6 @@
 package com.prmto.mova_movieapp.core.presentation.util
 
-import com.prmto.mova_movieapp.feature_authentication.util.AuthError
+import com.prmto.authentication_domain.util.AuthError
 
 data class StandardTextFieldState(
     val text: String = "",

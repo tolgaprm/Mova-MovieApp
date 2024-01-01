@@ -116,39 +116,11 @@
     <string name="allow">Allow</string>
     <string name="it_is_necc_for_notification">it is necessary to show notification</string>
 
-
-
     <string name="cancel">Cancel</string>
     <string name="must_login_able_to_add_in_list"> You must to login to able to add in list</string>
     <string name="error_field_empty">This field can\'t be empty</string>
     <string name="error_user">You must login to do this operation</string>
 
-
-    // FirebaseAuth Error Message
-    <string name="error_invalid_custom_token">Invalid custom token provided.</string>
-    <string name="error_custom_token_mismatch">The custom token provided does not match the stored API key.</string>
-    <string name="error_invalid_credential">Invalid credential provided.</string>
-    <string name="error_invalid_email">Invalid email address provided.</string>
-    <string name="error_wrong_password">Incorrect password provided.</string>
-    <string name="error_user_mismatch">The credential provided does not match the stored account.</string>
-    <string name="error_requires_recent_login">The user needs to have recently signed in.</string>
-    <string name="error_account_exists_with_different_credential">User already exists with different credential.</string>
-    <string name="error_email_already_in_use">Email address is already in use.</string>
-    <string name="error_credential_already_in_use">Credential is already in use.</string>
-    <string name="error_user_disabled">User account has been disabled.</string>
-    <string name="error_user_token_expired">User token has expired.</string>
-    <string name="error_user_not_found">User account not found.</string>
-    <string name="error_invalid_user_token">Invalid user token provided.</string>
-    <string name="error_operation_not_allowed">This operation is not allowed.</string>
-    <string name="error_weak_password">Password is too weak.</string>
-
-
-    // FirebaseFirestore Error Message
-    <string name="permission_denied_error">You do not have the necessary permissions to perform this operation. Please contact the administrator.</string>
-    <string name="not_found_error">The requested record/document could not be found. Please try a different query.</string>
-    <string name="already_exists_error">The record could not be added because it already exists. Please add a different record.</string>
-    <string name="aborted_error">The operation could not be completed because the required resource is no longer available. Please try again later.</string>
-    <string name="unavailable_error">Unable to connect to Firebase servers. Please check your internet connection and try again.</string>
     <string name="coming_soon">Coming Soon</string>
     <string name="info">Info</string>
 

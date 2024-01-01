@@ -9,24 +9,9 @@
     <string name="unknown_error">Ein unbekannter Fehler ist aufgetreten</string>
     <string name="something_went_wrong">Etwas ist schief gelaufen</string>
     <string name="must_login_able_to_add_in_list"> Sie müssen sich anmelden, um in die Liste aufnehmen zu können </string>
+    <string name="error_field_empty"> Dieses Feld darf nicht leer sein </string>
+    <string name="error_user"> Sie müssen sich anmelden, um diese Operation durchzuführen </string>
 
-    // FirebaseAuth Error Message
-    <string name="error_invalid_custom_token">Ungültiges benutzerdefiniertes Token angegeben.</string>
-    <string name="error_custom_token_mismatch">Das angegebene benutzerdefinierte Token stimmt nicht mit dem gespeicherten API-Schlüssel überein.</string>
-    <string name="error_invalid_credential">Ungültige Anmeldeinformationen angegeben.</string>
-    <string name="error_invalid_email">Ungültige E-Mail-Adresse angegeben.</string>
-    <string name="error_wrong_password">Falsches Passwort angegeben.</string>
-    <string name="error_user_mismatch">Die angegebene Anmeldeinformation stimmt nicht mit dem gespeicherten Konto überein.</string>
-    <string name="error_requires_recent_login">Der Benutzer muss sich kürzlich angemeldet haben.</string>
-    <string name="error_account_exists_with_different_credential">Benutzer existiert bereits mit anderer Anmeldeinformation.</string>
-    <string name="error_email_already_in_use">E-Mail-Adresse wird bereits verwendet.</string>
-    <string name="error_credential_already_in_use">Anmeldeinformation wird bereits verwendet.</string>
-    <string name="error_user_disabled">Benutzerkonto wurde deaktiviert.</string>
-    <string name="error_user_token_expired">Benutzertoken ist abgelaufen.</string>
-    <string name="error_user_not_found">Benutzerkonto nicht gefunden.</string>
-    <string name="error_invalid_user_token">Ungültiges Benutzertoken angegeben.</string>
-    <string name="error_operation_not_allowed">Diese Operation ist nicht erlaubt.</string>
-    <string name="error_weak_password"> Passwort ist zu schwach. </string>
 
     // FirebaseFirestore Error Message
     <string name="permission_denied_error"> Sie haben nicht die erforderlichen Berechtigungen, um diese Operation durchzuführen. Bitte kontaktieren Sie den Administrator. </string>

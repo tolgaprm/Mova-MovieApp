@@ -1,8 +1,8 @@
 package com.prmto.mova_movieapp.feature_authentication.presentation.sign_up
 
+import com.prmto.authentication_domain.use_case.CreateUserWithEmailAndPasswordUseCase
 import com.prmto.mova_movieapp.core.presentation.base.viewModel.BaseViewModelWithUiEvent
 import com.prmto.mova_movieapp.core.presentation.util.UiEvent
-import com.prmto.mova_movieapp.feature_authentication.domain.use_case.CreateUserWithEmailAndPasswordUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -54,12 +54,12 @@ class SignUpViewModel @Inject constructor(
             mutableState.updateIsLoading(true)
         }
 
-        if (result.emailError != null) {
-            mutableState.updateEmailError(result.emailError)
+        result.emailError?.let {
+            mutableState.updateEmailError(it)
         }
 
-        if (result.passwordError != null) {
-            mutableState.updatePasswordError(result.passwordError)
+        result.passwordError?.let {
+            mutableState.updatePasswordError(it)
         }
     }
 }
