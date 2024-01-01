@@ -1,3 +1,5 @@
+import com.prmto.convention.dependency.databaseModuleWithApi
+
 plugins {
     id("mova.layer.data")
 }
@@ -7,5 +9,5 @@ android {
 }
 
 dependencies {
-    api(project(":database"))
+    databaseModuleWithApi()
 }

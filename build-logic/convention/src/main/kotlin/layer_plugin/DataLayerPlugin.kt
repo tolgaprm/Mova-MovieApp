@@ -3,10 +3,10 @@ package layer_plugin
 import com.android.build.api.dsl.DefaultConfig
 import com.android.build.gradle.LibraryExtension
 import com.prmto.convention.commonDependenciesForEachModule
+import com.prmto.convention.dependency.coreDomainModule
 import com.prmto.convention.dependency.dataStore
 import com.prmto.convention.dependency.firebase
 import com.prmto.convention.dependency.retrofit
-import com.prmto.convention.dependencyHandler.addModule
 import com.prmto.convention.libs
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -32,7 +32,7 @@ class DataLayerPlugin : Plugin<Project> {
                 commonDependenciesForEachModule(this)
 
                 dependencies {
-                    addModule(":core:core-domain")
+                    coreDomainModule()
                     firebase(libs)
                     retrofit(libs)
                     dataStore(libs)

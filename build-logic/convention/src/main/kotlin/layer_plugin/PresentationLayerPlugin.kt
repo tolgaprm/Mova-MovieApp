@@ -5,6 +5,7 @@ import com.android.build.gradle.LibraryExtension
 import com.prmto.convention.commonDependenciesForEachModule
 import com.prmto.convention.configureCommon
 import com.prmto.convention.dependency.addAllUiDependencies
+import com.prmto.convention.dependency.coreDomainModule
 import com.prmto.convention.libs
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -24,6 +25,7 @@ class PresentationLayerPlugin : Plugin<Project> {
                 commonDependenciesForEachModule(this)
 
                 dependencies {
+                    coreDomainModule()
                     addAllUiDependencies(libs)
                 }
             }

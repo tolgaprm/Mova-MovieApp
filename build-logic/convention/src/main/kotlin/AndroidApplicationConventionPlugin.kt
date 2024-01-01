@@ -4,14 +4,19 @@ import com.prmto.convention.configureCommon
 import com.prmto.convention.dependency.addAllUiDependencies
 import com.prmto.convention.dependency.addCommonTestDependencies
 import com.prmto.convention.dependency.androidXKtx
+import com.prmto.convention.dependency.authenticationDataModule
+import com.prmto.convention.dependency.authenticationDomainModule
+import com.prmto.convention.dependency.coreDataModule
+import com.prmto.convention.dependency.coreDomainModule
 import com.prmto.convention.dependency.coroutines
 import com.prmto.convention.dependency.dataStore
 import com.prmto.convention.dependency.paging
 import com.prmto.convention.dependency.retrofit
 import com.prmto.convention.dependency.timber
+import com.prmto.convention.dependency.upcomingDataModule
+import com.prmto.convention.dependency.upcomingDomainModule
 import com.prmto.convention.dependency.workManager
 import com.prmto.convention.dependencyHandler.addCoreLibraryDesugaring
-import com.prmto.convention.dependencyHandler.addModule
 import com.prmto.convention.libs
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -59,12 +64,12 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
             }
 
             dependencies {
-                addModule(":core:core-data")
-                addModule(":core:core-domain")
-                addModule(":upcoming:upcoming-domain")
-                addModule(":upcoming:upcoming-data")
-                addModule(":authentication:authentication-data")
-                addModule(":authentication:authentication-domain")
+                coreDataModule()
+                coreDomainModule()
+                upcomingDataModule()
+                upcomingDomainModule()
+                authenticationDataModule()
+                authenticationDomainModule()
 
                 addAllUiDependencies(libs)
                 addCoreLibraryDesugaring(libs.findLibrary("desugar.jdk.libs").get())

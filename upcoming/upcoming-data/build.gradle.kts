@@ -1,3 +1,6 @@
+import com.prmto.convention.dependency.coreDataModule
+import com.prmto.convention.dependency.upcomingDomainModule
+
 plugins {
     id("mova.layer.data")
 }
@@ -7,6 +10,6 @@ android {
 }
 
 dependencies {
-    implementation(project(":core:core-data"))
-    implementation(project(":upcoming:upcoming-domain"))
+    coreDataModule()
+    upcomingDomainModule()
 }

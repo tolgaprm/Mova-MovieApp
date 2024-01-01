@@ -1,3 +1,5 @@
+import com.prmto.convention.dependency.coreDomainModule
+
 plugins {
     id("mova.android.library")
     id("mova.android.room")
@@ -9,5 +11,5 @@ android {
 }
 
 dependencies {
-    implementation(project(":core:core-domain"))
+    coreDomainModule()
 }

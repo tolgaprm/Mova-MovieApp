@@ -13,6 +13,10 @@ internal fun DependencyHandlerScope.addModule(path: String) {
     add("implementation", project(path))
 }
 
+internal fun DependencyHandlerScope.addApi(path: String) {
+    add("api", project(path))
+}
+
 internal fun DependencyHandlerScope.addTestImplementation(dependency: Provider<MinimalExternalModuleDependency>) {
     add("testImplementation", dependency)
 }
