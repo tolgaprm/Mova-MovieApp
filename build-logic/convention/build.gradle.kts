@@ -67,8 +67,8 @@ gradlePlugin {
             implementationClass = "layer_plugin.DomainLayerPlugin"
         }
 
-        register("androidPresentationLayer") {
-            id = "mova.layer.presentation"
+        register("androidUiLayer") {
+            id = "mova.layer.ui"
             implementationClass = "layer_plugin.PresentationLayerPlugin"
         }
     }

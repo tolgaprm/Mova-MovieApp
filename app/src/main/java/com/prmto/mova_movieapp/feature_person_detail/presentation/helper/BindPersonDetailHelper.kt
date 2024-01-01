@@ -4,15 +4,14 @@ import android.content.Context
 import android.widget.ImageView
 import androidx.core.view.isVisible
 import coil.load
-import com.prmto.mova_movieapp.R
-import com.prmto.mova_movieapp.core.presentation.util.ImageUtil
-import com.prmto.mova_movieapp.core.presentation.util.toolBarTextVisibilityByScrollPositionOfNestedScrollView
+import com.prmto.core_ui.util.ImageUtil
 import com.prmto.mova_movieapp.databinding.FragmentPersonDetailBinding
 import com.prmto.mova_movieapp.feature_person_detail.domain.model.CastForPerson
 import com.prmto.mova_movieapp.feature_person_detail.domain.model.CrewForPerson
 import com.prmto.mova_movieapp.feature_person_detail.domain.model.PersonDetail
 import com.prmto.mova_movieapp.feature_person_detail.presentation.adapter.PersonCastMovieAdapter
 import com.prmto.mova_movieapp.feature_person_detail.presentation.adapter.PersonCrewMovieAdapter
+import com.prmto.core_ui.R as CoreUiR
 
 class BindPersonDetailHelper(
     private val binding: FragmentPersonDetailBinding,
@@ -22,7 +21,7 @@ class BindPersonDetailHelper(
 ) {
 
     init {
-        toolBarTextVisibilityByScrollPositionOfNestedScrollView(
+        com.prmto.core_ui.util.toolBarTextVisibilityByScrollPositionOfNestedScrollView(
             nestedScrollView = binding.nestedScrollView,
             position = 1000,
             toolBarTitle = binding.txtToolBarTitle,
@@ -73,7 +72,7 @@ class BindPersonDetailHelper(
                 }
             )
 
-            placeholder(R.drawable.loading_animate)
+            placeholder(CoreUiR.drawable.loading_animate)
         }
 
         binding.txtPersonName.text = personDetail.name

@@ -19,7 +19,6 @@ import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-
 @HiltAndroidApp
 class MovaApplication @Inject constructor(
 ) : Application(), Configuration.Provider {

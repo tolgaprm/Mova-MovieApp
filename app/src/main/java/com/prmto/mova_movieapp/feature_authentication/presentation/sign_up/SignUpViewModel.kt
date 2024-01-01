@@ -1,8 +1,15 @@
 package com.prmto.mova_movieapp.feature_authentication.presentation.sign_up
 
 import com.prmto.authentication_domain.use_case.CreateUserWithEmailAndPasswordUseCase
-import com.prmto.mova_movieapp.core.presentation.base.viewModel.BaseViewModelWithUiEvent
-import com.prmto.mova_movieapp.core.presentation.util.UiEvent
+import com.prmto.authentication_ui.signUp.SignUpEvent
+import com.prmto.authentication_ui.signUp.SignUpUiState
+import com.prmto.authentication_ui.signUp.updateEmailError
+import com.prmto.authentication_ui.signUp.updateEmailText
+import com.prmto.authentication_ui.signUp.updateIsLoading
+import com.prmto.authentication_ui.signUp.updatePasswordError
+import com.prmto.authentication_ui.signUp.updatePasswordText
+import com.prmto.core_ui.base.viewModel.BaseViewModelWithUiEvent
+import com.prmto.core_ui.util.UiEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

@@ -10,8 +10,6 @@ import com.prmto.core_domain.use_case.firebase.tv.GetFavoriteTvSeriesFromLocalDa
 import com.prmto.core_domain.use_case.firebase.tv.GetTvSeriesWatchFromLocalDatabaseThenUpdateToFirebase
 import com.prmto.core_domain.util.UiText
 import com.prmto.mova_movieapp.R
-import com.prmto.mova_movieapp.core.presentation.base.viewModel.BaseViewModelWithUiEvent
-import com.prmto.mova_movieapp.core.presentation.util.UiEvent
 import com.prmto.mova_movieapp.feature_settings.domain.use_case.SettingUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -34,7 +32,7 @@ class SettingsViewModel @Inject constructor(
     private val getMovieWatchListFromLocalDatabaseThenUpdateToFirebase: GetMovieWatchListFromLocalDatabaseThenUpdateToFirebase,
     private val getFavoriteTvSeriesFromLocalDatabaseThenUpdateToFirebase: GetFavoriteTvSeriesFromLocalDatabaseThenUpdateToFirebase,
     private val getTvSeriesWatchFromLocalDatabaseThenUpdateToFirebase: GetTvSeriesWatchFromLocalDatabaseThenUpdateToFirebase
-) : BaseViewModelWithUiEvent<UiEvent>() {
+) : com.prmto.core_ui.base.viewModel.BaseViewModelWithUiEvent<com.prmto.core_ui.util.UiEvent>() {
 
 
     private val mutableState = MutableStateFlow(SettingsUiState())
@@ -83,14 +81,14 @@ class SettingsViewModel @Inject constructor(
     private fun signOut() {
         firebaseCoreUseCases.signOutUseCase()
         mutableState.update { it.copy(isSignedIn = false) }
-        addConsumableViewEvent(UiEvent.ShowSnackbar(UiText.StringResource(R.string.successfully_log_out)))
+        addConsumableViewEvent(com.prmto.core_ui.util.UiEvent.ShowSnackbar(UiText.StringResource(R.string.successfully_log_out)))
     }
 
     private fun getMovieFavoriteFromLocalDatabaseThenUpdateFirebase() {
         viewModelScope.launch {
             getFavoriteMoviesFromLocalDatabaseThenUpdateToFirebaseUseCase(
                 onSuccess = { return@getFavoriteMoviesFromLocalDatabaseThenUpdateToFirebaseUseCase },
-                onFailure = { addConsumableViewEvent(UiEvent.ShowSnackbar(it)) }
+                onFailure = { addConsumableViewEvent(com.prmto.core_ui.util.UiEvent.ShowSnackbar(it)) }
             )
         }
     }
@@ -99,7 +97,7 @@ class SettingsViewModel @Inject constructor(
         viewModelScope.launch {
             getMovieWatchListFromLocalDatabaseThenUpdateToFirebase(
                 onSuccess = { return@getMovieWatchListFromLocalDatabaseThenUpdateToFirebase },
-                onFailure = { addConsumableViewEvent(UiEvent.ShowSnackbar(it)) }
+                onFailure = { addConsumableViewEvent(com.prmto.core_ui.util.UiEvent.ShowSnackbar(it)) }
             )
         }
     }
@@ -108,7 +106,7 @@ class SettingsViewModel @Inject constructor(
         viewModelScope.launch {
             getFavoriteTvSeriesFromLocalDatabaseThenUpdateToFirebase(
                 onSuccess = { return@getFavoriteTvSeriesFromLocalDatabaseThenUpdateToFirebase },
-                onFailure = { addConsumableViewEvent(UiEvent.ShowSnackbar(it)) }
+                onFailure = { addConsumableViewEvent(com.prmto.core_ui.util.UiEvent.ShowSnackbar(it)) }
             )
         }
     }
@@ -117,7 +115,7 @@ class SettingsViewModel @Inject constructor(
         viewModelScope.launch {
             getTvSeriesWatchFromLocalDatabaseThenUpdateToFirebase(
                 onSuccess = { return@getTvSeriesWatchFromLocalDatabaseThenUpdateToFirebase },
-                onFailure = { addConsumableViewEvent(UiEvent.ShowSnackbar(it)) })
+                onFailure = { addConsumableViewEvent(com.prmto.core_ui.util.UiEvent.ShowSnackbar(it)) })
         }
     }
 

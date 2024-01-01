@@ -3,10 +3,10 @@ package com.prmto.mova_movieapp.feature_home.presentation.home.adapter
 import android.content.Context
 import coil.load
 import com.prmto.core_domain.models.tv.TvSeries
-import com.prmto.mova_movieapp.core.presentation.base.BaseMovieAndTvRecyclerAdapter
-import com.prmto.mova_movieapp.core.presentation.util.ImageSize
-import com.prmto.mova_movieapp.core.presentation.util.ImageUtil
-import com.prmto.mova_movieapp.databinding.MovieRowBinding
+import com.prmto.core_ui.base.BaseMovieAndTvRecyclerAdapter
+import com.prmto.core_ui.databinding.MovieRowBinding
+import com.prmto.core_ui.util.ImageSize
+import com.prmto.core_ui.util.ImageUtil
 
 class TopRatedTvSeriesAdapter : BaseMovieAndTvRecyclerAdapter<TvSeries>() {
 

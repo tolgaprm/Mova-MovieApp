@@ -7,18 +7,18 @@ import com.prmto.core_domain.models.movie.Movie
 import com.prmto.core_domain.models.tv.TvSeries
 import com.prmto.core_domain.use_case.database.LocalDatabaseUseCases
 import com.prmto.core_domain.use_case.firebase.FirebaseCoreUseCases
+import com.prmto.core_ui.detailBottomSheet.DetailBottomSheetEvent
+import com.prmto.core_ui.detailBottomSheet.DetailBottomSheetState
+import com.prmto.core_ui.detailBottomSheet.DetailBottomUiEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.flow.updateAndGet
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -39,16 +39,13 @@ class DetailBottomSheetViewModel @Inject constructor(
     ) { favoriteMovieIds, movieWatchListIds, favoriteTvIds, tvWatchListIds ->
         _state.updateAndGet {
             it.copy(
-                doesAddFavorite = if (it.movie != null) {
-                    favoriteMovieIds.contains(it.movie.id)
-                } else {
-                    favoriteTvIds.contains(it.tvSeries!!.id)
-                },
-                doesAddWatchList = if (it.movie != null) {
-                    movieWatchListIds.contains(it.movie.id)
-                } else {
-                    tvWatchListIds.contains(it.tvSeries!!.id)
-                },
+                doesAddFavorite = it.movie?.let {
+                    favoriteMovieIds.contains(it.id)
+                } ?: favoriteTvIds.contains(it.tvSeries?.id ?: 0),
+
+                doesAddWatchList = it.movie?.let {
+                    movieWatchListIds.contains(it.id)
+                } ?: tvWatchListIds.contains(it.tvSeries?.id ?: 0),
             )
         }
     }.stateIn(
@@ -67,28 +64,6 @@ class DetailBottomSheetViewModel @Inject constructor(
 
         DetailBottomSheetArgs.fromSavedStateHandle(savedStateHandle).tvSeries?.let { tvSeries ->
             _state.value = DetailBottomSheetState(tvSeries = tvSeries)
-        }
-    }
-
-    private fun updateDoesAddFavoriteState(
-        idThatCheck: Int,
-        addedFavoriteIds: Flow<List<Int>>
-    ) {
-        viewModelScope.launch {
-            addedFavoriteIds.collectLatest { favoriteMovieIds ->
-                _state.update { it.copy(doesAddFavorite = favoriteMovieIds.any { id -> id == idThatCheck }) }
-            }
-        }
-    }
-
-    private fun updateDoesAddWatchListState(
-        idThatCheck: Int,
-        addedMovieWatchListIds: Flow<List<Int>>
-    ) {
-        viewModelScope.launch {
-            addedMovieWatchListIds.collectLatest { movieWatchListItemIds ->
-                _state.update { it.copy(doesAddWatchList = movieWatchListItemIds.any { id -> id == idThatCheck }) }
-            }
         }
     }
 

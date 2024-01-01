@@ -2,10 +2,14 @@ package com.prmto.mova_movieapp.feature_authentication.presentation.forget_passw
 
 import androidx.lifecycle.SavedStateHandle
 import com.prmto.authentication_domain.use_case.SendPasswordResetEmailUseCase
+import com.prmto.authentication_ui.forgetPassword.ForgetEvent
+import com.prmto.authentication_ui.forgetPassword.ForgetPasswordUiState
+import com.prmto.authentication_ui.forgetPassword.updateEmailError
+import com.prmto.authentication_ui.forgetPassword.updateEmailText
 import com.prmto.core_domain.util.UiText
+import com.prmto.core_ui.base.viewModel.BaseViewModelWithUiEvent
+import com.prmto.core_ui.util.UiEvent
 import com.prmto.mova_movieapp.R
-import com.prmto.mova_movieapp.core.presentation.base.viewModel.BaseViewModelWithUiEvent
-import com.prmto.mova_movieapp.core.presentation.util.UiEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

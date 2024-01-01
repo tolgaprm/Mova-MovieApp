@@ -22,9 +22,8 @@
     <string name="tv">Tv</string>
     <string name="tv_name_with_original_name" translatable="false">%1$s ( %2$s )</string>
 
-    <string name="voteAverage">%1$s (%2$s)</string>
+
     <string name="voteAverageDetail">%1$s (%2$s reviews)</string>
-    <string name="release_date_genre">%1$s  %2$s</string>
     <string name="runtime">%1$sh %2$sm</string>
     <string name="season_count">%s Seasons</string>
 
@@ -43,8 +42,6 @@
     <string name="apply">Apply</string>
     <string name="error_didnt_download">Didn\'t download genre options. PLease check your internet connection</string>
     <string name="all_periods">All Periods</string>
-    <string name="internet_error">"Oops! Please check your internet connection."</string>
-    <string name="oops_something_went_wrong">Oops! Something went wrong. Please try again.</string>
     <string name="unknown_error">An unknown error occurred</string>
 
     <string name="navigate_up">Navigate up</string>

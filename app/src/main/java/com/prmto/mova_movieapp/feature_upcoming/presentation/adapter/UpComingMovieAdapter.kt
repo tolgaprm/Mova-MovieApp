@@ -8,8 +8,6 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.prmto.core_domain.util.DateFormatUtils
 import com.prmto.mova_movieapp.R
-import com.prmto.mova_movieapp.core.presentation.util.ImageSize
-import com.prmto.mova_movieapp.core.presentation.util.ImageUtil
 import com.prmto.mova_movieapp.databinding.ComingSoonItemBinding
 import com.prmto.upcoming_domain.model.UpcomingMovie
 
@@ -77,14 +75,14 @@ class UpComingMovieAdapter :
 
         private fun bindImages(posterPath: String?) {
             binding.imvMoviePoster.load(
-                ImageUtil.getImage(
-                    imageSize = ImageSize.W300.path,
+                com.prmto.core_ui.util.ImageUtil.getImage(
+                    imageSize = com.prmto.core_ui.util.ImageSize.W300.path,
                     imageUrl = posterPath
                 )
             )
             binding.imvMovieBackdrop.load(
-                ImageUtil.getImage(
-                    imageSize = ImageSize.W300.path,
+                com.prmto.core_ui.util.ImageUtil.getImage(
+                    imageSize = com.prmto.core_ui.util.ImageSize.W300.path,
                     imageUrl = posterPath
                 )
             )

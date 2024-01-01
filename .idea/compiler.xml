@@ -13,6 +13,8 @@
       <module name="Mova-MovieApp.core.test" target="1.7" />
       <module name="Mova-MovieApp.explore.main" target="1.7" />
       <module name="Mova-MovieApp.explore.test" target="1.7" />
+      <module name="Mova-MovieApp.home.main" target="1.7" />
+      <module name="Mova-MovieApp.home.test" target="1.7" />
       <module name="Mova-MovieApp.Upcoming.main" target="1.7" />
       <module name="Mova-MovieApp.Upcoming.test" target="1.7" />
     </bytecodeTargetLevel>

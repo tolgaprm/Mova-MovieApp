@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="surface">#282C36</color>
+    <color name="light_gray">#CEEDF1FB</color>
+    <color name="light_gray_no_alpha">#EDF1FB</color>
+
+    <color name="red">#FFE21221</color>
+    <color name="red_variant">#D2F6D1D3</color>
+    <color name="dark_red_variant">#EBA5A8</color>
+
+    <color name="gray">#CEA0A4AC</color>
+    <color name="gray_200">#86EDF1FB</color>
+    <color name="background">#FF181A20</color>
+    <color name="dark_gray">#FF212121</color>
+
+    <color name="light_red">#FCE7E9</color>
+    <color name="light_black">#35383F</color>
+</resources>

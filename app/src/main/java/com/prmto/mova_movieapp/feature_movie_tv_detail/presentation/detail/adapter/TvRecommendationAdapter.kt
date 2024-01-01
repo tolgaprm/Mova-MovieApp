@@ -3,20 +3,17 @@ package com.prmto.mova_movieapp.feature_movie_tv_detail.presentation.detail.adap
 import android.content.Context
 import coil.load
 import com.prmto.core_domain.models.tv.TvSeries
-import com.prmto.mova_movieapp.core.presentation.base.BaseMovieAndTvRecyclerAdapter
-import com.prmto.mova_movieapp.core.presentation.util.ImageSize
-import com.prmto.mova_movieapp.core.presentation.util.ImageUtil
-import com.prmto.mova_movieapp.databinding.MovieRowBinding
+import com.prmto.core_ui.databinding.MovieRowBinding
 
-class TvRecommendationAdapter : BaseMovieAndTvRecyclerAdapter<TvSeries>() {
+class TvRecommendationAdapter : com.prmto.core_ui.base.BaseMovieAndTvRecyclerAdapter<TvSeries>() {
 
     override fun onBindViewHold(binding: MovieRowBinding, position: Int, context: Context) {
         val tvSeries = getItem(position)
 
         if (tvSeries != null) {
             binding.ivPoster.load(
-                ImageUtil.getImage(
-                    imageSize = ImageSize.W185.path,
+                com.prmto.core_ui.util.ImageUtil.getImage(
+                    imageSize = com.prmto.core_ui.util.ImageSize.W185.path,
                     imageUrl = tvSeries.posterPath
                 )
             )

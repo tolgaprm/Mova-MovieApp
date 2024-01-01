@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="voteAverage" translatable="false">%1$s (%2$s)</string>
+    <string name="release_date_genre" translatable="false">%1$s  %2$s</string>
+
+
+    <string name="internet_error">"Oops! Please check your internet connection."</string>
+    <string name="oops_something_went_wrong">Oops! Something went wrong. Please try again.</string>
+</resources>

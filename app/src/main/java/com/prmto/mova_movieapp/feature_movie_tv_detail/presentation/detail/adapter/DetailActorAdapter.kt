@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import coil.load
 import com.prmto.mova_movieapp.R
-import com.prmto.mova_movieapp.core.presentation.util.ImageUtil
 import com.prmto.mova_movieapp.databinding.ActorRowBinding
 import com.prmto.mova_movieapp.feature_movie_tv_detail.domain.models.credit.Cast
 
@@ -23,7 +22,7 @@ class DetailActorAdapter :
 
         fun bind(cast: Cast) {
             binding.imvProfilePhoto.load(
-                ImageUtil.getImage(
+                com.prmto.core_ui.util.ImageUtil.getImage(
                     imageUrl = cast.profilePath
                 )
             ) {

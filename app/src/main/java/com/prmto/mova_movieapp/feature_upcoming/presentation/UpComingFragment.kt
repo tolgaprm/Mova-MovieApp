@@ -4,11 +4,11 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.prmto.core_domain.util.asString
+import com.prmto.core_ui.base.fragment.BaseFragment
+import com.prmto.core_ui.util.collectFlow
 import com.prmto.database.entity.movie.UpcomingRemindEntity
-import com.prmto.mova_movieapp.core.presentation.base.fragment.BaseFragment
-import com.prmto.mova_movieapp.core.presentation.util.collectFlow
-import com.prmto.mova_movieapp.core.presentation.util.handlePagingLoadState.HandlePagingStateUpComingPagingAdapter
 import com.prmto.mova_movieapp.databinding.FragmentUpComingBinding
+import com.prmto.mova_movieapp.feature_upcoming.presentation.adapter.HandlePagingStateUpComingPagingAdapter
 import com.prmto.mova_movieapp.feature_upcoming.presentation.adapter.UpComingMovieAdapter
 import dagger.hilt.android.AndroidEntryPoint
 

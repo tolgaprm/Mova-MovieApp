@@ -4,19 +4,18 @@ import com.prmto.convention.configureCommon
 import com.prmto.convention.dependency.addAllUiDependencies
 import com.prmto.convention.dependency.addCommonTestDependencies
 import com.prmto.convention.dependency.androidXKtx
-import com.prmto.convention.dependency.authenticationDataModule
-import com.prmto.convention.dependency.authenticationDomainModule
+import com.prmto.convention.dependency.authenticationFeature
 import com.prmto.convention.dependency.coreDataModule
 import com.prmto.convention.dependency.coreDomainModule
+import com.prmto.convention.dependency.coreUiModule
 import com.prmto.convention.dependency.coroutines
 import com.prmto.convention.dependency.dataStore
-import com.prmto.convention.dependency.exploreDataModule
-import com.prmto.convention.dependency.exploreDomainModule
+import com.prmto.convention.dependency.exploreFeature
+import com.prmto.convention.dependency.homeFeature
 import com.prmto.convention.dependency.paging
 import com.prmto.convention.dependency.retrofit
 import com.prmto.convention.dependency.timber
-import com.prmto.convention.dependency.upcomingDataModule
-import com.prmto.convention.dependency.upcomingDomainModule
+import com.prmto.convention.dependency.upcomingFeature
 import com.prmto.convention.dependency.workManager
 import com.prmto.convention.dependencyHandler.addCoreLibraryDesugaring
 import com.prmto.convention.libs
@@ -68,12 +67,11 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
             dependencies {
                 coreDataModule()
                 coreDomainModule()
-                upcomingDataModule()
-                upcomingDomainModule()
-                authenticationDataModule()
-                authenticationDomainModule()
-                exploreDataModule()
-                exploreDomainModule()
+                coreUiModule()
+                upcomingFeature()
+                authenticationFeature()
+                exploreFeature()
+                homeFeature()
 
                 addAllUiDependencies(libs)
                 addCoreLibraryDesugaring(libs.findLibrary("desugar.jdk.libs").get())

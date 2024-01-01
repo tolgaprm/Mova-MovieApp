@@ -4,9 +4,9 @@ import android.content.Context
 import android.widget.ImageView
 import coil.load
 import com.prmto.mova_movieapp.R
-import com.prmto.mova_movieapp.core.presentation.util.ImageUtil
 import com.prmto.mova_movieapp.databinding.FragmentDetailBinding
 import com.prmto.mova_movieapp.feature_movie_tv_detail.domain.models.watchProvider.WatchProviderItem
+import com.prmto.core_ui.R as CoreUiR
 
 open class BindAttributesDetailFragment(
     val binding: FragmentDetailBinding,
@@ -21,7 +21,7 @@ open class BindAttributesDetailFragment(
 
     protected fun bindImage(posterPath: String?) {
         binding.imvPoster.load(
-            ImageUtil.getImage(
+            com.prmto.core_ui.util.ImageUtil.getImage(
                 imageUrl = posterPath
             )
         ) {
@@ -33,8 +33,7 @@ open class BindAttributesDetailFragment(
                     binding.imvPoster.scaleType = ImageView.ScaleType.CENTER_CROP
                 }
             )
-            placeholder(R.drawable.loading_animate)
-
+            placeholder(CoreUiR.drawable.loading_animate)
         }
     }
 

@@ -10,7 +10,7 @@ internal fun configureCommon(
         compileSdk = 33
 
         defaultConfig {
-            minSdk = 26
+            minSdk = 24
             testInstrumentationRunner = "com.prmto.mova_movieapp.HiltTestRunner"
         }
 

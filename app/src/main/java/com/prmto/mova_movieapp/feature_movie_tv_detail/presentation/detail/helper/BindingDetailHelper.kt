@@ -4,7 +4,6 @@ import android.content.Context
 import android.view.View
 import android.view.ViewGroup
 import com.google.android.material.tabs.TabLayout
-import com.prmto.mova_movieapp.core.presentation.util.toolBarTextVisibilityByScrollPositionOfNestedScrollView
 import com.prmto.mova_movieapp.databinding.FragmentDetailBinding
 import com.prmto.mova_movieapp.feature_movie_tv_detail.domain.models.detail.movie.MovieDetail
 import com.prmto.mova_movieapp.feature_movie_tv_detail.domain.models.detail.tv.TvDetail
@@ -25,7 +24,7 @@ class BindingDetailHelper(
     }
 
     init {
-        toolBarTextVisibilityByScrollPositionOfNestedScrollView(
+        com.prmto.core_ui.util.toolBarTextVisibilityByScrollPositionOfNestedScrollView(
             nestedScrollView = binding.nestedScrollView,
             position = 1500,
             toolBarTitle = binding.txtToolBarTitle,

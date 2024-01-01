@@ -4,9 +4,8 @@ import android.text.method.ScrollingMovementMethod
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.prmto.mova_movieapp.core.presentation.base.fragment.BaseFragmentWithUiEvent
-import com.prmto.mova_movieapp.core.presentation.util.collectFlow
-import com.prmto.mova_movieapp.core.presentation.util.loadAd
+import com.prmto.core_ui.util.collectFlow
+import com.prmto.core_ui.util.loadAd
 import com.prmto.mova_movieapp.databinding.FragmentPersonDetailBinding
 import com.prmto.mova_movieapp.feature_person_detail.domain.model.CastForPerson
 import com.prmto.mova_movieapp.feature_person_detail.domain.model.CrewForPerson
@@ -19,7 +18,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class PersonDetailFragment :
-    BaseFragmentWithUiEvent<FragmentPersonDetailBinding, PersonDetailViewModel>(
+    com.prmto.core_ui.base.fragment.BaseFragmentWithUiEvent<FragmentPersonDetailBinding, PersonDetailViewModel>(
         inflater = FragmentPersonDetailBinding::inflate
     ) {
     override val viewModel: PersonDetailViewModel by viewModels()

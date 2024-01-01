@@ -10,7 +10,7 @@ import com.prmto.core_domain.models.Category
 import com.prmto.core_domain.models.Sort
 import com.prmto.core_domain.models.isMovie
 import com.prmto.core_domain.models.isPopularity
-import com.prmto.mova_movieapp.core.presentation.util.collectFlow
+import com.prmto.core_ui.util.collectFlow
 import com.prmto.mova_movieapp.databinding.FragmentBottomSheetBinding
 import com.prmto.mova_movieapp.feature_explore.presentation.GenreChipInflater
 import com.prmto.mova_movieapp.feature_explore.presentation.event.ExploreBottomSheetEvent

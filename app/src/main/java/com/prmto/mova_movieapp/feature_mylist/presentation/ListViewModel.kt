@@ -4,8 +4,6 @@ import androidx.lifecycle.viewModelScope
 import com.prmto.core_domain.models.movie.Movie
 import com.prmto.core_domain.models.tv.TvSeries
 import com.prmto.core_domain.use_case.database.LocalDatabaseUseCases
-import com.prmto.mova_movieapp.core.presentation.base.viewModel.BaseViewModelWithUiEvent
-import com.prmto.mova_movieapp.core.presentation.util.UiEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -18,7 +16,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ListViewModel @Inject constructor(
     private val localDatabaseUseCases: LocalDatabaseUseCases,
-) : BaseViewModelWithUiEvent<UiEvent>() {
+) : com.prmto.core_ui.base.viewModel.BaseViewModelWithUiEvent<com.prmto.core_ui.util.UiEvent>() {
 
     private val mutableState = MutableStateFlow(ListState())
     val state = combine(
@@ -75,7 +73,7 @@ class ListViewModel @Inject constructor(
             movie,
             tvSeries
         )
-        addConsumableViewEvent(UiEvent.NavigateTo(directions))
+        addConsumableViewEvent(com.prmto.core_ui.util.UiEvent.NavigateTo(directions))
     }
 
     private fun updateListMovieAndLoading(movieList: List<Movie>): ListState {

@@ -13,6 +13,10 @@ fun DependencyHandlerScope.coreDomainModule() {
     addModule(":core:core-domain")
 }
 
+fun DependencyHandlerScope.coreUiModule() {
+    addModule(":core:core-ui")
+}
+
 // Upcoming
 fun DependencyHandlerScope.upcomingDomainModule() {
     addModule(":upcoming:upcoming-domain")
@@ -22,6 +26,11 @@ fun DependencyHandlerScope.upcomingDataModule() {
     addModule(":upcoming:upcoming-data")
 }
 
+internal fun DependencyHandlerScope.upcomingFeature() {
+    upcomingDataModule()
+    upcomingDomainModule()
+}
+
 // Authentication
 fun DependencyHandlerScope.authenticationDataModule() {
     addModule(":authentication:authentication-data")
@@ -29,6 +38,16 @@ fun DependencyHandlerScope.authenticationDataModule() {
 
 fun DependencyHandlerScope.authenticationDomainModule() {
     addModule(":authentication:authentication-domain")
+}
+
+fun DependencyHandlerScope.authenticationUiModule() {
+    addModule(":authentication:authentication-ui")
+}
+
+internal fun DependencyHandlerScope.authenticationFeature() {
+    authenticationDataModule()
+    authenticationDomainModule()
+    authenticationUiModule()
 }
 
 //Database
@@ -47,4 +66,28 @@ fun DependencyHandlerScope.exploreDataModule() {
 
 fun DependencyHandlerScope.exploreDomainModule() {
     addModule(":explore:explore-domain")
+}
+
+internal fun DependencyHandlerScope.exploreFeature() {
+    exploreDataModule()
+    exploreDomainModule()
+}
+
+// Home
+fun DependencyHandlerScope.homeDataModule() {
+    addModule(":home:home-data")
+}
+
+fun DependencyHandlerScope.homeDomainModule() {
+    addModule(":home:home-domain")
+}
+
+fun DependencyHandlerScope.homeUiModule() {
+    addModule(":home:home-ui")
+}
+
+internal fun DependencyHandlerScope.homeFeature() {
+    homeDataModule()
+    homeDomainModule()
+    homeUiModule()
 }

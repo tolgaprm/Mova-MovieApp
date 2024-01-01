@@ -8,9 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.prmto.core_domain.models.movie.Movie
 import com.prmto.mova_movieapp.R
-import com.prmto.mova_movieapp.core.presentation.util.ImageSize
-import com.prmto.mova_movieapp.core.presentation.util.ImageUtil
 import com.prmto.mova_movieapp.databinding.NowPlayingRowBinding
+import com.prmto.core_ui.R as CoreUiR
 
 class SearchMovieViewHolder(
     private val binding: NowPlayingRowBinding,
@@ -22,15 +21,15 @@ class SearchMovieViewHolder(
         onMovieSearchItemClick: (Movie) -> Unit = {}
     ) {
         binding.backdropImage.load(
-            ImageUtil.getImage(
+            com.prmto.core_ui.util.ImageUtil.getImage(
                 imageUrl = movie.posterPath,
-                imageSize = ImageSize.W500.path
+                imageSize = com.prmto.core_ui.util.ImageSize.W500.path
             )
         )
 
 
         binding.voteAverage.text = context.getString(
-            R.string.voteAverage,
+            CoreUiR.string.voteAverage,
             movie.voteAverage.toString(),
             movie.formattedVoteCount
         )

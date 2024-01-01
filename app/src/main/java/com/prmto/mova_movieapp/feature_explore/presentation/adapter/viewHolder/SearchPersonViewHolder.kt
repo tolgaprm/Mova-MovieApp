@@ -7,8 +7,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import coil.load
 import com.prmto.mova_movieapp.R
-import com.prmto.mova_movieapp.core.presentation.util.ImageSize
-import com.prmto.mova_movieapp.core.presentation.util.ImageUtil
 import com.prmto.mova_movieapp.databinding.SearchPersonRowBinding
 
 class SearchPersonViewHolder(
@@ -22,9 +20,9 @@ class SearchPersonViewHolder(
         onClickPersonItem: (com.prmto.explore_domain.model.PersonSearch) -> Unit = {}
     ) {
         binding.ivProfile.load(
-            ImageUtil.getImage(
+            com.prmto.core_ui.util.ImageUtil.getImage(
                 imageUrl = personSearch.profilePath,
-                imageSize = ImageSize.W500.path
+                imageSize = com.prmto.core_ui.util.ImageSize.W500.path
             )
         ) {
             error(R.drawable.ic_baseline_person_24)

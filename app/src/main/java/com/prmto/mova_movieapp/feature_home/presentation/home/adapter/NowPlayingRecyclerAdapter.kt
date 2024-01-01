@@ -4,18 +4,15 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.prmto.core_domain.models.movie.Movie
-import com.prmto.core_domain.models.tv.TvSeries
-import com.prmto.mova_movieapp.R
-import com.prmto.mova_movieapp.core.presentation.util.ImageSize
-import com.prmto.mova_movieapp.core.presentation.util.ImageUtil
+import com.prmto.core_ui.adapter.DiffUtilCallBack
 import com.prmto.mova_movieapp.databinding.NowPlayingRowBinding
+import com.prmto.core_ui.R as CoreUiR
 
 class NowPlayingRecyclerAdapter :
-    PagingDataAdapter<Movie, NowPlayingRecyclerAdapter.MovieViewHolder>(DiffUtilCallBack<Movie>()) {
+    PagingDataAdapter<Movie, NowPlayingRecyclerAdapter.MovieViewHolder>(DiffUtilCallBack()) {
 
     private var onItemClickListener: (Movie) -> Unit = {}
 
@@ -28,14 +25,15 @@ class NowPlayingRecyclerAdapter :
 
 
             binding.voteAverage.text = context.getString(
-                R.string.voteAverage,
+                CoreUiR.string.voteAverage,
                 movie.voteAverage.toString(),
                 movie.formattedVoteCount
             )
 
             binding.backdropImage.load(
-                ImageUtil.getImage(
-                    imageUrl = movie.posterPath, imageSize = ImageSize.W500.path
+                com.prmto.core_ui.util.ImageUtil.getImage(
+                    imageUrl = movie.posterPath,
+                    imageSize = com.prmto.core_ui.util.ImageSize.W500.path
                 )
             )
 
@@ -71,26 +69,4 @@ class NowPlayingRecyclerAdapter :
         onItemClickListener = listener
     }
 
-}
-
-class DiffUtilCallBack<T : Any> : DiffUtil.ItemCallback<T>() {
-    override fun areItemsTheSame(oldItem: T, newItem: T): Boolean {
-        return if (oldItem is Movie && newItem is Movie) {
-            val old = oldItem as Movie
-            val new = newItem as Movie
-            new.id == old.id
-        } else {
-            val old = oldItem as TvSeries
-            val new = newItem as TvSeries
-            old.id == new.id
-        }
-    }
-
-    override fun areContentsTheSame(oldItem: T, newItem: T): Boolean {
-        return if (oldItem is Movie) {
-            oldItem as Movie == newItem as Movie
-        } else {
-            oldItem as TvSeries == newItem as TvSeries
-        }
-    }
 }

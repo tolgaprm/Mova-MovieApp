@@ -9,18 +9,17 @@ import androidx.core.os.LocaleListCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import com.prmto.core_domain.models.supportedLanguages
+import com.prmto.core_ui.util.collectFlow
+import com.prmto.core_ui.util.loadAd
 import com.prmto.mova_movieapp.R
-import com.prmto.mova_movieapp.core.presentation.base.fragment.BaseFragmentWithUiEvent
-import com.prmto.mova_movieapp.core.presentation.util.AlertDialogUtil
-import com.prmto.mova_movieapp.core.presentation.util.collectFlow
-import com.prmto.mova_movieapp.core.presentation.util.loadAd
 import com.prmto.mova_movieapp.databinding.FragmentSettingsBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class SettingsFragment : BaseFragmentWithUiEvent<FragmentSettingsBinding, SettingsViewModel>(
-    inflater = FragmentSettingsBinding::inflate
-) {
+class SettingsFragment :
+    com.prmto.core_ui.base.fragment.BaseFragmentWithUiEvent<FragmentSettingsBinding, SettingsViewModel>(
+        inflater = FragmentSettingsBinding::inflate
+    ) {
 
     override val viewModel: SettingsViewModel by viewModels()
 
@@ -99,7 +98,7 @@ class SettingsFragment : BaseFragmentWithUiEvent<FragmentSettingsBinding, Settin
 
     private fun addTxtLogoutClickListener() {
         binding.txtLogOut.setOnClickListener {
-            AlertDialogUtil.showAlertDialog(
+            com.prmto.core_ui.util.AlertDialogUtil.showAlertDialog(
                 context = requireContext(),
                 title = R.string.are_you_sure_log_out,
                 message = R.string.log_out_message,

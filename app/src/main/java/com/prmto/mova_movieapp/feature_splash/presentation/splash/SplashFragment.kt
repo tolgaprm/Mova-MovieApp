@@ -7,8 +7,8 @@ import androidx.core.os.LocaleListCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.prmto.core_ui.util.collectFlow
 import com.prmto.mova_movieapp.R
-import com.prmto.mova_movieapp.core.presentation.util.collectFlow
 import com.prmto.mova_movieapp.feature_splash.presentation.splash.event.SplashEvent
 import dagger.hilt.android.AndroidEntryPoint
 

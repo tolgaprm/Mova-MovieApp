@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="internet_error">"Hoppla! Bitte überprüfen Sie Ihre Internetverbindung."</string>
+    <string name="oops_something_went_wrong">Hoppla! Etwas ist schief gelaufen. Bitte versuchen Sie es erneut.</string>
+</resources>

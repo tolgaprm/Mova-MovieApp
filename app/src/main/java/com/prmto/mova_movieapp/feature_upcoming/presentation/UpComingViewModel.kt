@@ -3,7 +3,6 @@ package com.prmto.mova_movieapp.feature_upcoming.presentation
 import androidx.lifecycle.viewModelScope
 import com.prmto.core_domain.use_case.languageIsoCode.GetLanguageIsoCodeUseCase
 import com.prmto.database.entity.movie.UpcomingRemindEntity
-import com.prmto.mova_movieapp.core.presentation.base.viewModel.BaseViewModel
 import com.prmto.mova_movieapp.notification.alarmManager.UpComingAlarmItem
 import com.prmto.mova_movieapp.notification.alarmManager.UpComingAlarmScheduler
 import com.prmto.upcoming_domain.repository.UpcomingRepository
@@ -24,7 +23,7 @@ class UpComingViewModel @Inject constructor(
     private val upcomingRepository: UpcomingRepository,
     private val languageIsoCodeUseCase: GetLanguageIsoCodeUseCase,
     private val upComingAlarmScheduler: UpComingAlarmScheduler
-) : BaseViewModel() {
+) : com.prmto.core_ui.base.viewModel.BaseViewModel() {
 
     private val mutableState = MutableStateFlow(UpComingState())
     val state: StateFlow<UpComingState> = mutableState.asStateFlow()

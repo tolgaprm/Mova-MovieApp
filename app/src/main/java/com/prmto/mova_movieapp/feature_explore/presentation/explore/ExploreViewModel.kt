@@ -13,9 +13,7 @@ import com.prmto.core_domain.repository.GenreRepository
 import com.prmto.core_domain.repository.isAvaliable
 import com.prmto.core_domain.util.Constants.DEFAULT_LANGUAGE
 import com.prmto.core_domain.util.UiText
-import com.prmto.mova_movieapp.R
-import com.prmto.mova_movieapp.core.presentation.base.viewModel.BaseViewModelWithUiEvent
-import com.prmto.mova_movieapp.core.presentation.util.UiEvent
+import com.prmto.core_ui.util.UiEvent
 import com.prmto.mova_movieapp.feature_explore.presentation.event.ExploreBottomSheetEvent
 import com.prmto.mova_movieapp.feature_explore.presentation.event.ExploreFragmentEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -28,13 +26,14 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import com.prmto.core_ui.R as CoreUiR
 
 @HiltViewModel
 class ExploreViewModel @Inject constructor(
     private val exploreUseCases: com.prmto.explore_domain.use_case.ExploreUseCases,
     private val observeNetwork: ConnectivityObserver,
     private val genreRepository: GenreRepository
-) : BaseViewModelWithUiEvent<UiEvent>() {
+) : com.prmto.core_ui.base.viewModel.BaseViewModelWithUiEvent<com.prmto.core_ui.util.UiEvent>() {
     private var languageState = DEFAULT_LANGUAGE
 
     private val _query = MutableStateFlow("")
@@ -148,7 +147,7 @@ class ExploreViewModel @Inject constructor(
             }
 
             is ExploreBottomSheetEvent.Apply -> {
-                addConsumableViewEvent(UiEvent.PopBackStack)
+                addConsumableViewEvent(com.prmto.core_ui.util.UiEvent.PopBackStack)
             }
         }
     }
@@ -167,7 +166,7 @@ class ExploreViewModel @Inject constructor(
                 }
             } catch (e: Exception) {
                 addConsumableViewEvent(
-                    UiEvent.ShowSnackbar(UiText.StringResource(R.string.internet_error))
+                    UiEvent.ShowSnackbar(UiText.StringResource(CoreUiR.string.internet_error))
                 )
             }
         }

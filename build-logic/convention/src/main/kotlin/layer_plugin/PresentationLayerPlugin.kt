@@ -1,6 +1,5 @@
 package layer_plugin
 
-import com.android.build.api.dsl.ApplicationExtension
 import com.android.build.gradle.LibraryExtension
 import com.prmto.convention.commonDependenciesForEachModule
 import com.prmto.convention.configureCommon
@@ -30,7 +29,7 @@ class PresentationLayerPlugin : Plugin<Project> {
                 }
             }
 
-            extensions.configure<ApplicationExtension> {
+            extensions.configure<LibraryExtension> {
                 configureCommon(this)
             }
         }

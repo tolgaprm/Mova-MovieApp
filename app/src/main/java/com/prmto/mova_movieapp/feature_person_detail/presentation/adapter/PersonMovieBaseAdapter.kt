@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.prmto.mova_movieapp.R
-import com.prmto.mova_movieapp.core.presentation.util.ImageUtil
 import com.prmto.mova_movieapp.databinding.ActorMovieRowBinding
 import com.prmto.mova_movieapp.feature_person_detail.domain.model.CastForPerson
 import com.prmto.mova_movieapp.feature_person_detail.domain.model.CrewForPerson
@@ -28,7 +27,7 @@ abstract class PersonMovieBaseAdapter<T : Any> :
             binding.txtDetail.text = context.getString(R.string.director)
             bindTxtCategory(mediaType = crew.mediaType)
             binding.ivPoster.load(
-                ImageUtil.getImage(
+                com.prmto.core_ui.util.ImageUtil.getImage(
                     imageUrl = crew.posterPath
                 )
             )
@@ -39,7 +38,7 @@ abstract class PersonMovieBaseAdapter<T : Any> :
             binding.txtDetail.text = cast.character
             bindTxtCategory(mediaType = cast.mediaType)
             binding.ivPoster.load(
-                ImageUtil.getImage(
+                com.prmto.core_ui.util.ImageUtil.getImage(
                     imageUrl = cast.posterPath
                 )
             )

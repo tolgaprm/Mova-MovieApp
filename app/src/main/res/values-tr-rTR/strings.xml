@@ -21,10 +21,7 @@
     <string name="tv">Dizi</string>
     <string name="movies">Filmler</string>
 
-
-    <string name="voteAverage">%1$s (%2$s)</string>
     <string name="voteAverageDetail">%1$s (%2$s reviews)</string>
-    <string name="release_date_genre">%1$s  %2$s</string>
     <string name="runtime">%1$ss  %2$sdk</string>
     <string name="season_count">%s Sezon</string>
 
@@ -43,8 +40,6 @@
     <string name="apply">Apply</string>
     <string name="error_didnt_download">Didn\'t download genre options. PLease check your internet connection</string>
     <string name="all_periods">All Periods</string>
-    <string name="internet_error">"Oops! Lütfen internet bağlatınızı kontrol ediniz."</string>
-    <string name="oops_something_went_wrong">Oops! Bir şeyler ters gitti. Lütfen tekrar deneyiniz.</string>
     <string name="unknown_error">Bilinmeyen bir hata meydana geldi</string>
 
     <string name="navigate_up">Navigate up</string>

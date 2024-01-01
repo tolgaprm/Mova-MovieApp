@@ -5,9 +5,9 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.prmto.core_domain.models.movie.Movie
 import com.prmto.core_domain.models.tv.TvSeries
-import com.prmto.mova_movieapp.core.presentation.base.viewModel.BaseViewModelWithUiEvent
-import com.prmto.mova_movieapp.core.presentation.util.UiEvent
-import com.prmto.mova_movieapp.feature_home.domain.usecases.HomeUseCases
+import com.prmto.core_ui.base.viewModel.BaseViewModelWithUiEvent
+import com.prmto.core_ui.util.UiEvent
+import com.prmto.home_domain.usecases.HomeUseCases
 import com.prmto.mova_movieapp.feature_home.presentation.home.event.HomeEvent
 import com.prmto.mova_movieapp.feature_home.presentation.home.state.HomeState
 import dagger.hilt.android.lifecycle.HiltViewModel

@@ -7,10 +7,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import coil.load
 import com.prmto.core_domain.models.tv.TvSeries
+import com.prmto.core_ui.util.ImageSize
+import com.prmto.core_ui.util.ImageUtil
 import com.prmto.mova_movieapp.R
-import com.prmto.mova_movieapp.core.presentation.util.ImageSize
-import com.prmto.mova_movieapp.core.presentation.util.ImageUtil
 import com.prmto.mova_movieapp.databinding.NowPlayingRowBinding
+import com.prmto.core_ui.R as CoreUiR
 
 class SearchTvViewHolder(
     val binding: NowPlayingRowBinding,
@@ -29,7 +30,7 @@ class SearchTvViewHolder(
         )
 
         binding.voteAverage.text = context.getString(
-            R.string.voteAverage,
+            CoreUiR.string.voteAverage,
             tvSeries.voteAverage.toString(),
             tvSeries.formattedVoteCount
         )

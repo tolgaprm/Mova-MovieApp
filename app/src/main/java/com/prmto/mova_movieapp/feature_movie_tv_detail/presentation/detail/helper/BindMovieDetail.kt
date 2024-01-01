@@ -1,9 +1,9 @@
 package com.prmto.mova_movieapp.feature_movie_tv_detail.presentation.detail.helper
 
 import android.content.Context
+import com.prmto.core_ui.util.makeGone
+import com.prmto.core_ui.util.makeVisible
 import com.prmto.mova_movieapp.R
-import com.prmto.mova_movieapp.core.presentation.util.makeGone
-import com.prmto.mova_movieapp.core.presentation.util.makeVisible
 import com.prmto.mova_movieapp.databinding.FragmentDetailBinding
 import com.prmto.mova_movieapp.feature_movie_tv_detail.domain.models.credit.Crew
 import com.prmto.mova_movieapp.feature_movie_tv_detail.domain.models.detail.movie.MovieDetail

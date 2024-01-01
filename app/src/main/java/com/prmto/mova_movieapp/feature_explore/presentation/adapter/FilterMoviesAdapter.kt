@@ -4,11 +4,9 @@ import android.content.Context
 import android.view.View
 import coil.load
 import com.prmto.core_domain.models.movie.Movie
+import com.prmto.core_ui.base.BaseMovieAndTvRecyclerAdapter
+import com.prmto.core_ui.databinding.MovieRowBinding
 import com.prmto.mova_movieapp.R
-import com.prmto.mova_movieapp.core.presentation.base.BaseMovieAndTvRecyclerAdapter
-import com.prmto.mova_movieapp.core.presentation.util.ImageSize
-import com.prmto.mova_movieapp.core.presentation.util.ImageUtil
-import com.prmto.mova_movieapp.databinding.MovieRowBinding
 
 class FilterMoviesAdapter : BaseMovieAndTvRecyclerAdapter<Movie>() {
 
@@ -22,8 +20,8 @@ class FilterMoviesAdapter : BaseMovieAndTvRecyclerAdapter<Movie>() {
 
         if (movie != null) {
             binding.ivPoster.load(
-                ImageUtil.getImage(
-                    imageSize = ImageSize.W185.path,
+                com.prmto.core_ui.util.ImageUtil.getImage(
+                    imageSize = com.prmto.core_ui.util.ImageSize.W185.path,
                     imageUrl = movie.posterPath
                 )
             )

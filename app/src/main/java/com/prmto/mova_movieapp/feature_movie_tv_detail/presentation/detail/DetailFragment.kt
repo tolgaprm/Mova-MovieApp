@@ -5,17 +5,15 @@ import android.net.Uri
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.prmto.core_ui.base.fragment.BaseFragment
+import com.prmto.core_ui.util.AlertDialogUtil
+import com.prmto.core_ui.util.collectFlow
+import com.prmto.core_ui.util.collectFlowInside
+import com.prmto.core_ui.util.makeGone
+import com.prmto.core_ui.util.makeVisible
+import com.prmto.core_ui.util.setAddFavoriteIconByFavoriteState
+import com.prmto.core_ui.util.setWatchListIconByWatchState
 import com.prmto.mova_movieapp.R
-import com.prmto.mova_movieapp.core.presentation.adapter.MovieAdapter
-import com.prmto.mova_movieapp.core.presentation.adapter.TvSeriesAdapter
-import com.prmto.mova_movieapp.core.presentation.base.fragment.BaseFragment
-import com.prmto.mova_movieapp.core.presentation.util.AlertDialogUtil
-import com.prmto.mova_movieapp.core.presentation.util.collectFlow
-import com.prmto.mova_movieapp.core.presentation.util.collectFlowInside
-import com.prmto.mova_movieapp.core.presentation.util.makeGone
-import com.prmto.mova_movieapp.core.presentation.util.makeVisible
-import com.prmto.mova_movieapp.core.presentation.util.setAddFavoriteIconByFavoriteState
-import com.prmto.mova_movieapp.core.presentation.util.setWatchListIconByWatchState
 import com.prmto.mova_movieapp.databinding.FragmentDetailBinding
 import com.prmto.mova_movieapp.feature_movie_tv_detail.presentation.detail.adapter.DetailActorAdapter
 import com.prmto.mova_movieapp.feature_movie_tv_detail.presentation.detail.adapter.VideosAdapter
@@ -26,14 +24,15 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 
 @AndroidEntryPoint
-class DetailFragment : BaseFragment<FragmentDetailBinding, DetailViewModel>(
-    inflater = FragmentDetailBinding::inflate
-) {
+class DetailFragment :
+    BaseFragment<FragmentDetailBinding, DetailViewModel>(
+        inflater = FragmentDetailBinding::inflate
+    ) {
     private var job: Job? = null
     private var jobVideos: Job? = null
-    private val movieRecommendationAdapter: MovieAdapter by lazy { MovieAdapter() }
+    private val movieRecommendationAdapter: com.prmto.core_ui.adapter.MovieAdapter by lazy { com.prmto.core_ui.adapter.MovieAdapter() }
     private val detailActorAdapter: DetailActorAdapter by lazy { DetailActorAdapter() }
-    private val tvRecommendationAdapter: TvSeriesAdapter by lazy { TvSeriesAdapter() }
+    private val tvRecommendationAdapter: com.prmto.core_ui.adapter.TvSeriesAdapter by lazy { com.prmto.core_ui.adapter.TvSeriesAdapter() }
     private val videosAdapter: VideosAdapter by lazy { VideosAdapter(viewLifecycleOwner.lifecycle) }
 
     private var bindingDetailHelper: BindingDetailHelper? = null

@@ -4,7 +4,7 @@ import com.prmto.core_domain.use_case.database.tv.GetFavoriteTvSeriesIdsUseCase
 import com.prmto.core_domain.use_case.database.tv.GetTvSeriesWatchListItemIdsUseCase
 import com.prmto.core_domain.util.Resource
 import com.prmto.core_domain.util.handleResource
-import com.prmto.mova_movieapp.core.presentation.countryCode.CountryCodeProvider
+import com.prmto.core_ui.countryCode.CountryCodeProvider
 import com.prmto.mova_movieapp.feature_movie_tv_detail.domain.models.detail.tv.TvDetail
 import com.prmto.mova_movieapp.feature_movie_tv_detail.domain.repository.tv.TvDetailRepository
 import kotlinx.coroutines.flow.combine

@@ -21,9 +21,7 @@
     <string name="movies">Filme</string>
     <string name="tv">Fernsehen</string>
 
-    <string name="voteAverage">%1$s (%2$s)</string>
     <string name="voteAverageDetail">%1$s (%2$s Bewertungen)</string>
-    <string name="release_date_genre">%1$s  %2$s</string>
     <string name="runtime">%1$sh %2$sm</string>
     <string name="season_count">%s Staffeln</string>
 
@@ -42,8 +40,7 @@
     <string name="apply">Anwenden</string>
     <string name="error_didnt_download">Genre-Optionen wurden nicht heruntergeladen. Bitte überprüfen Sie Ihre Internetverbindung</string>
     <string name="all_periods">Alle Perioden</string>
-    <string name="internet_error">"Hoppla! Bitte überprüfen Sie Ihre Internetverbindung."</string>
-    <string name="oops_something_went_wrong">Hoppla! Etwas ist schief gelaufen. Bitte versuchen Sie es erneut.</string>
+
     <string name="unknown_error">Ein unbekannter Fehler ist aufgetreten</string>
 
     <string name="navigate_up">Nach oben navigieren</string>

@@ -9,10 +9,11 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.prmto.authentication_ui.login.LoginEvent
+import com.prmto.authentication_ui.util.updateFieldEmptyError
+import com.prmto.core_ui.base.fragment.BaseFragmentWithUiEvent
+import com.prmto.core_ui.util.collectFlow
 import com.prmto.mova_movieapp.R
-import com.prmto.mova_movieapp.core.presentation.base.fragment.BaseFragmentWithUiEvent
-import com.prmto.mova_movieapp.core.presentation.util.collectFlow
-import com.prmto.mova_movieapp.core.presentation.util.updateFieldEmptyError
 import com.prmto.mova_movieapp.databinding.FragmentLoginBinding
 import dagger.hilt.android.AndroidEntryPoint
 
