@@ -40,6 +40,10 @@
             <option value="$PROJECT_DIR$/home/home-data" />
             <option value="$PROJECT_DIR$/home/home-domain" />
             <option value="$PROJECT_DIR$/home/home-ui" />
+            <option value="$PROJECT_DIR$/movie-tv-detail" />
+            <option value="$PROJECT_DIR$/movie-tv-detail/data" />
+            <option value="$PROJECT_DIR$/movie-tv-detail/domain" />
+            <option value="$PROJECT_DIR$/movie-tv-detail/ui" />
             <option value="$PROJECT_DIR$/upcoming" />
             <option value="$PROJECT_DIR$/upcoming/upcoming-data" />
             <option value="$PROJECT_DIR$/upcoming/upcoming-domain" />

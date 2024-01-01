@@ -2,8 +2,8 @@ package com.prmto.core_ui.di
 
 import android.content.Context
 import coil.ImageLoader
+import com.prmto.core_domain.countryCode.CountryCodeProvider
 import com.prmto.core_ui.R
-import com.prmto.core_ui.countryCode.CountryCodeProvider
 import com.prmto.core_ui.countryCode.CountryCodeProviderImpl
 import dagger.Module
 import dagger.Provides

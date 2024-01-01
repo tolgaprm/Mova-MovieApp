@@ -2,7 +2,7 @@ package com.prmto.mova_movieapp.feature_movie_tv_detail.presentation.detail.help
 
 import android.content.Context
 import android.view.ViewGroup
-import com.prmto.mova_movieapp.feature_movie_tv_detail.domain.models.credit.Crew
+import com.prmto.domain.models.credit.Crew
 
 class DirectorTextInflater(
     private val context: Context,

@@ -6,11 +6,10 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.Toast
 import coil.load
+import com.prmto.domain.models.watchProvider.WatchProviderItemInfo
 import com.prmto.mova_movieapp.R
-import com.prmto.mova_movieapp.feature_movie_tv_detail.domain.models.watchProvider.WatchProviderItemInfo
 
 class BindWatchProvidersHelper(private val context: Context) {
-    // TODO ADD WatchProviderImageInflater
     fun bind(
         listOfWatchProviderItem: List<WatchProviderItemInfo>,
         linearLayout: LinearLayout,

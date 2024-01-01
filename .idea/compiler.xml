@@ -11,10 +11,19 @@
       <module name="Mova-MovieApp.buildLogic.test" target="1.7" />
       <module name="Mova-MovieApp.core.main" target="1.7" />
       <module name="Mova-MovieApp.core.test" target="1.7" />
+      <module name="Mova-MovieApp.detail.main" target="1.7" />
+      <module name="Mova-MovieApp.detail.movie-tv.main" target="1.7" />
+      <module name="Mova-MovieApp.detail.movie-tv.test" target="1.7" />
+      <module name="Mova-MovieApp.detail.person" target="1.7" />
+      <module name="Mova-MovieApp.detail.person.main" target="1.7" />
+      <module name="Mova-MovieApp.detail.person.test" target="1.7" />
+      <module name="Mova-MovieApp.detail.test" target="1.7" />
       <module name="Mova-MovieApp.explore.main" target="1.7" />
       <module name="Mova-MovieApp.explore.test" target="1.7" />
       <module name="Mova-MovieApp.home.main" target="1.7" />
       <module name="Mova-MovieApp.home.test" target="1.7" />
+      <module name="Mova-MovieApp.movie-tv-detail.main" target="1.7" />
+      <module name="Mova-MovieApp.movie-tv-detail.test" target="1.7" />
       <module name="Mova-MovieApp.Upcoming.main" target="1.7" />
       <module name="Mova-MovieApp.Upcoming.test" target="1.7" />
     </bytecodeTargetLevel>

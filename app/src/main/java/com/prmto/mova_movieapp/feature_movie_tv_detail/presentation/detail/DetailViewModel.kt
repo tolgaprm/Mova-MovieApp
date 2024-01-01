@@ -7,13 +7,15 @@ import com.prmto.core_domain.use_case.database.LocalDatabaseUseCases
 import com.prmto.core_domain.use_case.firebase.FirebaseCoreUseCases
 import com.prmto.core_domain.util.Constants.DEFAULT_LANGUAGE
 import com.prmto.core_ui.base.viewModel.BaseViewModelWithUiEvent
-import com.prmto.mova_movieapp.feature_movie_tv_detail.domain.models.detail.movie.toMovie
-import com.prmto.mova_movieapp.feature_movie_tv_detail.domain.models.detail.tv.toTvSeries
-import com.prmto.mova_movieapp.feature_movie_tv_detail.domain.models.detail.video.Videos
-import com.prmto.mova_movieapp.feature_movie_tv_detail.domain.use_cases.DetailUseCases
-import com.prmto.mova_movieapp.feature_movie_tv_detail.presentation.detail.event.DetailEvent
-import com.prmto.mova_movieapp.feature_movie_tv_detail.presentation.detail.event.DetailUiEvent
-import com.prmto.mova_movieapp.feature_movie_tv_detail.util.Constants.DETAIL_DEFAULT_ID
+import com.prmto.domain.models.detail.movie.toMovie
+import com.prmto.domain.models.detail.tv.toTvSeries
+import com.prmto.domain.models.detail.video.Videos
+import com.prmto.domain.use_cases.DetailUseCases
+import com.prmto.domain.util.Constants.DETAIL_DEFAULT_ID
+import com.prmto.ui.detail.event.DetailEvent
+import com.prmto.ui.detail.event.DetailUiEvent
+import com.prmto.ui.detail.isNotNullTvDetail
+import com.prmto.ui.detail.isSelectedTrailerTab
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -31,8 +33,8 @@ class DetailViewModel @Inject constructor(
     private val localDatabaseUseCases: LocalDatabaseUseCases,
     private val savedStateHandle: SavedStateHandle
 ) : BaseViewModelWithUiEvent<DetailUiEvent>() {
-    private val _detailState = MutableStateFlow(DetailState())
-    val detailState: StateFlow<DetailState> = _detailState.asStateFlow()
+    private val _detailState = MutableStateFlow(com.prmto.ui.detail.DetailState())
+    val detailState: StateFlow<com.prmto.ui.detail.DetailState> = _detailState.asStateFlow()
 
     private val _videos = MutableStateFlow<Videos?>(null)
     val videos: StateFlow<Videos?> = _videos.asStateFlow()

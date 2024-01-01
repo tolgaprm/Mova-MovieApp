@@ -6,8 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import coil.load
-import com.prmto.mova_movieapp.R
 import com.prmto.mova_movieapp.databinding.SearchPersonRowBinding
+import com.prmto.core_ui.R as CoreUIR
 
 class SearchPersonViewHolder(
     val binding: SearchPersonRowBinding,
@@ -25,7 +25,7 @@ class SearchPersonViewHolder(
                 imageSize = com.prmto.core_ui.util.ImageSize.W500.path
             )
         ) {
-            error(R.drawable.ic_baseline_person_24)
+            error(CoreUIR.drawable.ic_baseline_person_24)
         }
 
         binding.txtCategory.visibility = View.VISIBLE

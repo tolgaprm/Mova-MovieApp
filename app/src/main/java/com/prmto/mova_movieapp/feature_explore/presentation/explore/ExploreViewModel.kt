@@ -33,7 +33,7 @@ class ExploreViewModel @Inject constructor(
     private val exploreUseCases: com.prmto.explore_domain.use_case.ExploreUseCases,
     private val observeNetwork: ConnectivityObserver,
     private val genreRepository: GenreRepository
-) : com.prmto.core_ui.base.viewModel.BaseViewModelWithUiEvent<com.prmto.core_ui.util.UiEvent>() {
+) : com.prmto.core_ui.base.viewModel.BaseViewModelWithUiEvent<UiEvent>() {
     private var languageState = DEFAULT_LANGUAGE
 
     private val _query = MutableStateFlow("")
@@ -147,7 +147,7 @@ class ExploreViewModel @Inject constructor(
             }
 
             is ExploreBottomSheetEvent.Apply -> {
-                addConsumableViewEvent(com.prmto.core_ui.util.UiEvent.PopBackStack)
+                addConsumableViewEvent(UiEvent.PopBackStack)
             }
         }
     }

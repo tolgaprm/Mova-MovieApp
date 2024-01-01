@@ -4,7 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.google.android.material.textview.MaterialTextView
-import com.prmto.mova_movieapp.R
+import com.prmto.ui.R
 
 abstract class BaseTextInflater(
     private val context: Context,

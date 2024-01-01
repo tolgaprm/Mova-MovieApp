@@ -3,10 +3,10 @@ package com.prmto.mova_movieapp.feature_movie_tv_detail.presentation.detail.help
 import android.content.Context
 import android.view.View
 import com.prmto.core_ui.util.makeVisible
+import com.prmto.domain.models.detail.tv.CreatedBy
+import com.prmto.domain.models.detail.tv.TvDetail
 import com.prmto.mova_movieapp.R
 import com.prmto.mova_movieapp.databinding.FragmentDetailBinding
-import com.prmto.mova_movieapp.feature_movie_tv_detail.domain.models.detail.tv.CreatedBy
-import com.prmto.mova_movieapp.feature_movie_tv_detail.domain.models.detail.tv.TvDetail
 import com.prmto.mova_movieapp.feature_movie_tv_detail.presentation.detail.helper.inflater.CreatorTextInflater
 
 class BindTvDetail(

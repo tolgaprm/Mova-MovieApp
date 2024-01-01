@@ -12,6 +12,7 @@ import com.prmto.convention.dependency.coroutines
 import com.prmto.convention.dependency.dataStore
 import com.prmto.convention.dependency.exploreFeature
 import com.prmto.convention.dependency.homeFeature
+import com.prmto.convention.dependency.movieTvDetailFeature
 import com.prmto.convention.dependency.paging
 import com.prmto.convention.dependency.retrofit
 import com.prmto.convention.dependency.timber
@@ -72,6 +73,7 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
                 authenticationFeature()
                 exploreFeature()
                 homeFeature()
+                movieTvDetailFeature()
 
                 addAllUiDependencies(libs)
                 addCoreLibraryDesugaring(libs.findLibrary("desugar.jdk.libs").get())

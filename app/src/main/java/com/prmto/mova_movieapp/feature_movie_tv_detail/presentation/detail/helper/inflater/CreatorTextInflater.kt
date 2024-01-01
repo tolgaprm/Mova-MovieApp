@@ -2,7 +2,7 @@ package com.prmto.mova_movieapp.feature_movie_tv_detail.presentation.detail.help
 
 import android.content.Context
 import android.view.ViewGroup
-import com.prmto.mova_movieapp.feature_movie_tv_detail.domain.models.detail.tv.CreatedBy
+import com.prmto.domain.models.detail.tv.CreatedBy
 
 class CreatorTextInflater(
     private val context: Context,

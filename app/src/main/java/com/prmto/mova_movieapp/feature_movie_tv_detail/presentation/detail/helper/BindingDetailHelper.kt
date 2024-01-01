@@ -4,14 +4,15 @@ import android.content.Context
 import android.view.View
 import android.view.ViewGroup
 import com.google.android.material.tabs.TabLayout
+import com.prmto.core_ui.util.toolBarTextVisibilityByScrollPositionOfNestedScrollView
+import com.prmto.domain.models.detail.movie.MovieDetail
+import com.prmto.domain.models.detail.tv.TvDetail
+import com.prmto.domain.util.Constants
 import com.prmto.mova_movieapp.databinding.FragmentDetailBinding
-import com.prmto.mova_movieapp.feature_movie_tv_detail.domain.models.detail.movie.MovieDetail
-import com.prmto.mova_movieapp.feature_movie_tv_detail.domain.models.detail.tv.TvDetail
 import com.prmto.mova_movieapp.feature_movie_tv_detail.presentation.detail.DetailViewModel
-import com.prmto.mova_movieapp.feature_movie_tv_detail.presentation.detail.SelectableTab
-import com.prmto.mova_movieapp.feature_movie_tv_detail.presentation.detail.adapter.DetailActorAdapter
-import com.prmto.mova_movieapp.feature_movie_tv_detail.presentation.detail.event.DetailEvent
-import com.prmto.mova_movieapp.feature_movie_tv_detail.util.Constants
+import com.prmto.ui.detail.SelectableTab
+import com.prmto.ui.detail.adapter.DetailActorAdapter
+import com.prmto.ui.detail.event.DetailEvent
 
 class BindingDetailHelper(
     private val binding: FragmentDetailBinding,
@@ -24,7 +25,7 @@ class BindingDetailHelper(
     }
 
     init {
-        com.prmto.core_ui.util.toolBarTextVisibilityByScrollPositionOfNestedScrollView(
+        toolBarTextVisibilityByScrollPositionOfNestedScrollView(
             nestedScrollView = binding.nestedScrollView,
             position = 1500,
             toolBarTitle = binding.txtToolBarTitle,

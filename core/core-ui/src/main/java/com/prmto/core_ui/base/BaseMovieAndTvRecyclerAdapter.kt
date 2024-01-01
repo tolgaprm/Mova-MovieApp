@@ -11,8 +11,7 @@ import com.prmto.core_ui.R
 import com.prmto.core_ui.adapter.DiffUtilCallBack
 import com.prmto.core_ui.databinding.MovieRowBinding
 
-abstract class BaseMovieAndTvRecyclerAdapter<T : Any>(
-) : PagingDataAdapter<
+abstract class BaseMovieAndTvRecyclerAdapter<T : Any> : PagingDataAdapter<
         T, BaseMovieAndTvRecyclerAdapter.MovieViewHolder>(DiffUtilCallBack<T>()) {
 
     var itemClickListener: (T) -> Unit = {}
