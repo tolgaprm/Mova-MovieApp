@@ -6,7 +6,7 @@ import coil.load
 import com.prmto.core_domain.models.movie.Movie
 import com.prmto.core_ui.base.BaseMovieAndTvRecyclerAdapter
 import com.prmto.core_ui.databinding.MovieRowBinding
-import com.prmto.mova_movieapp.R
+import com.prmto.core_ui.R as CoreUiR
 
 class FilterMoviesAdapter : BaseMovieAndTvRecyclerAdapter<Movie>() {
 
@@ -34,7 +34,7 @@ class FilterMoviesAdapter : BaseMovieAndTvRecyclerAdapter<Movie>() {
                 this.itemClickListener(movie)
             }
             binding.txtCategory.visibility = View.VISIBLE
-            binding.txtCategory.text = context.getText(R.string.movie)
+            binding.txtCategory.text = context.getText(CoreUiR.string.movie)
         }
     }
 }

@@ -3,19 +3,24 @@ package com.prmto.mova_movieapp.feature_mylist.presentation
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import com.google.android.material.tabs.TabLayout
+import com.prmto.core_ui.adapter.MovieAdapter
+import com.prmto.core_ui.adapter.TvSeriesAdapter
+import com.prmto.core_ui.base.fragment.BaseFragmentWithUiEvent
 import com.prmto.core_ui.util.collectFlow
 import com.prmto.core_ui.util.loadAd
-import com.prmto.mova_movieapp.databinding.FragmentMyListBinding
+import com.prmto.my_list_ui.ChipType
+import com.prmto.my_list_ui.ListEvent
+import com.prmto.my_list_ui.ListTab
+import com.prmto.my_list_ui.databinding.FragmentMyListBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ListFragment :
-    com.prmto.core_ui.base.fragment.BaseFragmentWithUiEvent<FragmentMyListBinding, ListViewModel>(
-        inflater = FragmentMyListBinding::inflate
-    ) {
+class ListFragment : BaseFragmentWithUiEvent<FragmentMyListBinding, ListViewModel>(
+    inflater = FragmentMyListBinding::inflate
+) {
     override val viewModel: ListViewModel by viewModels()
-    private val movieAdapter: com.prmto.core_ui.adapter.MovieAdapter by lazy { com.prmto.core_ui.adapter.MovieAdapter() }
-    private val tvSeriesAdapter: com.prmto.core_ui.adapter.TvSeriesAdapter by lazy { com.prmto.core_ui.adapter.TvSeriesAdapter() }
+    private val movieAdapter: MovieAdapter by lazy { MovieAdapter() }
+    private val tvSeriesAdapter: TvSeriesAdapter by lazy { TvSeriesAdapter() }
 
     override fun onInitialize() {
         binding.adView.loadAd()

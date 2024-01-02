@@ -24,6 +24,8 @@
       <module name="Mova-MovieApp.home.test" target="1.7" />
       <module name="Mova-MovieApp.movie-tv-detail.main" target="1.7" />
       <module name="Mova-MovieApp.movie-tv-detail.test" target="1.7" />
+      <module name="Mova-MovieApp.my-list.main" target="1.7" />
+      <module name="Mova-MovieApp.my-list.test" target="1.7" />
       <module name="Mova-MovieApp.settings.main" target="1.7" />
       <module name="Mova-MovieApp.settings.test" target="1.7" />
       <module name="Mova-MovieApp.Upcoming.main" target="1.7" />

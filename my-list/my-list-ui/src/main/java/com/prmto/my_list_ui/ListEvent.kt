@@ -1,4 +1,4 @@
-package com.prmto.mova_movieapp.feature_mylist.presentation
+package com.prmto.my_list_ui
 
 import com.prmto.core_domain.models.movie.Movie
 import com.prmto.core_domain.models.tv.TvSeries

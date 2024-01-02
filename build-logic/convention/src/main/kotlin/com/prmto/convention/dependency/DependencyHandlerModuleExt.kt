@@ -124,3 +124,12 @@ internal fun DependencyHandlerScope.settingsFeature() {
     settingsDomainModule()
     settingsUiModule()
 }
+
+// MyList
+fun DependencyHandlerScope.myListUiModule() {
+    addModule(":my-list:my-list-ui")
+}
+
+internal fun DependencyHandlerScope.myListFeature() {
+    myListUiModule()
+}

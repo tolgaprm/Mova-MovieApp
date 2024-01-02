@@ -4,6 +4,12 @@ import androidx.lifecycle.viewModelScope
 import com.prmto.core_domain.models.movie.Movie
 import com.prmto.core_domain.models.tv.TvSeries
 import com.prmto.core_domain.use_case.database.LocalDatabaseUseCases
+import com.prmto.core_ui.base.viewModel.BaseViewModelWithUiEvent
+import com.prmto.core_ui.util.UiEvent
+import com.prmto.my_list_ui.ChipType
+import com.prmto.my_list_ui.ListEvent
+import com.prmto.my_list_ui.ListState
+import com.prmto.my_list_ui.isFavoriteList
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -16,7 +22,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ListViewModel @Inject constructor(
     private val localDatabaseUseCases: LocalDatabaseUseCases,
-) : com.prmto.core_ui.base.viewModel.BaseViewModelWithUiEvent<com.prmto.core_ui.util.UiEvent>() {
+) : BaseViewModelWithUiEvent<UiEvent>() {
 
     private val mutableState = MutableStateFlow(ListState())
     val state = combine(
@@ -43,7 +49,10 @@ class ListViewModel @Inject constructor(
                 }
             }
         }
-    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), ListState())
+    }.stateIn(
+        viewModelScope, SharingStarted.WhileSubscribed(5000),
+        ListState()
+    )
 
     fun onEvent(event: ListEvent) {
         when (event) {
@@ -73,7 +82,7 @@ class ListViewModel @Inject constructor(
             movie,
             tvSeries
         )
-        addConsumableViewEvent(com.prmto.core_ui.util.UiEvent.NavigateTo(directions))
+        addConsumableViewEvent(UiEvent.NavigateTo(directions))
     }
 
     private fun updateListMovieAndLoading(movieList: List<Movie>): ListState {

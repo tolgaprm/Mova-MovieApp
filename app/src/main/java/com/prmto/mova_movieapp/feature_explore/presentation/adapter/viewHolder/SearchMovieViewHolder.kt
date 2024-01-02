@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.prmto.core_domain.models.movie.Movie
-import com.prmto.mova_movieapp.R
 import com.prmto.mova_movieapp.databinding.NowPlayingRowBinding
 import com.prmto.core_ui.R as CoreUiR
 
@@ -39,7 +38,7 @@ class SearchMovieViewHolder(
         binding.movieTitle.textSize = 16f
         binding.movieTitle.text = movie.title
         binding.txtCategory.visibility = View.VISIBLE
-        binding.txtCategory.text = context.getString(R.string.movie)
+        binding.txtCategory.text = context.getString(CoreUiR.string.movie)
 
         binding.root.setOnClickListener {
             onMovieSearchItemClick(movie)

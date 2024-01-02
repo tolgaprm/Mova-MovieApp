@@ -11,6 +11,7 @@ import coil.load
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.prmto.core_domain.models.movie.Movie
 import com.prmto.core_domain.models.tv.TvSeries
+import com.prmto.core_ui.databinding.FragmentDetailBottomSheetBinding
 import com.prmto.core_ui.detailBottomSheet.DetailBottomSheetEvent
 import com.prmto.core_ui.detailBottomSheet.DetailBottomUiEvent
 import com.prmto.core_ui.util.AlertDialogUtil
@@ -18,7 +19,6 @@ import com.prmto.core_ui.util.collectFlow
 import com.prmto.core_ui.util.setAddFavoriteIconByFavoriteState
 import com.prmto.core_ui.util.setWatchListIconByWatchState
 import com.prmto.mova_movieapp.R
-import com.prmto.mova_movieapp.databinding.FragmentDetailBottomSheetBinding
 import dagger.hilt.android.AndroidEntryPoint
 import com.prmto.core_ui.R as CoreUiR
 

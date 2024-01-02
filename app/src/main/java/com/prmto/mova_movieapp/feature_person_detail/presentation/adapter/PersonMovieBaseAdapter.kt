@@ -12,6 +12,7 @@ import com.prmto.mova_movieapp.R
 import com.prmto.mova_movieapp.databinding.ActorMovieRowBinding
 import com.prmto.mova_movieapp.feature_person_detail.domain.model.CastForPerson
 import com.prmto.mova_movieapp.feature_person_detail.domain.model.CrewForPerson
+import com.prmto.core_ui.R as CoreUiR
 
 abstract class PersonMovieBaseAdapter<T : Any> :
     ListAdapter<T, PersonMovieBaseAdapter.PersonMovieViewHolder>(PersonMovieDiffUtil()) {
@@ -48,7 +49,7 @@ abstract class PersonMovieBaseAdapter<T : Any> :
             when (mediaType) {
                 com.prmto.explore_domain.util.MediaType.MOVIE.value -> {
                     binding.txtCategory.isVisible = true
-                    binding.txtCategory.text = context.getString(R.string.movie)
+                    binding.txtCategory.text = context.getString(CoreUiR.string.movie)
                 }
 
                 com.prmto.explore_domain.util.MediaType.TV_SERIES.value -> {
