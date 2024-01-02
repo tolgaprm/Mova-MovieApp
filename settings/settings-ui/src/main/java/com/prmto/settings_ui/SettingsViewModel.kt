@@ -1,6 +1,5 @@
-package com.prmto.mova_movieapp.feature_settings.presentation.setting
+package com.prmto.settings_ui
 
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.viewModelScope
 import com.prmto.core_domain.use_case.database.LocalDatabaseUseCases
 import com.prmto.core_domain.use_case.firebase.FirebaseCoreUseCases
@@ -9,15 +8,15 @@ import com.prmto.core_domain.use_case.firebase.movie.GetMovieWatchListFromLocalD
 import com.prmto.core_domain.use_case.firebase.tv.GetFavoriteTvSeriesFromLocalDatabaseThenUpdateToFirebase
 import com.prmto.core_domain.use_case.firebase.tv.GetTvSeriesWatchFromLocalDatabaseThenUpdateToFirebase
 import com.prmto.core_domain.util.UiText
-import com.prmto.mova_movieapp.R
-import com.prmto.mova_movieapp.feature_settings.domain.use_case.SettingUseCase
+import com.prmto.core_ui.base.viewModel.BaseViewModelWithUiEvent
+import com.prmto.core_ui.util.UiEvent
+import com.prmto.settings_domain.use_case.SettingUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -32,22 +31,22 @@ class SettingsViewModel @Inject constructor(
     private val getMovieWatchListFromLocalDatabaseThenUpdateToFirebase: GetMovieWatchListFromLocalDatabaseThenUpdateToFirebase,
     private val getFavoriteTvSeriesFromLocalDatabaseThenUpdateToFirebase: GetFavoriteTvSeriesFromLocalDatabaseThenUpdateToFirebase,
     private val getTvSeriesWatchFromLocalDatabaseThenUpdateToFirebase: GetTvSeriesWatchFromLocalDatabaseThenUpdateToFirebase
-) : com.prmto.core_ui.base.viewModel.BaseViewModelWithUiEvent<com.prmto.core_ui.util.UiEvent>() {
-
+) : BaseViewModelWithUiEvent<UiEvent>() {
 
     private val mutableState = MutableStateFlow(SettingsUiState())
     val state = mutableState.asStateFlow()
 
-
     init {
+        isUserSignIn()
+    }
+
+    private fun isUserSignIn() {
         val isUserSignIn = firebaseCoreUseCases.isUserSignInUseCase()
         mutableState.update { it.copy(isSignedIn = isUserSignIn) }
     }
 
-    fun getUIMode(): Flow<Int> {
-        return settingUseCase.getUIModeUseCase().map {
-            it ?: AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
-        }
+    fun getUiMode(): Flow<Int?> {
+        return settingUseCase.getUIModeUseCase()
     }
 
     fun updateUIMode(uiMode: Int) {
@@ -81,14 +80,14 @@ class SettingsViewModel @Inject constructor(
     private fun signOut() {
         firebaseCoreUseCases.signOutUseCase()
         mutableState.update { it.copy(isSignedIn = false) }
-        addConsumableViewEvent(com.prmto.core_ui.util.UiEvent.ShowSnackbar(UiText.StringResource(R.string.successfully_log_out)))
+        addConsumableViewEvent(UiEvent.ShowSnackbar(UiText.StringResource(R.string.successfully_log_out)))
     }
 
     private fun getMovieFavoriteFromLocalDatabaseThenUpdateFirebase() {
         viewModelScope.launch {
             getFavoriteMoviesFromLocalDatabaseThenUpdateToFirebaseUseCase(
                 onSuccess = { return@getFavoriteMoviesFromLocalDatabaseThenUpdateToFirebaseUseCase },
-                onFailure = { addConsumableViewEvent(com.prmto.core_ui.util.UiEvent.ShowSnackbar(it)) }
+                onFailure = { addConsumableViewEvent(UiEvent.ShowSnackbar(it)) }
             )
         }
     }
@@ -97,7 +96,7 @@ class SettingsViewModel @Inject constructor(
         viewModelScope.launch {
             getMovieWatchListFromLocalDatabaseThenUpdateToFirebase(
                 onSuccess = { return@getMovieWatchListFromLocalDatabaseThenUpdateToFirebase },
-                onFailure = { addConsumableViewEvent(com.prmto.core_ui.util.UiEvent.ShowSnackbar(it)) }
+                onFailure = { addConsumableViewEvent(UiEvent.ShowSnackbar(it)) }
             )
         }
     }
@@ -106,7 +105,7 @@ class SettingsViewModel @Inject constructor(
         viewModelScope.launch {
             getFavoriteTvSeriesFromLocalDatabaseThenUpdateToFirebase(
                 onSuccess = { return@getFavoriteTvSeriesFromLocalDatabaseThenUpdateToFirebase },
-                onFailure = { addConsumableViewEvent(com.prmto.core_ui.util.UiEvent.ShowSnackbar(it)) }
+                onFailure = { addConsumableViewEvent(UiEvent.ShowSnackbar(it)) }
             )
         }
     }
@@ -115,7 +114,7 @@ class SettingsViewModel @Inject constructor(
         viewModelScope.launch {
             getTvSeriesWatchFromLocalDatabaseThenUpdateToFirebase(
                 onSuccess = { return@getTvSeriesWatchFromLocalDatabaseThenUpdateToFirebase },
-                onFailure = { addConsumableViewEvent(com.prmto.core_ui.util.UiEvent.ShowSnackbar(it)) })
+                onFailure = { addConsumableViewEvent(UiEvent.ShowSnackbar(it)) })
         }
     }
 

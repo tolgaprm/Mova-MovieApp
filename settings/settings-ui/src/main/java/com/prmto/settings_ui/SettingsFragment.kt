@@ -1,4 +1,4 @@
-package com.prmto.mova_movieapp.feature_settings.presentation.setting
+package com.prmto.settings_ui
 
 import android.view.View
 import android.widget.AdapterView
@@ -8,18 +8,17 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.LocaleListCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
-import com.prmto.core_domain.models.supportedLanguages
+import com.prmto.core_ui.base.fragment.BaseFragmentWithUiEvent
 import com.prmto.core_ui.util.collectFlow
 import com.prmto.core_ui.util.loadAd
-import com.prmto.mova_movieapp.R
-import com.prmto.mova_movieapp.databinding.FragmentSettingsBinding
+import com.prmto.settings_ui.databinding.FragmentSettingsBinding
 import dagger.hilt.android.AndroidEntryPoint
+import com.prmto.core_ui.R as CoreUiR
 
 @AndroidEntryPoint
-class SettingsFragment :
-    com.prmto.core_ui.base.fragment.BaseFragmentWithUiEvent<FragmentSettingsBinding, SettingsViewModel>(
-        inflater = FragmentSettingsBinding::inflate
-    ) {
+class SettingsFragment : BaseFragmentWithUiEvent<FragmentSettingsBinding, SettingsViewModel>(
+    inflater = FragmentSettingsBinding::inflate
+) {
 
     override val viewModel: SettingsViewModel by viewModels()
 
@@ -62,9 +61,12 @@ class SettingsFragment :
     }
 
     private fun collectUIMode() {
-        collectFlow(viewModel.getUIMode()) { uiMode ->
-            binding.switchDarkTheme.isChecked =
-                uiMode == AppCompatDelegate.MODE_NIGHT_YES
+        collectFlow(viewModel.getUiMode()) { uiMode ->
+            val isDarkTheme = uiMode?.let {
+                it == AppCompatDelegate.MODE_NIGHT_YES
+            } ?: false
+
+            binding.switchDarkTheme.isChecked = isDarkTheme
         }
     }
 
@@ -85,7 +87,6 @@ class SettingsFragment :
                 position: Int,
                 p3: Long
             ) {
-
                 val isoCode = supportedLanguages[position].iso
                 viewModel.updateLanguageIsoCode(isoCode)
                 AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags(isoCode))
@@ -103,7 +104,7 @@ class SettingsFragment :
                 title = R.string.are_you_sure_log_out,
                 message = R.string.log_out_message,
                 positiveBtnMessage = R.string.log_out,
-                negativeBtnMessage = R.string.cancel,
+                negativeBtnMessage = CoreUiR.string.cancel,
                 onClickPositiveButton = {
                     viewModel.logOut()
                 }

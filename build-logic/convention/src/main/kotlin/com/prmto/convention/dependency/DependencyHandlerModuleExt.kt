@@ -110,3 +110,17 @@ internal fun DependencyHandlerScope.movieTvDetailFeature() {
     movieTvDetailDomainModule()
     movieTvDetailUiModule()
 }
+
+// Settings
+fun DependencyHandlerScope.settingsDomainModule() {
+    addModule(":settings:settings-domain")
+}
+
+fun DependencyHandlerScope.settingsUiModule() {
+    addModule(":settings:settings-ui")
+}
+
+internal fun DependencyHandlerScope.settingsFeature() {
+    settingsDomainModule()
+    settingsUiModule()
+}

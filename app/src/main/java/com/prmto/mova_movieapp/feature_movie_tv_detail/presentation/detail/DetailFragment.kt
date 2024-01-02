@@ -19,10 +19,12 @@ import com.prmto.mova_movieapp.databinding.FragmentDetailBinding
 import com.prmto.mova_movieapp.feature_movie_tv_detail.presentation.detail.helper.BindingDetailHelper
 import com.prmto.ui.detail.adapter.DetailActorAdapter
 import com.prmto.ui.detail.adapter.VideosAdapter
+import com.prmto.ui.detail.event.DetailUiEvent
 import com.prmto.ui.detail.isSelectedRecommendationTab
 import com.prmto.ui.detail.isSelectedTrailerTab
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
+import com.prmto.core_ui.R as CoreUiR
 
 @AndroidEntryPoint
 class DetailFragment : BaseFragment<FragmentDetailBinding, DetailViewModel>(
@@ -102,34 +104,34 @@ class DetailFragment : BaseFragment<FragmentDetailBinding, DetailViewModel>(
         collectFlow(viewModel.consumableViewEvents) { listOfUiEvents ->
             if (listOfUiEvents.isNotEmpty()) {
                 when (val uiEvent = listOfUiEvents.first()) {
-                    is com.prmto.ui.detail.event.DetailUiEvent.PopBackStack -> {
+                    is DetailUiEvent.PopBackStack -> {
                         findNavController().popBackStack()
                         viewModel.onEventConsumed()
                     }
 
-                    is com.prmto.ui.detail.event.DetailUiEvent.ShowSnackbar -> {
+                    is DetailUiEvent.ShowSnackbar -> {
                         binding.swipeRefreshLayout.isEnabled = true
                         showSnackbar(uiText = uiEvent.uiText)
                         viewModel.onEventConsumed()
                     }
 
-                    is com.prmto.ui.detail.event.DetailUiEvent.IntentToImdbWebSite -> {
+                    is DetailUiEvent.IntentToImdbWebSite -> {
                         intentToTmdbWebSite(uiEvent.url)
                         viewModel.onEventConsumed()
                     }
 
-                    is com.prmto.ui.detail.event.DetailUiEvent.NavigateTo -> {
+                    is DetailUiEvent.NavigateTo -> {
                         findNavController().navigate(uiEvent.directions)
                         viewModel.onEventConsumed()
                     }
 
-                    is com.prmto.ui.detail.event.DetailUiEvent.ShowAlertDialog -> {
+                    is DetailUiEvent.ShowAlertDialog -> {
                         AlertDialogUtil.showAlertDialog(
                             context = requireContext(),
                             title = R.string.sign_in,
                             message = R.string.must_login_able_to_add_in_list,
                             positiveBtnMessage = R.string.sign_in,
-                            negativeBtnMessage = R.string.cancel,
+                            negativeBtnMessage = CoreUiR.string.cancel,
                             onClickPositiveButton = {
                                 findNavController().navigate(DetailFragmentDirections.actionDetailFragmentToLoginFragment())
                             }

@@ -15,6 +15,7 @@ import com.prmto.convention.dependency.homeFeature
 import com.prmto.convention.dependency.movieTvDetailFeature
 import com.prmto.convention.dependency.paging
 import com.prmto.convention.dependency.retrofit
+import com.prmto.convention.dependency.settingsFeature
 import com.prmto.convention.dependency.timber
 import com.prmto.convention.dependency.upcomingFeature
 import com.prmto.convention.dependency.workManager
@@ -74,6 +75,7 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
                 exploreFeature()
                 homeFeature()
                 movieTvDetailFeature()
+                settingsFeature()
 
                 addAllUiDependencies(libs)
                 addCoreLibraryDesugaring(libs.findLibrary("desugar.jdk.libs").get())

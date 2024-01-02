@@ -2,4 +2,5 @@
 <resources>
     <string name="internet_error">"Oops! Lütfen internet bağlatınızı kontrol ediniz."</string>
     <string name="oops_something_went_wrong">Oops! Bir şeyler ters gitti. Lütfen tekrar deneyiniz.</string>
+    <string name="cancel">İptal</string>
 </resources>

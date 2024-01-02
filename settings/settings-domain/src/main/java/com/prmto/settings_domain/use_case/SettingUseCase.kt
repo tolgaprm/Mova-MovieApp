@@ -1,4 +1,4 @@
-package com.prmto.mova_movieapp.feature_settings.domain.use_case
+package com.prmto.settings_domain.use_case
 
 import com.prmto.core_domain.use_case.languageIsoCode.GetLanguageIsoCodeUseCase
 import com.prmto.core_domain.use_case.languageIsoCode.UpdateLanguageIsoCodeUseCase

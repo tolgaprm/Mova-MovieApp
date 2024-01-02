@@ -1,4 +1,4 @@
-package com.prmto.core_domain.models
+package com.prmto.settings_ui
 
 import androidx.annotation.StringRes
 import com.prmto.core_domain.R

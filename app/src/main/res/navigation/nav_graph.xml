@@ -88,7 +88,7 @@
     </dialog>
     <fragment
         android:id="@+id/settingsFragment"
-        android:name="com.prmto.mova_movieapp.feature_settings.presentation.setting.SettingsFragment"
+        android:name="com.prmto.settings_ui.SettingsFragment"
         android:label="SettingsFragment"
         tools:layout="@layout/fragment_settings" />
     <fragment

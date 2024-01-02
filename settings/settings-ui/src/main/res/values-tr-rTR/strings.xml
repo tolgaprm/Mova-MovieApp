@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="successfully_log_out">Başarıyla çıkış yapıldı.</string>
+    <string name="log_out">Çıkış Yap</string>
+
+    <string name="are_you_sure_log_out">Çıkış yapmak istediğinize emin misiniz?</string>
+    <string name="log_out_message">Çıkış yaptıktan sonra favori ve izleme listelerinize ekleme yapamazsınız.</string>
+
+    <string name="dark_theme">Karanlık Mod</string>
+    <string name="languages">Diller</string>
+    <string name="settings">Ayarlar</string>
+</resources>

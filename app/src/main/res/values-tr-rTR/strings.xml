@@ -43,9 +43,6 @@
     <string name="unknown_error">Bilinmeyen bir hata meydana geldi</string>
 
     <string name="navigate_up">Navigate up</string>
-    <string name="dark_theme">Karanlık Mod</string>
-    <string name="languages">Diller</string>
-    <string name="settings">Ayarlar</string>
 
     <string name="language_english">İngilizce</string>
     <string name="language_turkish">Türkçe</string>
@@ -103,10 +100,6 @@
     <string name="check_your_email">Şifreyi sıfırlamak için gerekli bağlantıyı email hesabınıza gönderdik. \nEmail hesabınızı kontrol ediniz.</string>
     <string name="or_continue_with">or continue with</string>
     <string name="sign_in_with_google">Google\'la giriş yap</string>
-    <string name="log_out">Çıkış Yap</string>
-    <string name="are_you_sure_log_out">Çıkış yapmak istediğinize emin misiniz?</string>
-    <string name="log_out_message">Çıkış yaptıktan sonra favori ve izleme listelerinize ekleme yapamazsınız.</string>
-    <string name="successfully_log_out">Başarıyla çıkış yapıldı.</string>
     <string name="couldn_t_find_any_videos_of_this_film">Bu filmin herhangi bir tanıtım videosu bulunamadı.</string>
 
     <string name="have_good_weekend"> İyi hafta sonları</string>
@@ -115,7 +108,6 @@
     <string name="it_is_necc_for_notification">Bildirim alabilmeniz için gerekli</string>
 
 
-    <string name="cancel">İptal</string>
     <string name="must_login_able_to_add_in_list">Listeye ekleme işlemi yapabilmek için giriş yapmalısınız.</string>
     <string name="error_field_empty">Bu alan boş bırakılamaz.</string>
     <string name="error_user">Bu işlemi yapabilmek için giriş yapmanız gerekiyor.</string>

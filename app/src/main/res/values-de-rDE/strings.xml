@@ -44,9 +44,6 @@
     <string name="unknown_error">Ein unbekannter Fehler ist aufgetreten</string>
 
     <string name="navigate_up">Nach oben navigieren</string>
-    <string name="dark_theme">Dunkles Thema</string>
-    <string name="languages">Sprachen</string>
-    <string name="settings">Einstellungen</string>
 
     <string name="language_english">Englisch </string>
     <string name="language_turkish">Türkisch</string>
@@ -102,10 +99,6 @@
     <string name="check_your_email">Überprüfen Sie Ihre E-Mail</string>
     <string name="or_continue_with">oder weiter mit</string>
     <string name="sign_in_with_google">Mit Google anmelden</string>
-    <string name="log_out"> Abmelden </string>
-    <string name="are_you_sure_log_out"> Möchten Sie sich wirklich abmelden? </string>
-    <string name="log_out_message"> Nach dem Abmelden können Sie keinen Film mehr zu Favoriten oder Beobachtungslisten hinzufügen </string>
-    <string name="successfully_log_out"> Erfolgreich abgemeldet </string>
     <string name="couldn_t_find_any_videos_of_this_film"> Konnte keine Videos von diesem Film finden </string>
 
     <string name="have_good_weekend"> Schönes Wochenende </string>
@@ -114,7 +107,6 @@
     <string name="it_is_necc_for_notification"> es ist notwendig, um Benachrichtigungen anzuzeigen </string>
 
 
-    <string name="cancel"> Abbrechen </string>
     <string name="must_login_able_to_add_in_list"> Sie müssen sich anmelden, um in die Liste aufnehmen zu können </string>
     <string name="error_field_empty"> Dieses Feld darf nicht leer sein </string>
     <string name="error_user"> Sie müssen sich anmelden, um diese Operation durchzuführen </string>

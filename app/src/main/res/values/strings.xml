@@ -45,9 +45,6 @@
     <string name="unknown_error">An unknown error occurred</string>
 
     <string name="navigate_up">Navigate up</string>
-    <string name="dark_theme">Dark Theme</string>
-    <string name="languages">Languages</string>
-    <string name="settings">Settings</string>
 
     <string name="language_english">English</string>
     <string name="language_turkish">Turkish</string>
@@ -102,10 +99,6 @@
     <string name="check_your_email">Check your email</string>
     <string name="or_continue_with">or continue with</string>
     <string name="sign_in_with_google">Sign In With Google</string>
-    <string name="log_out">Log out</string>
-    <string name="are_you_sure_log_out">Are you sure you want to log out?</string>
-    <string name="log_out_message">After log out, you can\'t add movie to favorite or watch lists</string>
-    <string name="successfully_log_out">Successfully log out</string>
     <string name="couldn_t_find_any_videos_of_this_film">Couldn\'t find any videos of this film</string>
 
     <string name="have_good_weekend">Have a good weekend</string>
@@ -113,7 +106,6 @@
     <string name="allow">Allow</string>
     <string name="it_is_necc_for_notification">it is necessary to show notification</string>
 
-    <string name="cancel">Cancel</string>
     <string name="must_login_able_to_add_in_list"> You must to login to able to add in list</string>
     <string name="error_field_empty">This field can\'t be empty</string>
     <string name="error_user">You must login to do this operation</string>

@@ -44,6 +44,9 @@
             <option value="$PROJECT_DIR$/movie-tv-detail/data" />
             <option value="$PROJECT_DIR$/movie-tv-detail/domain" />
             <option value="$PROJECT_DIR$/movie-tv-detail/ui" />
+            <option value="$PROJECT_DIR$/settings" />
+            <option value="$PROJECT_DIR$/settings/settings-domain" />
+            <option value="$PROJECT_DIR$/settings/settings-ui" />
             <option value="$PROJECT_DIR$/upcoming" />
             <option value="$PROJECT_DIR$/upcoming/upcoming-data" />
             <option value="$PROJECT_DIR$/upcoming/upcoming-domain" />
