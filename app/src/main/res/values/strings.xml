@@ -16,8 +16,6 @@
     <string name="sort_amp_filter"><![CDATA[Sort & Filter]]></string>
     <string name="categories">Categories</string>
     <string name="genre">Genre</string>
-    <string name="movies">Movies</string>
-    <string name="tv">Tv</string>
     <string name="tv_name_with_original_name" translatable="false">%1$s ( %2$s )</string>
 
 
@@ -42,8 +40,6 @@
     <string name="all_periods">All Periods</string>
     <string name="unknown_error">An unknown error occurred</string>
 
-    <string name="navigate_up">Navigate up</string>
-
     <string name="language_english">English</string>
     <string name="language_turkish">Turkish</string>
     <string name="language_spanish">Spanish</string>
@@ -52,7 +48,6 @@
 
     <string name="overview">Overview</string>
     <string name="actor">Actor</string>
-    <string name="director">Director</string>
 
     <string name="add_favorite_list">Add My Favorite List</string>
     <string name="add_watch_list">Add My Watch List</string>
@@ -69,16 +64,6 @@
     <string name="person">Person</string>
     <string name="something_went_wrong">Something went wrong</string>
     <string name="try_again">TRY AGAIN</string>
-
-    <string name="person_detail_title">Details:</string>
-    <string name="person_date_of_birth_title">Date of birth:</string>
-    <string name="person_date_of_death_title">Date of death:</string>
-    <string name="person_nation_title">Nation:</string>
-
-    <string name="character">Character</string>
-    <string name="department">Department</string>
-    <string name="as_director_work">As Director\'s Works</string>
-    <string name="as_actor_works">As Actor\'s Works</string>
 
     <string name="trailers">Trailers</string>
     <string name="recommendation">Recommendations</string>

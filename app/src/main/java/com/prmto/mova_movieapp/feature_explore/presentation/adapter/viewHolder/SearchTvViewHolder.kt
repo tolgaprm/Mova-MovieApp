@@ -9,7 +9,6 @@ import coil.load
 import com.prmto.core_domain.models.tv.TvSeries
 import com.prmto.core_ui.util.ImageSize
 import com.prmto.core_ui.util.ImageUtil
-import com.prmto.mova_movieapp.R
 import com.prmto.mova_movieapp.databinding.NowPlayingRowBinding
 import com.prmto.core_ui.R as CoreUiR
 
@@ -40,7 +39,7 @@ class SearchTvViewHolder(
         binding.movieTitle.textSize = 16f
         binding.movieTitle.text = tvSeries.name
         binding.txtCategory.visibility = View.VISIBLE
-        binding.txtCategory.text = context.getString(R.string.tv)
+        binding.txtCategory.text = context.getString(CoreUiR.string.tv)
 
         binding.root.setOnClickListener {
             onSearchTvItemClick(tvSeries)

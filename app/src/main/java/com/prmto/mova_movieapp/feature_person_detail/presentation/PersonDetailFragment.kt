@@ -4,21 +4,23 @@ import android.text.method.ScrollingMovementMethod
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.example.person_detail_ui.adapter.PersonCastMovieAdapter
+import com.example.person_detail_ui.adapter.PersonCrewMovieAdapter
+import com.example.person_detail_ui.databinding.FragmentPersonDetailBinding
+import com.example.person_detail_ui.helper.BindPersonDetailHelper
+import com.prmto.core_domain.util.MediaType
+import com.prmto.core_ui.base.fragment.BaseFragmentWithUiEvent
 import com.prmto.core_ui.util.collectFlow
 import com.prmto.core_ui.util.loadAd
-import com.prmto.mova_movieapp.databinding.FragmentPersonDetailBinding
-import com.prmto.mova_movieapp.feature_person_detail.domain.model.CastForPerson
-import com.prmto.mova_movieapp.feature_person_detail.domain.model.CrewForPerson
-import com.prmto.mova_movieapp.feature_person_detail.domain.model.toMovie
-import com.prmto.mova_movieapp.feature_person_detail.domain.model.toTvSeries
-import com.prmto.mova_movieapp.feature_person_detail.presentation.adapter.PersonCastMovieAdapter
-import com.prmto.mova_movieapp.feature_person_detail.presentation.adapter.PersonCrewMovieAdapter
-import com.prmto.mova_movieapp.feature_person_detail.presentation.helper.BindPersonDetailHelper
+import com.prmto.person_detail_domain.model.CastForPerson
+import com.prmto.person_detail_domain.model.CrewForPerson
+import com.prmto.person_detail_domain.model.toMovie
+import com.prmto.person_detail_domain.model.toTvSeries
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class PersonDetailFragment :
-    com.prmto.core_ui.base.fragment.BaseFragmentWithUiEvent<FragmentPersonDetailBinding, PersonDetailViewModel>(
+    BaseFragmentWithUiEvent<FragmentPersonDetailBinding, PersonDetailViewModel>(
         inflater = FragmentPersonDetailBinding::inflate
     ) {
     override val viewModel: PersonDetailViewModel by viewModels()
@@ -83,12 +85,12 @@ class PersonDetailFragment :
         val action =
             PersonDetailFragmentDirections.actionPersonDetailFragmentToDetailBottomSheet(null, null)
         when (crewForPerson.mediaType) {
-            com.prmto.explore_domain.util.MediaType.MOVIE.value -> {
+            MediaType.MOVIE.value -> {
                 action.movie = crewForPerson.toMovie()
                 action.tvSeries = null
             }
 
-            com.prmto.explore_domain.util.MediaType.TV_SERIES.value -> {
+            MediaType.TV_SERIES.value -> {
                 action.movie = null
                 action.tvSeries = crewForPerson.toTvSeries()
             }
@@ -100,12 +102,12 @@ class PersonDetailFragment :
         val action =
             PersonDetailFragmentDirections.actionPersonDetailFragmentToDetailBottomSheet(null, null)
         when (castForPerson.mediaType) {
-            com.prmto.explore_domain.util.MediaType.MOVIE.value -> {
+            MediaType.MOVIE.value -> {
                 action.movie = castForPerson.toMovie()
                 action.tvSeries = null
             }
 
-            com.prmto.explore_domain.util.MediaType.TV_SERIES.value -> {
+            MediaType.TV_SERIES.value -> {
                 action.movie = null
                 action.tvSeries = castForPerson.toTvSeries()
             }

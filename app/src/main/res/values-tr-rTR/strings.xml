@@ -16,8 +16,6 @@
     <string name="sort_amp_filter"><![CDATA[Sort & Filter]]></string>
     <string name="categories">Kategoriler</string>
     <string name="genre">Tür</string>
-    <string name="tv">Dizi</string>
-    <string name="movies">Filmler</string>
 
     <string name="voteAverageDetail">%1$s (%2$s reviews)</string>
     <string name="runtime">%1$ss  %2$sdk</string>
@@ -40,8 +38,6 @@
     <string name="all_periods">All Periods</string>
     <string name="unknown_error">Bilinmeyen bir hata meydana geldi</string>
 
-    <string name="navigate_up">Navigate up</string>
-
     <string name="language_english">İngilizce</string>
     <string name="language_turkish">Türkçe</string>
     <string name="language_spanish">İspanyolca</string>
@@ -50,7 +46,6 @@
 
     <string name="overview">Overview</string>
     <string name="actor">Oyuncu Kadrosu</string>
-    <string name="director">Yönetmen</string>
 
     <string name="add_favorite_list">Favori Listeme Ekle</string>
     <string name="add_watch_list">İzleme Listeme Ekle</string>
@@ -68,18 +63,6 @@
     <string name="person">Kişi</string>
     <string name="something_went_wrong">Birşeyler ters gitti.</string>
     <string name="try_again">Yeniden Deneyiniz.</string>
-
-    <string name="person_detail_title">Detaylar:</string>
-    <string name="person_date_of_birth_title">Doğum Tarihi:</string>
-    <string name="person_date_of_death_title">Ölüm Tarihi:</string>
-
-    <string name="person_nation_title">Milliyet:</string>
-
-    <string name="character">Karakter</string>
-    <string name="department">Departman</string>
-    <string name="as_director_work">Yönetmen Olarak Çalıştığı İşler</string>
-    <string name="as_actor_works">Oyuncu Olarak Çalıştığı İşler</string>
-
 
     <string name="trailers">Fragmanlar</string>
     <string name="recommendation">Öneriler</string>

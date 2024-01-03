@@ -15,6 +15,7 @@ import com.prmto.convention.dependency.homeFeature
 import com.prmto.convention.dependency.movieTvDetailFeature
 import com.prmto.convention.dependency.myListFeature
 import com.prmto.convention.dependency.paging
+import com.prmto.convention.dependency.personDetailFeature
 import com.prmto.convention.dependency.retrofit
 import com.prmto.convention.dependency.settingsFeature
 import com.prmto.convention.dependency.timber
@@ -78,6 +79,7 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
                 movieTvDetailFeature()
                 settingsFeature()
                 myListFeature()
+                personDetailFeature()
 
                 addAllUiDependencies(libs)
                 addCoreLibraryDesugaring(libs.findLibrary("desugar.jdk.libs").get())

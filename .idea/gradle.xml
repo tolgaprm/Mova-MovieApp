@@ -46,6 +46,10 @@
             <option value="$PROJECT_DIR$/movie-tv-detail/ui" />
             <option value="$PROJECT_DIR$/my-list" />
             <option value="$PROJECT_DIR$/my-list/my-list-ui" />
+            <option value="$PROJECT_DIR$/person-detail" />
+            <option value="$PROJECT_DIR$/person-detail/person-detail-data" />
+            <option value="$PROJECT_DIR$/person-detail/person-detail-domain" />
+            <option value="$PROJECT_DIR$/person-detail/person-detail-ui" />
             <option value="$PROJECT_DIR$/settings" />
             <option value="$PROJECT_DIR$/settings/settings-domain" />
             <option value="$PROJECT_DIR$/settings/settings-ui" />

@@ -2,7 +2,10 @@ package com.prmto.mova_movieapp.feature_person_detail.presentation
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
-import com.prmto.mova_movieapp.feature_person_detail.domain.use_case.PersonDetailUseCases
+import com.example.person_detail_ui.PersonDetailState
+import com.prmto.core_ui.base.viewModel.BaseViewModelWithUiEvent
+import com.prmto.core_ui.util.UiEvent
+import com.prmto.person_detail_domain.use_case.PersonDetailUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.async
@@ -17,7 +20,7 @@ import javax.inject.Inject
 class PersonDetailViewModel @Inject constructor(
     private val personDetailUseCases: PersonDetailUseCases,
     savedStateHandle: SavedStateHandle
-) : com.prmto.core_ui.base.viewModel.BaseViewModelWithUiEvent<com.prmto.core_ui.util.UiEvent>() {
+) : BaseViewModelWithUiEvent<UiEvent>() {
 
     private val mutableState = MutableStateFlow(PersonDetailState())
     val state = mutableState.asStateFlow()
@@ -48,7 +51,7 @@ class PersonDetailViewModel @Inject constructor(
                 },
                 onErrorCallback = { uiText ->
                     mutableState.update { it.copy(isLoading = false) }
-                    addConsumableViewEvent(com.prmto.core_ui.util.UiEvent.ShowSnackbar(uiText))
+                    addConsumableViewEvent(UiEvent.ShowSnackbar(uiText))
                 },
                 onSuccessCallback = { personDetail ->
                     mutableState.value = PersonDetailState(personDetail = personDetail)

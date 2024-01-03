@@ -4,9 +4,9 @@ import com.prmto.core_data.util.HandleUtils
 import com.prmto.core_data.util.orZero
 import com.prmto.core_domain.models.movie.Movie
 import com.prmto.core_domain.models.tv.TvSeries
+import com.prmto.core_domain.util.MediaType
 import com.prmto.explore_domain.model.MultiSearch
 import com.prmto.explore_domain.model.PersonSearch
-import com.prmto.explore_domain.util.MediaType
 import com.squareup.moshi.Json
 
 data class SearchDto(

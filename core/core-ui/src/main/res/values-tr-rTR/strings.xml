@@ -3,7 +3,10 @@
     <string name="internet_error">"Oops! Lütfen internet bağlatınızı kontrol ediniz."</string>
     <string name="oops_something_went_wrong">Oops! Bir şeyler ters gitti. Lütfen tekrar deneyiniz.</string>
     <string name="cancel">İptal</string>
-
     <string name="movie">Film</string>
     <string name="tv_series">Diziler</string>
+    <string name="tv">Dizi</string>
+    <string name="movies">Filmler</string>
+    <string name="navigate_up">Navigate up</string>
+    <string name="director">Yönetmen</string>
 </resources>

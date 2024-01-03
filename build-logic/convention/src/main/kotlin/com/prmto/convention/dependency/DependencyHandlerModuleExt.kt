@@ -133,3 +133,24 @@ fun DependencyHandlerScope.myListUiModule() {
 internal fun DependencyHandlerScope.myListFeature() {
     myListUiModule()
 }
+
+// Person Detail
+
+fun DependencyHandlerScope.personDetailDataModule() {
+    addModule(":person-detail:person-detail-data")
+}
+
+
+fun DependencyHandlerScope.personDetailDomainModule() {
+    addModule(":person-detail:person-detail-domain")
+}
+
+fun DependencyHandlerScope.personDetailUiModule() {
+    addModule(":person-detail:person-detail-ui")
+}
+
+internal fun DependencyHandlerScope.personDetailFeature() {
+    personDetailDataModule()
+    personDetailDomainModule()
+    personDetailUiModule()
+}

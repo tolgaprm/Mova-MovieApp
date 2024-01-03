@@ -16,8 +16,6 @@
     <string name="sort_amp_filter"><![CDATA[Sortieren & Filtern]]></string>
     <string name="categories">Kategorien</string>
     <string name="genre">Genre</string>
-    <string name="movies">Filme</string>
-    <string name="tv">Fernsehen</string>
 
     <string name="voteAverageDetail">%1$s (%2$s Bewertungen)</string>
     <string name="runtime">%1$sh %2$sm</string>
@@ -41,7 +39,6 @@
 
     <string name="unknown_error">Ein unbekannter Fehler ist aufgetreten</string>
 
-    <string name="navigate_up">Nach oben navigieren</string>
 
     <string name="language_english">Englisch </string>
     <string name="language_turkish">Türkisch</string>
@@ -52,7 +49,6 @@
 
     <string name="overview"> Übersicht </string>
     <string name="actor"> Schauspieler </string>
-    <string name="director"> Regisseur </string>
 
     <string name="add_favorite_list"> Zu meiner Favoritenliste hinzufügen </string>
     <string name="add_watch_list"> Zu meiner Beobachtungsliste hinzufügen </string>
@@ -69,16 +65,6 @@
     <string name="person">Person</string>
     <string name="something_went_wrong">Etwas ist schief gelaufen</string>
     <string name="try_again">VERSUCH ES NOCH EINMAL</string>
-
-    <string name="person_detail_title">Details:</string>
-    <string name="person_date_of_birth_title">Geburtsdatum:</string>
-    <string name="person_date_of_death_title">Todesdatum:</string>
-    <string name="person_nation_title">Nation:</string>
-
-    <string name="character">Charakter</string>
-    <string name="department">Abteilung</string>
-    <string name="as_director_work">Als Regisseur Werke</string>
-    <string name="as_actor_works"> Als Schauspieler Werke </string>
 
     <string name="trailers"> Trailer </string>
     <string name="recommendation"> Empfehlungen </string>

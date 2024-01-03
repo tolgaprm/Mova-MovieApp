@@ -15,4 +15,7 @@
 
     <color name="light_red">#FCE7E9</color>
     <color name="light_black">#35383F</color>
+
+    <color name="shimmer_color">#EBE8E8</color>
+    <color name="shimmer_item_color">#C2C2C2</color>
 </resources>

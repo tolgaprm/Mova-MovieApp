@@ -6,7 +6,9 @@ import coil.load
 import com.prmto.core_domain.models.tv.TvSeries
 import com.prmto.core_ui.base.BaseMovieAndTvRecyclerAdapter
 import com.prmto.core_ui.databinding.MovieRowBinding
-import com.prmto.mova_movieapp.R
+import com.prmto.core_ui.util.ImageSize
+import com.prmto.core_ui.util.ImageUtil
+import com.prmto.core_ui.R as CoreUiR
 
 class FilterTvSeriesAdapter : BaseMovieAndTvRecyclerAdapter<TvSeries>() {
 
@@ -15,8 +17,8 @@ class FilterTvSeriesAdapter : BaseMovieAndTvRecyclerAdapter<TvSeries>() {
 
         if (tvSeries != null) {
             binding.ivPoster.load(
-                com.prmto.core_ui.util.ImageUtil.getImage(
-                    imageSize = com.prmto.core_ui.util.ImageSize.W185.path,
+                ImageUtil.getImage(
+                    imageSize = ImageSize.W185.path,
                     imageUrl = tvSeries.posterPath
                 )
             )
@@ -29,7 +31,7 @@ class FilterTvSeriesAdapter : BaseMovieAndTvRecyclerAdapter<TvSeries>() {
                 this.itemClickListener(tvSeries)
             }
             binding.txtCategory.visibility = View.VISIBLE
-            binding.txtCategory.text = context.getText(R.string.tv)
+            binding.txtCategory.text = context.getText(CoreUiR.string.tv)
         }
     }
 

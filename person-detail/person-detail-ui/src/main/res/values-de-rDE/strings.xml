@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="character">Charakter</string>
+    <string name="department">Abteilung</string>
+    <string name="as_director_work">Als Regisseur Werke</string>
+    <string name="as_actor_works"> Als Schauspieler Werke </string>
+
+    <string name="person_detail_title">Details:</string>
+    <string name="person_date_of_birth_title">Geburtsdatum:</string>
+    <string name="person_date_of_death_title">Todesdatum:</string>
+    <string name="person_nation_title">Nation:</string>
+</resources>
