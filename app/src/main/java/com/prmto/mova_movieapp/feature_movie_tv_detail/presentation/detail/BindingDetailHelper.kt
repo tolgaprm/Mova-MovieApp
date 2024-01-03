@@ -1,4 +1,4 @@
-package com.prmto.mova_movieapp.feature_movie_tv_detail.presentation.detail.helper
+package com.prmto.mova_movieapp.feature_movie_tv_detail.presentation.detail
 
 import android.content.Context
 import android.view.View
@@ -8,11 +8,12 @@ import com.prmto.core_ui.util.toolBarTextVisibilityByScrollPositionOfNestedScrol
 import com.prmto.domain.models.detail.movie.MovieDetail
 import com.prmto.domain.models.detail.tv.TvDetail
 import com.prmto.domain.util.Constants
-import com.prmto.mova_movieapp.databinding.FragmentDetailBinding
-import com.prmto.mova_movieapp.feature_movie_tv_detail.presentation.detail.DetailViewModel
+import com.prmto.ui.databinding.FragmentDetailBinding
 import com.prmto.ui.detail.SelectableTab
 import com.prmto.ui.detail.adapter.DetailActorAdapter
 import com.prmto.ui.detail.event.DetailEvent
+import com.prmto.ui.detail.helper.BindMovieDetail
+import com.prmto.ui.detail.helper.BindTvDetail
 
 class BindingDetailHelper(
     private val binding: FragmentDetailBinding,

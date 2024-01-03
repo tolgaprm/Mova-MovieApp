@@ -2,4 +2,6 @@
 <resources>
     <color name="shimmer_color">#7AEBE8E8</color>
     <color name="shimmer_item_color">#57C2C2C2</color>
+
+    <color name="subtitleColor">@color/gray</color>
 </resources>

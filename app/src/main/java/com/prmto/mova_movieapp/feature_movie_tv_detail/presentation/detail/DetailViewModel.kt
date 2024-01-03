@@ -12,6 +12,7 @@ import com.prmto.domain.models.detail.tv.toTvSeries
 import com.prmto.domain.models.detail.video.Videos
 import com.prmto.domain.use_cases.DetailUseCases
 import com.prmto.domain.util.Constants.DETAIL_DEFAULT_ID
+import com.prmto.ui.detail.DetailState
 import com.prmto.ui.detail.event.DetailEvent
 import com.prmto.ui.detail.event.DetailUiEvent
 import com.prmto.ui.detail.isNotNullTvDetail
@@ -33,8 +34,8 @@ class DetailViewModel @Inject constructor(
     private val localDatabaseUseCases: LocalDatabaseUseCases,
     private val savedStateHandle: SavedStateHandle
 ) : BaseViewModelWithUiEvent<DetailUiEvent>() {
-    private val _detailState = MutableStateFlow(com.prmto.ui.detail.DetailState())
-    val detailState: StateFlow<com.prmto.ui.detail.DetailState> = _detailState.asStateFlow()
+    private val _detailState = MutableStateFlow(DetailState())
+    val detailState: StateFlow<DetailState> = _detailState.asStateFlow()
 
     private val _videos = MutableStateFlow<Videos?>(null)
     val videos: StateFlow<Videos?> = _videos.asStateFlow()

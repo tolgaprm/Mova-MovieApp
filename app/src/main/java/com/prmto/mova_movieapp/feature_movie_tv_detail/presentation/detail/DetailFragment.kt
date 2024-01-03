@@ -15,10 +15,10 @@ import com.prmto.core_ui.util.makeVisible
 import com.prmto.core_ui.util.setAddFavoriteIconByFavoriteState
 import com.prmto.core_ui.util.setWatchListIconByWatchState
 import com.prmto.mova_movieapp.R
-import com.prmto.mova_movieapp.databinding.FragmentDetailBinding
-import com.prmto.mova_movieapp.feature_movie_tv_detail.presentation.detail.helper.BindingDetailHelper
+import com.prmto.ui.databinding.FragmentDetailBinding
 import com.prmto.ui.detail.adapter.DetailActorAdapter
 import com.prmto.ui.detail.adapter.VideosAdapter
+import com.prmto.ui.detail.event.DetailEvent
 import com.prmto.ui.detail.event.DetailUiEvent
 import com.prmto.ui.detail.isSelectedRecommendationTab
 import com.prmto.ui.detail.isSelectedTrailerTab
@@ -64,7 +64,7 @@ class DetailFragment : BaseFragment<FragmentDetailBinding, DetailViewModel>(
     private fun setRecommendationsAdapterListener() {
         movieRecommendationAdapter.setOnclickListener { movie ->
             viewModel.onEvent(
-                com.prmto.ui.detail.event.DetailEvent.ClickRecommendationItemClick(
+                DetailEvent.ClickRecommendationItemClick(
                     movie = movie
                 )
             )
@@ -72,7 +72,7 @@ class DetailFragment : BaseFragment<FragmentDetailBinding, DetailViewModel>(
 
         tvRecommendationAdapter.setOnclickListener { tvSeries ->
             viewModel.onEvent(
-                com.prmto.ui.detail.event.DetailEvent.ClickRecommendationItemClick(
+                DetailEvent.ClickRecommendationItemClick(
                     tvSeries = tvSeries
                 )
             )

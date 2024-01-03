@@ -94,15 +94,15 @@ internal fun DependencyHandlerScope.homeFeature() {
 
 // MovieTvDetail
 fun DependencyHandlerScope.movieTvDetailDataModule() {
-    addModule(":movie-tv-detail:data")
+    addModule(":movie-tv-detail:detail-data")
 }
 
 fun DependencyHandlerScope.movieTvDetailDomainModule() {
-    addModule(":movie-tv-detail:domain")
+    addModule(":movie-tv-detail:detail-domain")
 }
 
 fun DependencyHandlerScope.movieTvDetailUiModule() {
-    addModule(":movie-tv-detail:ui")
+    addModule(":movie-tv-detail:detail-ui")
 }
 
 internal fun DependencyHandlerScope.movieTvDetailFeature() {

@@ -1,4 +1,4 @@
-package com.prmto.mova_movieapp.feature_movie_tv_detail.presentation.detail.helper.inflater
+package com.prmto.ui.detail.helper.inflater
 
 import android.content.Context
 import android.view.ViewGroup

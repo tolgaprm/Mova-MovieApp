@@ -41,9 +41,9 @@
             <option value="$PROJECT_DIR$/home/home-domain" />
             <option value="$PROJECT_DIR$/home/home-ui" />
             <option value="$PROJECT_DIR$/movie-tv-detail" />
-            <option value="$PROJECT_DIR$/movie-tv-detail/data" />
-            <option value="$PROJECT_DIR$/movie-tv-detail/domain" />
-            <option value="$PROJECT_DIR$/movie-tv-detail/ui" />
+            <option value="$PROJECT_DIR$/movie-tv-detail/detail-data" />
+            <option value="$PROJECT_DIR$/movie-tv-detail/detail-domain" />
+            <option value="$PROJECT_DIR$/movie-tv-detail/detail-ui" />
             <option value="$PROJECT_DIR$/my-list" />
             <option value="$PROJECT_DIR$/my-list/my-list-ui" />
             <option value="$PROJECT_DIR$/person-detail" />

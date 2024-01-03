@@ -1,4 +1,4 @@
-package com.prmto.mova_movieapp.feature_movie_tv_detail.presentation.detail.helper
+package com.prmto.ui.detail.helper
 
 import android.content.Context
 import com.prmto.core_ui.util.makeGone
@@ -6,9 +6,9 @@ import com.prmto.core_ui.util.makeVisible
 import com.prmto.domain.models.credit.Crew
 import com.prmto.domain.models.detail.movie.MovieDetail
 import com.prmto.domain.util.Constants
-import com.prmto.mova_movieapp.R
-import com.prmto.mova_movieapp.databinding.FragmentDetailBinding
-import com.prmto.mova_movieapp.feature_movie_tv_detail.presentation.detail.helper.inflater.DirectorTextInflater
+import com.prmto.ui.R
+import com.prmto.ui.databinding.FragmentDetailBinding
+import com.prmto.ui.detail.helper.inflater.DirectorTextInflater
 
 class BindMovieDetail(
     binding: FragmentDetailBinding,

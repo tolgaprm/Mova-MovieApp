@@ -1,4 +1,4 @@
-package com.prmto.mova_movieapp.feature_movie_tv_detail.presentation.detail.helper
+package com.prmto.ui.detail.helper
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -7,7 +7,7 @@ import android.widget.LinearLayout
 import android.widget.Toast
 import coil.load
 import com.prmto.domain.models.watchProvider.WatchProviderItemInfo
-import com.prmto.mova_movieapp.R
+import com.prmto.ui.R
 
 class BindWatchProvidersHelper(private val context: Context) {
     fun bind(

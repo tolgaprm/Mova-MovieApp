@@ -17,16 +17,6 @@
     <string name="categories">Kategoriler</string>
     <string name="genre">Tür</string>
 
-    <string name="voteAverageDetail">%1$s (%2$s reviews)</string>
-    <string name="runtime">%1$ss  %2$sdk</string>
-    <string name="season_count">%s Sezon</string>
-
-    <string name="share">Paylaş</string>
-    <string name="favorite_list">Favori Listem</string>
-    <string name="watchList">İzleme Listem</string>
-    <string name="detail_bottom_sheet_movie_info">Detaylar ve daha fazlası</string>
-    <string name="detail_bottom_sheet_tv_info">Bölümler ve daha fazlası</string>
-
     <string name="time_periods">Time/Periods</string>
     <string name="retry">Yeniden Dene</string>
     <string name="sort">Sırala</string>
@@ -44,29 +34,9 @@
     <string name="language_french">Fransızca</string>
     <string name="language_german">Almanca</string>
 
-    <string name="overview">Overview</string>
-    <string name="actor">Oyuncu Kadrosu</string>
-
-    <string name="add_favorite_list">Favori Listeme Ekle</string>
-    <string name="add_watch_list">İzleme Listeme Ekle</string>
-    <string name="go_movies_tmdb_site">Filmin TMDB web sitesine git</string>
-    <string name="director_title">Yönetmen: </string>
-    <string name="singular_creator_title">Yapımcı: </string>
-    <string name="plural_creator_title">Yapımcılar: <br /></string>
-
-
-    <string name="watch_now">Şimdi İzle</string>
-    <string name="stream">Yayın</string>
-    <string name="rent">Kirala</string>
-    <string name="buy">Satın Al</string>
-    <string name="provides_now_watch_information_by_justwatch">Şimdi İzle bilgileri <font color="#FFEB3B">JustWatch</font> tarafından sağlanıyor.</string>
     <string name="person">Kişi</string>
     <string name="something_went_wrong">Birşeyler ters gitti.</string>
     <string name="try_again">Yeniden Deneyiniz.</string>
-
-    <string name="trailers">Fragmanlar</string>
-    <string name="recommendation">Öneriler</string>
-    <string name="similar">Benzerler</string>
 
     <string name="login_to_your_account">Hesabınıza Giriş Yapın</string>
     <string name="create_your_account">Hesap Oluşturun</string>
@@ -81,7 +51,6 @@
     <string name="check_your_email">Şifreyi sıfırlamak için gerekli bağlantıyı email hesabınıza gönderdik. \nEmail hesabınızı kontrol ediniz.</string>
     <string name="or_continue_with">or continue with</string>
     <string name="sign_in_with_google">Google\'la giriş yap</string>
-    <string name="couldn_t_find_any_videos_of_this_film">Bu filmin herhangi bir tanıtım videosu bulunamadı.</string>
 
     <string name="have_good_weekend"> İyi hafta sonları</string>
     <string name="movie_notification">Hafta sonu ne izleyeceğine karar veremedin mi? İzleyeceğin güzel bir film bul ve izle</string>

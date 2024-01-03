@@ -11,4 +11,11 @@
     <string name="movies">Movies</string>
     <string name="navigate_up">Navigate up</string>
     <string name="director">Director</string>
+    <string name="share">Share</string>
+    <string name="favorite_list">Favorite List</string>
+    <string name="watchList">Watch List</string>
+    <string name="detail_bottom_sheet_movie_info">Details and More</string>
+    <string name="detail_bottom_sheet_tv_info">Episodes and More</string>
+    <string name="add_favorite_list">Add My Favorite List</string>
+    <string name="add_watch_list">Add My Watch List</string>
 </resources>

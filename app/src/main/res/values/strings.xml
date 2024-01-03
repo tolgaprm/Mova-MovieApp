@@ -18,17 +18,6 @@
     <string name="genre">Genre</string>
     <string name="tv_name_with_original_name" translatable="false">%1$s ( %2$s )</string>
 
-
-    <string name="voteAverageDetail">%1$s (%2$s reviews)</string>
-    <string name="runtime">%1$sh %2$sm</string>
-    <string name="season_count">%s Seasons</string>
-
-    <string name="share">Share</string>
-    <string name="favorite_list">Favorite List</string>
-    <string name="watchList">Watch List</string>
-    <string name="detail_bottom_sheet_movie_info">Details and More</string>
-    <string name="detail_bottom_sheet_tv_info">Episodes and More</string>
-
     <string name="time_periods">Time/Periods</string>
     <string name="retry">Retry</string>
     <string name="sort">Sort</string>
@@ -46,28 +35,9 @@
     <string name="language_french">French</string>
     <string name="language_german">German</string>
 
-    <string name="overview">Overview</string>
-    <string name="actor">Actor</string>
-
-    <string name="add_favorite_list">Add My Favorite List</string>
-    <string name="add_watch_list">Add My Watch List</string>
-    <string name="go_movies_tmdb_site">Go tmdb url that the movie</string>
-    <string name="director_title">Director: </string>
-    <string name="singular_creator_title">Creator: </string>
-    <string name="plural_creator_title">Creators: <br /> </string>
-
-    <string name="watch_now">Watch Now</string>
-    <string name="stream">Stream</string>
-    <string name="rent">Rent</string>
-    <string name="buy">Buy</string>
-    <string name="provides_now_watch_information_by_justwatch">Provides \'Now Watch Information\' by <font color="#FFEB3B">JustWatch</font></string>
     <string name="person">Person</string>
     <string name="something_went_wrong">Something went wrong</string>
     <string name="try_again">TRY AGAIN</string>
-
-    <string name="trailers">Trailers</string>
-    <string name="recommendation">Recommendations</string>
-    <string name="similar">Similar</string>
 
     <string name="login_to_your_account">Login to Your Account</string>
     <string name="create_your_account">Create Your Account</string>
@@ -82,7 +52,6 @@
     <string name="check_your_email">Check your email</string>
     <string name="or_continue_with">or continue with</string>
     <string name="sign_in_with_google">Sign In With Google</string>
-    <string name="couldn_t_find_any_videos_of_this_film">Couldn\'t find any videos of this film</string>
 
     <string name="have_good_weekend">Have a good weekend</string>
     <string name="movie_notification">Can\'t decide what to watch this weekend? Find a good movie to watch and enjoy!</string>

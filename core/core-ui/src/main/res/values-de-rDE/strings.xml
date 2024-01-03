@@ -9,4 +9,12 @@
     <string name="tv">Fernsehen</string>
     <string name="navigate_up">Nach oben navigieren</string>
     <string name="director"> Regisseur </string>
+
+    <string name="share">Teilen</string>
+    <string name="favorite_list">Lieblingsliste</string>
+    <string name="watchList">Beobachtungsliste</string>
+    <string name="detail_bottom_sheet_movie_info">Details und mehr</string>
+    <string name="detail_bottom_sheet_tv_info">Episoden und mehr</string>
+    <string name="add_favorite_list"> Zu meiner Favoritenliste hinzufügen </string>
+    <string name="add_watch_list"> Zu meiner Beobachtungsliste hinzufügen </string>
 </resources>

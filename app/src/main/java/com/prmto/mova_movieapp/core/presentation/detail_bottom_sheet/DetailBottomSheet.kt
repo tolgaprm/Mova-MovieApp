@@ -104,7 +104,7 @@ class DetailBottomSheet : BottomSheetDialogFragment() {
                 loadImage(posterPath = movie.posterPath)
             }
             tvBottomInfoText.text =
-                requireContext().getString(R.string.detail_bottom_sheet_movie_info)
+                requireContext().getString(CoreUiR.string.detail_bottom_sheet_movie_info)
         }
     }
 
@@ -116,7 +116,8 @@ class DetailBottomSheet : BottomSheetDialogFragment() {
             if (tvSeries.posterPath != null) {
                 loadImage(posterPath = tvSeries.posterPath)
             }
-            tvBottomInfoText.text = requireContext().getString(R.string.detail_bottom_sheet_tv_info)
+            tvBottomInfoText.text =
+                requireContext().getString(CoreUiR.string.detail_bottom_sheet_tv_info)
 
             tvOverview.movementMethod = ScrollingMovementMethod()
         }
