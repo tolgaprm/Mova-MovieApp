@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="now_playing">Vizyondakiler</string>
+    <string name="popular_movies">Popüler Filmler</string>
+    <string name="popular_tv_series">Popüler Diziler</string>
+    <string name="top_rated_movies">En Çok Oy Alan Filmler</string>
+    <string name="top_rated_tv_series">En Çok Oy Alan Diziler</string>
+</resources>

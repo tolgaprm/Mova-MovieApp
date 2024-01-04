@@ -1,30 +1,15 @@
 <resources>
-    <string name="app_name" translatable="false">Mova</string>
     <string name="splash_screen_logo_text">Mova</string>
     <string name="bottom_nav_home">Home</string>
     <string name="bottom_nav_explore">Explore</string>
     <string name="bottom_nav_my_list">My List</string>
     <string name="bottom_nav_upcoming">Upcoming</string>
-    <string name="now_playing">Now Playing</string>
-    <string name="see_all">See all</string>
-    <string name="popular_movies">Popular Movies</string>
-    <string name="popular_tv_series">Popular Tv Series</string>
-    <string name="top_rated_movies">Top Rated Movies</string>
-    <string name="search">Search</string>
-    <string name="filter">filter</string>
-    <string name="top_rated_tv_series">Top Rated Tv Series</string>
-    <string name="sort_amp_filter"><![CDATA[Sort & Filter]]></string>
-    <string name="categories">Categories</string>
-    <string name="genre">Genre</string>
+
     <string name="tv_name_with_original_name" translatable="false">%1$s ( %2$s )</string>
 
     <string name="time_periods">Time/Periods</string>
     <string name="retry">Retry</string>
-    <string name="sort">Sort</string>
-    <string name="popularity">Popularity</string>
-    <string name="latest_release">Latest Release</string>
-    <string name="reset">Reset</string>
-    <string name="apply">Apply</string>
+
     <string name="error_didnt_download">Didn\'t download genre options. PLease check your internet connection</string>
     <string name="all_periods">All Periods</string>
     <string name="unknown_error">An unknown error occurred</string>
@@ -35,23 +20,7 @@
     <string name="language_french">French</string>
     <string name="language_german">German</string>
 
-    <string name="person">Person</string>
     <string name="something_went_wrong">Something went wrong</string>
-    <string name="try_again">TRY AGAIN</string>
-
-    <string name="login_to_your_account">Login to Your Account</string>
-    <string name="create_your_account">Create Your Account</string>
-    <string name="email">Email</string>
-    <string name="password">Password</string>
-    <string name="sign_in">Sign In</string>
-    <string name="sign_up">Sign up</string>
-    <string name="don_t_have_an_account">Don\'t have an account?</string>
-    <string name="forget_the_password">Forget the password?</string>
-    <string name="forget_password">Forget password</string>
-    <string name="back_to_login">Back to login</string>
-    <string name="check_your_email">Check your email</string>
-    <string name="or_continue_with">or continue with</string>
-    <string name="sign_in_with_google">Sign In With Google</string>
 
     <string name="have_good_weekend">Have a good weekend</string>
     <string name="movie_notification">Can\'t decide what to watch this weekend? Find a good movie to watch and enjoy!</string>

@@ -7,18 +7,19 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.prmto.core_domain.models.Category
 import com.prmto.core_domain.repository.isAvaliable
+import com.prmto.core_ui.base.fragment.BaseFragmentWithUiEvent
 import com.prmto.core_ui.base.isEmpty
 import com.prmto.core_ui.util.collectFlow
 import com.prmto.core_ui.util.handlePagingLoadState.HandlePagingLoadStateMovieAndTvBaseRecyclerAdapter
 import com.prmto.core_ui.util.loadAd
 import com.prmto.core_ui.util.makeGone
 import com.prmto.core_ui.util.makeVisible
-import com.prmto.mova_movieapp.databinding.FragmentExploreBinding
-import com.prmto.mova_movieapp.feature_explore.presentation.adapter.FilterMoviesAdapter
-import com.prmto.mova_movieapp.feature_explore.presentation.adapter.FilterTvSeriesAdapter
-import com.prmto.mova_movieapp.feature_explore.presentation.adapter.HandlePagingStateSearchAdapter
-import com.prmto.mova_movieapp.feature_explore.presentation.adapter.SearchRecyclerAdapter
-import com.prmto.mova_movieapp.feature_explore.presentation.event.ExploreFragmentEvent
+import com.prmto.explore_ui.adapter.FilterMoviesAdapter
+import com.prmto.explore_ui.adapter.FilterTvSeriesAdapter
+import com.prmto.explore_ui.adapter.HandlePagingStateSearchAdapter
+import com.prmto.explore_ui.adapter.SearchRecyclerAdapter
+import com.prmto.explore_ui.databinding.FragmentExploreBinding
+import com.prmto.explore_ui.event.ExploreFragmentEvent
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -28,7 +29,7 @@ import com.prmto.core_ui.R as CoreUiR
 
 @AndroidEntryPoint
 class ExploreFragment :
-    com.prmto.core_ui.base.fragment.BaseFragmentWithUiEvent<FragmentExploreBinding, ExploreViewModel>(
+    BaseFragmentWithUiEvent<FragmentExploreBinding, ExploreViewModel>(
         inflater = FragmentExploreBinding::inflate
     ) {
     override lateinit var viewModel: ExploreViewModel

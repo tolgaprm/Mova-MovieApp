@@ -10,6 +10,7 @@ import com.prmto.mova_movieapp.MainActivity
 import com.prmto.mova_movieapp.R
 import com.prmto.mova_movieapp.notification.Notifier
 import javax.inject.Inject
+import com.prmto.core_ui.R as CoreUiR
 
 class WeekendNotifier @Inject constructor(
     private val context: Context,
@@ -34,7 +35,7 @@ class WeekendNotifier @Inject constructor(
         return NotificationCompat.Builder(context, notificationChannelId)
             .setContentTitle(getNotificationTitle())
             .setContentText(getNotificationMessage())
-            .setSmallIcon(R.drawable.ic_outline_movie_24)
+            .setSmallIcon(CoreUiR.drawable.ic_outline_movie_red)
             .setContentIntent(pendingIntent)
             .build()
     }

@@ -20,4 +20,12 @@
     <color name="shimmer_item_color">#C2C2C2</color>
 
     <color name="subtitleColor">#CB212121</color>
+
+    <color name="chip_state_check_background_color">@color/red</color>
+    <color name="chip_state_check_text_color">@android:color/white</color>
+
+    <color name="progressTint">#FFEB3B</color>
+
+    <color name="chip_state_uncheck_background_color">@android:color/white</color>
+    <color name="chip_state_uncheck_text_color">@color/red</color>
 </resources>

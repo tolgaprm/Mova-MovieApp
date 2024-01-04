@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name" translatable="false">Mova</string>
     <string name="voteAverage" translatable="false">%1$s (%2$s)</string>
     <string name="release_date_genre" translatable="false">%1$s  %2$s</string>
     <string name="internet_error">"Oops! Please check your internet connection."</string>
@@ -18,4 +19,7 @@
     <string name="detail_bottom_sheet_tv_info">Episodes and More</string>
     <string name="add_favorite_list">Add My Favorite List</string>
     <string name="add_watch_list">Add My Watch List</string>
+    <string name="sign_in">Sign In</string>
+    <string name="try_again">TRY AGAIN</string>
+    <string name="see_all">See all</string>
 </resources>

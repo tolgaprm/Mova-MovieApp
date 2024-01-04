@@ -14,16 +14,17 @@ import com.prmto.core_ui.util.getCountryIsoCode
 import com.prmto.core_ui.util.handlePagingLoadState.HandlePagingLoadStateMovieAndTvBaseRecyclerAdapter
 import com.prmto.core_ui.util.makeGone
 import com.prmto.core_ui.util.makeVisible
-import com.prmto.mova_movieapp.R
-import com.prmto.mova_movieapp.databinding.FragmentHomeBinding
-import com.prmto.mova_movieapp.feature_home.presentation.home.adapter.HandlePagingStateNowPlayingRecyclerAdapter
-import com.prmto.mova_movieapp.feature_home.presentation.home.adapter.NowPlayingRecyclerAdapter
-import com.prmto.mova_movieapp.feature_home.presentation.home.adapter.PopularMoviesAdapter
-import com.prmto.mova_movieapp.feature_home.presentation.home.adapter.PopularTvSeriesAdapter
-import com.prmto.mova_movieapp.feature_home.presentation.home.adapter.TopRatedMoviesAdapter
-import com.prmto.mova_movieapp.feature_home.presentation.home.adapter.TopRatedTvSeriesAdapter
-import com.prmto.mova_movieapp.feature_home.presentation.home.event.HomeEvent
+import com.prmto.home_ui.adapter.HandlePagingStateNowPlayingRecyclerAdapter
+import com.prmto.home_ui.adapter.NowPlayingRecyclerAdapter
+import com.prmto.home_ui.adapter.PopularMoviesAdapter
+import com.prmto.home_ui.adapter.PopularTvSeriesAdapter
+import com.prmto.home_ui.adapter.TopRatedMoviesAdapter
+import com.prmto.home_ui.adapter.TopRatedTvSeriesAdapter
+import com.prmto.home_ui.databinding.FragmentHomeBinding
+import com.prmto.mova_movieapp.feature_home.presentation.event.HomeEvent
 import dagger.hilt.android.AndroidEntryPoint
+import com.prmto.core_ui.R as CoreUiR
+import com.prmto.home_ui.R as HomeUiR
 
 @AndroidEntryPoint
 class HomeFragment : BaseFragmentWithUiEvent<FragmentHomeBinding, HomeViewModel>(
@@ -90,23 +91,23 @@ class HomeFragment : BaseFragmentWithUiEvent<FragmentHomeBinding, HomeViewModel>
             val context = requireContext()
             val adapter =
                 when (viewModel.homeState.value.seeAllPageToolBarText?.asString(context)) {
-                    context.getString(R.string.now_playing) -> {
+                    context.getString(HomeUiR.string.now_playing) -> {
                         nowPlayingAdapter
                     }
 
-                    context.getString(R.string.popular_movies) -> {
+                    context.getString(HomeUiR.string.popular_movies) -> {
                         popularMoviesAdapter
                     }
 
-                    context.getString(R.string.popular_tv_series) -> {
+                    context.getString(HomeUiR.string.popular_tv_series) -> {
                         popularTvSeriesAdapter
                     }
 
-                    context.getString(R.string.top_rated_movies) -> {
+                    context.getString(HomeUiR.string.top_rated_movies) -> {
                         topRatedMoviesAdapter
                     }
 
-                    context.getString(R.string.top_rated_tv_series) -> {
+                    context.getString(HomeUiR.string.top_rated_tv_series) -> {
                         topRatedTvSeriesAdapter
                     }
 
@@ -209,35 +210,35 @@ class HomeFragment : BaseFragmentWithUiEvent<FragmentHomeBinding, HomeViewModel>
         binding.apply {
             nowPlayingSeeAll.setOnClickListener {
                 viewModel.onEvent(
-                    HomeEvent.ClickSeeAllText(UiText.StringResource(R.string.now_playing))
+                    HomeEvent.ClickSeeAllText(UiText.StringResource(HomeUiR.string.now_playing))
                 )
                 recyclerViewSeeAll.adapter = nowPlayingAdapter
             }
 
             popularMoviesSeeAll.setOnClickListener {
                 viewModel.onEvent(
-                    HomeEvent.ClickSeeAllText(UiText.StringResource(R.string.popular_movies))
+                    HomeEvent.ClickSeeAllText(UiText.StringResource(HomeUiR.string.popular_movies))
                 )
                 recyclerViewSeeAll.adapter = popularMoviesAdapter
             }
 
             popularTvSeeAll.setOnClickListener {
                 viewModel.onEvent(
-                    HomeEvent.ClickSeeAllText(UiText.StringResource(R.string.popular_tv_series))
+                    HomeEvent.ClickSeeAllText(UiText.StringResource(HomeUiR.string.popular_tv_series))
                 )
                 recyclerViewSeeAll.adapter = popularTvSeriesAdapter
             }
 
             topRatedMoviesSeeAll.setOnClickListener {
                 viewModel.onEvent(
-                    HomeEvent.ClickSeeAllText(UiText.StringResource(R.string.top_rated_movies))
+                    HomeEvent.ClickSeeAllText(UiText.StringResource(HomeUiR.string.top_rated_movies))
                 )
                 recyclerViewSeeAll.adapter = topRatedMoviesAdapter
             }
 
             topRatedTvSeriesSeeAll.setOnClickListener {
                 viewModel.onEvent(
-                    HomeEvent.ClickSeeAllText(UiText.StringResource(R.string.top_rated_tv_series))
+                    HomeEvent.ClickSeeAllText(UiText.StringResource(HomeUiR.string.top_rated_tv_series))
                 )
                 recyclerViewSeeAll.adapter = topRatedTvSeriesAdapter
             }
@@ -246,7 +247,7 @@ class HomeFragment : BaseFragmentWithUiEvent<FragmentHomeBinding, HomeViewModel>
     }
 
     private fun slideInLeftAnim(): Animation =
-        AnimationUtils.loadAnimation(requireContext(), R.anim.slide_in_left)
+        AnimationUtils.loadAnimation(requireContext(), CoreUiR.anim.slide_in_left)
 
     private fun setupRecyclerAdapters() {
         binding.apply {

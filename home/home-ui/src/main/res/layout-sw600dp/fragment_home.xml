@@ -1,0 +1,457 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="@dimen/large_padding">
+
+
+    <LinearLayout
+        android:id="@+id/errorScreen"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:visibility="gone">
+
+        <TextView
+            style="@style/Mova.H5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="@dimen/large_margin"
+            android:text="@string/something_went_wrong"
+            android:textAlignment="center" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnError"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/try_again"
+            android:textColor="?attr/colorSurface"
+            app:backgroundTint="?attr/colorOnSurface"
+            app:cornerRadius="@dimen/shape_medium" />
+
+    </LinearLayout>
+
+    <!--region seeAllSection that when click see all, the linear layout visible-->
+    <LinearLayout
+        android:id="@+id/seeAllPage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <androidx.appcompat.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/large_padding"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/btnNavigateUp"
+                    android:layout_width="@dimen/iconSizeLarge"
+                    android:layout_height="@dimen/iconSizeLarge"
+                    android:layout_gravity="center"
+                    android:background="@drawable/text_ripple"
+                    android:contentDescription="@string/navigate_up"
+                    android:padding="@dimen/medium_padding"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_arrow_back_white"
+                    app:tint="@color/red" />
+
+                <TextView
+                    android:id="@+id/toolbarText"
+                    style="@style/Mova.Title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:paddingStart="0dp"
+                    android:paddingEnd="@dimen/iconSizeLarge"
+                    android:textAlignment="center"
+                    tools:text="Now Playing" />
+            </LinearLayout>
+
+
+        </androidx.appcompat.widget.Toolbar>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewSeeAll"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingStart="@dimen/medium_padding"
+            android:paddingEnd="@dimen/medium_padding"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:spanCount="4" />
+    </LinearLayout>
+    <!--endregion -->
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/extra_large_padding">
+
+            <!--region nowPlaying -->
+            <TextView
+                android:id="@+id/login_text"
+                style="@style/Mova.Title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/now_playing"
+                app:layout_constraintEnd_toStartOf="@+id/nowPlayingSeeAll"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintHorizontal_chainStyle="spread"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/nowPlayingSeeAll"
+                style="@style/rippleText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="@dimen/large_padding"
+                android:paddingVertical="@dimen/medium_padding"
+                app:layout_constraintBaseline_toBaselineOf="@+id/login_text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/login_text"
+                tools:ignore="TouchTargetSizeCheck" />
+
+
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/nowPlayingShimmerLayout"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/now_playing_row_backdrop_size"
+                android:layout_marginTop="@dimen/medium_margin"
+                android:importantForAccessibility="no"
+                app:layout_constraintBottom_toTopOf="@id/popularMoviesSeeAll"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/login_text">
+
+                <include layout="@layout/now_playing_row_shimmer_item" />
+
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
+            <com.jackandphantom.carouselrecyclerview.CarouselRecyclerview
+                android:id="@+id/nowPlayingRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/now_playing_row_backdrop_size"
+                android:layout_marginTop="@dimen/medium_margin"
+                android:contentDescription="@string/now_playing"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/login_text"
+                tools:itemCount="2"
+                tools:listitem="@layout/now_playing_row">
+
+            </com.jackandphantom.carouselrecyclerview.CarouselRecyclerview>
+            <!--endregion nowPlaying-->
+
+            <!--region PopularMovies -->
+            <TextView
+                android:id="@+id/popular_movies_text"
+                style="@style/Mova.Title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/large_margin"
+                android:text="@string/popular_movies"
+                app:layout_constraintEnd_toStartOf="@+id/nowPlayingSeeAll"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/nowPlayingRecyclerView" />
+
+            <TextView
+                android:id="@+id/popularMoviesSeeAll"
+                style="@style/rippleText"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:gravity="center"
+                android:paddingHorizontal="@dimen/large_padding"
+                android:paddingVertical="@dimen/medium_padding"
+                app:layout_constraintBaseline_toBaselineOf="@+id/popular_movies_text"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:ignore="TouchTargetSizeCheck" />
+
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/popularMoviesShimmerLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:importantForAccessibility="no"
+                app:layout_constraintBottom_toTopOf="@id/popularTvSeeAll"
+                app:layout_constraintEnd_toEndOf="parent"
+
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/popular_movies_text">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <include layout="@layout/movie_row_shimmer_item" />
+
+                    <include layout="@layout/movie_row_shimmer_item" />
+
+                    <include layout="@layout/movie_row_shimmer_item" />
+
+                    <include layout="@layout/movie_row_shimmer_item" />
+
+                    <include layout="@layout/movie_row_shimmer_item" />
+
+                    <include layout="@layout/movie_row_shimmer_item" />
+
+                </LinearLayout>
+
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/popularMoviesRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/home_fragment_recycler_height"
+                android:layout_marginTop="@dimen/medium_margin"
+                android:contentDescription="@string/popular_movies"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/popular_movies_text"
+                tools:itemCount="6"
+                tools:listitem="@layout/movie_row" />
+
+            <!--endregion PopularMovies -->
+
+            <!--region PopularTvSeries -->
+
+            <TextView
+                android:id="@+id/popular_tv_text"
+                style="@style/Mova.Title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/large_margin"
+                android:text="@string/popular_tv_series"
+                app:layout_constraintEnd_toStartOf="@+id/popularTvSeeAll"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/popularMoviesRecyclerView" />
+
+            <TextView
+                android:id="@+id/popularTvSeeAll"
+                style="@style/rippleText"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:gravity="center"
+                android:paddingHorizontal="@dimen/large_padding"
+                android:paddingVertical="@dimen/medium_padding"
+                app:layout_constraintBaseline_toBaselineOf="@+id/popular_tv_text"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:ignore="TouchTargetSizeCheck" />
+
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/popularTvSeriesShimmerLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:importantForAccessibility="no"
+                app:layout_constraintBottom_toTopOf="@id/topRatedMoviesSeeAll"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/popular_tv_text">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <include layout="@layout/movie_row_shimmer_item" />
+
+                    <include layout="@layout/movie_row_shimmer_item" />
+
+                    <include layout="@layout/movie_row_shimmer_item" />
+
+                    <include layout="@layout/movie_row_shimmer_item" />
+
+                    <include layout="@layout/movie_row_shimmer_item" />
+
+                    <include layout="@layout/movie_row_shimmer_item" />
+
+                </LinearLayout>
+
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/popularTvSeriesRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/home_fragment_recycler_height"
+                android:layout_marginTop="@dimen/medium_margin"
+                android:contentDescription="@string/popular_tv_series"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/popular_tv_text"
+                tools:itemCount="6"
+                tools:listitem="@layout/movie_row" />
+            <!--endregion PopularTvSeries -->
+
+            <!--region TopRatedMovies -->
+            <TextView
+                android:id="@+id/topRatedMovies"
+                style="@style/Mova.Title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/large_margin"
+                android:text="@string/top_rated_movies"
+                app:layout_constraintEnd_toStartOf="@+id/popularTvSeeAll"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/popularTvSeriesRecyclerView" />
+
+            <TextView
+                android:id="@+id/topRatedMoviesSeeAll"
+                style="@style/rippleText"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:gravity="center"
+                android:paddingHorizontal="@dimen/large_padding"
+                android:paddingVertical="@dimen/medium_padding"
+                app:layout_constraintBaseline_toBaselineOf="@+id/topRatedMovies"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:ignore="TouchTargetSizeCheck" />
+
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/topRatedMoviesShimmerLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:importantForAccessibility="no"
+                app:layout_constraintBottom_toTopOf="@id/topRatedTvSeriesSeeAll"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/topRatedMovies">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <include layout="@layout/movie_row_shimmer_item" />
+
+                    <include layout="@layout/movie_row_shimmer_item" />
+
+                    <include layout="@layout/movie_row_shimmer_item" />
+
+                    <include layout="@layout/movie_row_shimmer_item" />
+
+                    <include layout="@layout/movie_row_shimmer_item" />
+
+                    <include layout="@layout/movie_row_shimmer_item" />
+
+                </LinearLayout>
+
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/topRatedMoviesRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/home_fragment_recycler_height"
+                android:layout_marginTop="@dimen/medium_margin"
+                android:contentDescription="@string/top_rated_movies"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/topRatedMovies"
+                tools:itemCount="6"
+                tools:listitem="@layout/movie_row" />
+            <!--endregion TopRatedMovies -->
+
+            <!--region TopRatedTvSeries-->
+            <TextView
+                android:id="@+id/topRatedTvSeries"
+                style="@style/Mova.Title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/large_margin"
+                android:text="@string/top_rated_tv_series"
+                app:layout_constraintEnd_toStartOf="@+id/popularTvSeeAll"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/topRatedMoviesRecyclerView" />
+
+            <TextView
+                android:id="@+id/topRatedTvSeriesSeeAll"
+                style="@style/rippleText"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:gravity="center"
+                android:paddingHorizontal="@dimen/large_padding"
+                android:paddingVertical="@dimen/medium_padding"
+                app:layout_constraintBaseline_toBaselineOf="@+id/topRatedTvSeries"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:ignore="TouchTargetSizeCheck" />
+
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/topRatedTvSeriesShimmerLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:importantForAccessibility="no"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/topRatedTvSeries">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <include layout="@layout/movie_row_shimmer_item" />
+
+                    <include layout="@layout/movie_row_shimmer_item" />
+
+                    <include layout="@layout/movie_row_shimmer_item" />
+
+                    <include layout="@layout/movie_row_shimmer_item" />
+
+                    <include layout="@layout/movie_row_shimmer_item" />
+
+                    <include layout="@layout/movie_row_shimmer_item" />
+
+                </LinearLayout>
+
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/topRatedTvSeriesRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/home_fragment_recycler_height"
+                android:layout_marginTop="@dimen/medium_margin"
+                android:contentDescription="@string/top_rated_tv_series"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/topRatedTvSeries"
+                tools:itemCount="6"
+                tools:listitem="@layout/movie_row" />
+
+            <!--endregion TopRatedTvSeries-->
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </ScrollView>
+</FrameLayout>

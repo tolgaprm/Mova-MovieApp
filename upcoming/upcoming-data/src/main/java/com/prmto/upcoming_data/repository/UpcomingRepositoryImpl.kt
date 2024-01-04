@@ -42,15 +42,23 @@ class UpcomingRepositoryImpl @Inject constructor(
         ).flow
     }
 
-    override suspend fun insertUpcomingRemind(upcomingRemindEntity: UpcomingRemindEntity) {
-        upcomingDao.insertUpcomingRemind(upcomingRemindEntity)
+    override suspend fun insertUpcomingRemind(upcomingMovie: UpcomingMovie) {
+        upcomingDao.insertUpcomingRemind(upcomingMovie.toUpcomingRemindEntity())
     }
 
-    override suspend fun deleteUpcomingRemind(upcomingRemindEntity: UpcomingRemindEntity) {
-        upcomingDao.deleteUpcomingRemind(upcomingRemindEntity)
+    override suspend fun deleteUpcomingRemind(upcomingMovie: UpcomingMovie) {
+        upcomingDao.deleteUpcomingRemind(upcomingMovie.toUpcomingRemindEntity())
     }
 
     override fun getAllUpcomingRemind(): Flow<List<UpcomingRemindEntity>> {
         return upcomingDao.getUpcomingRemindList()
+    }
+
+    private fun UpcomingMovie.toUpcomingRemindEntity(): UpcomingRemindEntity {
+        return UpcomingRemindEntity(
+            movieId = movie.id,
+            movieTitle = movie.title,
+            movieReleaseDate = movie.fullReleaseDate ?: ""
+        )
     }
 }

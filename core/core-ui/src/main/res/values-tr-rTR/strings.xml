@@ -16,4 +16,7 @@
     <string name="detail_bottom_sheet_tv_info">Bölümler ve daha fazlası</string>
     <string name="add_favorite_list">Favori Listeme Ekle</string>
     <string name="add_watch_list">İzleme Listeme Ekle</string>
+    <string name="sign_in">Giriş Yap</string>
+    <string name="try_again">Yeniden Deneyiniz.</string>
+    <string name="see_all">Hepsini Gör</string>
 </resources>

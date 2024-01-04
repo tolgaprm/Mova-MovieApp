@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="login_to_your_account">Hesabınıza Giriş Yapın</string>
+    <string name="create_your_account">Hesap Oluşturun</string>
+    <string name="email">Email</string>
+    <string name="password">Şifre</string>
+    <string name="sign_up">Kayıt Ol</string>
+    <string name="don_t_have_an_account">Hesabınız Yok mu?</string>
+    <string name="forget_the_password">Şifremi Unuttum?</string>
+    <string name="forget_password">Şifremi Unuttum</string>
+    <string name="back_to_login">Giriş Yap</string>
+    <string name="check_your_email">Şifreyi sıfırlamak için gerekli bağlantıyı email hesabınıza gönderdik. \nEmail hesabınızı kontrol ediniz.</string>
+    <string name="or_continue_with">or continue with</string>
+    <string name="sign_in_with_google">Google\'la giriş yap</string>
+</resources>

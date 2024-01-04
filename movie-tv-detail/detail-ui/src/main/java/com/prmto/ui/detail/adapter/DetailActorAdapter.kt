@@ -26,7 +26,7 @@ class DetailActorAdapter :
                     imageUrl = cast.profilePath
                 )
             ) {
-                error(CoreUiR.drawable.ic_baseline_person_24)
+                error(CoreUiR.drawable.ic_person_white)
             }
             binding.txtActorName.text = cast.name
             binding.txtCharacterName.text = cast.character

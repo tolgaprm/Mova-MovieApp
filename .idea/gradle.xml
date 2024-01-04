@@ -36,6 +36,7 @@
             <option value="$PROJECT_DIR$/explore" />
             <option value="$PROJECT_DIR$/explore/explore-data" />
             <option value="$PROJECT_DIR$/explore/explore-domain" />
+            <option value="$PROJECT_DIR$/explore/explore-ui" />
             <option value="$PROJECT_DIR$/home" />
             <option value="$PROJECT_DIR$/home/home-data" />
             <option value="$PROJECT_DIR$/home/home-domain" />

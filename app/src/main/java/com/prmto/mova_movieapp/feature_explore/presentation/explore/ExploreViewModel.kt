@@ -13,9 +13,12 @@ import com.prmto.core_domain.repository.GenreRepository
 import com.prmto.core_domain.repository.isAvaliable
 import com.prmto.core_domain.util.Constants.DEFAULT_LANGUAGE
 import com.prmto.core_domain.util.UiText
+import com.prmto.core_ui.base.viewModel.BaseViewModelWithUiEvent
 import com.prmto.core_ui.util.UiEvent
-import com.prmto.mova_movieapp.feature_explore.presentation.event.ExploreBottomSheetEvent
-import com.prmto.mova_movieapp.feature_explore.presentation.event.ExploreFragmentEvent
+import com.prmto.explore_domain.model.MultiSearch
+import com.prmto.explore_domain.use_case.ExploreUseCases
+import com.prmto.explore_ui.event.ExploreBottomSheetEvent
+import com.prmto.explore_ui.event.ExploreFragmentEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -30,10 +33,10 @@ import com.prmto.core_ui.R as CoreUiR
 
 @HiltViewModel
 class ExploreViewModel @Inject constructor(
-    private val exploreUseCases: com.prmto.explore_domain.use_case.ExploreUseCases,
+    private val exploreUseCases: ExploreUseCases,
     private val observeNetwork: ConnectivityObserver,
     private val genreRepository: GenreRepository
-) : com.prmto.core_ui.base.viewModel.BaseViewModelWithUiEvent<UiEvent>() {
+) : BaseViewModelWithUiEvent<UiEvent>() {
     private var languageState = DEFAULT_LANGUAGE
 
     private val _query = MutableStateFlow("")
@@ -82,12 +85,12 @@ class ExploreViewModel @Inject constructor(
         return networkState.value.isAvaliable()
     }
 
-    fun multiSearch(query: String): Flow<PagingData<com.prmto.explore_domain.model.MultiSearch>> {
+    fun multiSearch(query: String): Flow<PagingData<MultiSearch>> {
         return if (query.isNotEmpty()) {
             exploreUseCases.multiSearchUseCase(query = query, language = languageState)
                 .cachedIn(viewModelScope)
         } else {
-            flow<PagingData<com.prmto.explore_domain.model.MultiSearch>> { PagingData.empty<com.prmto.explore_data.remote.dto.multisearch.SearchDto>() }.cachedIn(
+            flow<PagingData<MultiSearch>> { PagingData.empty<com.prmto.explore_data.remote.dto.multisearch.SearchDto>() }.cachedIn(
                 viewModelScope
             )
         }

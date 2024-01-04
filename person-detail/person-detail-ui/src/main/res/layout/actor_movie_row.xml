@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="end"
             android:layout_margin="@dimen/small_margin"
-            android:background="@drawable/shimmer_shape"
+            android:background="@drawable/bg_color_shimmer_item_color_with_radius_8"
             android:backgroundTint="?attr/colorSurface"
             android:backgroundTintMode="src_over"
             android:elevation="@dimen/medium_elevation"

@@ -8,8 +8,8 @@ import com.prmto.core_domain.models.tv.TvSeries
 import com.prmto.core_ui.base.viewModel.BaseViewModelWithUiEvent
 import com.prmto.core_ui.util.UiEvent
 import com.prmto.home_domain.usecases.HomeUseCases
-import com.prmto.mova_movieapp.feature_home.presentation.home.event.HomeEvent
-import com.prmto.mova_movieapp.feature_home.presentation.home.state.HomeState
+import com.prmto.home_ui.state.HomeState
+import com.prmto.mova_movieapp.feature_home.presentation.event.HomeEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow

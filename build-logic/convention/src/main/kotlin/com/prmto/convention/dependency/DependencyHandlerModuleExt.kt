@@ -26,9 +26,14 @@ fun DependencyHandlerScope.upcomingDataModule() {
     addModule(":upcoming:upcoming-data")
 }
 
+fun DependencyHandlerScope.upcomingUiModule() {
+    addModule(":upcoming:upcoming-ui")
+}
+
 internal fun DependencyHandlerScope.upcomingFeature() {
     upcomingDataModule()
     upcomingDomainModule()
+    upcomingUiModule()
 }
 
 // Authentication
@@ -68,9 +73,14 @@ fun DependencyHandlerScope.exploreDomainModule() {
     addModule(":explore:explore-domain")
 }
 
+fun DependencyHandlerScope.exploreUiModule() {
+    addModule(":explore:explore-ui")
+}
+
 internal fun DependencyHandlerScope.exploreFeature() {
     exploreDataModule()
     exploreDomainModule()
+    exploreUiModule()
 }
 
 // Home

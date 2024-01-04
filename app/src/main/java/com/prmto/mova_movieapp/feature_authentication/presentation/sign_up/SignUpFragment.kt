@@ -4,11 +4,11 @@ import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.prmto.authentication_ui.databinding.FragmentSignUpBinding
 import com.prmto.authentication_ui.signUp.SignUpEvent
 import com.prmto.authentication_ui.util.updateFieldEmptyError
 import com.prmto.core_ui.base.fragment.BaseFragmentWithUiEvent
 import com.prmto.core_ui.util.collectFlow
-import com.prmto.mova_movieapp.databinding.FragmentSignUpBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

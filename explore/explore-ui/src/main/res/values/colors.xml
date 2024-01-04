@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="reset_button_background">@color/light_red</color>
+    <color name="reset_button_text">@color/red</color>
+</resources>

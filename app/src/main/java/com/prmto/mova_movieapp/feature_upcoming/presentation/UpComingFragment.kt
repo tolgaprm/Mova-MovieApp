@@ -6,10 +6,10 @@ import androidx.navigation.fragment.findNavController
 import com.prmto.core_domain.util.asString
 import com.prmto.core_ui.base.fragment.BaseFragment
 import com.prmto.core_ui.util.collectFlow
-import com.prmto.database.entity.movie.UpcomingRemindEntity
-import com.prmto.mova_movieapp.databinding.FragmentUpComingBinding
-import com.prmto.mova_movieapp.feature_upcoming.presentation.adapter.HandlePagingStateUpComingPagingAdapter
-import com.prmto.mova_movieapp.feature_upcoming.presentation.adapter.UpComingMovieAdapter
+import com.prmto.upcoming_ui.UpComingEvent
+import com.prmto.upcoming_ui.adapter.HandlePagingStateUpComingPagingAdapter
+import com.prmto.upcoming_ui.adapter.UpComingMovieAdapter
+import com.prmto.upcoming_ui.databinding.FragmentUpComingBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -44,12 +44,7 @@ class UpComingFragment : BaseFragment<FragmentUpComingBinding, UpComingViewModel
         upComingMovieAdapter.setOnRemindMeClickListener { upComingMovie ->
             viewModel.onEvent(
                 UpComingEvent.OnClickRemindMe(
-                    upcomingRemindEntity = UpcomingRemindEntity(
-                        upComingMovie.movie.id,
-                        upComingMovie.movie.title,
-                        upComingMovie.movie.fullReleaseDate ?: ""
-                    ),
-                    isAddedToRemind = upComingMovie.isAddedToRemind
+                    upComingMovie
                 )
             )
         }

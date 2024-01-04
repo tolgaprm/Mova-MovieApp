@@ -75,7 +75,7 @@
         android:layout_margin="@dimen/medium_margin"
         android:contentDescription="@string/navigate_up"
         android:padding="@dimen/small_padding"
-        android:src="@drawable/ic_baseline_close_24"
+        android:src="@drawable/ic_close_white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -86,7 +86,7 @@
         android:layout_marginTop="@dimen/medium_margin"
         android:contentDescription="@string/add_favorite_list"
         android:paddingTop="2dp"
-        android:src="@drawable/ic_baseline_favorite_border_24"
+        android:src="@drawable/ic_favorite_border_white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/ibShare"
         app:layout_constraintHorizontal_bias="0.5"
@@ -110,7 +110,7 @@
         android:id="@+id/ibShare"
         style="@style/CircleImageLargeButton"
         android:contentDescription="@string/share"
-        android:src="@drawable/ic_share"
+        android:src="@drawable/ic_share_white"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/btnFavoriteList"
         app:layout_constraintEnd_toStartOf="@+id/btnWatchingList"
@@ -183,7 +183,7 @@
             android:layout_height="@dimen/iconSizeMedium"
             android:layout_weight="1"
             android:importantForAccessibility="no"
-            android:src="@drawable/ic_outline_info_24"
+            android:src="@drawable/ic_outline_info_white"
             app:tint="?attr/colorOnSurface" />
 
         <TextView
@@ -200,7 +200,7 @@
             android:layout_height="@dimen/iconSizeMedium"
             android:layout_weight="1"
             android:importantForAccessibility="no"
-            android:src="@drawable/ic_baseline_keyboard_arrow_right_24"
+            android:src="@drawable/ic_keyboard_arrow_right_white"
             app:tint="?attr/colorOnSurface" />
 
     </LinearLayout>

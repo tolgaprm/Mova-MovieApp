@@ -5,25 +5,11 @@
     <string name="bottom_nav_explore">Keşfet</string>
     <string name="bottom_nav_my_list">Listem</string>
     <string name="bottom_nav_upcoming">Yakında</string>
-    <string name="now_playing">Vizyondakiler</string>
-    <string name="see_all">Hepsini Gör</string>
-    <string name="popular_movies">Popüler Filmler</string>
-    <string name="popular_tv_series">Popüler Diziler</string>
-    <string name="top_rated_movies">En Çok Oy Alan Filmler</string>
-    <string name="search">Arama yapın</string>
-    <string name="filter">Filtrele</string>
-    <string name="top_rated_tv_series">En Çok Oy Alan Diziler</string>
-    <string name="sort_amp_filter"><![CDATA[Sort & Filter]]></string>
-    <string name="categories">Kategoriler</string>
-    <string name="genre">Tür</string>
+
 
     <string name="time_periods">Time/Periods</string>
     <string name="retry">Yeniden Dene</string>
-    <string name="sort">Sırala</string>
-    <string name="popularity">Popularity</string>
-    <string name="latest_release">Latest Release</string>
-    <string name="reset">Reset</string>
-    <string name="apply">Apply</string>
+
     <string name="error_didnt_download">Didn\'t download genre options. PLease check your internet connection</string>
     <string name="all_periods">All Periods</string>
     <string name="unknown_error">Bilinmeyen bir hata meydana geldi</string>
@@ -34,23 +20,8 @@
     <string name="language_french">Fransızca</string>
     <string name="language_german">Almanca</string>
 
-    <string name="person">Kişi</string>
     <string name="something_went_wrong">Birşeyler ters gitti.</string>
-    <string name="try_again">Yeniden Deneyiniz.</string>
 
-    <string name="login_to_your_account">Hesabınıza Giriş Yapın</string>
-    <string name="create_your_account">Hesap Oluşturun</string>
-    <string name="email">Email</string>
-    <string name="password">Şifre</string>
-    <string name="sign_in">Giriş Yap</string>
-    <string name="sign_up">Kayıt Ol</string>
-    <string name="don_t_have_an_account">Hesabınız Yok mu?</string>
-    <string name="forget_the_password">Şifremi Unuttum?</string>
-    <string name="forget_password">Şifremi Unuttum</string>
-    <string name="back_to_login">Giriş Yap</string>
-    <string name="check_your_email">Şifreyi sıfırlamak için gerekli bağlantıyı email hesabınıza gönderdik. \nEmail hesabınızı kontrol ediniz.</string>
-    <string name="or_continue_with">or continue with</string>
-    <string name="sign_in_with_google">Google\'la giriş yap</string>
 
     <string name="have_good_weekend"> İyi hafta sonları</string>
     <string name="movie_notification">Hafta sonu ne izleyeceğine karar veremedin mi? İzleyeceğin güzel bir film bul ve izle</string>

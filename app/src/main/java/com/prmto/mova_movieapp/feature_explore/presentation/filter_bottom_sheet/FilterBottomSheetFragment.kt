@@ -11,9 +11,9 @@ import com.prmto.core_domain.models.Sort
 import com.prmto.core_domain.models.isMovie
 import com.prmto.core_domain.models.isPopularity
 import com.prmto.core_ui.util.collectFlow
-import com.prmto.mova_movieapp.databinding.FragmentBottomSheetBinding
-import com.prmto.mova_movieapp.feature_explore.presentation.GenreChipInflater
-import com.prmto.mova_movieapp.feature_explore.presentation.event.ExploreBottomSheetEvent
+import com.prmto.explore_ui.GenreChipInflater
+import com.prmto.explore_ui.databinding.FragmentBottomSheetBinding
+import com.prmto.explore_ui.event.ExploreBottomSheetEvent
 import com.prmto.mova_movieapp.feature_explore.presentation.explore.ExploreViewModel
 import dagger.hilt.android.AndroidEntryPoint
 

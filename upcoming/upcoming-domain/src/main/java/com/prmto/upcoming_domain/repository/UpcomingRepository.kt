@@ -10,9 +10,9 @@ interface UpcomingRepository {
         language: String
     ): Flow<PagingData<UpcomingMovie>>
 
-    suspend fun insertUpcomingRemind(upcomingRemindEntity: UpcomingRemindEntity)
+    suspend fun insertUpcomingRemind(upcomingMovie: UpcomingMovie)
 
-    suspend fun deleteUpcomingRemind(upcomingRemindEntity: UpcomingRemindEntity)
+    suspend fun deleteUpcomingRemind(upcomingMovie: UpcomingMovie)
 
     fun getAllUpcomingRemind(): Flow<List<UpcomingRemindEntity>>
 }

@@ -5,25 +5,11 @@
     <string name="bottom_nav_explore">Erkunden</string>
     <string name="bottom_nav_my_list">Meine Liste</string>
     <string name="bottom_nav_upcoming">Demnächst</string>
-    <string name="now_playing">Jetzt läuft</string>
-    <string name="see_all">Alle sehen</string>
-    <string name="popular_movies">Beliebte Filme</string>
-    <string name="popular_tv_series">Beliebte Fernsehserien</string>
-    <string name="top_rated_movies">Top bewertete Filme</string>
-    <string name="search">Suche</string>
-    <string name="filter">Filter</string>
-    <string name="top_rated_tv_series">Top bewertete Fernsehserien</string>
-    <string name="sort_amp_filter"><![CDATA[Sortieren & Filtern]]></string>
-    <string name="categories">Kategorien</string>
-    <string name="genre">Genre</string>
+
 
     <string name="time_periods">Zeit/Perioden</string>
     <string name="retry">Wiederholen</string>
-    <string name="sort">Sortieren</string>
-    <string name="popularity">Beliebtheit</string>
-    <string name="latest_release">Neueste Veröffentlichung</string>
-    <string name="reset">Zurücksetzen</string>
-    <string name="apply">Anwenden</string>
+
     <string name="error_didnt_download">Genre-Optionen wurden nicht heruntergeladen. Bitte überprüfen Sie Ihre Internetverbindung</string>
     <string name="all_periods">Alle Perioden</string>
 
@@ -38,24 +24,9 @@
 
 
 
-    <string name="person">Person</string>
     <string name="something_went_wrong">Etwas ist schief gelaufen</string>
-    <string name="try_again">VERSUCH ES NOCH EINMAL</string>
 
 
-    <string name="login_to_your_account">Melden Sie sich bei Ihrem Konto an</string>
-    <string name="create_your_account">Erstellen Sie Ihr Konto</string>
-    <string name="email">Email</string>
-    <string name="password">Passwort</string>
-    <string name="sign_in">Anmelden</string>
-    <string name="sign_up">Anmelden</string>
-    <string name="don_t_have_an_account">Sie haben noch kein Konto?</string>
-    <string name="forget_the_password">Passwort vergessen?</string>
-    <string name="forget_password">Passwort vergessen</string>
-    <string name="back_to_login">Zurück zur Anmeldung</string>
-    <string name="check_your_email">Überprüfen Sie Ihre E-Mail</string>
-    <string name="or_continue_with">oder weiter mit</string>
-    <string name="sign_in_with_google">Mit Google anmelden</string>
 
     <string name="have_good_weekend"> Schönes Wochenende </string>
     <string name="movie_notification"> Können Sie sich nicht entscheiden, was Sie an diesem Wochenende sehen möchten? Finden Sie einen guten Film zum Anschauen und Genießen! </string>
