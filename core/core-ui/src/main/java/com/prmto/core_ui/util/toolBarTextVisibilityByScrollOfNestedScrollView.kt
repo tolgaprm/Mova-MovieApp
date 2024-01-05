@@ -9,6 +9,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.view.isVisible
 import androidx.core.widget.NestedScrollView
 import com.prmto.core_ui.R
+import com.prmto.navigation.R as NavigationR
 
 fun toolBarTextVisibilityByScrollPositionOfNestedScrollView(
     nestedScrollView: NestedScrollView,
@@ -27,11 +28,11 @@ fun toolBarTextVisibilityByScrollPositionOfNestedScrollView(
                 toolbar.setBackgroundResource(R.color.light_gray_no_alpha)
             }
             toolBarTitle.isVisible = true
-            toolbar.animation = AnimationUtils.loadAnimation(context, R.anim.alpha_in)
+            toolbar.animation = AnimationUtils.loadAnimation(context, NavigationR.anim.alpha_in)
         } else if (scrollY < position && toolBarTitle.isVisible) {
             toolbar.setBackgroundColor(Color.argb(0, 255, 255, 255))
             toolBarTitle.isVisible = false
-            toolbar.animation = AnimationUtils.loadAnimation(context, R.anim.alpha_out)
+            toolbar.animation = AnimationUtils.loadAnimation(context, NavigationR.anim.alpha_out)
         }
     }
 }

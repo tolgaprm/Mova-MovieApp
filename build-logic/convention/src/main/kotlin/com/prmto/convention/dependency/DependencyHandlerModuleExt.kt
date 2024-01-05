@@ -164,3 +164,8 @@ internal fun DependencyHandlerScope.personDetailFeature() {
     personDetailDomainModule()
     personDetailUiModule()
 }
+
+// Navigation
+fun DependencyHandlerScope.navigationModule() {
+    addModule(":navigation")
+}

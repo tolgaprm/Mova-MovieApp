@@ -9,6 +9,7 @@ import androidx.core.os.LocaleListCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import com.prmto.core_ui.base.fragment.BaseFragmentWithUiEvent
+import com.prmto.core_ui.util.AlertDialogUtil
 import com.prmto.core_ui.util.collectFlow
 import com.prmto.core_ui.util.loadAd
 import com.prmto.settings_ui.databinding.FragmentSettingsBinding
@@ -99,7 +100,7 @@ class SettingsFragment : BaseFragmentWithUiEvent<FragmentSettingsBinding, Settin
 
     private fun addTxtLogoutClickListener() {
         binding.txtLogOut.setOnClickListener {
-            com.prmto.core_ui.util.AlertDialogUtil.showAlertDialog(
+            AlertDialogUtil.showAlertDialog(
                 context = requireContext(),
                 title = R.string.are_you_sure_log_out,
                 message = R.string.log_out_message,

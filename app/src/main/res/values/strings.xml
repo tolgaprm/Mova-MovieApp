@@ -27,7 +27,6 @@
     <string name="allow">Allow</string>
     <string name="it_is_necc_for_notification">it is necessary to show notification</string>
 
-    <string name="must_login_able_to_add_in_list"> You must to login to able to add in list</string>
     <string name="error_field_empty">This field can\'t be empty</string>
     <string name="error_user">You must login to do this operation</string>
 

@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.navigation.fragment.findNavController
 import androidx.viewbinding.ViewBinding
 import com.prmto.core_ui.util.UiEvent
+import com.prmto.navigation.ToFlowNavigatable
 
 abstract class BaseFragmentWithUiEvent<VB : ViewBinding, VM : ViewModel>(
     inflater: (LayoutInflater, ViewGroup?, Boolean) -> VB
@@ -22,7 +23,12 @@ abstract class BaseFragmentWithUiEvent<VB : ViewBinding, VM : ViewModel>(
                     onEventConsumed()
                 }
 
-                is UiEvent.NavigateTo -> {
+                is UiEvent.NavigateToFlow -> {
+                    (requireActivity() as ToFlowNavigatable).navigateToFlow(firstEvent.navigateFlow)
+                    onEventConsumed()
+                }
+
+                is UiEvent.NavigateToDirections -> {
                     findNavController().navigate(firstEvent.directions)
                     onEventConsumed()
                 }
@@ -31,6 +37,7 @@ abstract class BaseFragmentWithUiEvent<VB : ViewBinding, VM : ViewModel>(
                     findNavController().popBackStack()
                     onEventConsumed()
                 }
+
             }
         }
     }

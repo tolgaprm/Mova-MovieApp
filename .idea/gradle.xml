@@ -47,6 +47,7 @@
             <option value="$PROJECT_DIR$/movie-tv-detail/detail-ui" />
             <option value="$PROJECT_DIR$/my-list" />
             <option value="$PROJECT_DIR$/my-list/my-list-ui" />
+            <option value="$PROJECT_DIR$/navigation" />
             <option value="$PROJECT_DIR$/person-detail" />
             <option value="$PROJECT_DIR$/person-detail/person-detail-data" />
             <option value="$PROJECT_DIR$/person-detail/person-detail-domain" />
@@ -54,9 +55,11 @@
             <option value="$PROJECT_DIR$/settings" />
             <option value="$PROJECT_DIR$/settings/settings-domain" />
             <option value="$PROJECT_DIR$/settings/settings-ui" />
+            <option value="$PROJECT_DIR$/splash" />
             <option value="$PROJECT_DIR$/upcoming" />
             <option value="$PROJECT_DIR$/upcoming/upcoming-data" />
             <option value="$PROJECT_DIR$/upcoming/upcoming-domain" />
+            <option value="$PROJECT_DIR$/upcoming/upcoming-ui" />
           </set>
         </option>
         <option name="resolveExternalAnnotations" value="false" />

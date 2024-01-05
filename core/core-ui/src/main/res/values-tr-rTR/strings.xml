@@ -19,4 +19,5 @@
     <string name="sign_in">Giriş Yap</string>
     <string name="try_again">Yeniden Deneyiniz.</string>
     <string name="see_all">Hepsini Gör</string>
+    <string name="must_login_able_to_add_in_list">Listeye ekleme işlemi yapabilmek için giriş yapmalısınız.</string>
 </resources>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="default_web_client_id" translatable="false">120860039536-re355cviancivntq392eiu8metuajt86.apps.googleusercontent.com</string>
     <string name="login_to_your_account">Login to Your Account</string>
     <string name="create_your_account">Create Your Account</string>
     <string name="email">Email</string>

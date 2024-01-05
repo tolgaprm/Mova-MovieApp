@@ -34,7 +34,6 @@
     <string name="it_is_necc_for_notification"> es ist notwendig, um Benachrichtigungen anzuzeigen </string>
 
 
-    <string name="must_login_able_to_add_in_list"> Sie müssen sich anmelden, um in die Liste aufnehmen zu können </string>
     <string name="error_field_empty"> Dieses Feld darf nicht leer sein </string>
     <string name="error_user"> Sie müssen sich anmelden, um diese Operation durchzuführen </string>
 

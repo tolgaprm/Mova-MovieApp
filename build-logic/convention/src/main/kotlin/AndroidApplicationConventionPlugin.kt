@@ -14,6 +14,7 @@ import com.prmto.convention.dependency.exploreFeature
 import com.prmto.convention.dependency.homeFeature
 import com.prmto.convention.dependency.movieTvDetailFeature
 import com.prmto.convention.dependency.myListFeature
+import com.prmto.convention.dependency.navigationModule
 import com.prmto.convention.dependency.paging
 import com.prmto.convention.dependency.personDetailFeature
 import com.prmto.convention.dependency.retrofit
@@ -80,6 +81,7 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
                 settingsFeature()
                 myListFeature()
                 personDetailFeature()
+                navigationModule()
 
                 addAllUiDependencies(libs)
                 addCoreLibraryDesugaring(libs.findLibrary("desugar.jdk.libs").get())

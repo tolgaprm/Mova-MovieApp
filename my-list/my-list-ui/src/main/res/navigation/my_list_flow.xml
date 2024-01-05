@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/my_list_flow"
+    app:startDestination="@id/myListFragment">
+    <fragment
+        android:id="@+id/myListFragment"
+        android:name="com.prmto.my_list_ui.ListFragment"
+        android:label="MyListFragment"
+        tools:layout="@layout/fragment_my_list">
+        <deepLink
+            android:id="@+id/deepLink"
+            app:uri="myapp://movaapp.com/list" />
+    </fragment>
+</navigation>

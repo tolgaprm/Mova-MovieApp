@@ -8,7 +8,6 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import com.prmto.mova_movieapp.R
-import com.prmto.mova_movieapp.feature_splash.presentation.splash.SplashFragment
 import com.prmto.mova_movieapp.launchFragmentInHiltContainer
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -37,7 +36,7 @@ class SplashFragmentTest {
             ApplicationProvider.getApplicationContext()
         )
 
-        launchFragmentInHiltContainer<SplashFragment> {
+        launchFragmentInHiltContainer<com.prmto.splash.SplashFragment> {
             Navigation.setViewNavController(requireView(), navController)
             navController.setGraph(R.navigation.nav_graph)
         }

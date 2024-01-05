@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/detail_bottom_sheet_flow"
+    app:startDestination="@id/detailBottomSheet">
+    <dialog
+        android:id="@+id/detailBottomSheet"
+        android:name="com.prmto.core_ui.detailBottomSheet.DetailBottomSheet"
+        android:label="DetailBottomSheet"
+        tools:layout="@layout/fragment_detail_bottom_sheet">
+        <argument
+            android:name="Movie"
+            app:argType="com.prmto.core_domain.models.movie.Movie"
+            app:nullable="true" />
+        <argument
+            android:name="TvSeries"
+            app:argType="com.prmto.core_domain.models.tv.TvSeries"
+            app:nullable="true" />
+    </dialog>
+</navigation>

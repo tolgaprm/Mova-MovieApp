@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@id/explore_flow"
+    app:startDestination="@id/exploreFragment">
+    <fragment
+        android:id="@+id/exploreFragment"
+        android:name="com.prmto.explore_ui.explore.ExploreFragment"
+        android:label="ExploreFragment"
+        tools:layout="@layout/fragment_explore">
+        <action
+            android:id="@+id/action_exploreFragment_to_filterBottomSheetFragment"
+            app:destination="@id/filterBottomSheetFragment" />
+    </fragment>
+
+    <dialog
+        android:id="@+id/filterBottomSheetFragment"
+        android:name="com.prmto.explore_ui.filter_bottom_sheet.FilterBottomSheetFragment"
+        android:label="FilterBottomSheetFragment"
+        tools:layout="@layout/fragment_bottom_sheet" />
+</navigation>

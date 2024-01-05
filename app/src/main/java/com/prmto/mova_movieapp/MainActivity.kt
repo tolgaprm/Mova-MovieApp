@@ -18,10 +18,23 @@ import com.google.firebase.FirebaseApp
 import com.google.firebase.appcheck.FirebaseAppCheck
 import com.google.firebase.appcheck.playintegrity.PlayIntegrityAppCheckProviderFactory
 import com.prmto.mova_movieapp.databinding.ActivityMainBinding
+import com.prmto.navigation.NavigateFlow
+import com.prmto.navigation.Navigator
+import com.prmto.navigation.ToFlowNavigatable
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
+import com.prmto.core_ui.R as CoreUiR
+import com.prmto.explore_ui.R as ExploreUiR
+import com.prmto.home_ui.R as HomeUiR
+import com.prmto.my_list_ui.R as MyListUiR
+import com.prmto.settings_ui.R as SettingsUiR
+import com.prmto.upcoming_ui.R as UpcomingUiR
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), ToFlowNavigatable {
+
+    @Inject
+    lateinit var navigator: Navigator
 
     private lateinit var binding: ActivityMainBinding
 
@@ -46,15 +59,16 @@ class MainActivity : AppCompatActivity() {
 
         val navController = navHost.navController
 
+        navigator.navController = navController
+
         binding.bottomBar?.setupWithNavController(navController)
 
         binding.navigationRail?.setupWithNavController(navController)
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
-
             val isPreviousBackStackBottomBarDestinations =
                 isVisibleBottomBarOrNavRail(navController.previousBackStackEntry?.destination)
-            val isCurrentBackStackDetailBottomSheet = destination.id == R.id.detailBottomSheet
+            val isCurrentBackStackDetailBottomSheet = destination.id == CoreUiR.id.detailBottomSheet
 
             val isVisibleBottomBarOrNavRailWhenOpenBottomDetail =
                 isPreviousBackStackBottomBarDestinations && isCurrentBackStackDetailBottomSheet
@@ -66,16 +80,17 @@ class MainActivity : AppCompatActivity() {
             binding.bottomBar?.isVisible =
                 isVisibleBottomBarOrNavigationRail || isVisibleBottomBarOrNavRailWhenOpenBottomDetail
         }
+
     }
 
     private fun isVisibleBottomBarOrNavRail(destination: NavDestination?): Boolean {
         if (destination == null) return false
         return when (destination.id) {
-            R.id.homeFragment -> true
-            R.id.exploreFragment -> true
-            R.id.upComingFragment -> true
-            R.id.myListFragment -> true
-            R.id.settingsFragment -> true
+            HomeUiR.id.homeFragment -> true
+            ExploreUiR.id.exploreFragment -> true
+            UpcomingUiR.id.upComingFragment -> true
+            MyListUiR.id.myListFragment -> true
+            SettingsUiR.id.settingsFragment -> true
             else -> false
         }
     }
@@ -130,5 +145,9 @@ class MainActivity : AppCompatActivity() {
         Snackbar.make(binding.root, permissionExplanation, Snackbar.LENGTH_INDEFINITE)
             .setAction(permissionAction) { permissionLauncher.launch(permission) }
             .show()
+    }
+
+    override fun navigateToFlow(flow: NavigateFlow) {
+        navigator.navigateToFlow(flow)
     }
 }

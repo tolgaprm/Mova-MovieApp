@@ -13,4 +13,5 @@ android {
 dependencies {
     coreUiModule()
     authenticationDomainModule()
+    implementation(libs.play.services.auth)
 }

@@ -19,4 +19,5 @@
     <string name="sign_in">Anmelden</string>
     <string name="try_again">VERSUCH ES NOCH EINMAL</string>
     <string name="see_all">Alle sehen</string>
+    <string name="must_login_able_to_add_in_list"> Sie müssen sich anmelden, um in die Liste aufnehmen zu können </string>
 </resources>

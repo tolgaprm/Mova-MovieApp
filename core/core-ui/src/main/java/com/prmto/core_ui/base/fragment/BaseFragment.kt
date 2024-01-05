@@ -12,6 +12,8 @@ import androidx.viewbinding.ViewBinding
 import com.google.android.material.snackbar.Snackbar
 import com.prmto.core_domain.util.UiText
 import com.prmto.core_domain.util.asString
+import com.prmto.navigation.NavigateFlow
+import com.prmto.navigation.ToFlowNavigatable
 
 abstract class BaseFragment<VB : ViewBinding, VM : ViewModel>(
     private val inflater: (LayoutInflater, ViewGroup?, Boolean) -> VB
@@ -59,6 +61,10 @@ abstract class BaseFragment<VB : ViewBinding, VM : ViewModel>(
             }
         }
         requireActivity().onBackPressedDispatcher.addCallback(callback)
+    }
+
+    fun navigateToFlow(navigationFlow: NavigateFlow) {
+        (requireActivity() as? ToFlowNavigatable)?.navigateToFlow(navigationFlow)
     }
 
     override fun onDestroyView() {

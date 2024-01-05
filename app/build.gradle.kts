@@ -24,4 +24,5 @@ android {
 
 dependencies {
     implementation(libs.play.services.base)
+    implementation(project(":splash"))
 }

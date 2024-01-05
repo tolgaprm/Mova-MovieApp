@@ -20,6 +20,7 @@
     <string name="add_favorite_list">Add My Favorite List</string>
     <string name="add_watch_list">Add My Watch List</string>
     <string name="sign_in">Sign In</string>
+    <string name="must_login_able_to_add_in_list"> You must to login to able to add in list</string>
     <string name="try_again">TRY AGAIN</string>
     <string name="see_all">See all</string>
 </resources>

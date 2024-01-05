@@ -5,6 +5,7 @@ import com.prmto.convention.commonDependenciesForEachModule
 import com.prmto.convention.configureCommon
 import com.prmto.convention.dependency.addAllUiDependencies
 import com.prmto.convention.dependency.coreDomainModule
+import com.prmto.convention.dependency.navigationModule
 import com.prmto.convention.libs
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -25,6 +26,7 @@ class PresentationLayerPlugin : Plugin<Project> {
 
                 dependencies {
                     coreDomainModule()
+                    navigationModule()
                     addAllUiDependencies(libs)
                 }
             }

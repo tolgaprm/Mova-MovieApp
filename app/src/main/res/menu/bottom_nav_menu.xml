@@ -2,28 +2,27 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/homeFragment"
+        android:id="@id/home_flow"
         android:icon="@drawable/bottom_nav_home_selector"
-
         android:title="@string/bottom_nav_home" />
 
     <item
-        android:id="@+id/exploreFragment"
+        android:id="@id/explore_flow"
         android:icon="@drawable/bottom_nav_explore_selector"
         android:title="@string/bottom_nav_explore" />
 
     <item
-        android:id="@+id/upComingFragment"
+        android:id="@id/upcoming_flow"
         android:icon="@drawable/bottom_nav_upcoming_selector"
         android:title="@string/bottom_nav_upcoming" />
 
     <item
-        android:id="@+id/myListFragment"
+        android:id="@id/my_list_flow"
         android:icon="@drawable/bottom_nav_mylist_selector"
         android:title="@string/bottom_nav_my_list" />
 
     <item
-        android:id="@+id/settingsFragment"
+        android:id="@id/setting_flow"
         android:icon="@drawable/bottom_nav_setting_selector"
         android:title="@string/settings" />
 
