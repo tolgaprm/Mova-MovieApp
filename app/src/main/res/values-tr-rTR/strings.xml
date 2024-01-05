@@ -23,8 +23,6 @@
     <string name="something_went_wrong">Birşeyler ters gitti.</string>
 
 
-    <string name="have_good_weekend"> İyi hafta sonları</string>
-    <string name="movie_notification">Hafta sonu ne izleyeceğine karar veremedin mi? İzleyeceğin güzel bir film bul ve izle</string>
     <string name="allow">İzin Ver</string>
     <string name="it_is_necc_for_notification">Bildirim alabilmeniz için gerekli</string>
 
@@ -37,10 +35,6 @@
     <string name="info">Bilgi</string>
 
 
-    <string name="remind_me">Bana Hatırlat</string>
-    <string name="upcoming_movie_set_big_context">Merhaba! Merakla beklediğiniz film hakkında size hatırlatmada bulunmak istedik. Sizi heyecanla bilgilendirmek istiyoruz, %s artık gösterimde!</string>
-    <string name="upcoming_movie_release_basic">%s Şimdi Gösterimde! Arkadaşlarınızı alın ve gösterinin tadını çıkarın!</string>
-    <string name="upcoming_movie_release_title">Yaklaşan Film</string>
 
 
 </resources>

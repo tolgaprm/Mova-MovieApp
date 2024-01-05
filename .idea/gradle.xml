@@ -48,6 +48,7 @@
             <option value="$PROJECT_DIR$/my-list" />
             <option value="$PROJECT_DIR$/my-list/my-list-ui" />
             <option value="$PROJECT_DIR$/navigation" />
+            <option value="$PROJECT_DIR$/notification" />
             <option value="$PROJECT_DIR$/person-detail" />
             <option value="$PROJECT_DIR$/person-detail/person-detail-data" />
             <option value="$PROJECT_DIR$/person-detail/person-detail-domain" />
@@ -60,6 +61,7 @@
             <option value="$PROJECT_DIR$/upcoming/upcoming-data" />
             <option value="$PROJECT_DIR$/upcoming/upcoming-domain" />
             <option value="$PROJECT_DIR$/upcoming/upcoming-ui" />
+            <option value="$PROJECT_DIR$/work-manager" />
           </set>
         </option>
         <option name="resolveExternalAnnotations" value="false" />

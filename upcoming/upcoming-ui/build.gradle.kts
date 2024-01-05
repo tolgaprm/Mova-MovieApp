@@ -12,4 +12,5 @@ android {
 dependencies {
     coreUiModule()
     upcomingDomainModule()
+    implementation(project(":notification"))
 }

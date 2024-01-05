@@ -8,7 +8,7 @@ import com.prmto.convention.dependencyHandler.addTestImplementation
 import org.gradle.api.artifacts.VersionCatalog
 import org.gradle.kotlin.dsl.DependencyHandlerScope
 
-fun DependencyHandlerScope.hilt(libs: VersionCatalog) {
+internal fun DependencyHandlerScope.hilt(libs: VersionCatalog) {
     addImplementation(libs.findLibrary("dagger.hilt").get())
     addKapt(libs.findLibrary("dagger.hilt.compiler").get())
     addKapt(libs.findLibrary("hilt.compiler").get())
@@ -16,54 +16,54 @@ fun DependencyHandlerScope.hilt(libs: VersionCatalog) {
     addKaptAndroidTest(libs.findLibrary("dagger.hilt.compiler").get())
 }
 
-fun DependencyHandlerScope.room(libs: VersionCatalog) {
+internal fun DependencyHandlerScope.room(libs: VersionCatalog) {
     addImplementation(libs.findLibrary("room.runtime").get())
     addImplementation(libs.findLibrary("room.ktx").get())
     add("annotationProcessor", libs.findLibrary("room.compiler").get())
     addKapt(libs.findLibrary("room.compiler").get())
 }
 
-fun DependencyHandlerScope.retrofit(libs: VersionCatalog) {
+internal fun DependencyHandlerScope.retrofit(libs: VersionCatalog) {
     addImplementation(libs.findLibrary("retrofit").get())
     addImplementation(libs.findLibrary("retrofit.coroutines.adapter").get())
     addImplementation(libs.findLibrary("retrofit.converter.moshi").get())
 }
 
-fun DependencyHandlerScope.dataStore(libs: VersionCatalog) {
+internal fun DependencyHandlerScope.dataStore(libs: VersionCatalog) {
     addImplementation(libs.findLibrary("datastore.preferences").get())
 }
 
-fun DependencyHandlerScope.workManager(libs: VersionCatalog) {
+internal fun DependencyHandlerScope.workManager(libs: VersionCatalog) {
     addImplementation(libs.findLibrary("work.runtime.ktx").get())
     addImplementation(libs.findLibrary("hilt.work").get())
 }
 
-fun DependencyHandlerScope.moshi(libs: VersionCatalog) {
+internal fun DependencyHandlerScope.moshi(libs: VersionCatalog) {
     addImplementation(libs.findLibrary("moshi").get())
     addImplementation(libs.findLibrary("moshi.kotlin").get())
     addKapt(libs.findLibrary("moshi.kotlin.codegen").get())
 }
 
-fun DependencyHandlerScope.coroutines(libs: VersionCatalog) {
+internal fun DependencyHandlerScope.coroutines(libs: VersionCatalog) {
     addImplementation(libs.findLibrary("coroutines.core").get())
     addImplementation(libs.findLibrary("coroutines.android").get())
     addTestImplementation(libs.findLibrary("kotlinx.coroutines.test").get())
     addAndroidTestImplementation(libs.findLibrary("kotlinx.coroutines.test").get())
 }
 
-fun DependencyHandlerScope.paging(libs: VersionCatalog) {
+internal fun DependencyHandlerScope.paging(libs: VersionCatalog) {
     addImplementation(libs.findLibrary("paging.runtime.ktx").get())
 }
 
-fun DependencyHandlerScope.timber(libs: VersionCatalog) {
+internal fun DependencyHandlerScope.timber(libs: VersionCatalog) {
     addImplementation(libs.findLibrary("timber").get())
 }
 
-fun DependencyHandlerScope.androidXKtx(libs: VersionCatalog) {
+internal fun DependencyHandlerScope.androidXKtx(libs: VersionCatalog) {
     addImplementation(libs.findLibrary("androidx.ktx").get())
 }
 
-fun DependencyHandlerScope.firebase(libs: VersionCatalog) {
+internal fun DependencyHandlerScope.firebase(libs: VersionCatalog) {
     addImplementation(platform(libs.findLibrary("firebase.bom").get()))
     addImplementation(libs.findLibrary("firebase.analytics.ktx").get())
     addImplementation(libs.findLibrary("firebase.auth.ktx").get())

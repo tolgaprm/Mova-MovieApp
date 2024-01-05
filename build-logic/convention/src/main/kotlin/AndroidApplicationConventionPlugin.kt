@@ -15,6 +15,7 @@ import com.prmto.convention.dependency.homeFeature
 import com.prmto.convention.dependency.movieTvDetailFeature
 import com.prmto.convention.dependency.myListFeature
 import com.prmto.convention.dependency.navigationModule
+import com.prmto.convention.dependency.notificationModule
 import com.prmto.convention.dependency.paging
 import com.prmto.convention.dependency.personDetailFeature
 import com.prmto.convention.dependency.retrofit
@@ -22,6 +23,7 @@ import com.prmto.convention.dependency.settingsFeature
 import com.prmto.convention.dependency.timber
 import com.prmto.convention.dependency.upcomingFeature
 import com.prmto.convention.dependency.workManager
+import com.prmto.convention.dependency.workManagerModule
 import com.prmto.convention.dependencyHandler.addCoreLibraryDesugaring
 import com.prmto.convention.libs
 import org.gradle.api.Plugin
@@ -82,6 +84,8 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
                 myListFeature()
                 personDetailFeature()
                 navigationModule()
+                notificationModule()
+                workManagerModule()
 
                 addAllUiDependencies(libs)
                 addCoreLibraryDesugaring(libs.findLibrary("desugar.jdk.libs").get())

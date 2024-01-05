@@ -22,8 +22,7 @@
 
     <string name="something_went_wrong">Something went wrong</string>
 
-    <string name="have_good_weekend">Have a good weekend</string>
-    <string name="movie_notification">Can\'t decide what to watch this weekend? Find a good movie to watch and enjoy!</string>
+
     <string name="allow">Allow</string>
     <string name="it_is_necc_for_notification">it is necessary to show notification</string>
 
@@ -32,11 +31,4 @@
 
     <string name="coming_soon">Coming Soon</string>
     <string name="info">Info</string>
-
-    <string name="remind_me">Remind Me</string>
-    <string name="upcoming_movie_set_big_context">Hey there! Just a friendly reminder about the movie you were looking forward to. We\'re thrilled to let you know that %s is now showing in released!</string>
-    <string name="upcoming_movie_release_basic">%s Now Showing! Grab Your Friends and Enjoy the Show!</string>
-    <string name="upcoming_movie_release_title">Upcoming Movie</string>
-
-
 </resources>

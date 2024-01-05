@@ -27,9 +27,6 @@
     <string name="something_went_wrong">Etwas ist schief gelaufen</string>
 
 
-
-    <string name="have_good_weekend"> Schönes Wochenende </string>
-    <string name="movie_notification"> Können Sie sich nicht entscheiden, was Sie an diesem Wochenende sehen möchten? Finden Sie einen guten Film zum Anschauen und Genießen! </string>
     <string name="allow"> Erlauben </string>
     <string name="it_is_necc_for_notification"> es ist notwendig, um Benachrichtigungen anzuzeigen </string>
 
@@ -40,9 +37,5 @@
     <string name="coming_soon">Demnächst</string>
     <string name="info">Infos</string>
 
-    <string name="remind_me">Erinnere mich</string>
-    <string name="upcoming_movie_set_big_context">Hallo! Nur eine freundliche Erinnerung an den Film, auf den Sie sich gefreut haben. Wir freuen uns, Ihnen mitteilen zu können, dass %s jetzt veröffentlicht wird!</string>
-    <string name="upcoming_movie_release_basic">%s Jetzt im Kino! Holen Sie sich Ihre Freunde und genießen Sie die Vorstellung!</string>
-    <string name="upcoming_movie_release_title">Kommender Film</string>
 
 </resources>

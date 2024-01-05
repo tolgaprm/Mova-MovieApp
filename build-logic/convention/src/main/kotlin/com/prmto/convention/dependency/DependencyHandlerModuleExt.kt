@@ -169,3 +169,13 @@ internal fun DependencyHandlerScope.personDetailFeature() {
 fun DependencyHandlerScope.navigationModule() {
     addModule(":navigation")
 }
+
+// Notification
+fun DependencyHandlerScope.notificationModule() {
+    addModule(":notification")
+}
+
+// Work Manager
+fun DependencyHandlerScope.workManagerModule() {
+    addModule(":work-manager")
+}

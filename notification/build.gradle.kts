@@ -1,4 +1,5 @@
 import com.prmto.convention.dependency.coreDomainModule
+import com.prmto.convention.dependency.coreUiModule
 
 plugins {
     id("mova.android.library")
@@ -11,4 +12,5 @@ android {
 
 dependencies {
     coreDomainModule()
+    coreUiModule()
 }
