@@ -11,14 +11,10 @@ import androidx.work.NetworkType
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
-import com.prmto.mova_movieapp.core.data.worker.NotificationWorker
-import com.prmto.mova_movieapp.core.data.worker.UpdateFirebaseMovieWorker
-import com.prmto.mova_movieapp.core.data.worker.UpdateFirebaseTvSeriesWorker
 import dagger.hilt.android.HiltAndroidApp
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
-
 
 @HiltAndroidApp
 class MovaApplication @Inject constructor(
@@ -41,16 +37,19 @@ class MovaApplication @Inject constructor(
             .setRequiredNetworkType(NetworkType.CONNECTED)
             .build()
 
-        val notificationWorker = OneTimeWorkRequestBuilder<NotificationWorker>()
-            .build()
+        val notificationWorker =
+            OneTimeWorkRequestBuilder<com.prmto.work_manager.NotificationWorker>()
+                .build()
 
-        val updateFirebaseMovieWorker = PeriodicWorkRequestBuilder<UpdateFirebaseMovieWorker>(
-            repeatInterval = 1, repeatIntervalTimeUnit = TimeUnit.DAYS
-        ).setConstraints(constraints).build()
+        val updateFirebaseMovieWorker =
+            PeriodicWorkRequestBuilder<com.prmto.work_manager.UpdateFirebaseMovieWorker>(
+                repeatInterval = 1, repeatIntervalTimeUnit = TimeUnit.DAYS
+            ).setConstraints(constraints).build()
 
-        val updateFirebaseTvSeriesWorker = PeriodicWorkRequestBuilder<UpdateFirebaseTvSeriesWorker>(
-            repeatInterval = 1, repeatIntervalTimeUnit = TimeUnit.DAYS
-        ).setConstraints(constraints).build()
+        val updateFirebaseTvSeriesWorker =
+            PeriodicWorkRequestBuilder<com.prmto.work_manager.UpdateFirebaseTvSeriesWorker>(
+                repeatInterval = 1, repeatIntervalTimeUnit = TimeUnit.DAYS
+            ).setConstraints(constraints).build()
 
         val workManager = WorkManager.getInstance(this)
 

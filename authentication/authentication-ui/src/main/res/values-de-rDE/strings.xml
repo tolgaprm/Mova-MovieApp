@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="login_to_your_account">Melden Sie sich bei Ihrem Konto an</string>
+    <string name="create_your_account">Erstellen Sie Ihr Konto</string>
+    <string name="email">Email</string>
+    <string name="password">Passwort</string>
+    <string name="sign_up">Anmelden</string>
+    <string name="don_t_have_an_account">Sie haben noch kein Konto?</string>
+    <string name="forget_the_password">Passwort vergessen?</string>
+    <string name="forget_password">Passwort vergessen</string>
+    <string name="back_to_login">Zurück zur Anmeldung</string>
+    <string name="check_your_email">Überprüfen Sie Ihre E-Mail</string>
+    <string name="or_continue_with">oder weiter mit</string>
+    <string name="sign_in_with_google">Mit Google anmelden</string>
+</resources>

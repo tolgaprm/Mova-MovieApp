@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="default_web_client_id" translatable="false">120860039536-re355cviancivntq392eiu8metuajt86.apps.googleusercontent.com</string>
+    <string name="login_to_your_account">Login to Your Account</string>
+    <string name="create_your_account">Create Your Account</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="sign_up">Sign up</string>
+    <string name="don_t_have_an_account">Don\'t have an account?</string>
+    <string name="forget_the_password">Forget the password?</string>
+    <string name="forget_password">Forget password</string>
+    <string name="back_to_login">Back to login</string>
+    <string name="check_your_email">Check your email</string>
+    <string name="or_continue_with">or continue with</string>
+    <string name="sign_in_with_google">Sign In With Google</string>
+</resources>

@@ -4,13 +4,64 @@
   <component name="GradleSettings">
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
+        <compositeConfiguration>
+          <compositeBuild compositeDefinitionSource="SCRIPT">
+            <builds>
+              <build path="$PROJECT_DIR$/build-logic" name="build-logic">
+                <projects>
+                  <project path="$PROJECT_DIR$/build-logic" />
+                  <project path="$PROJECT_DIR$/build-logic/convention" />
+                </projects>
+              </build>
+            </builds>
+          </compositeBuild>
+        </compositeConfiguration>
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="gradleJvm" value="#GRADLE_LOCAL_JAVA_HOME" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
-            <option value="$PROJECT_DIR$/buildSrc" />
+            <option value="$PROJECT_DIR$/authentication" />
+            <option value="$PROJECT_DIR$/authentication/authentication-data" />
+            <option value="$PROJECT_DIR$/authentication/authentication-domain" />
+            <option value="$PROJECT_DIR$/authentication/authentication-ui" />
+            <option value="$PROJECT_DIR$/build-logic" />
+            <option value="$PROJECT_DIR$/build-logic/convention" />
+            <option value="$PROJECT_DIR$/core" />
+            <option value="$PROJECT_DIR$/core/core-data" />
+            <option value="$PROJECT_DIR$/core/core-domain" />
+            <option value="$PROJECT_DIR$/core/core-ui" />
+            <option value="$PROJECT_DIR$/database" />
+            <option value="$PROJECT_DIR$/explore" />
+            <option value="$PROJECT_DIR$/explore/explore-data" />
+            <option value="$PROJECT_DIR$/explore/explore-domain" />
+            <option value="$PROJECT_DIR$/explore/explore-ui" />
+            <option value="$PROJECT_DIR$/home" />
+            <option value="$PROJECT_DIR$/home/home-data" />
+            <option value="$PROJECT_DIR$/home/home-domain" />
+            <option value="$PROJECT_DIR$/home/home-ui" />
+            <option value="$PROJECT_DIR$/movie-tv-detail" />
+            <option value="$PROJECT_DIR$/movie-tv-detail/detail-data" />
+            <option value="$PROJECT_DIR$/movie-tv-detail/detail-domain" />
+            <option value="$PROJECT_DIR$/movie-tv-detail/detail-ui" />
+            <option value="$PROJECT_DIR$/my-list" />
+            <option value="$PROJECT_DIR$/my-list/my-list-ui" />
+            <option value="$PROJECT_DIR$/navigation" />
+            <option value="$PROJECT_DIR$/notification" />
+            <option value="$PROJECT_DIR$/person-detail" />
+            <option value="$PROJECT_DIR$/person-detail/person-detail-data" />
+            <option value="$PROJECT_DIR$/person-detail/person-detail-domain" />
+            <option value="$PROJECT_DIR$/person-detail/person-detail-ui" />
+            <option value="$PROJECT_DIR$/settings" />
+            <option value="$PROJECT_DIR$/settings/settings-domain" />
+            <option value="$PROJECT_DIR$/settings/settings-ui" />
+            <option value="$PROJECT_DIR$/splash" />
+            <option value="$PROJECT_DIR$/upcoming" />
+            <option value="$PROJECT_DIR$/upcoming/upcoming-data" />
+            <option value="$PROJECT_DIR$/upcoming/upcoming-domain" />
+            <option value="$PROJECT_DIR$/upcoming/upcoming-ui" />
+            <option value="$PROJECT_DIR$/work-manager" />
           </set>
         </option>
         <option name="resolveExternalAnnotations" value="false" />

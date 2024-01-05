@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="character">Karakter</string>
+    <string name="department">Departman</string>
+    <string name="as_director_work">Yönetmen Olarak Çalıştığı İşler</string>
+    <string name="as_actor_works">Oyuncu Olarak Çalıştığı İşler</string>
+
+    <string name="person_detail_title">Detaylar:</string>
+    <string name="person_date_of_birth_title">Doğum Tarihi:</string>
+    <string name="person_date_of_death_title">Ölüm Tarihi:</string>
+    <string name="person_nation_title">Milliyet:</string>
+</resources>

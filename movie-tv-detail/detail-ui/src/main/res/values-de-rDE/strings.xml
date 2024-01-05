@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="trailers"> Trailer </string>
+    <string name="recommendation"> Empfehlungen </string>
+    <string name="similar"> Ähnlich </string>
+    <string name="voteAverageDetail">%1$s (%2$s Bewertungen)</string>
+    <string name="runtime">%1$sh %2$sm</string>
+    <string name="season_count">%s Staffeln</string>
+    <string name="go_movies_tmdb_site"> Gehe zur tmdb-URL des Films </string>
+    <string name="director_title"> Regisseur: </string>
+    <string name="singular_creator_title"> Schöpfer: </string>
+    <string name="plural_creator_title"> Schöpfer: <br /> </string>
+    <string name="overview"> Übersicht </string>
+    <string name="actor"> Schauspieler </string>
+    <string name="watch_now">Jetzt ansehen</string>
+    <string name="stream">Stream</string>
+    <string name="rent">Mieten</string>
+    <string name="buy">Kaufen</string>
+    <string name="provides_now_watch_information_by_justwatch">Bietet \'Jetzt ansehen Informationen\' von <font color="#FFEB3B">JustWatch</font></string>
+    <string name="couldn_t_find_any_videos_of_this_film"> Konnte keine Videos von diesem Film finden </string>
+</resources>

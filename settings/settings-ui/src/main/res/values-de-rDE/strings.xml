@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="successfully_log_out"> Erfolgreich abgemeldet </string>
+    <string name="log_out"> Abmelden </string>
+
+    <string name="are_you_sure_log_out"> Möchten Sie sich wirklich abmelden? </string>
+    <string name="log_out_message"> Nach dem Abmelden können Sie keinen Film mehr zu Favoriten oder Beobachtungslisten hinzufügen </string>
+
+    <string name="dark_theme">Dunkles Thema</string>
+    <string name="languages">Sprachen</string>
+    <string name="settings">Einstellungen</string>
+</resources>

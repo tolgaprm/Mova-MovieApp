@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@id/upcoming_flow"
+    app:startDestination="@id/upComingFragment">
+    <fragment
+        android:id="@+id/upComingFragment"
+        android:name="com.prmto.upcoming_ui.UpComingFragment"
+        android:label="fragment_up_coming"
+        tools:layout="@layout/fragment_up_coming"></fragment>
+</navigation>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="trailers">Fragmanlar</string>
+    <string name="recommendation">Öneriler</string>
+    <string name="similar">Benzerler</string>
+    <string name="voteAverageDetail">%1$s (%2$s reviews)</string>
+    <string name="runtime">%1$ss  %2$sdk</string>
+    <string name="season_count">%s Sezon</string>
+    <string name="go_movies_tmdb_site">Filmin TMDB web sitesine git</string>
+    <string name="director_title">Yönetmen: </string>
+    <string name="singular_creator_title">Yapımcı: </string>
+    <string name="plural_creator_title">Yapımcılar: <br /></string>
+    <string name="overview">Overview</string>
+    <string name="actor">Oyuncu Kadrosu</string>
+    <string name="watch_now">Şimdi İzle</string>
+    <string name="stream">Yayın</string>
+    <string name="rent">Kirala</string>
+    <string name="buy">Satın Al</string>
+    <string name="provides_now_watch_information_by_justwatch">Şimdi İzle bilgileri <font color="#FFEB3B">JustWatch</font> tarafından sağlanıyor.</string>
+    <string name="couldn_t_find_any_videos_of_this_film">Bu filmin herhangi bir tanıtım videosu bulunamadı.</string>
+</resources>

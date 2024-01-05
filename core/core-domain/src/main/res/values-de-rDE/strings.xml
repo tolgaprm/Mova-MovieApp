@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="language_english">Englisch </string>
+    <string name="language_turkish">Türkisch</string>
+    <string name="language_spanish">Spanisch</string>
+    <string name="language_french">Französisch </string>
+    <string name="language_german"> Deutsch </string>
+
+    <string name="unknown_error">Ein unbekannter Fehler ist aufgetreten</string>
+    <string name="something_went_wrong">Etwas ist schief gelaufen</string>
+    <string name="must_login_able_to_add_in_list"> Sie müssen sich anmelden, um in die Liste aufnehmen zu können </string>
+    <string name="error_field_empty"> Dieses Feld darf nicht leer sein </string>
+    <string name="error_user"> Sie müssen sich anmelden, um diese Operation durchzuführen </string>
+
+
+    // FirebaseFirestore Error Message
+    <string name="permission_denied_error"> Sie haben nicht die erforderlichen Berechtigungen, um diese Operation durchzuführen. Bitte kontaktieren Sie den Administrator. </string>
+    <string name="not_found_error"> Der angeforderte Datensatz/Dokument konnte nicht gefunden werden. Bitte versuchen Sie eine andere Abfrage. </string>
+    <string name="already_exists_error"> Der Datensatz konnte nicht hinzugefügt werden, weil er bereits existiert. Bitte fügen Sie einen anderen Datensatz hinzu. </string>
+    <string name="aborted_error">Die Operation konnte nicht abgeschlossen werden, weil die erforderliche Ressource nicht mehr verfügbar ist. Bitte versuchen Sie es später erneut.</string>
+    <string name="unavailable_error">Verbindung zu den Firebase-Servern nicht möglich. Bitte überprüfen Sie Ihre Internetverbindung und versuchen Sie es erneut.</string>
+    <string name="coming_soon">Demnächst</string>
+    <string name="info">Infos</string>
+
+    <string name="remind_me">Erinnere mich</string>
+    <string name="upcoming_movie_set_big_context">Hallo! Nur eine freundliche Erinnerung an den Film, auf den Sie sich gefreut haben. Wir freuen uns, Ihnen mitteilen zu können, dass %s jetzt veröffentlicht wird!</string>
+    <string name="upcoming_movie_release_basic">%s Jetzt im Kino! Holen Sie sich Ihre Freunde und genießen Sie die Vorstellung!</string>
+    <string name="upcoming_movie_release_title">Kommender Film</string>
+</resources>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="internet_error">"Hoppla! Bitte überprüfen Sie Ihre Internetverbindung."</string>
+    <string name="oops_something_went_wrong">Hoppla! Etwas ist schief gelaufen. Bitte versuchen Sie es erneut.</string>
+    <string name="cancel"> Abbrechen </string>
+    <string name="movie">Film</string>
+    <string name="tv_series">Fernsehserie</string>
+    <string name="movies">Filme</string>
+    <string name="tv">Fernsehen</string>
+    <string name="navigate_up">Nach oben navigieren</string>
+    <string name="director"> Regisseur </string>
+    <string name="share">Teilen</string>
+    <string name="favorite_list">Lieblingsliste</string>
+    <string name="watchList">Beobachtungsliste</string>
+    <string name="detail_bottom_sheet_movie_info">Details und mehr</string>
+    <string name="detail_bottom_sheet_tv_info">Episoden und mehr</string>
+    <string name="add_favorite_list"> Zu meiner Favoritenliste hinzufügen </string>
+    <string name="add_watch_list"> Zu meiner Beobachtungsliste hinzufügen </string>
+    <string name="sign_in">Anmelden</string>
+    <string name="try_again">VERSUCH ES NOCH EINMAL</string>
+    <string name="see_all">Alle sehen</string>
+    <string name="must_login_able_to_add_in_list"> Sie müssen sich anmelden, um in die Liste aufnehmen zu können </string>
+</resources>

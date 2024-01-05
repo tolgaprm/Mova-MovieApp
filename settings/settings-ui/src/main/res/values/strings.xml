@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="successfully_log_out">Successfully log out</string>
+    <string name="log_out">Log out</string>
+    <string name="are_you_sure_log_out">Are you sure you want to log out?</string>
+    <string name="log_out_message">After log out, you can\'t add movie to favorite or watch lists</string>
+
+    <string name="dark_theme">Dark Theme</string>
+    <string name="languages">Languages</string>
+    <string name="settings">Settings</string>
+</resources>

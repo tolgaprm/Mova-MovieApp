@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main_nav_graph"
+    app:startDestination="@id/splash_flow">
+
+    <include app:graph="@navigation/auth_flow" />
+
+    <include app:graph="@navigation/home_flow" />
+
+    <include app:graph="@navigation/detail_flow" />
+
+    <include app:graph="@navigation/detail_bottom_sheet_flow" />
+
+    <include app:graph="@navigation/person_detail_flow" />
+
+    <include app:graph="@navigation/upcoming_flow" />
+
+    <include app:graph="@navigation/explore_flow" />
+
+    <include app:graph="@navigation/my_list_flow" />
+
+    <include app:graph="@navigation/splash_flow" />
+
+    <action
+        android:id="@+id/action_global_homeFlow"
+        app:destination="@+id/home_flow"
+        app:popUpTo="@id/auth_flow"
+        app:popUpToInclusive="true" />
+
+    <action
+        android:id="@+id/action_global_authFlow"
+        app:destination="@id/auth_flow" />
+
+    <action
+        android:id="@+id/action_global_detailBottomSheetFlow"
+        app:destination="@id/detail_bottom_sheet_flow">
+        <argument
+            android:name="Movie"
+            app:argType="com.prmto.core_domain.models.movie.Movie"
+            app:nullable="true" />
+        <argument
+            android:name="TvSeries"
+            app:argType="com.prmto.core_domain.models.tv.TvSeries"
+            app:nullable="true" />
+    </action>
+
+    <action
+        android:id="@+id/action_global_detailFlow"
+        app:destination="@id/detail_flow"
+        app:enterAnim="@anim/slide_in_left"
+        app:exitAnim="@anim/slide_out_rigth">
+        <argument
+            android:name="movieId"
+            app:argType="integer" />
+        <argument
+            android:name="tvId"
+            app:argType="integer" />
+    </action>
+
+    <action
+        android:id="@+id/action_global_personDetailFlow"
+        app:destination="@id/person_detail_flow"
+        app:enterAnim="@anim/slide_in_left"
+        app:exitAnim="@anim/slide_out_rigth">
+        <argument
+            android:name="personId"
+            app:argType="integer" />
+    </action>
+</navigation>

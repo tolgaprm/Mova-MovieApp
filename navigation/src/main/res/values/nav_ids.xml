@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="auth_flow" type="id" />
+    <item name="home_flow" type="id" />
+    <item name="detail_bottom_sheet_flow" type="id" />
+    <item name="detail_flow" type="id" />
+    <item name="person_detail_flow" type="id" />
+    <item name="upcoming_flow" type="id" />
+    <item name="explore_flow" type="id" />
+    <item name="my_list_flow" type="id" />
+    <item name="splash_flow" type="id" />
+    <item name="setting_flow" type="id" />
+</resources>

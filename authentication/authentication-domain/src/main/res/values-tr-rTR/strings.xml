@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    // FirebaseAuth Error Message
+    <string name="error_invalid_custom_token">Geçersiz bir özel token sağlandı.</string>
+    <string name="error_custom_token_mismatch">Sağlanan özel token, kaydedilen API anahtarı ile eşleşmiyor.</string>
+    <string name="error_invalid_credential">Geçersiz bir güvenlik belirteci sağlandı.</string>
+    <string name="error_invalid_email">Geçersiz bir e-posta adresi .</string>
+    <string name="error_wrong_password">Şifreniz yanlış. Yeniden deneyiniz.</string>
+    <string name="error_user_mismatch">Sağlanan güvenlik belirteci, kaydedilen kullanıcı hesabı ile eşleşmiyor.</string>
+    <string name="error_requires_recent_login">Kullanıcının güncel bir giriş yapması gerekiyor.</string>
+    <string name="error_account_exists_with_different_credential">Kullanıcı zaten farklı bir güvenlik belirteci ile kaydedilmiş.</string>
+    <string name="error_email_already_in_use">Bu e-posta adresi zaten kullanımda.</string>
+    <string name="error_credential_already_in_use">Bu güvenlik belirteci zaten kullanımda.</string>
+    <string name="error_user_disabled">Bu kullanıcı hesabı devre dışı bırakıldı.</string>
+    <string name="error_user_token_expired">Kullanıcının güvenlik belirteci zaman aşımına uğradı.</string>
+    <string name="error_user_not_found">Kullanıcı hesabı bulunamadı.</string>
+    <string name="error_invalid_user_token">Geçersiz bir kullanıcı belirteci sağlandı.</string>
+    <string name="error_operation_not_allowed">Bu işlem yapılmasına izin verilmiyor.</string>
+    <string name="error_weak_password">Şifre yetersiz güvenliğe sahip.</string>
+</resources>

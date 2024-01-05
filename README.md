@@ -23,18 +23,18 @@ You can view the cast, plot summary, release date, and more. "
 
 ***
 <div>
-<img src="Screenshoots/home_light_turkish.png" width="180" height="360" float:left>
-<img src="Screenshoots/home_detail_light_turkish.png" width="180" height="360" float:left>
+<img src="Screenshoots/light/home_light_turkish.png" width="180" height="360" float:left>
+<img src="Screenshoots/light/home_detail_light_turkish.png" width="180" height="360" float:left>
 
-<img src="Screenshoots/detail_light_turkish.png" width="180" height="360" float:left>
-<img src="Screenshoots/detail_2_light_turkish.png" width="180" height="360" float:left>
-<img src="Screenshoots/detail_3_light_turkish.png" width="180" height="360" float:left>
-<img src="Screenshoots/detail_4_light_turkish.png" width="180" height="360" float:left>
+<img src="Screenshoots/light/detail_light_turkish.png" width="180" height="360" float:left>
+<img src="Screenshoots/light/detail_2_light_turkish.png" width="180" height="360" float:left>
+<img src="Screenshoots/light/detail_3_light_turkish.png" width="180" height="360" float:left>
+<img src="Screenshoots/light/detail_4_light_turkish.png" width="180" height="360" float:left>
 
-<img src="Screenshoots/explore_light_turkish.png" width="180" height="360" float:left>
-<img src="Screenshoots/upcoming_light.png" width="180" height="360" float:left >
+<img src="Screenshoots/light/explore_light_turkish.png" width="180" height="360" float:left>
+<img src="Screenshoots/light/upcoming_light.png" width="180" height="360" float:left >
 
-**[Other Screenshots](LIGHTSCREENS.md)**
+**[Other Screenshots](readme/LIGHTSCREENS.md)**
 
 </div>
 
@@ -56,7 +56,7 @@ You can view the cast, plot summary, release date, and more. "
 <img src="Screenshoots/dark/upcoming_dark.png" width="180" height="360" float:left>
 
 
-**[Other Screenshots](DARKSCREENS.md)**
+**[Other Screenshots](readme/DARKSCREENS.md)**
 
 </div>
 
@@ -112,11 +112,14 @@ You can view the cast, plot summary, release date, and more. "
       kotlinx.coroutines Flow.
     - [Truth](https://truth.dev/) - A library for performing assertions in tests
 
-## Package Structure
+## Modularization Structure
 
-The application will then be migrated to the Modularization architecture.
+- I used convention plugin for manage dependencies.
+- This app modularization guide is soon.
+- When I implement navigation for multiModule, I got help [this
+  article.](https://medium.com/itnext/android-multimodule-navigation-with-the-navigation-component-99f265de24)
 
-<img src="Screenshoots/package_structure.png" height="700" float:left > 
+ <img src="Screenshoots/module_structure.png" height="700" float:left >
 
 ## API Key 🔑
 
@@ -128,9 +131,7 @@ The application will then be migrated to the Modularization architecture.
 
 ``` API_KEY = PASTE_YOUR_API_KEY ```
 
-## Upcoming
-
-- Modularization
+## Upcoming Features
 - CI Support
 - UI and Unit Tests
 

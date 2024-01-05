@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="now_playing">Now Playing</string>
+    <string name="popular_movies">Popular Movies</string>
+    <string name="popular_tv_series">Popular Tv Series</string>
+    <string name="top_rated_movies">Top Rated Movies</string>
+    <string name="top_rated_tv_series">Top Rated Tv Series</string>
+</resources>

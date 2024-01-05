@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="search">Search</string>
+    <string name="filter">filter</string>
+    <string name="sort_amp_filter"><![CDATA[Sort & Filter]]></string>
+    <string name="categories">Categories</string>
+    <string name="genre">Genre</string>
+    <string name="sort">Sort</string>
+    <string name="popularity">Popularity</string>
+    <string name="latest_release">Latest Release</string>
+    <string name="reset">Reset</string>
+    <string name="apply">Apply</string>
+    <string name="person">Person</string>
+</resources>

@@ -5,52 +5,14 @@
     <string name="bottom_nav_explore">Keşfet</string>
     <string name="bottom_nav_my_list">Listem</string>
     <string name="bottom_nav_upcoming">Yakında</string>
-    <string name="now_playing">Vizyondakiler</string>
-    <string name="see_all">Hepsini Gör</string>
-    <string name="popular_movies">Popüler Filmler</string>
-    <string name="popular_tv_series">Popüler Diziler</string>
-    <string name="top_rated_movies">En Çok Oy Alan Filmler</string>
-    <string name="search">Arama yapın</string>
-    <string name="filter">Filtrele</string>
-    <string name="top_rated_tv_series">En Çok Oy Alan Diziler</string>
-    <string name="sort_amp_filter"><![CDATA[Sort & Filter]]></string>
-    <string name="categories">Kategoriler</string>
-    <string name="movie">Film</string>
-    <string name="tv_series">Diziler</string>
-    <string name="genre">Tür</string>
-    <string name="tv">Dizi</string>
-    <string name="movies">Filmler</string>
 
-
-    <string name="voteAverage">%1$s (%2$s)</string>
-    <string name="voteAverageDetail">%1$s (%2$s reviews)</string>
-    <string name="release_date_genre">%1$s  %2$s</string>
-    <string name="runtime">%1$ss  %2$sdk</string>
-    <string name="season_count">%s Sezon</string>
-
-    <string name="share">Paylaş</string>
-    <string name="favorite_list">Favori Listem</string>
-    <string name="watchList">İzleme Listem</string>
-    <string name="detail_bottom_sheet_movie_info">Detaylar ve daha fazlası</string>
-    <string name="detail_bottom_sheet_tv_info">Bölümler ve daha fazlası</string>
 
     <string name="time_periods">Time/Periods</string>
     <string name="retry">Yeniden Dene</string>
-    <string name="sort">Sırala</string>
-    <string name="popularity">Popularity</string>
-    <string name="latest_release">Latest Release</string>
-    <string name="reset">Reset</string>
-    <string name="apply">Apply</string>
+
     <string name="error_didnt_download">Didn\'t download genre options. PLease check your internet connection</string>
     <string name="all_periods">All Periods</string>
-    <string name="internet_error">"Oops! Lütfen internet bağlatınızı kontrol ediniz."</string>
-    <string name="oops_something_went_wrong">Oops! Bir şeyler ters gitti. Lütfen tekrar deneyiniz.</string>
     <string name="unknown_error">Bilinmeyen bir hata meydana geldi</string>
-
-    <string name="navigate_up">Navigate up</string>
-    <string name="dark_theme">Karanlık Mod</string>
-    <string name="languages">Diller</string>
-    <string name="settings">Ayarlar</string>
 
     <string name="language_english">İngilizce</string>
     <string name="language_turkish">Türkçe</string>
@@ -58,106 +20,21 @@
     <string name="language_french">Fransızca</string>
     <string name="language_german">Almanca</string>
 
-    <string name="overview">Overview</string>
-    <string name="actor">Oyuncu Kadrosu</string>
-    <string name="director">Yönetmen</string>
-
-    <string name="add_favorite_list">Favori Listeme Ekle</string>
-    <string name="add_watch_list">İzleme Listeme Ekle</string>
-    <string name="go_movies_tmdb_site">Filmin TMDB web sitesine git</string>
-    <string name="director_title">Yönetmen: </string>
-    <string name="singular_creator_title">Yapımcı: </string>
-    <string name="plural_creator_title">Yapımcılar: <br /></string>
-
-
-    <string name="watch_now">Şimdi İzle</string>
-    <string name="stream">Yayın</string>
-    <string name="rent">Kirala</string>
-    <string name="buy">Satın Al</string>
-    <string name="provides_now_watch_information_by_justwatch">Şimdi İzle bilgileri <font color="#FFEB3B">JustWatch</font> tarafından sağlanıyor.</string>
-    <string name="person">Kişi</string>
     <string name="something_went_wrong">Birşeyler ters gitti.</string>
-    <string name="try_again">Yeniden Deneyiniz.</string>
-
-    <string name="person_detail_title">Detaylar:</string>
-    <string name="person_date_of_birth_title">Doğum Tarihi:</string>
-    <string name="person_date_of_death_title">Ölüm Tarihi:</string>
-
-    <string name="person_nation_title">Milliyet:</string>
-
-    <string name="character">Karakter</string>
-    <string name="department">Departman</string>
-    <string name="as_director_work">Yönetmen Olarak Çalıştığı İşler</string>
-    <string name="as_actor_works">Oyuncu Olarak Çalıştığı İşler</string>
 
 
-    <string name="trailers">Fragmanlar</string>
-    <string name="recommendation">Öneriler</string>
-    <string name="similar">Benzerler</string>
-
-    <string name="login_to_your_account">Hesabınıza Giriş Yapın</string>
-    <string name="create_your_account">Hesap Oluşturun</string>
-    <string name="email">Email</string>
-    <string name="password">Şifre</string>
-    <string name="sign_in">Giriş Yap</string>
-    <string name="sign_up">Kayıt Ol</string>
-    <string name="don_t_have_an_account">Hesabınız Yok mu?</string>
-    <string name="forget_the_password">Şifremi Unuttum?</string>
-    <string name="forget_password">Şifremi Unuttum</string>
-    <string name="back_to_login">Giriş Yap</string>
-    <string name="check_your_email">Şifreyi sıfırlamak için gerekli bağlantıyı email hesabınıza gönderdik. \nEmail hesabınızı kontrol ediniz.</string>
-    <string name="or_continue_with">or continue with</string>
-    <string name="sign_in_with_google">Google\'la giriş yap</string>
-    <string name="log_out">Çıkış Yap</string>
-    <string name="are_you_sure_log_out">Çıkış yapmak istediğinize emin misiniz?</string>
-    <string name="log_out_message">Çıkış yaptıktan sonra favori ve izleme listelerinize ekleme yapamazsınız.</string>
-    <string name="successfully_log_out">Başarıyla çıkış yapıldı.</string>
-    <string name="couldn_t_find_any_videos_of_this_film">Bu filmin herhangi bir tanıtım videosu bulunamadı.</string>
-
-    <string name="have_good_weekend"> İyi hafta sonları</string>
-    <string name="movie_notification">Hafta sonu ne izleyeceğine karar veremedin mi? İzleyeceğin güzel bir film bul ve izle</string>
     <string name="allow">İzin Ver</string>
     <string name="it_is_necc_for_notification">Bildirim alabilmeniz için gerekli</string>
 
 
-    <string name="cancel">İptal</string>
-    <string name="must_login_able_to_add_in_list">Listeye ekleme işlemi yapabilmek için giriş yapmalısınız.</string>
     <string name="error_field_empty">Bu alan boş bırakılamaz.</string>
     <string name="error_user">Bu işlemi yapabilmek için giriş yapmanız gerekiyor.</string>
 
 
-    // FirebaseAuth Error Message
-    <string name="error_invalid_custom_token">Geçersiz bir özel token sağlandı.</string>
-    <string name="error_custom_token_mismatch">Sağlanan özel token, kaydedilen API anahtarı ile eşleşmiyor.</string>
-    <string name="error_invalid_credential">Geçersiz bir güvenlik belirteci sağlandı.</string>
-    <string name="error_invalid_email">Geçersiz bir e-posta adresi .</string>
-    <string name="error_wrong_password">Şifreniz yanlış. Yeniden deneyiniz.</string>
-    <string name="error_user_mismatch">Sağlanan güvenlik belirteci, kaydedilen kullanıcı hesabı ile eşleşmiyor.</string>
-    <string name="error_requires_recent_login">Kullanıcının güncel bir giriş yapması gerekiyor.</string>
-    <string name="error_account_exists_with_different_credential">Kullanıcı zaten farklı bir güvenlik belirteci ile kaydedilmiş.</string>
-    <string name="error_email_already_in_use">Bu e-posta adresi zaten kullanımda.</string>
-    <string name="error_credential_already_in_use">Bu güvenlik belirteci zaten kullanımda.</string>
-    <string name="error_user_disabled">Bu kullanıcı hesabı devre dışı bırakıldı.</string>
-    <string name="error_user_token_expired">Kullanıcının güvenlik belirteci zaman aşımına uğradı.</string>
-    <string name="error_user_not_found">Kullanıcı hesabı bulunamadı.</string>
-    <string name="error_invalid_user_token">Geçersiz bir kullanıcı belirteci sağlandı.</string>
-    <string name="error_operation_not_allowed">Bu işlem yapılmasına izin verilmiyor.</string>
-    <string name="error_weak_password">Şifre yetersiz güvenliğe sahip.</string>
-
-    // FirebaseFirestore Error Message
-    <string name="permission_denied_error">Bu işlemi gerçekleştirmek için gerekli izinlere sahip değilsiniz. Lütfen yönetici ile iletişime geçin.</string>
-    <string name="not_found_error">Aranan kayıt/doküman bulunamadı. Lütfen farklı bir sorgu deneyin.</string>
-    <string name="already_exists_error">Kayıt eklenemedi çünkü zaten var. Lütfen farklı bir kayıt ekleyin.</string>
-    <string name="aborted_error">İşlem tamamlanamadı çünkü gereken kaynak artık mevcut değil. Lütfen daha sonra tekrar deneyin.</string>
-    <string name="unavailable_error">Firebase sunucularına erişilemiyor. Lütfen internet bağlantınızı kontrol edin ve daha sonra tekrar deneyin.</string>
     <string name="coming_soon">Yakında</string>
     <string name="info">Bilgi</string>
 
 
-    <string name="remind_me">Bana Hatırlat</string>
-    <string name="upcoming_movie_set_big_context">Merhaba! Merakla beklediğiniz film hakkında size hatırlatmada bulunmak istedik. Sizi heyecanla bilgilendirmek istiyoruz, %s artık gösterimde!</string>
-    <string name="upcoming_movie_release_basic">%s Şimdi Gösterimde! Arkadaşlarınızı alın ve gösterinin tadını çıkarın!</string>
-    <string name="upcoming_movie_release_title">Yaklaşan Film</string>
 
 
 </resources>

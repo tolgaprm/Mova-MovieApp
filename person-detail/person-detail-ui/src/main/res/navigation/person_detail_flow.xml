@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@id/person_detail_flow"
+    app:startDestination="@id/personDetailFragment">
+
+    <fragment
+        android:id="@+id/personDetailFragment"
+        android:name="com.example.person_detail_ui.PersonDetailFragment"
+        android:label="PersonDetailFragment"
+        tools:layout="@layout/fragment_person_detail">
+        <argument
+            android:name="personId"
+            app:argType="integer" />
+    </fragment>
+</navigation>
