@@ -116,9 +116,10 @@ You can view the cast, plot summary, release date, and more. "
 
 - I used convention plugin for manage dependencies.
 - This app modularization guide is soon.
-- When I implement navigation for multiModule, I got help this
-  article. [Android Multimodule Navigation with the Navigation Component](https://medium.com/itnext/android-multimodule-navigation-with-the-navigation-component-99f265de24)
-  <img src="Screenshoots/module_structure.png" height="700" float:left >
+- When I implement navigation for multiModule, I got help [this
+  article.](https://medium.com/itnext/android-multimodule-navigation-with-the-navigation-component-99f265de24)
+
+ <img src="Screenshoots/module_structure.png" height="700" float:left >
 
 ## API Key 🔑
 
