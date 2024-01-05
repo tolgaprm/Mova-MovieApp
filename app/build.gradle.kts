@@ -7,8 +7,8 @@ android {
     defaultConfig {
         applicationId = "com.prmto.mova_movieapp"
         minSdk = 24
-        versionCode = 12
-        versionName = "2.0"
+        versionCode = 14
+        versionName = "1.0"
     }
 
     buildTypes {
@@ -24,5 +24,4 @@ android {
 
 dependencies {
     implementation(libs.play.services.base)
-    implementation(project(":splash"))
 }

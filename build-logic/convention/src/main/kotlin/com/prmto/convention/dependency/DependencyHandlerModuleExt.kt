@@ -179,3 +179,8 @@ fun DependencyHandlerScope.notificationModule() {
 fun DependencyHandlerScope.workManagerModule() {
     addModule(":work-manager")
 }
+
+// Splash
+fun DependencyHandlerScope.splashModule() {
+    addModule(":splash")
+}

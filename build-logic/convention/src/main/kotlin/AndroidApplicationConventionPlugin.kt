@@ -20,6 +20,7 @@ import com.prmto.convention.dependency.paging
 import com.prmto.convention.dependency.personDetailFeature
 import com.prmto.convention.dependency.retrofit
 import com.prmto.convention.dependency.settingsFeature
+import com.prmto.convention.dependency.splashModule
 import com.prmto.convention.dependency.timber
 import com.prmto.convention.dependency.upcomingFeature
 import com.prmto.convention.dependency.workManager
@@ -86,6 +87,7 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
                 navigationModule()
                 notificationModule()
                 workManagerModule()
+                splashModule()
 
                 addAllUiDependencies(libs)
                 addCoreLibraryDesugaring(libs.findLibrary("desugar.jdk.libs").get())
