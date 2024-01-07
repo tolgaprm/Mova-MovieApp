@@ -1,34 +1,25 @@
 package com.prmto.authentication_domain.repository
 
 import com.google.firebase.auth.AuthCredential
-import com.prmto.core_domain.util.UiText
+import com.prmto.core_domain.util.SimpleResource
 
 interface AuthenticationRepository {
 
-    fun signInWithEmailAndPassword(
+    suspend fun signInWithEmailAndPassword(
         email: String,
-        password: String,
-        onSuccess: () -> Unit,
-        onFailure: (uiText: UiText) -> Unit
-    )
+        password: String
+    ): SimpleResource
 
-    fun createWithEmailAndPassword(
+    suspend fun createWithEmailAndPassword(
         email: String,
-        password: String,
-        onSuccess: () -> Unit,
-        onFailure: (uiText: UiText) -> Unit
-    )
+        password: String
+    ): SimpleResource
 
-    fun sendPasswordResetEmail(
-        email: String,
-        onSuccess: () -> Unit,
-        onFailure: (uiText: UiText) -> Unit
-    )
+    suspend fun sendPasswordResetEmail(
+        email: String
+    ): SimpleResource
 
-    fun signInWithCredential(
-        credential: AuthCredential,
-        onSuccess: () -> Unit,
-        onFailure: (uiText: UiText) -> Unit
-    )
-
+    suspend fun signInWithCredential(
+        credential: AuthCredential
+    ): SimpleResource
 }

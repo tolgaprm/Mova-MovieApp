@@ -4,11 +4,11 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.prmto.authentication_data.repository.AuthenticationRepositoryImpl
 import com.prmto.authentication_data.repository.FirebaseMovieRepositoryImpl
+import com.prmto.authentication_data.repository.FirebaseTvSeriesRepositoryImpl
 import com.prmto.authentication_domain.repository.AuthenticationRepository
 import com.prmto.authentication_domain.repository.FirebaseMovieRepository
 import com.prmto.authentication_domain.repository.FirebaseTvSeriesRepository
 import com.prmto.authentication_domain.use_case.*
-import com.prmto.mova_movieapp.feature_authentication.data.repository.FirebaseTvSeriesRepositoryImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

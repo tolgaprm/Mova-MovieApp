@@ -1,19 +1,15 @@
 package com.prmto.authentication_domain.repository
 
 import com.prmto.core_domain.models.movie.Movie
-import com.prmto.core_domain.util.UiText
+import com.prmto.core_domain.util.Resource
 
 interface FirebaseMovieRepository {
 
-    fun getFavoriteMovie(
-        userUid: String,
-        onSuccess: (List<Movie>) -> Unit,
-        onFailure: (uiText: UiText) -> Unit,
-    )
+    suspend fun getFavoriteMovie(
+        userUid: String
+    ): Resource<List<Movie>>
 
-    fun getMovieInWatchList(
-        userUid: String,
-        onSuccess: (List<Movie>) -> Unit,
-        onFailure: (uiText: UiText) -> Unit,
-    )
+    suspend fun getMovieInWatchList(
+        userUid: String
+    ): Resource<List<Movie>>
 }

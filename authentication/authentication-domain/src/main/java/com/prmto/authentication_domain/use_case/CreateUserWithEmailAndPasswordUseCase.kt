@@ -3,18 +3,15 @@ package com.prmto.authentication_domain.use_case
 import com.prmto.authentication_domain.models.AuthenticationResult
 import com.prmto.authentication_domain.repository.AuthenticationRepository
 import com.prmto.authentication_domain.util.AuthError
-import com.prmto.core_domain.util.UiText
 import javax.inject.Inject
 
 class CreateUserWithEmailAndPasswordUseCase @Inject constructor(
     private val repository: AuthenticationRepository
 ) {
 
-    operator fun invoke(
+    suspend operator fun invoke(
         email: String,
-        password: String,
-        onSuccess: () -> Unit,
-        onFailure: (uiText: UiText) -> Unit
+        password: String
     ): AuthenticationResult {
         val emailError = if (email.isBlank()) AuthError.FieldEmpty else null
         val passwordError = if (password.isBlank()) AuthError.FieldEmpty else null
@@ -30,9 +27,7 @@ class CreateUserWithEmailAndPasswordUseCase @Inject constructor(
         return AuthenticationResult(
             result = repository.createWithEmailAndPassword(
                 email = email,
-                password = password,
-                onSuccess = onSuccess,
-                onFailure = onFailure
+                password = password
             )
         )
     }

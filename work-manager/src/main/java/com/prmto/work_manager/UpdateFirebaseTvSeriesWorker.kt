@@ -6,6 +6,7 @@ import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.prmto.core_domain.use_case.firebase.tv.GetFavoriteTvSeriesFromLocalDatabaseThenUpdateToFirebase
 import com.prmto.core_domain.use_case.firebase.tv.GetTvSeriesWatchFromLocalDatabaseThenUpdateToFirebase
+import com.prmto.core_domain.util.Resource
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.CoroutineScope
@@ -27,17 +28,19 @@ class UpdateFirebaseTvSeriesWorker @AssistedInject constructor(
         var error = false
 
         coroutineScope.launch {
-            getFavoriteTvSeriesFromLocalDatabaseThenUpdateToFirebase(
-                onSuccess = { error = false },
-                onFailure = { error = true }
-            )
+            error = when (getFavoriteTvSeriesFromLocalDatabaseThenUpdateToFirebase()) {
+                is Resource.Error -> true
+
+                is Resource.Success -> false
+            }
         }
 
         coroutineScope.launch {
-            getTvSeriesWatchFromLocalDatabaseThenUpdateToFirebase(
-                onSuccess = { error = false },
-                onFailure = { error = true }
-            )
+            error = when (getTvSeriesWatchFromLocalDatabaseThenUpdateToFirebase()) {
+                is Resource.Error -> true
+
+                is Resource.Success -> false
+            }
         }
 
         return if (error) Result.failure() else Result.success()

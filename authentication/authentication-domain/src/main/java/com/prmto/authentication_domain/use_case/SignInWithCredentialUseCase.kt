@@ -11,10 +11,8 @@ import javax.inject.Inject
 class SignInWithCredentialUseCase @Inject constructor(
     private val repository: AuthenticationRepository
 ) {
-    operator fun invoke(
-        task: Task<GoogleSignInAccount>,
-        onSuccess: () -> Unit,
-        onFailure: (uiText: UiText) -> Unit
+    suspend operator fun invoke(
+        task: Task<GoogleSignInAccount>
     ): GoogleAuthenticationResult {
 
         val account: GoogleSignInAccount = task.result
@@ -26,9 +24,7 @@ class SignInWithCredentialUseCase @Inject constructor(
 
         return GoogleAuthenticationResult(
             result = repository.signInWithCredential(
-                credential = credential,
-                onSuccess = onSuccess,
-                onFailure = onFailure
+                credential = credential
             )
         )
     }

@@ -2,7 +2,7 @@ package com.prmto.core_domain.use_case.firebase.tv
 
 import com.prmto.core_domain.use_case.database.LocalDatabaseUseCases
 import com.prmto.core_domain.use_case.firebase.FirebaseCoreUseCases
-import com.prmto.core_domain.util.UiText
+import com.prmto.core_domain.util.SimpleResource
 import kotlinx.coroutines.flow.first
 import javax.inject.Inject
 
@@ -11,16 +11,11 @@ class GetFavoriteTvSeriesFromLocalDatabaseThenUpdateToFirebase @Inject construct
     private val firebaseCoreUseCases: FirebaseCoreUseCases
 ) {
 
-    suspend operator fun invoke(
-        onSuccess: () -> Unit,
-        onFailure: (UiText) -> Unit
-    ) {
+    suspend operator fun invoke(): SimpleResource {
         val favoriteTvSeries = localDatabaseUseCases.getFavoriteTvSeriesUseCase().first()
 
-        firebaseCoreUseCases.addTvSeriesToFavoriteListInFirebaseUseCase(
-            tvSeriesInFavoriteList = favoriteTvSeries,
-            onSuccess = onSuccess,
-            onFailure = onFailure
+        return firebaseCoreUseCases.addTvSeriesToFavoriteListInFirebaseUseCase(
+            tvSeriesInFavoriteList = favoriteTvSeries
         )
     }
 }

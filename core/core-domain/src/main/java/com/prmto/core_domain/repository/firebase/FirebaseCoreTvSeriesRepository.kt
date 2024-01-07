@@ -1,21 +1,16 @@
 package com.prmto.core_domain.repository.firebase
 
 import com.prmto.core_domain.models.tv.TvSeries
-import com.prmto.core_domain.util.UiText
+import com.prmto.core_domain.util.SimpleResource
 
 interface FirebaseCoreTvSeriesRepository {
-    fun addTvSeriesToFavoriteList(
+    suspend fun addTvSeriesToFavoriteList(
         userUid: String,
-        data: Map<String, List<TvSeries>>,
-        onSuccess: () -> Unit,
-        onFailure: (uiText: UiText) -> Unit,
+        tvSeriesInFavoriteList: List<TvSeries>
+    ): SimpleResource
 
-        )
-
-    fun addTvSeriesToWatchList(
+    suspend fun addTvSeriesToWatchList(
         userUid: String,
-        data: Map<String, List<TvSeries>>,
-        onSuccess: () -> Unit,
-        onFailure: (uiText: UiText) -> Unit,
-    )
+        tvSeriesInWatchList: List<TvSeries>
+    ): SimpleResource
 }

@@ -3,9 +3,10 @@ package com.prmto.authentication_domain.use_case
 import com.prmto.authentication_domain.repository.FirebaseMovieRepository
 import com.prmto.core_domain.repository.firebase.FirebaseCoreRepository
 import com.prmto.core_domain.repository.local.LocalDatabaseRepository
+import com.prmto.core_domain.util.Resource
+import com.prmto.core_domain.util.SimpleResource
 import com.prmto.core_domain.util.UiText
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 import com.prmto.core_domain.R as CoreDomainR
 
@@ -15,26 +16,32 @@ class GetFavoriteMovieFromFirebaseThenUpdateLocalDatabaseUseCase @Inject constru
     private val localDatabaseRepository: LocalDatabaseRepository,
 ) {
 
-    operator fun invoke(
-        onFailure: (uiText: UiText) -> Unit,
-        coroutineScope: CoroutineScope,
-    ) {
+    suspend operator fun invoke(
+    ): SimpleResource {
         val currentUser = firebaseCoreRepository.getCurrentUser()
         val userUid = currentUser?.uid
-            ?: return onFailure(UiText.StringResource(CoreDomainR.string.error_user))
+            ?: return Resource.Error(UiText.StringResource(CoreDomainR.string.error_user))
 
-        firebaseMovieRepository.getFavoriteMovie(
-            userUid = userUid,
-            onSuccess = { movies ->
-                movies.forEach { movie ->
-                    coroutineScope.launch {
+        val result = firebaseMovieRepository.getFavoriteMovie(
+            userUid = userUid
+        )
+
+        return when (result) {
+            is Resource.Error -> {
+                Resource.Error(result.uiText ?: UiText.unknownError())
+            }
+
+            is Resource.Success -> {
+                Timber.d(result.data.toString())
+                result.data?.let {
+                    it.forEach { movie ->
                         localDatabaseRepository.movieLocalRepository.insertMovieToFavoriteList(
                             movie = movie
                         )
                     }
-                }
-            },
-            onFailure = onFailure
-        )
+                    Resource.Success(Unit)
+                } ?: Resource.Error(UiText.unknownError())
+            }
+        }
     }
 }

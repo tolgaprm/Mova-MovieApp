@@ -1,10 +1,13 @@
 package com.prmto.core_data.util
 
+import com.google.android.gms.tasks.Task
 import com.prmto.core_domain.models.Category
 import com.prmto.core_domain.models.Sort
 import com.prmto.core_domain.models.isLatestRelease
 import com.prmto.core_domain.models.isMovie
 import com.prmto.core_domain.models.isPopularity
+import com.prmto.core_domain.util.Resource
+import com.prmto.core_domain.util.UiText
 
 
 fun Int?.orZero(): Int = this ?: 0
@@ -49,4 +52,12 @@ fun Sort.toDiscoveryQueryString(movieCategory: Category): String {
     }
 
     return stringBuilder.append(".desc").toString()
+}
+
+fun <T> Task<Void>.returnResourceByTaskResult(successItem: T): Resource<T> {
+    return if (isSuccessful) {
+        Resource.Success(successItem)
+    } else {
+        Resource.Error(UiText.unknownError())
+    }
 }
