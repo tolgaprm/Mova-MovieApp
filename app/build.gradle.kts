@@ -7,7 +7,7 @@ android {
     defaultConfig {
         applicationId = "com.prmto.mova_movieapp"
         minSdk = 24
-        versionCode = 14
+        versionCode = 15
         versionName = "1.0"
     }
 

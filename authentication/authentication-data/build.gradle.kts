@@ -1,3 +1,6 @@
+import com.prmto.convention.dependency.authenticationDomainModule
+import com.prmto.convention.dependency.coreDataModule
+
 plugins {
     id("mova.layer.data")
 }
@@ -7,6 +10,6 @@ android {
 }
 
 dependencies {
-    implementation(project(":core:core-data"))
-    implementation(project(":authentication:authentication-domain"))
+    coreDataModule()
+    authenticationDomainModule()
 }

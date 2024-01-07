@@ -57,9 +57,6 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
                 defaultConfig {
                     targetSdk = 33
                     addBuildConfigField(properties, "API_KEY")
-                    addBuildConfigField(properties, "FIREBASE_PROJECT_ID")
-                    addBuildConfigField(properties, "FIREBASE_APPLICATION_ID")
-                    addBuildConfigField(properties, "FIREBASE_API_KEY")
 
                     val resourceConfigurations = listOf("en", "tr-rTR", "de-rDE")
                     resourceConfigurations.forEach { resConfig ->

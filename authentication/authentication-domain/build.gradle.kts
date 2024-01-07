@@ -1,3 +1,5 @@
+import com.prmto.convention.dependency.coreDomainModule
+
 plugins {
     id("mova.layer.domain")
 }
@@ -7,5 +9,5 @@ android {
 }
 
 dependencies {
-    implementation(project(":core:core-domain"))
+    coreDomainModule()
 }

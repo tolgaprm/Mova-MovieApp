@@ -24,6 +24,11 @@ class AndroidLibraryConventionPlugin : Plugin<Project> {
                     defaultConfig.targetSdk = 33
                     compileSdk = 33
 
+                    val resourceConfigurations = listOf("en", "tr-rTR", "de-rDE")
+                    resourceConfigurations.forEach { resConfig ->
+                        resConfig
+                    }
+
                     compileOptions {
                         sourceCompatibility = JavaVersion.VERSION_11
                         targetCompatibility = JavaVersion.VERSION_11

@@ -86,7 +86,8 @@ class DetailBottomSheet : BottomSheetDialogFragment() {
                         positiveBtnMessage = CoreUiR.string.sign_in,
                         negativeBtnMessage = CoreUiR.string.cancel,
                         onClickPositiveButton = {
-                            (requireActivity() as ToFlowNavigatable).navigateToFlow(NavigateFlow.HomeFlow)
+                            (requireActivity() as? ToFlowNavigatable)
+                                ?.navigateToFlow(NavigateFlow.AuthFlow)
                         }
                     )
                 }

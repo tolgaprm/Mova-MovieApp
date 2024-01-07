@@ -15,7 +15,6 @@ import com.prmto.core_ui.util.makeVisible
 import com.prmto.core_ui.util.setAddFavoriteIconByFavoriteState
 import com.prmto.core_ui.util.setWatchListIconByWatchState
 import com.prmto.navigation.NavigateFlow
-import com.prmto.navigation.ToFlowNavigatable
 import com.prmto.ui.databinding.FragmentDetailBinding
 import com.prmto.ui.detail.adapter.DetailActorAdapter
 import com.prmto.ui.detail.adapter.VideosAdapter
@@ -131,11 +130,7 @@ class DetailFragment : BaseFragment<FragmentDetailBinding, DetailViewModel>(
                             message = CoreUiR.string.must_login_able_to_add_in_list,
                             positiveBtnMessage = CoreUiR.string.sign_in,
                             negativeBtnMessage = CoreUiR.string.cancel,
-                            onClickPositiveButton = {
-                                (requireActivity() as ToFlowNavigatable).navigateToFlow(
-                                    NavigateFlow.HomeFlow
-                                )
-                            }
+                            onClickPositiveButton = { navigateToFlow(NavigateFlow.AuthFlow) }
                         )
                         viewModel.onEventConsumed()
                     }
