@@ -1,7 +1,7 @@
 package com.prmto.person_detail_data.remote.datasource
 
-import com.prmto.core_data.dispatcher.DispatcherProvider
 import com.prmto.core_data.util.tryApiCall
+import com.prmto.core_domain.dispatcher.DispatcherProvider
 import com.prmto.person_detail_data.remote.PersonApi
 import com.prmto.person_detail_data.remote.dto.PersonDetailDto
 import kotlinx.coroutines.withContext

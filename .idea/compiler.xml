@@ -9,6 +9,7 @@
       <module name="Mova-MovieApp.buildlogic.convention.test" target="1.7" />
       <module name="Mova-MovieApp.buildLogic.main" target="1.7" />
       <module name="Mova-MovieApp.buildLogic.test" target="1.7" />
+      <module name="Mova-MovieApp.core.core-testing.test" target="1.7" />
       <module name="Mova-MovieApp.core.main" target="1.7" />
       <module name="Mova-MovieApp.core.test" target="1.7" />
       <module name="Mova-MovieApp.detail.main" target="1.7" />

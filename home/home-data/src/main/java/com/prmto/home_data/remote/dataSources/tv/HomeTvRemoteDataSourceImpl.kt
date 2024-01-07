@@ -1,9 +1,9 @@
 package com.prmto.home_data.remote.dataSources.tv
 
-import com.prmto.core_data.dispatcher.DispatcherProvider
 import com.prmto.core_data.remote.dto.ApiResponse
 import com.prmto.core_data.remote.dto.tv.TvSeriesDto
 import com.prmto.core_data.util.tryApiCall
+import com.prmto.core_domain.dispatcher.DispatcherProvider
 import com.prmto.home_data.remote.api.HomeApi
 import kotlinx.coroutines.withContext
 import javax.inject.Inject

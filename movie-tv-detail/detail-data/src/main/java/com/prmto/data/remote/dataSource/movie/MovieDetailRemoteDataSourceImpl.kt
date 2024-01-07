@@ -1,9 +1,9 @@
 package com.prmto.data.remote.dataSource.movie
 
-import com.prmto.core_data.dispatcher.DispatcherProvider
 import com.prmto.core_data.remote.dto.ApiResponse
 import com.prmto.core_data.remote.dto.movie.MovieDto
 import com.prmto.core_data.util.tryApiCall
+import com.prmto.core_domain.dispatcher.DispatcherProvider
 import com.prmto.data.remote.api.DetailApi
 import com.prmto.data.remote.dto.detail.movie.MovieDetailDto
 import com.prmto.data.remote.dto.detail.video.VideosDto

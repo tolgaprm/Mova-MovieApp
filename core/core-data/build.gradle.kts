@@ -1,3 +1,4 @@
+import com.prmto.convention.dependency.coreTestingModule
 import com.prmto.convention.dependency.databaseModuleWithApi
 
 plugins {
@@ -10,4 +11,5 @@ android {
 
 dependencies {
     databaseModuleWithApi()
+    coreTestingModule()
 }

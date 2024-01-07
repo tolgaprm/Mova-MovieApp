@@ -1,8 +1,8 @@
 package com.prmto.explore_data.remote.dataSources.multisearch
 
-import com.prmto.core_data.dispatcher.DispatcherProvider
 import com.prmto.core_data.remote.dto.ApiResponse
 import com.prmto.core_data.util.tryApiCall
+import com.prmto.core_domain.dispatcher.DispatcherProvider
 import com.prmto.explore_data.remote.api.ExploreApi
 import com.prmto.explore_data.remote.dto.multisearch.SearchDto
 import kotlinx.coroutines.withContext

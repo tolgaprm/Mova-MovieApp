@@ -20,7 +20,6 @@ class DataOperationsImpl @Inject constructor(
     private val dataStore: DataStore<Preferences>
 ) : DataStoreOperations {
 
-
     private object PreferencesKey {
         val localeKey = stringPreferencesKey(LOCALE_KEY)
         val uiModeKey = intPreferencesKey(UI_MODE_KEY)

@@ -1,7 +1,7 @@
 package com.prmto.core_data.di
 
 import com.prmto.core_data.dispatcher.DefaultDispatcher
-import com.prmto.core_data.dispatcher.DispatcherProvider
+import com.prmto.core_domain.dispatcher.DispatcherProvider
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

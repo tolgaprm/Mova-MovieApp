@@ -184,3 +184,8 @@ fun DependencyHandlerScope.workManagerModule() {
 fun DependencyHandlerScope.splashModule() {
     addModule(":splash")
 }
+
+// Test
+fun DependencyHandlerScope.coreTestingModule() {
+    addModule(":core:core-testing")
+}

@@ -1,5 +1,6 @@
 package com.prmto.core_data.dispatcher
 
+import com.prmto.core_domain.dispatcher.DispatcherProvider
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import javax.inject.Inject

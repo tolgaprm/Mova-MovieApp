@@ -1,4 +1,4 @@
-package com.prmto.core_data.dispatcher
+package com.prmto.core_domain.dispatcher
 
 import kotlinx.coroutines.CoroutineDispatcher
 

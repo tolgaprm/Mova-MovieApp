@@ -1,8 +1,8 @@
 package com.prmto.core_data.repository
 
-import com.prmto.core_data.dispatcher.DispatcherProvider
 import com.prmto.core_data.remote.api.TMDBApi
 import com.prmto.core_data.remote.mapper.genre.toGenreList
+import com.prmto.core_domain.dispatcher.DispatcherProvider
 import com.prmto.core_domain.models.genre.GenreList
 import com.prmto.core_domain.repository.GenreRepository
 import kotlinx.coroutines.withContext

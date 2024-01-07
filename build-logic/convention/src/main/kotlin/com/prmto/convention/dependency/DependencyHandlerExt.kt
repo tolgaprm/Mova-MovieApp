@@ -27,6 +27,7 @@ internal fun DependencyHandlerScope.retrofit(libs: VersionCatalog) {
     addImplementation(libs.findLibrary("retrofit").get())
     addImplementation(libs.findLibrary("retrofit.coroutines.adapter").get())
     addImplementation(libs.findLibrary("retrofit.converter.moshi").get())
+    addTestImplementation(libs.findLibrary("mockwebserver").get())
 }
 
 internal fun DependencyHandlerScope.dataStore(libs: VersionCatalog) {

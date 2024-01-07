@@ -31,6 +31,7 @@
             <option value="$PROJECT_DIR$/core" />
             <option value="$PROJECT_DIR$/core/core-data" />
             <option value="$PROJECT_DIR$/core/core-domain" />
+            <option value="$PROJECT_DIR$/core/core-testing" />
             <option value="$PROJECT_DIR$/core/core-ui" />
             <option value="$PROJECT_DIR$/database" />
             <option value="$PROJECT_DIR$/explore" />
