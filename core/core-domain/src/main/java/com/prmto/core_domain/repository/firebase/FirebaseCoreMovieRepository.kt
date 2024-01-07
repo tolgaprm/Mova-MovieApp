@@ -1,20 +1,16 @@
 package com.prmto.core_domain.repository.firebase
 
 import com.prmto.core_domain.models.movie.Movie
-import com.prmto.core_domain.util.UiText
+import com.prmto.core_domain.util.SimpleResource
 
 interface FirebaseCoreMovieRepository {
-    fun addMovieToFavoriteList(
+    suspend fun addMovieToFavoriteList(
         userUid: String,
-        data: Map<String, List<Movie>>,
-        onSuccess: () -> Unit,
-        onFailure: (uiText: UiText) -> Unit,
-    )
+        movieInFavoriteList: List<Movie>
+    ): SimpleResource
 
-    fun addMovieToWatchList(
+    suspend fun addMovieToWatchList(
         userUid: String,
-        data: Map<String, List<Movie>>,
-        onSuccess: () -> Unit,
-        onFailure: (uiText: UiText) -> Unit,
-    )
+        moviesInWatchList: List<Movie>
+    ): SimpleResource
 }

@@ -19,4 +19,8 @@ object Constants {
     const val FIREBASE_FAVORITE_TV_DOCUMENT_NAME = "FavoriteTvSeries"
     const val FIREBASE_MOVIE_WATCH_DOCUMENT_NAME = "MovieWatchList"
     const val FIREBASE_TV_WATCH_DOCUMENT_NAME = "TvSeriesWatchList"
+
+
+    const val FIREBASE_MOVIES_FIELD_NAME = "movies"
+    const val FIREBASE_TV_SERIES_FIELD_NAME = "tvSeries"
 }

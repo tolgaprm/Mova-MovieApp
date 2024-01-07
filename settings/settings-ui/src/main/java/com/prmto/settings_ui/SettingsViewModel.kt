@@ -85,36 +85,41 @@ class SettingsViewModel @Inject constructor(
 
     private fun getMovieFavoriteFromLocalDatabaseThenUpdateFirebase() {
         viewModelScope.launch {
-            getFavoriteMoviesFromLocalDatabaseThenUpdateToFirebaseUseCase(
-                onSuccess = { return@getFavoriteMoviesFromLocalDatabaseThenUpdateToFirebaseUseCase },
-                onFailure = { addConsumableViewEvent(UiEvent.ShowSnackbar(it)) }
+            handleResourceWithCallbacks(
+                resourceSupplier = { getFavoriteMoviesFromLocalDatabaseThenUpdateToFirebaseUseCase() },
+                onSuccessCallback = { return@handleResourceWithCallbacks },
+                onErrorCallback = { addConsumableViewEvent(UiEvent.ShowSnackbar(it)) }
             )
         }
     }
 
     private fun getMovieWatchListItemFromLocalDatabaseThenUpdateFirebase() {
         viewModelScope.launch {
-            getMovieWatchListFromLocalDatabaseThenUpdateToFirebase(
-                onSuccess = { return@getMovieWatchListFromLocalDatabaseThenUpdateToFirebase },
-                onFailure = { addConsumableViewEvent(UiEvent.ShowSnackbar(it)) }
+            handleResourceWithCallbacks(
+                resourceSupplier = { getMovieWatchListFromLocalDatabaseThenUpdateToFirebase() },
+                onSuccessCallback = { return@handleResourceWithCallbacks },
+                onErrorCallback = { addConsumableViewEvent(UiEvent.ShowSnackbar(it)) }
             )
         }
     }
 
     private fun getTvSeriesFavoriteFromLocalDatabaseThenUpdateFirebase() {
         viewModelScope.launch {
-            getFavoriteTvSeriesFromLocalDatabaseThenUpdateToFirebase(
-                onSuccess = { return@getFavoriteTvSeriesFromLocalDatabaseThenUpdateToFirebase },
-                onFailure = { addConsumableViewEvent(UiEvent.ShowSnackbar(it)) }
+            handleResourceWithCallbacks(
+                resourceSupplier = { getFavoriteTvSeriesFromLocalDatabaseThenUpdateToFirebase() },
+                onSuccessCallback = { return@handleResourceWithCallbacks },
+                onErrorCallback = { addConsumableViewEvent(UiEvent.ShowSnackbar(it)) }
             )
         }
     }
 
     private fun getTvSeriesWatchListItemFromLocalDatabaseThenUpdateFirebase() {
         viewModelScope.launch {
-            getTvSeriesWatchFromLocalDatabaseThenUpdateToFirebase(
-                onSuccess = { return@getTvSeriesWatchFromLocalDatabaseThenUpdateToFirebase },
-                onFailure = { addConsumableViewEvent(UiEvent.ShowSnackbar(it)) })
+            handleResourceWithCallbacks(
+                resourceSupplier = { getTvSeriesWatchFromLocalDatabaseThenUpdateToFirebase() },
+                onSuccessCallback = { return@handleResourceWithCallbacks },
+                onErrorCallback = { addConsumableViewEvent(UiEvent.ShowSnackbar(it)) }
+            )
         }
     }
 

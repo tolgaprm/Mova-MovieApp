@@ -6,13 +6,12 @@ import com.google.android.gms.tasks.Task
 import com.prmto.authentication_domain.use_case.FirebaseUseCases
 import com.prmto.authentication_domain.use_case.SignInWithCredentialUseCase
 import com.prmto.authentication_domain.use_case.SignInWithEmailAndPasswordUseCase
+import com.prmto.core_domain.util.Resource
 import com.prmto.core_domain.util.UiText
 import com.prmto.core_ui.base.viewModel.BaseViewModelWithUiEvent
 import com.prmto.core_ui.util.UiEvent
 import com.prmto.navigation.NavigateFlow
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -62,88 +61,81 @@ class LoginViewModel @Inject constructor(
     }
 
     private fun signIn(email: String, password: String) {
-        val loginResult = signInWithEmailAndUserName(
-            email = email,
-            password = password,
-            onSuccess = { onLoginSuccess() },
-            onFailure = { uiText ->
-                addConsumableViewEvent(UiEvent.ShowSnackbar(uiText = uiText))
-                mutableState.updateIsLoading(false)
+        viewModelScope.launch {
+            val loginResult = signInWithEmailAndUserName(
+                email = email,
+                password = password
+            )
+
+            if (loginResult.passwordError == null && loginResult.emailError == null) {
+                mutableState.updateIsLoading(true)
             }
-        )
 
-        if (loginResult.passwordError == null && loginResult.emailError == null) {
-            mutableState.updateIsLoading(true)
-        }
+            loginResult.emailError?.let { emailError ->
+                mutableState.updateEmailError(emailError)
+            }
 
-        loginResult.emailError?.let { emailError ->
-            mutableState.updateEmailError(emailError)
-        }
+            loginResult.passwordError?.let { passwordError ->
+                mutableState.updatePasswordError(passwordError)
+            }
 
-        loginResult.passwordError?.let { passwordError ->
-            mutableState.updatePasswordError(passwordError)
+            when (val resource = loginResult.result) {
+                is Resource.Error -> {
+                    addConsumableViewEvent(
+                        UiEvent.ShowSnackbar(
+                            uiText = resource.uiText ?: UiText.unknownError()
+                        )
+                    )
+                    mutableState.updateIsLoading(false)
+                }
+
+                is Resource.Success -> onLoginSuccess()
+                null -> return@launch
+            }
         }
     }
 
     private fun handleResultsForSignInWithGoogle(task: Task<GoogleSignInAccount>) {
-        if (task.isSuccessful) {
-            mutableState.updateIsLoading(true)
-            val result = signInWithCredentialUseCase(
-                task = task,
-                onSuccess = { onLoginSuccess() },
-                onFailure = { uiText ->
-                    addConsumableViewEvent(UiEvent.ShowSnackbar(uiText = uiText))
+        viewModelScope.launch {
+            if (task.isSuccessful) {
+                mutableState.updateIsLoading(true)
+                val result = signInWithCredentialUseCase(
+                    task = task
+                )
+                result.errorMessage?.let { errorMessage ->
+                    addConsumableViewEvent(UiEvent.ShowSnackbar(errorMessage))
                     mutableState.updateIsLoading(false)
                 }
-            )
-            result.errorMessage?.let { errorMessage ->
-                addConsumableViewEvent(UiEvent.ShowSnackbar(errorMessage))
-                mutableState.updateIsLoading(false)
+
+                when (val resource = result.result) {
+                    is Resource.Error -> {
+                        addConsumableViewEvent(
+                            UiEvent.ShowSnackbar(
+                                uiText = resource.uiText ?: UiText.unknownError()
+                            )
+                        )
+                        mutableState.updateIsLoading(false)
+                    }
+
+                    is Resource.Success -> onLoginSuccess()
+                    null -> return@launch
+                }
+            } else {
+                addConsumableViewEvent(UiEvent.ShowSnackbar(UiText.somethingWentWrong()))
             }
-        } else {
-            addConsumableViewEvent(UiEvent.ShowSnackbar(UiText.somethingWentWrong()))
         }
     }
 
     private fun onLoginSuccess() {
-        val movieJob = getMoviesFromFirebaseThenUpdateLocalDatabase()
-        val tvSeriesJob = getTvSeriesFromFirebaseThenUpdateLocalDatabase()
         viewModelScope.launch {
-            movieJob.join()
-            tvSeriesJob.join()
+            firebaseUseCases.getFavoriteMovieFromFirebaseThenUpdateLocalDatabaseUseCase()
+            firebaseUseCases.getMovieWatchListFromFirebaseThenUpdateLocalDatabaseUseCase()
+            firebaseUseCases.getFavoriteTvSeriesFromFirebaseThenUpdateLocalDatabaseUseCase()
+            firebaseUseCases.getTvSeriesWatchListFromFirebaseThenUpdateLocalDatabaseUseCase()
             addConsumableViewEvent(
                 UiEvent.NavigateToFlow(NavigateFlow.HomeFlow)
             )
             mutableState.updateIsLoading(false)
-        }
-    }
-
-    private fun getMoviesFromFirebaseThenUpdateLocalDatabase(): Job {
-        return viewModelScope.launch {
-            firebaseUseCases.getFavoriteMovieFromFirebaseThenUpdateLocalDatabaseUseCase(
-                onFailure = {},
-                coroutineScope = this
-            )
-
-            firebaseUseCases.getMovieWatchListFromFirebaseThenUpdateLocalDatabaseUseCase(
-                onFailure = {},
-                coroutineScope = this
-            )
-            delay(5000)
-        }
-    }
-
-    private fun getTvSeriesFromFirebaseThenUpdateLocalDatabase(): Job {
-        return viewModelScope.launch {
-            firebaseUseCases.getFavoriteTvSeriesFromFirebaseThenUpdateLocalDatabaseUseCase(
-                onFailure = {},
-                coroutineScope = this
-            )
-            firebaseUseCases.getTvSeriesWatchListFromFirebaseThenUpdateLocalDatabaseUseCase(
-                onFailure = {},
-                coroutineScope = this
-            )
-            delay(5000)
         }
     }
 }

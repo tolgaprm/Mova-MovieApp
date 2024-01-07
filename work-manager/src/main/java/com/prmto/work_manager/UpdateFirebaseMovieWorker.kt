@@ -6,6 +6,7 @@ import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.prmto.core_domain.use_case.firebase.movie.GetFavoriteMoviesFromLocalDatabaseThenUpdateToFirebaseUseCase
 import com.prmto.core_domain.use_case.firebase.movie.GetMovieWatchListFromLocalDatabaseThenUpdateToFirebase
+import com.prmto.core_domain.util.Resource
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.CoroutineScope
@@ -27,17 +28,19 @@ class UpdateFirebaseMovieWorker @AssistedInject constructor(
         var error = false
 
         coroutineScope.launch {
-            getFavoriteMoviesFromLocalDatabaseThenUpdateToFirebaseUseCase(
-                onSuccess = { error = false },
-                onFailure = { error = true }
-            )
+            error = when (getFavoriteMoviesFromLocalDatabaseThenUpdateToFirebaseUseCase()) {
+                is Resource.Error -> true
+
+                is Resource.Success -> false
+            }
         }
 
         coroutineScope.launch {
-            getMovieWatchListFromLocalDatabaseThenUpdateToFirebase(
-                onSuccess = { error = false },
-                onFailure = { error = true }
-            )
+            error = when (getMovieWatchListFromLocalDatabaseThenUpdateToFirebase()) {
+                is Resource.Error -> true
+
+                is Resource.Success -> false
+            }
         }
 
         return if (error) Result.failure() else Result.success()

@@ -28,20 +28,17 @@ class FirebaseFirestoreErrorMessage {
             "UNAVAILABLE" to R.string.unavailable_error
         )
 
-        fun setExceptionToFirebaseMessage(
-            exception: Exception,
-            onFailure: (uiText: UiText) -> Unit
-        ) {
+        fun <T> setExceptionToFirebaseMessage(
+            exception: Exception
+        ): Resource<T> {
             Timber.e(exception.localizedMessage?.toString())
-            if (exception is FirebaseFirestoreException) {
+            return if (exception is FirebaseFirestoreException) {
                 val errorCode = exception.code.toString()
                 val errorStringId = getMessage(errorCode = errorCode)
-                onFailure(UiText.StringResource(errorStringId))
+                Resource.Error(UiText.StringResource(errorStringId))
             } else {
-                onFailure(UiText.unknownError())
+                Resource.Error(UiText.StringResource(R.string.unknown_error))
             }
         }
-
-
     }
 }

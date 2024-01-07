@@ -2,7 +2,7 @@ package com.prmto.core_domain.use_case.firebase.movie
 
 import com.prmto.core_domain.use_case.database.LocalDatabaseUseCases
 import com.prmto.core_domain.use_case.firebase.FirebaseCoreUseCases
-import com.prmto.core_domain.util.UiText
+import com.prmto.core_domain.util.SimpleResource
 import kotlinx.coroutines.flow.first
 import javax.inject.Inject
 
@@ -11,16 +11,10 @@ class GetMovieWatchListFromLocalDatabaseThenUpdateToFirebase @Inject constructor
     private val firebaseCoreUseCases: FirebaseCoreUseCases
 ) {
 
-    suspend operator fun invoke(
-        onSuccess: () -> Unit,
-        onFailure: (uiText: UiText) -> Unit
-    ) {
+    suspend operator fun invoke(): SimpleResource {
         val moviesInWatchList = localDatabaseUseCases.getMoviesInWatchListUseCase().first()
-
-        firebaseCoreUseCases.addMovieToWatchListInFirebaseUseCase(
-            moviesInWatchList = moviesInWatchList,
-            onSuccess = onSuccess,
-            onFailure = onFailure
+        return firebaseCoreUseCases.addMovieToWatchListInFirebaseUseCase(
+            moviesInWatchList = moviesInWatchList
         )
     }
 }

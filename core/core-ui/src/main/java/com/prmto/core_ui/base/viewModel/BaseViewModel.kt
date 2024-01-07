@@ -39,8 +39,8 @@ abstract class BaseViewModel : ViewModel() {
      */
     protected inline fun <T> handleResourceWithCallbacks(
         resourceSupplier: () -> Resource<T>,
-        crossinline onSuccessCallback: (T) -> Unit,
-        crossinline onErrorCallback: (UiText) -> Unit
+        crossinline onSuccessCallback: (T) -> Unit = {},
+        crossinline onErrorCallback: (UiText) -> Unit = {}
     ) {
         when (val response = resourceSupplier()) {
             is Resource.Success -> {

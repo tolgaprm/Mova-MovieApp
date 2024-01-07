@@ -1,8 +1,10 @@
 package com.prmto.authentication_ui.forgetPassword
 
 import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.viewModelScope
 import com.prmto.authentication_domain.use_case.SendPasswordResetEmailUseCase
 import com.prmto.authentication_ui.R
+import com.prmto.core_domain.util.Resource
 import com.prmto.core_domain.util.UiText
 import com.prmto.core_ui.base.viewModel.BaseViewModelWithUiEvent
 import com.prmto.core_ui.util.UiEvent
@@ -11,6 +13,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -52,23 +55,35 @@ class ForgetPasswordViewModel @Inject constructor(
     }
 
     private fun sendPasswordResetToEmail(email: String) {
-        val result = sendPasswordResetEmailUseCase(
-            email = email,
-            onSuccess = {
-                addConsumableViewEvent(
-                    UiEvent.ShowSnackbar(uiText = UiText.StringResource(R.string.check_your_email))
-                )
-            },
-            onFailure = { uiText ->
-                addConsumableViewEvent(UiEvent.ShowSnackbar(uiText = uiText))
-            },
-        )
+        viewModelScope.launch {
+            val result = sendPasswordResetEmailUseCase(
+                email = email
+            )
 
-        result.emailError?.let { emailError ->
-            mutableState.update {
-                it.copy(
-                    emailState = it.updateEmailError(emailError)
-                )
+            result.emailError?.let { emailError ->
+                mutableState.update {
+                    it.copy(
+                        emailState = it.updateEmailError(emailError)
+                    )
+                }
+            }
+
+            when (val resource = result.result) {
+                is Resource.Error -> {
+                    addConsumableViewEvent(
+                        UiEvent.ShowSnackbar(
+                            uiText = resource.uiText ?: UiText.unknownError()
+                        )
+                    )
+                }
+
+                is Resource.Success -> {
+                    addConsumableViewEvent(
+                        UiEvent.ShowSnackbar(uiText = UiText.StringResource(R.string.check_your_email))
+                    )
+                }
+
+                null -> return@launch
             }
         }
     }
