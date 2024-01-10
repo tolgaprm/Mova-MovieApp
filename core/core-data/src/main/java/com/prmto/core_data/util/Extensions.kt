@@ -9,7 +9,6 @@ import com.prmto.core_domain.models.isPopularity
 import com.prmto.core_domain.util.Resource
 import com.prmto.core_domain.util.UiText
 
-
 fun Int?.orZero(): Int = this ?: 0
 
 fun Double?.orZero(): Double = this ?: 0.0

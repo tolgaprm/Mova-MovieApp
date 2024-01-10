@@ -2,6 +2,8 @@ package com.prmto.core_data.repository
 
 import com.google.common.truth.Truth.assertThat
 import com.prmto.core_data.remote.api.TMDBApi
+import com.prmto.core_data.util.MOVIE_GENRE_RESPONSE_JSON
+import com.prmto.core_data.util.TV_GENRE_RESPONSE_JSON
 import com.prmto.core_domain.models.genre.Genre
 import com.prmto.core_domain.repository.GenreRepository
 import com.prmto.core_testing.dispatcher.TestDispatcher
@@ -33,7 +35,7 @@ class GenreRepositoryImplTest {
     @Test
     fun getMovieGenreList_returnErrorFromApi_returnEmptyList() = runTest {
         mockWebServer.enqueueMockResponse(
-            "movie_genre_response.json",
+            MOVIE_GENRE_RESPONSE_JSON,
             MockResponse().setResponseCode(500)
         )
         val genre = genreRepository.getMovieGenreList("en")
@@ -42,7 +44,7 @@ class GenreRepositoryImplTest {
 
     @Test
     fun getMovieGenreList_returnSuccessFromApi_firstGenreNameIsSame() = runTest {
-        mockWebServer.enqueueMockResponse("movie_genre_response.json")
+        mockWebServer.enqueueMockResponse(MOVIE_GENRE_RESPONSE_JSON)
         val genre = genreRepository.getMovieGenreList("en")
         assertThat(genre.genres.first()).isEqualTo(
             Genre(
@@ -55,7 +57,7 @@ class GenreRepositoryImplTest {
     @Test
     fun getTvGenreList_returnErrorFromApi_returnEmptyList() = runTest {
         mockWebServer.enqueueMockResponse(
-            "tv_genre_response.json",
+            TV_GENRE_RESPONSE_JSON,
             MockResponse().setResponseCode(500)
         )
         val genre = genreRepository.getTvGenreList("en")
@@ -64,7 +66,7 @@ class GenreRepositoryImplTest {
 
     @Test
     fun getTvGenreList_returnSuccessFromApi_firstGenreNameIsSame() = runTest {
-        mockWebServer.enqueueMockResponse("tv_genre_response.json")
+        mockWebServer.enqueueMockResponse(TV_GENRE_RESPONSE_JSON)
         val genre = genreRepository.getTvGenreList("en")
         assertThat(genre.genres.first()).isEqualTo(
             Genre(
