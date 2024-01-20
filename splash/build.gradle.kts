@@ -1,3 +1,4 @@
+import com.prmto.convention.dependency.coreTestingModule
 import com.prmto.convention.dependency.coreUiModule
 
 plugins {
@@ -10,4 +11,6 @@ android {
 
 dependencies {
     coreUiModule()
+    coreTestingModule()
+    testImplementation(libs.truth)
 }

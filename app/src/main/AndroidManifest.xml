@@ -20,7 +20,7 @@
         android:theme="@style/Theme.MovaMovieApp"
         tools:targetApi="33">
 
-        <receiver android:name=".feature_upcoming.alarm_manager.UpComingAlarmReceiver" />
+        <receiver android:name="com.prmto.upcoming_ui.alarmManager.receiver.UpComingAlarmReceiver" />
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="@string/admob_id" />

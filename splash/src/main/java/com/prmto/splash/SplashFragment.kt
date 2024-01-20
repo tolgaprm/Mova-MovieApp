@@ -17,25 +17,30 @@ class SplashFragment : BaseFragment<
 
     override val viewModel: SplashViewModel by viewModels()
     override fun onInitialize() {
-        collectFlow(viewModel.eventFlow) { event ->
-            when (event) {
-                is SplashEvent.NavigateTo -> {
-                    navigateToFlow(event.navigationFlow)
-                }
+        collectFlow(viewModel.consumableViewEvents) {
+            if (it.isNotEmpty()) {
+                when (val event = it.first()) {
+                    is SplashEvent.NavigateTo -> {
+                        navigateToFlow(event.navigationFlow)
+                        viewModel.onEventConsumed()
+                    }
 
-                is SplashEvent.UpdateAppLanguage -> {
-                    AppCompatDelegate.setApplicationLocales(
-                        LocaleListCompat.forLanguageTags(
-                            event.language
+                    is SplashEvent.UpdateAppLanguage -> {
+                        AppCompatDelegate.setApplicationLocales(
+                            LocaleListCompat.forLanguageTags(
+                                event.language
+                            )
                         )
-                    )
-                }
+                        viewModel.onEventConsumed()
+                    }
 
-                is SplashEvent.UpdateUiMode -> {
-                    if (event.uiMode == AppCompatDelegate.MODE_NIGHT_YES) {
-                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-                    } else {
-                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                    is SplashEvent.UpdateUiMode -> {
+                        if (event.uiMode == AppCompatDelegate.MODE_NIGHT_YES) {
+                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                        } else {
+                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                        }
+                        viewModel.onEventConsumed()
                     }
                 }
             }

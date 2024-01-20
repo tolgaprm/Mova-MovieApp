@@ -10,6 +10,7 @@ android {
 
 dependencies {
     coreDomainModule()
+    testImplementation(project(":core:core-domain"))
     implementation(libs.kotlinx.coroutines.test)
     implementation(libs.junit)
     implementation(libs.mockwebserver)

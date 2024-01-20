@@ -1,18 +1,15 @@
 package com.prmto.splash
 
-import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.prmto.core_domain.use_case.languageIsoCode.GetLanguageIsoCodeUseCase
 import com.prmto.core_domain.use_case.uIMode.GetUIModeUseCase
+import com.prmto.core_ui.base.viewModel.BaseViewModelWithUiEvent
 import com.prmto.navigation.NavigateFlow
 import com.prmto.splash.event.SplashEvent
 import com.prmto.splash.util.Constants.SPLASH_SCREEN_DELAY
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -21,10 +18,7 @@ import javax.inject.Inject
 class SplashViewModel @Inject constructor(
     private val getLanguageIsoCodeUseCase: GetLanguageIsoCodeUseCase,
     private val getUIModeUseCase: GetUIModeUseCase
-) : ViewModel() {
-
-    private val _eventFlow = MutableSharedFlow<SplashEvent>()
-    val eventFlow = _eventFlow.asSharedFlow()
+) : BaseViewModelWithUiEvent<SplashEvent>() {
 
     init {
         getNavigateAfterSplashScreenDelay()
@@ -32,17 +26,15 @@ class SplashViewModel @Inject constructor(
         getUiMode()
     }
 
-    @VisibleForTesting
-    fun getLanguageIsoCode() {
+    private fun getLanguageIsoCode() {
         viewModelScope.launch {
-            _eventFlow.emit(SplashEvent.UpdateAppLanguage(getLanguageIsoCodeUseCase().first()))
+            addConsumableViewEvent(SplashEvent.UpdateAppLanguage(getLanguageIsoCodeUseCase().first()))
         }
     }
 
-    @VisibleForTesting
-    fun getUiMode() {
+    private fun getUiMode() {
         viewModelScope.launch {
-            _eventFlow.emit(
+            addConsumableViewEvent(
                 SplashEvent.UpdateUiMode(
                     getUIModeUseCase().first() ?: AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
                 )
@@ -53,11 +45,7 @@ class SplashViewModel @Inject constructor(
     private fun getNavigateAfterSplashScreenDelay() {
         viewModelScope.launch {
             delay(SPLASH_SCREEN_DELAY)
-            _eventFlow.emit(
-                SplashEvent.NavigateTo(
-                    NavigateFlow.HomeFlow
-                )
-            )
+            addConsumableViewEvent(SplashEvent.NavigateTo(NavigateFlow.HomeFlow))
         }
     }
 }
