@@ -1,5 +1,4 @@
 import com.android.build.api.dsl.ApplicationExtension
-import com.android.build.api.dsl.DefaultConfig
 import com.prmto.convention.configureCommon
 import com.prmto.convention.dependency.addAllUiDependencies
 import com.prmto.convention.dependency.addCommonTestDependencies
@@ -31,14 +30,9 @@ import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.dependencies
-import java.util.Properties
 
 class AndroidApplicationConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
-        val properties = Properties().apply {
-            load(target.rootProject.file("local.properties").inputStream())
-        }
-
         with(target) {
             with(pluginManager) {
                 apply("com.android.application")
@@ -56,7 +50,6 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
                 compileSdk = 33
                 defaultConfig {
                     targetSdk = 33
-                    addBuildConfigField(properties, "API_KEY")
 
                     val resourceConfigurations = listOf("en", "tr-rTR", "de-rDE")
                     resourceConfigurations.forEach { resConfig ->
@@ -98,16 +91,5 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
                 addCommonTestDependencies(libs)
             }
         }
-    }
-
-    private fun DefaultConfig.addBuildConfigField(
-        properties: Properties,
-        name: String
-    ) {
-        buildConfigField(
-            "String",
-            name,
-            "\"${properties.getProperty(name)}\""
-        )
     }
 }

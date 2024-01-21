@@ -1,8 +1,8 @@
 package com.prmto.core_data.di
 
-import com.prmto.core_data.remote.api.TMDBApi
+import com.prmto.core_data.BuildConfig
+import com.prmto.core_data.remote.api.TMDBCoreApi
 import com.prmto.core_data.remote.interceptor.RequestInterceptor
-import com.prmto.core_data.util.Constants
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
@@ -39,13 +39,15 @@ object CoreNetworkModule {
     fun provideRetrofit(
         moshi: Moshi, okHttpClient: OkHttpClient
     ): Retrofit {
-        return Retrofit.Builder().baseUrl(Constants.BASE_URL).client(okHttpClient)
+        return Retrofit.Builder()
+            .baseUrl(BuildConfig.TMDB_BASE_URL)
+            .client(okHttpClient)
             .addConverterFactory(MoshiConverterFactory.create(moshi)).build()
     }
 
     @Provides
     @Singleton
-    fun provideTMDBApi(retrofit: Retrofit): TMDBApi {
-        return retrofit.create(TMDBApi::class.java)
+    fun provideTMDBApi(retrofit: Retrofit): TMDBCoreApi {
+        return retrofit.create(TMDBCoreApi::class.java)
     }
 }
