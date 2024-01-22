@@ -15,6 +15,7 @@ import com.prmto.core_domain.util.Constants.DEFAULT_LANGUAGE
 import com.prmto.core_domain.util.UiText
 import com.prmto.core_ui.base.viewModel.BaseViewModelWithUiEvent
 import com.prmto.core_ui.util.UiEvent
+import com.prmto.explore_domain.model.FilterBottomState
 import com.prmto.explore_domain.model.MultiSearch
 import com.prmto.explore_domain.use_case.ExploreUseCases
 import com.prmto.explore_ui.event.ExploreBottomSheetEvent
@@ -52,7 +53,7 @@ class ExploreViewModel @Inject constructor(
     val networkState: StateFlow<ConnectivityObserver.Status> = _networkState.asStateFlow()
 
     private val _filterBottomSheetState =
-        MutableStateFlow(com.prmto.explore_domain.model.FilterBottomState())
+        MutableStateFlow(FilterBottomState())
     val filterBottomSheetState = _filterBottomSheetState.asStateFlow()
 
     init {
@@ -133,7 +134,6 @@ class ExploreViewModel @Inject constructor(
             is ExploreBottomSheetEvent.UpdateCategory -> {
                 _filterBottomSheetState.update { it.copy(categoryState = event.checkedCategory) }
                 getGenreListByCategoriesState()
-                resetSelectedGenreIdsState()
             }
 
             is ExploreBottomSheetEvent.UpdateGenreList -> {
@@ -146,7 +146,7 @@ class ExploreViewModel @Inject constructor(
             }
 
             is ExploreBottomSheetEvent.ResetFilterBottomState -> {
-                _filterBottomSheetState.value = com.prmto.explore_domain.model.FilterBottomState()
+                _filterBottomSheetState.update { FilterBottomState() }
             }
 
             is ExploreBottomSheetEvent.Apply -> {
