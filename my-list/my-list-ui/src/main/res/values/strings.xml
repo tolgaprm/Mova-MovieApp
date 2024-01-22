@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="not_movies_in_your_list" translatable="false">No movies in your list.</string>
+    <string name="not_tv_in_your_list" translatable="false">No tv series in your list.</string>
+</resources>

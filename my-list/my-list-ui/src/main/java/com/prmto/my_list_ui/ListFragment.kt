@@ -48,6 +48,8 @@ class ListFragment : BaseFragmentWithUiEvent<FragmentMyListBinding, ListViewMode
                     }
                 }
             }
+            binding.errorScreen.errorScreen.isVisible = !state.hasAnyMovieInList
+            binding.errorScreen.errorText.text = requireContext().getString(state.errorMessage)
         }
     }
 

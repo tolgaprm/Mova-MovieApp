@@ -199,34 +199,8 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <LinearLayout
+    <include
         android:id="@+id/errorScreen"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:visibility="visible">
-
-        <TextView
-            style="@style/Mova.H5"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginBottom="@dimen/large_margin"
-            android:text="@string/something_went_wrong"
-            android:textAlignment="center" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnError"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="@string/try_again"
-            android:textColor="?attr/colorSurface"
-            app:backgroundTint="?attr/colorOnSurface"
-            app:cornerRadius="@dimen/shape_medium" />
-
-    </LinearLayout>
-
+        layout="@layout/error_screen" />
 </androidx.constraintlayout.widget.ConstraintLayout>
 
