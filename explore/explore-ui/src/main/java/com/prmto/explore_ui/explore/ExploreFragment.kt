@@ -143,16 +143,16 @@ class ExploreFragment :
 
     private fun showErrorScreenAndHideDetailScreen() {
         binding.detailScreen.makeGone()
-        binding.errorScreen.makeVisible()
+        binding.errorScreen.errorScreen.makeVisible()
     }
 
     private fun hideErrorScreenAndShowDetailScreen() {
         binding.detailScreen.makeVisible()
-        binding.errorScreen.makeGone()
+        binding.errorScreen.errorScreen.makeGone()
     }
 
     private fun setBtnErrorClickListener() {
-        binding.btnError.setOnClickListener {
+        binding.errorScreen.btnError.setOnClickListener {
             if (viewModel.isNetworkAvaliable()) {
                 collectData()
                 hideErrorScreenAndShowDetailScreen()

@@ -11,7 +11,6 @@ data class ListState(
     val tvSeriesList: List<TvSeries> = emptyList()
 )
 
-
 enum class ListTab {
     WATCHLIST,
     FAVORITELIST
