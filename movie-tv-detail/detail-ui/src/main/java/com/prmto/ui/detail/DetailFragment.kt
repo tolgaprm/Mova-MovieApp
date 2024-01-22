@@ -159,6 +159,7 @@ class DetailFragment : BaseFragment<FragmentDetailBinding, DetailViewModel>(
                 jobVideos = collectVideos()
             } else {
                 jobVideos?.cancel()
+                binding.txtVideoInfo.makeGone()
                 binding.videosRecyclerView.makeGone()
                 binding.recommendationRecyclerView.makeVisible()
             }
