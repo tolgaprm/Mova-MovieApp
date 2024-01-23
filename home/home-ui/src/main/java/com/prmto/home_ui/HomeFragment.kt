@@ -55,7 +55,7 @@ class HomeFragment : BaseFragmentWithUiEvent<FragmentHomeBinding, HomeViewModel>
             binding.seeAllPage.makeGone()
             binding.scrollView.makeVisible()
         }
-        binding.btnError.setOnClickListener {
+        binding.errorScreen.btnError.setOnClickListener {
             hideErrorScreenAndShowScrollView()
             nowPlayingAdapter.retry()
             popularMoviesAdapter.retry()
@@ -69,11 +69,11 @@ class HomeFragment : BaseFragmentWithUiEvent<FragmentHomeBinding, HomeViewModel>
 
     private fun hideScrollViewAndShowErrorScreen() {
         binding.scrollView.makeGone()
-        binding.errorScreen.makeVisible()
+        binding.errorScreen.errorScreen.makeVisible()
     }
 
     private fun hideErrorScreenAndShowScrollView() {
-        binding.errorScreen.makeGone()
+        binding.errorScreen.errorScreen.makeGone()
         binding.scrollView.makeVisible()
     }
 

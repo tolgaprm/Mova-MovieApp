@@ -7,8 +7,6 @@ object Constants {
     const val LOCALE_KEY = "locale_key"
     const val UI_MODE_KEY = "ui_mode_key"
 
-    const val BASE_URL = "https://api.themoviedb.org/3/"
-
     const val PREFERENCES_NAME = "mova_preferences_name"
 
     const val DISCOVER_DATE_QUERY_FOR_TV = "first_air_date"

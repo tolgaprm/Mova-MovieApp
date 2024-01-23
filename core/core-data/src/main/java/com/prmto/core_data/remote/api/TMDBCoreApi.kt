@@ -4,7 +4,7 @@ import com.prmto.core_data.remote.dto.genre.GenreListDto
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-interface TMDBApi {
+interface TMDBCoreApi {
 
     @GET("genre/movie/list")
     suspend fun getMovieGenreList(

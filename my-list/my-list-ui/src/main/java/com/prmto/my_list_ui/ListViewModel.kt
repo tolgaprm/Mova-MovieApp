@@ -86,7 +86,9 @@ class ListViewModel @Inject constructor(
         return mutableState.updateAndGet {
             it.copy(
                 movieList = movieList,
-                isLoading = false
+                isLoading = false,
+                hasAnyMovieInList = movieList.isNotEmpty(),
+                errorMessage = R.string.not_movies_in_your_list
             )
         }
     }
@@ -95,7 +97,9 @@ class ListViewModel @Inject constructor(
         return mutableState.updateAndGet {
             it.copy(
                 tvSeriesList = tvSeriesList,
-                isLoading = false
+                isLoading = false,
+                hasAnyMovieInList = tvSeriesList.isNotEmpty(),
+                errorMessage = R.string.not_tv_in_your_list
             )
         }
     }

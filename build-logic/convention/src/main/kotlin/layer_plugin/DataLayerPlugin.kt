@@ -1,7 +1,7 @@
 package layer_plugin
 
-import com.android.build.api.dsl.DefaultConfig
 import com.android.build.gradle.LibraryExtension
+import com.prmto.convention.addBuildConfigField
 import com.prmto.convention.commonDependenciesForEachModule
 import com.prmto.convention.dependency.coreDomainModule
 import com.prmto.convention.dependency.dataStore
@@ -39,19 +39,10 @@ class DataLayerPlugin : Plugin<Project> {
                 }
 
                 defaultConfig {
-                    addTmdbApi(properties)
+                    addBuildConfigField(properties, "API_KEY")
+                    addBuildConfigField("TMDB_BASE_URL", "https://api.themoviedb.org/3/")
                 }
             }
         }
     }
-}
-
-fun DefaultConfig.addTmdbApi(
-    properties: Properties
-) {
-    buildConfigField(
-        "String",
-        "API_KEY",
-        "\"${properties.getProperty("API_KEY")}\""
-    )
 }

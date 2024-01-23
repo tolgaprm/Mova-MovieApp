@@ -5,6 +5,7 @@ import androidx.fragment.app.viewModels
 import com.prmto.core_domain.util.asString
 import com.prmto.core_ui.base.fragment.BaseFragment
 import com.prmto.core_ui.util.collectFlow
+import com.prmto.core_ui.util.loadAd
 import com.prmto.navigation.NavigateFlow
 import com.prmto.upcoming_ui.adapter.HandlePagingStateUpComingPagingAdapter
 import com.prmto.upcoming_ui.adapter.UpComingMovieAdapter
@@ -21,6 +22,7 @@ class UpComingFragment : BaseFragment<FragmentUpComingBinding, UpComingViewModel
 
     override fun onInitialize() {
         binding.upComingRecyclerView.adapter = upComingMovieAdapter
+        binding.adView.loadAd()
         handlePagingLoadStates()
         collectUpComingPagingData()
         collectData()

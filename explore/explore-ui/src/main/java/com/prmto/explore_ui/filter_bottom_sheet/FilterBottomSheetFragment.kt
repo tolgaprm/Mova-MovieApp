@@ -47,10 +47,17 @@ class FilterBottomSheetFragment : BottomSheetDialogFragment() {
         setViewsListener()
     }
 
+    override fun onResume() {
+        super.onResume()
+        genreChipInflater?.updateCheckedGenreFilters(viewModel.filterBottomSheetState.value.checkedGenreIdsState)
+    }
+
     private fun setViewsListener() {
         binding.categoriesChipGroup.setOnCheckedStateChangeListener { group, _ ->
             val category =
                 if (group.checkedChipId == binding.movieChip.id) Category.MOVIE else Category.TV
+
+            binding.genreListGroup.clearCheck()
 
             viewModel.onEventBottomSheet(ExploreBottomSheetEvent.UpdateCategory(category))
         }
