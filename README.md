@@ -1,9 +1,5 @@
 # Mova-Movies App
 
-[<img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg"
-alt="Get it on Google Play Store"
-height="80">](https://play.google.com/store/apps/details?id=com.prmto.mova_movieapp)
-
 "A movie and TV show information app for teaching MVVM, Paging3, Flow-Coroutines with Clean
 Architecture
 With this app, you can easily find information about your favorite films and TV series.
