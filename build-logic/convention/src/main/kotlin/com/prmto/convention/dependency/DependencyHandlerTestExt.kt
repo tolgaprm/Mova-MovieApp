@@ -39,6 +39,4 @@ fun DependencyHandlerScope.addCommonTestDependencies(libs: VersionCatalog) {
     junit(libs)
     mockk(libs)
     mockito(libs)
-    addAndroidTestImplementation(libs.findLibrary("core.testing").get())
-    addTestImplementation(libs.findLibrary("core.testing").get())
 }

@@ -1,16 +1,17 @@
 package specific_library_plugin
 
-import com.prmto.convention.dependency.moshi
-import com.prmto.convention.libs
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.dependencies
+import util.Plugins
+import util.library.moshi
+import util.libs
 
 class MoshiConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {
             with(pluginManager) {
-                apply("kotlin-kapt")
+                apply(Plugins.KSP)
             }
 
             dependencies {

@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
     `kotlin-dsl`
 }
@@ -9,22 +11,28 @@ java {
     targetCompatibility = JavaVersion.VERSION_17
 }
 
-tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().all {
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_17.toString()
+kotlin {
+    compilerOptions {
+        jvmTarget = JvmTarget.JVM_17
     }
 }
 
 dependencies {
     compileOnly(libs.kotlin.gradle.plugin)
     compileOnly(libs.android.gradle.plugin)
+    compileOnly(libs.ksp.gradle.plugin)
 }
 
 gradlePlugin {
     plugins {
         register("androidApplication") {
             id = "mova.android.application"
-            implementationClass = "AndroidApplicationConventionPlugin"
+            implementationClass = "plugin.AndroidApplicationPlugin"
+        }
+
+        register("androidLibrary") {
+            id = "mova.android.library"
+            implementationClass = "plugin.AndroidLibraryPlugin"
         }
 
         register("androidHilt") {
@@ -50,11 +58,6 @@ gradlePlugin {
         register("androidApplicationFirebase") {
             id = "mova.android.application.firebase"
             implementationClass = "AndroidApplicationFirebaseConventionPlugin"
-        }
-
-        register("androidLibrary") {
-            id = "mova.android.library"
-            implementationClass = "AndroidLibraryConventionPlugin"
         }
 
         register("androidDataLayer") {

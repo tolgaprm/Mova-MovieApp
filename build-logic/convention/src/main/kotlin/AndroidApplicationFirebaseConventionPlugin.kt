@@ -1,8 +1,8 @@
-import com.prmto.convention.dependency.firebase
-import com.prmto.convention.libs
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.dependencies
+import util.library.firebase
+import util.libs
 
 class AndroidApplicationFirebaseConventionPlugin : Plugin<Project> {
 

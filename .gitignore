@@ -1,17 +1,17 @@
-*.iml
-.gradle
-/local.properties
-/.idea/caches
-/.idea/libraries
-/.idea/modules.xml
-/.idea/workspace.xml
-/.idea/navEditor.xml
-/.idea/assetWizardSettings.xml
-.DS_Store
-/build
-/captures
-.externalNativeBuild
-.cxx
+# Built application files
+/*/build/
+
+# Local configuration file (sdk path, etc)
 local.properties
-app/google-services.json
-/app/src/main/res/values/admob_values.xml
+
+# Gradle generated files
+.gradle/
+
+# Signing files
+.signing/
+
+# User-specific configurations
+*.iml
+.idea/
+/src/main/res/values/admob_values.xml
+/google-services.json
